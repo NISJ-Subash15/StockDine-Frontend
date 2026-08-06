@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate, Link } from '@tanstack/react-router'
 import { useState } from "react";
-import { ArrowRight, LogOut, Lock, X, AlertCircle, Eye, EyeOff } from "lucide-react";
+import { ArrowRight, LogOut, Lock, X, AlertCircle, Eye, EyeOff, ShieldCheck } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useStockDineStore } from "@/lib/stockdine-store";
 
