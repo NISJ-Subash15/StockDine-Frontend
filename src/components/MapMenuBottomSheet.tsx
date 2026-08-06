@@ -98,19 +98,7 @@ export const MapMenuBottomSheet: React.FC<MapMenuBottomSheetProps> = ({
           <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto" />
 
           <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-3">
-              {restaurant.logo ? (
-                <img
-                  src={restaurant.logo}
-                  alt={restaurant.name}
-                  className="size-14 rounded-2xl object-cover border-2 border-[#E5E7EB] bg-white shadow-sm shrink-0"
-                />
-              ) : (
-                <div className="size-14 rounded-2xl bg-gradient-to-br from-[#60241E] to-[#E77B49] text-white flex items-center justify-center font-bold font-serif text-xl border-2 border-[#E5E7EB] shadow-sm shrink-0">
-                  {restaurant.name?.charAt(0) || "S"}
-                </div>
-              )}
-              <div>
+            <div>
                 <div className="flex items-center gap-2">
                   <span className="text-[10px] font-extrabold uppercase bg-[#E77B49]/10 text-[#E77B49] px-2.5 py-0.5 rounded-full border border-[#E77B49]/20">
                     Live Menu

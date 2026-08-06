@@ -288,7 +288,7 @@ function CustomerRestaurantDetailPage() {
       <section className="relative">
         <div className="h-72 sm:h-96 w-full relative overflow-hidden">
           <img
-            src={profile?.coverImage || profile?.logo}
+            src={profile?.coverImage}
             alt={profile?.name || "Restaurant"}
             className="w-full h-full object-cover"
           />

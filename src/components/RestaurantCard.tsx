@@ -67,28 +67,15 @@ export const RestaurantCard: React.FC<RestaurantCardProps> = ({
             <span>{travelTimeText}</span>
           </div>
 
-          {/* Bottom Logo & Name Overlay */}
-          <div className="absolute bottom-3 left-3 right-3 flex items-center gap-3">
-            {restaurant.logo ? (
-              <img
-                src={restaurant.logo}
-                alt={restaurant.name}
-                className="size-14 rounded-2xl object-cover border-2 border-white shadow-lg shrink-0 bg-white"
-              />
-            ) : (
-              <div className="size-14 rounded-2xl bg-gradient-to-br from-[#60241E] to-[#E77B49] text-white flex items-center justify-center font-bold font-serif text-xl border-2 border-white shadow-lg shrink-0">
-                {restaurant.name?.charAt(0) || "S"}
-              </div>
-            )}
-            <div className="min-w-0 flex-1">
-              <h3 className="font-serif italic text-xl sm:text-2xl font-bold text-white leading-tight truncate">
-                {restaurant.name}
-              </h3>
-              <p className="text-[11px] text-white/90 font-medium flex items-center gap-1 truncate mt-0.5">
-                <MapPin className="size-3 text-[#E77B49] shrink-0" />
-                <span className="truncate">{restaurant.address || `${restaurant.city}, ${restaurant.country}`}</span>
-              </p>
-            </div>
+          {/* Bottom Name & Location Overlay */}
+          <div className="absolute bottom-3 left-3 right-3">
+            <h3 className="font-serif italic text-xl sm:text-2xl font-bold text-white leading-tight truncate">
+              {restaurant.name}
+            </h3>
+            <p className="text-[11px] text-white/90 font-medium flex items-center gap-1 truncate mt-0.5">
+              <MapPin className="size-3 text-[#E77B49] shrink-0" />
+              <span className="truncate">{restaurant.address || `${restaurant.city}, ${restaurant.country}`}</span>
+            </p>
           </div>
         </div>
 

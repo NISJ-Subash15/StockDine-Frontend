@@ -310,29 +310,16 @@ function MapRadarPage() {
           {selectedRestaurant && (
             <div className="bg-card dark:bg-slate-900 border-2 border border-border dark:border-slate-800 rounded-3xl p-6 shadow-md space-y-4">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                <div className="flex items-center gap-3">
-                  {selectedRestaurant.logo ? (
-                    <img
-                      src={selectedRestaurant.logo}
-                      alt={selectedRestaurant.name}
-                      className="size-16 rounded-2xl object-cover border border-border dark:border-slate-800 shadow-xs shrink-0"
-                    />
-                  ) : (
-                    <div className="size-16 rounded-2xl bg-gradient-to-br from-[#60241E] to-[#E77B49] text-white flex items-center justify-center font-bold font-serif text-2xl border border-border dark:border-slate-800 shadow-xs shrink-0">
-                      {selectedRestaurant.name?.charAt(0) || "S"}
-                    </div>
-                  )}
-                  <div>
-                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#E77B49]">
-                      Selected Partner Establishment
-                    </span>
-                    <h2 className="font-serif italic text-2xl font-bold text-[#60241E] dark:text-slate-100">
-                      {selectedRestaurant.name}
-                    </h2>
-                    <p className="text-xs text-muted-foreground font-medium flex items-center gap-1 mt-0.5">
-                      <MapPin className="size-3 text-[#E77B49]" /> {selectedRestaurant.address}, {selectedRestaurant.city}
-                    </p>
-                  </div>
+                <div>
+                  <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#E77B49]">
+                    Selected Partner Establishment
+                  </span>
+                  <h2 className="font-serif italic text-2xl font-bold text-[#60241E] dark:text-slate-100">
+                    {selectedRestaurant.name}
+                  </h2>
+                  <p className="text-xs text-muted-foreground font-medium flex items-center gap-1 mt-0.5">
+                    <MapPin className="size-3 text-[#E77B49]" /> {selectedRestaurant.address}, {selectedRestaurant.city}
+                  </p>
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0">
