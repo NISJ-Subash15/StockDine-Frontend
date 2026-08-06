@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate, Link } from '@tanstack/react-router'
 import { useState } from "react";
-import { ChefHat, BarChart3, ArrowRight, ShieldCheck, Sparkles, LogOut, Lock, X, AlertCircle, Eye, EyeOff } from "lucide-react";
+import { ArrowRight, LogOut, Lock, X, AlertCircle, Eye, EyeOff } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useStockDineStore } from "@/lib/stockdine-store";
 
@@ -81,10 +81,7 @@ function SelectWorkspacePage() {
 
       {/* Top Header */}
       <header className="relative z-10 flex items-center justify-between max-w-6xl mx-auto w-full pt-2 pb-6">
-        <Link to="/" className="group flex items-center gap-3">
-          <div className="size-11 rounded-2xl bg-[#60241E] dark:bg-[#E77B49] flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
-            <ChefHat className="size-6 text-white" />
-          </div>
+        <Link to="/" className="group flex items-center">
           <div>
             <span className="font-serif italic text-2xl sm:text-3xl font-bold tracking-tight text-[#60241E] dark:text-[#E77B49] block leading-none">
               StockDine
@@ -113,7 +110,6 @@ function SelectWorkspacePage() {
         {/* Page Title */}
         <div className="text-center max-w-xl mx-auto space-y-3 mb-10">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E77B49]/10 dark:bg-slate-800 border border-[#E77B49]/20 text-[#60241E] dark:text-[#E77B49] text-[11px] font-extrabold uppercase tracking-widest">
-            <Sparkles className="size-3.5 text-[#E77B49]" />
             <span>Authenticated Restaurant Admin</span>
           </div>
 
@@ -130,11 +126,8 @@ function SelectWorkspacePage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 w-full">
           {/* WORKSPACE CARD 1: KITCHEN PORTAL */}
           <div className="group relative rounded-3xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-border/60 dark:border-slate-800 p-8 sm:p-10 shadow-xl hover:shadow-2xl hover:border-[#E77B49]/50 transition-all duration-300 flex flex-col justify-between hover:scale-[1.02] cursor-pointer">
-            <div className="space-y-6">
+            <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <div className="size-16 rounded-2xl bg-amber-500/10 dark:bg-slate-800 text-amber-600 dark:text-amber-400 flex items-center justify-center border border-amber-500/20">
-                  <ChefHat className="size-8 text-amber-600 dark:text-amber-400" />
-                </div>
                 <span className="text-[10px] font-extrabold uppercase tracking-widest text-amber-700 bg-amber-100 dark:bg-amber-950/60 dark:text-amber-300 px-3 py-1 rounded-full border border-amber-300 dark:border-amber-800">
                   Kitchen Terminal
                 </span>
@@ -142,7 +135,7 @@ function SelectWorkspacePage() {
 
               <div>
                 <h2 className="font-serif italic text-2xl sm:text-3xl font-bold text-[#60241E] dark:text-slate-100">
-                  👨‍🍳 Kitchen Portal
+                  Kitchen Portal
                 </h2>
                 <p className="text-xs text-[#6B7280] dark:text-slate-400 font-medium mt-1">
                   Fast live order execution terminal for kitchen chefs & staff.
@@ -183,11 +176,8 @@ function SelectWorkspacePage() {
 
           {/* WORKSPACE CARD 2: RESTAURANT ADMIN */}
           <div className="group relative rounded-3xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-border/60 dark:border-slate-800 p-8 sm:p-10 shadow-xl hover:shadow-2xl hover:border-[#E77B49]/50 transition-all duration-300 flex flex-col justify-between hover:scale-[1.02] cursor-pointer">
-            <div className="space-y-6">
+            <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <div className="size-16 rounded-2xl bg-[#60241E]/10 dark:bg-slate-800 text-[#60241E] dark:text-[#E77B49] flex items-center justify-center border border-[#60241E]/20">
-                  <BarChart3 className="size-8 text-[#60241E] dark:text-[#E77B49]" />
-                </div>
                 <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#E77B49] bg-[#E77B49]/10 px-3 py-1 rounded-full">
                   Admin OS
                 </span>
@@ -195,7 +185,7 @@ function SelectWorkspacePage() {
 
               <div>
                 <h2 className="font-serif italic text-2xl sm:text-3xl font-bold text-[#60241E] dark:text-slate-100">
-                  📊 Restaurant Admin
+                  Restaurant Admin
                 </h2>
                 <p className="text-xs text-[#6B7280] dark:text-slate-400 font-medium mt-1">
                   Complete management dashboard, analytics, menu & table setup.

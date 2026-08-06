@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate, useSearch, Link } from "@tanstack/react-router";
-import { User, Store, ArrowRight, ShieldCheck, Sparkles, ChefHat } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 export const Route = createFileRoute("/auth/select-role")({
@@ -24,10 +24,7 @@ function SelectRolePage() {
 
       {/* Top Header */}
       <header className="relative z-10 flex items-center justify-between max-w-6xl mx-auto w-full pt-2 pb-6">
-        <Link to="/" className="group flex items-center gap-3">
-          <div className="size-11 rounded-2xl bg-[#60241E] dark:bg-[#E77B49] flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
-            <ChefHat className="size-6 text-white" />
-          </div>
+        <Link to="/" className="group flex items-center">
           <div>
             <span className="font-serif italic text-2xl sm:text-3xl font-bold tracking-tight text-[#60241E] dark:text-[#E77B49] block leading-none">
               StockDine
@@ -61,7 +58,6 @@ function SelectRolePage() {
         {/* Page Title */}
         <div className="text-center max-w-xl mx-auto space-y-3 mb-10">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E77B49]/10 dark:bg-slate-800 border border-[#E77B49]/20 text-[#60241E] dark:text-[#E77B49] text-[11px] font-extrabold uppercase tracking-widest">
-            <Sparkles className="size-3.5 text-[#E77B49]" />
             <span>{isLogin ? "Authentication Portal" : "Get Started"}</span>
           </div>
 
@@ -80,11 +76,8 @@ function SelectRolePage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 w-full">
           {/* CARD 1: CUSTOMER */}
           <div className="group relative rounded-3xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-border/60 dark:border-slate-800 p-8 sm:p-10 shadow-xl hover:shadow-2xl hover:border-[#E77B49]/50 transition-all duration-300 flex flex-col justify-between hover:scale-[1.02] cursor-pointer">
-            <div className="space-y-6">
+            <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <div className="size-16 rounded-2xl bg-[#60241E]/10 dark:bg-slate-800 text-[#60241E] dark:text-[#E77B49] flex items-center justify-center border border-[#60241E]/20">
-                  <User className="size-8 text-[#60241E] dark:text-[#E77B49]" />
-                </div>
                 <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#E77B49] bg-[#E77B49]/10 px-3 py-1 rounded-full">
                   Diner / Customer
                 </span>
@@ -92,7 +85,7 @@ function SelectRolePage() {
 
               <div>
                 <h2 className="font-serif italic text-2xl sm:text-3xl font-bold text-[#60241E] dark:text-slate-100">
-                  👤 Customer
+                  Customer
                 </h2>
                 <p className="text-xs text-[#6B7280] dark:text-slate-400 font-medium mt-1">
                   Everything you need to discover live food & reserve tables.
@@ -145,11 +138,8 @@ function SelectRolePage() {
 
           {/* CARD 2: RESTAURANT */}
           <div className="group relative rounded-3xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-border/60 dark:border-slate-800 p-8 sm:p-10 shadow-xl hover:shadow-2xl hover:border-[#E77B49]/50 transition-all duration-300 flex flex-col justify-between hover:scale-[1.02] cursor-pointer">
-            <div className="space-y-6">
+            <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <div className="size-16 rounded-2xl bg-[#60241E]/10 dark:bg-slate-800 text-[#60241E] dark:text-[#E77B49] flex items-center justify-center border border-[#60241E]/20">
-                  <Store className="size-8 text-[#60241E] dark:text-[#E77B49]" />
-                </div>
                 <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#E77B49] bg-[#E77B49]/10 px-3 py-1 rounded-full">
                   Partner / Owner
                 </span>
@@ -157,7 +147,7 @@ function SelectRolePage() {
 
               <div>
                 <h2 className="font-serif italic text-2xl sm:text-3xl font-bold text-[#60241E] dark:text-slate-100">
-                  🏪 Restaurant
+                  Restaurant
                 </h2>
                 <p className="text-xs text-[#6B7280] dark:text-slate-400 font-medium mt-1">
                   Complete OS for live stock control, kitchen pass, & bookings.
