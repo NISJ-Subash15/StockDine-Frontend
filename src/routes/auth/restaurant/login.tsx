@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Store, Mail, Lock, ArrowRight, ChefHat, Sparkles, AlertCircle, Eye, EyeOff } from "lucide-react";
+import { Mail, Lock, ArrowRight, AlertCircle, Eye, EyeOff } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useStockDineStore } from "@/lib/stockdine-store";
 import { api } from "@/lib/api";
@@ -98,9 +98,6 @@ function RestaurantLoginPage() {
           <div className="rounded-3xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-border/60 dark:border-slate-800 p-8 sm:p-10 shadow-2xl space-y-6">
             {/* Title Header */}
             <div className="text-center space-y-2">
-              <div className="size-14 rounded-2xl bg-[#60241E]/10 dark:bg-slate-800 text-[#60241E] dark:text-[#E77B49] flex items-center justify-center mx-auto border border-[#60241E]/20">
-                <Store className="size-7 text-[#60241E] dark:text-[#E77B49]" />
-              </div>
               <h1 className="font-serif italic text-3xl font-bold text-[#60241E] dark:text-slate-100">
                 Restaurant Partner Sign In
               </h1>

@@ -1,6 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
 import {
+  ArrowLeft,
   Building2,
   LogOut,
   Plus,
@@ -218,6 +219,10 @@ export function AdminPage() {
       const res: any = await api.restaurants.getProfile();
       if (res && res.success && res.restaurant) {
         const r = res.restaurant;
+        const isProtectionEnabled = r.adminPasswordProtection !== false;
+        if (typeof window !== "undefined") {
+          localStorage.setItem("stockdine_admin_protection_" + currentRestId, String(isProtectionEnabled));
+        }
         setProfileForm((prev) => ({
           ...prev,
           id: r._id || r.restaurantId || prev.id,
@@ -238,6 +243,7 @@ export function AdminPage() {
           description: r.description || prev.description || "",
           gstNumber: r.gstNumber || prev.gstNumber || "",
           fssaiNumber: r.fssaiNumber || prev.fssaiNumber || "",
+          adminPasswordProtection: isProtectionEnabled,
         }));
       }
     } catch (e) {}
@@ -816,14 +822,17 @@ export function AdminPage() {
           <button
             type="button"
             onClick={() => {
-              signOut();
-              navigate({ to: "/login" });
+              if (typeof window !== "undefined" && window.history.length > 1) {
+                window.history.back();
+              } else {
+                navigate({ to: "/auth/workspace" });
+              }
             }}
-            className="flex items-center gap-1.5 text-xs uppercase font-extrabold tracking-wider text-rose-600 dark:text-rose-400 hover:text-rose-700 border border-rose-500/20 rounded-2xl px-3.5 py-2.5 bg-rose-500/10 hover:bg-rose-500/20 transition-all shadow-sm active:scale-95 cursor-pointer"
-            title="Sign Out of Session"
+            className="flex items-center gap-1.5 text-xs uppercase font-extrabold tracking-wider text-[#60241E] dark:text-slate-200 hover:text-[#E77B49] border border-[#60241E]/20 dark:border-slate-700 rounded-2xl px-3.5 py-2.5 bg-[#60241E]/10 dark:bg-slate-800 hover:bg-[#60241E]/20 transition-all shadow-sm active:scale-95 cursor-pointer"
+            title="Back to Previous Page"
           >
-            <LogOut className="size-3.5" />
-            <span>Sign Out</span>
+            <ArrowLeft className="size-3.5 text-[#E77B49]" />
+            <span>Back</span>
           </button>
         </div>
       </header>
@@ -2640,6 +2649,9 @@ export function AdminPage() {
                   const newSetting = !currentSetting;
                   
                   setProfileForm((prev) => ({ ...prev, adminPasswordProtection: newSetting }));
+                  if (typeof window !== "undefined") {
+                    localStorage.setItem("stockdine_admin_protection_" + currentRestId, String(newSetting));
+                  }
                   setPassSuccessMsg("");
                   setPassErrMsg("");
                   
@@ -2724,7 +2736,7 @@ export function AdminPage() {
                         required
                         value={currentAdminPass}
                         onChange={(e) => setCurrentAdminPass(e.target.value)}
-                        placeholder="Enter current admin password"
+                        placeholder="Enter your current Admin Password"
                         className="w-full p-3 pr-10 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground font-semibold focus:outline-none focus:border-[#E77B49]"
                       />
                       <button
@@ -2748,7 +2760,7 @@ export function AdminPage() {
                         minLength={6}
                         value={newAdminPass}
                         onChange={(e) => setNewAdminPass(e.target.value)}
-                        placeholder="Enter new password (min 6 chars)"
+                        placeholder="Enter your new Admin Password"
                         className="w-full p-3 pr-10 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground font-semibold focus:outline-none focus:border-[#E77B49]"
                       />
                       <button
@@ -2771,7 +2783,7 @@ export function AdminPage() {
                         required
                         value={confirmAdminPass}
                         onChange={(e) => setConfirmAdminPass(e.target.value)}
-                        placeholder="Re-enter new password"
+                        placeholder="Re-enter your new Admin Password"
                         className="w-full p-3 pr-10 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground font-semibold focus:outline-none focus:border-[#E77B49]"
                       />
                       <button
