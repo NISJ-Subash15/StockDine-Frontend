@@ -529,6 +529,9 @@ export const stockDineStore = {
         };
 
         initialRestaurantProfiles[targetId] = profile;
+        if (typeof window !== "undefined") {
+          localStorage.setItem("stockdine_admin_protection_" + targetId, String(rest.adminPasswordProtection !== false));
+        }
         if (currentAuthSession.isLoggedIn) {
           currentAuthSession.profileData = {
             ...currentAuthSession.profileData,
@@ -794,14 +797,14 @@ export const stockDineStore = {
   checkRestaurantExists: (name?: string): boolean => false,
 
   getAdminPortalPassword: (restaurantId?: string): string => {
-    if (typeof window === "undefined") return "admin123";
+    if (typeof window === "undefined") return "";
     try {
       const data = localStorage.getItem("stockdine_admin_passwords");
       const map = data ? JSON.parse(data) : {};
       const restId = restaurantId || currentAuthSession.restaurantId || "default";
-      return map[restId] || "admin123";
+      return map[restId] || "";
     } catch {
-      return "admin123";
+      return "";
     }
   },
   setAdminPortalPassword: (restaurantId: string, pass: string) => {
@@ -828,7 +831,7 @@ export const stockDineStore = {
         return false;
       }
       const stored = stockDineStore.getAdminPortalPassword(restaurantId);
-      return pass === stored || pass === "admin123";
+      return Boolean(stored && pass === stored);
     }
   },
 

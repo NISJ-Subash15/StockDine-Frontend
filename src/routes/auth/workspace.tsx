@@ -60,7 +60,7 @@ function SelectWorkspacePage() {
           setLockoutUntil(lockTime);
           setAdminPassError("Security lock active: 5 incorrect password attempts reached. Please try again in 15 minutes.");
         } else {
-          setAdminPassError(`Incorrect password. Attempt ${nextAttempts} of 5. Default is 'admin123' unless changed in Settings.`);
+          setAdminPassError(`Incorrect Admin Security Password. Attempt ${nextAttempts} of 5. Please try again.`);
         }
       }
     } catch (err: any) {
@@ -232,7 +232,10 @@ function SelectWorkspacePage() {
                 onClick={() => {
                   const isUnlocked = typeof window !== "undefined" && sessionStorage.getItem("stockdine_admin_unlocked") === "true";
                   const restProfile = getRestaurantProfile(currentRestId);
-                  const isProtectionDisabled = restProfile?.adminPasswordProtection === false || authSession?.profileData?.adminPasswordProtection === false;
+                  const savedSetting = typeof window !== "undefined" ? localStorage.getItem("stockdine_admin_protection_" + currentRestId) : null;
+                  const isProtectionDisabled = savedSetting === "false" ||
+                    restProfile?.adminPasswordProtection === false ||
+                    authSession?.profileData?.adminPasswordProtection === false;
                   
                   if (isUnlocked || isProtectionDisabled) {
                     if (typeof window !== "undefined") {
@@ -249,6 +252,7 @@ function SelectWorkspacePage() {
               >
                 <span>
                   {(typeof window !== "undefined" && sessionStorage.getItem("stockdine_admin_unlocked") === "true") ||
+                  (typeof window !== "undefined" && localStorage.getItem("stockdine_admin_protection_" + currentRestId) === "false") ||
                   getRestaurantProfile(currentRestId)?.adminPasswordProtection === false ||
                   authSession?.profileData?.adminPasswordProtection === false
                     ? "Open Restaurant Admin"
@@ -306,7 +310,7 @@ function SelectWorkspacePage() {
                     required
                     value={adminPassInput}
                     onChange={(e) => setAdminPassInput(e.target.value)}
-                    placeholder="Default: admin123"
+                    placeholder="Enter your Admin Security Password"
                     className="w-full p-3 rounded-2xl border border-[#E5E7EB] dark:border-slate-700 bg-white dark:bg-slate-800 text-foreground pr-10 font-mono text-sm focus:outline-none focus:border-[#E77B49]"
                   />
                   <button

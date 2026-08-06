@@ -283,7 +283,7 @@ function LoginPage() {
     const targetRestId = authSession?.restaurantId || "";
     const storedPass = getAdminPortalPassword(targetRestId);
 
-    if (!storedPass || storedPass === "admin123") {
+    if (!storedPass) {
       setIsFirstTimeAdminSetup(true);
     } else {
       setIsFirstTimeAdminSetup(false);
