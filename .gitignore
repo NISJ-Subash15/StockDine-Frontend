@@ -1,0 +1,18 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build & Cache Outputs
+dist
+.output
+.tanstack
+.vercel
+.cache
+*.log
+
+# Environment Variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

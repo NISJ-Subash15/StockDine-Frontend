@@ -1,0 +1,4 @@
+{
+  "buildCommand": "npx cross-env NITRO_PRESET=vercel npm run build",
+  "outputDirectory": ".vercel/output/static"
+}
