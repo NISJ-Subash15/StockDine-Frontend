@@ -238,7 +238,7 @@ export const api = {
 
   // Dishes
   dishes: {
-    getAll: (params?: { restaurantId?: string; category?: string; search?: string; vegOnly?: string }) => {
+    getAll: (params?: { restaurantId?: string; category?: string; search?: string; vegOnly?: string; availableOnly?: string }) => {
       const query = new URLSearchParams(params as any).toString();
       return apiFetch(`/dishes${query ? `?${query}` : ""}`);
     },

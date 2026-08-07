@@ -512,7 +512,7 @@ export const stockDineStore = {
           gstNumber: rest.gstNumber || "",
           fssaiNumber: rest.fssaiNumber || "",
           adminPasswordProtection: rest.adminPasswordProtection !== false,
-          rating: rest.rating || 4.5,
+          rating: rest.numReviews && rest.numReviews > 0 ? (rest.rating || 0) : 0,
           reviewsCount: rest.numReviews || 0,
           isOpen: true,
           availableTablesCount: 0,

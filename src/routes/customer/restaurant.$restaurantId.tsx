@@ -50,6 +50,7 @@ import { api, formatImageUrl } from "@/lib/api";
 import { BookingModal } from "@/components/BookingModal";
 import { ReviewModal } from "@/components/ReviewModal";
 import { DirectionsModal } from "@/components/DirectionsModal";
+import { GuestAuthModal } from "@/components/GuestAuthModal";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 export const Route = createFileRoute("/customer/restaurant/$restaurantId")({
@@ -78,7 +79,11 @@ function CustomerRestaurantDetailPage() {
     tables,
     createBooking,
     likeReviewHelpful,
+    authSession,
   } = useStockDineStore();
+
+  const isGuest = !authSession || !authSession.isLoggedIn;
+  const [showGuestModal, setShowGuestModal] = useState(false);
 
   const profile = getRestaurantProfile(restaurantId);
   const gallery = getGalleryImages(profile?.id || restaurantId) || [];
@@ -276,7 +281,7 @@ function CustomerRestaurantDetailPage() {
           <ThemeToggle className="border-2 border-[#E5E7EB]" />
           <button
             type="button"
-            onClick={() => setShowBookingModal(true)}
+            onClick={() => { if (isGuest) { setShowGuestModal(true); } else { setShowBookingModal(true); } }}
             className="py-2 px-4 rounded-xl bg-[#E77B49] text-white text-xs font-extrabold hover:bg-[#D66A38] transition-all shadow-sm active:scale-95"
           >
             Book Table
@@ -322,6 +327,7 @@ function CustomerRestaurantDetailPage() {
                 <button
                   type="button"
                   onClick={() => {
+                    if (isGuest) { setShowGuestModal(true); return; }
                     setPreselectedTableId(undefined);
                     setPreselectedDish(null);
                     setShowBookingModal(true);
@@ -365,7 +371,7 @@ function CustomerRestaurantDetailPage() {
 
                 <button
                   type="button"
-                  onClick={() => setIsFavorite(!isFavorite)}
+                  onClick={() => { if (isGuest) { setShowGuestModal(true); return; } setIsFavorite(!isFavorite); }}
                   className={`p-3 rounded-2xl border-2 transition-all shadow-sm ${
                     isFavorite
                       ? "bg-rose-50 border-rose-300 text-rose-600"
@@ -384,7 +390,11 @@ function CustomerRestaurantDetailPage() {
                 <Star className="size-4 fill-amber-500 text-amber-500 shrink-0" />
                 <div>
                   <p className="text-[10px] text-[#6B7280] uppercase">Rating</p>
-                  <p className="text-[#60241E]">{profile?.rating || 4.9} ({profile?.reviewsCount || 342} Reviews)</p>
+                  <p className="text-[#60241E]">
+                    {reviewsList.length > 0
+                      ? `${(profile?.rating || 0).toFixed(1)} (${reviewsList.length} ${reviewsList.length === 1 ? "Review" : "Reviews"})`
+                      : "No reviews yet"}
+                  </p>
                 </div>
               </div>
 
@@ -798,6 +808,7 @@ function CustomerRestaurantDetailPage() {
             <button
               type="button"
               onClick={() => {
+                if (isGuest) { setShowGuestModal(true); return; }
                 setPreselectedTableId(undefined);
                 setShowBookingModal(true);
               }}
@@ -847,6 +858,7 @@ function CustomerRestaurantDetailPage() {
                 <button
                   type="button"
                   onClick={() => {
+                    if (isGuest) { setShowGuestModal(true); return; }
                     setPreselectedTableId(t.id);
                     setShowBookingModal(true);
                   }}
@@ -874,7 +886,7 @@ function CustomerRestaurantDetailPage() {
             <div className="flex items-center gap-2">
               <button
                 type="button"
-                onClick={() => setShowReviewModal(true)}
+                onClick={() => { if (isGuest) { setShowGuestModal(true); return; } setShowReviewModal(true); }}
                 className="py-2.5 px-4 rounded-2xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-extrabold shadow-md transition-all flex items-center gap-1.5 active:scale-95"
               >
                 <Sparkles className="size-4 fill-current text-white" />
@@ -889,41 +901,33 @@ function CustomerRestaurantDetailPage() {
             <div className="text-center sm:text-left space-y-1">
               <div className="flex items-baseline justify-center sm:justify-start gap-2">
                 <span className="font-serif italic text-5xl font-black text-[#60241E]">
-                  {profile?.rating || 4.9}
+                  {reviewsList.length > 0 ? (profile?.rating || 0).toFixed(1) : "0.0"}
                 </span>
                 <span className="text-sm text-[#6B7280] font-bold">/ 5.0</span>
               </div>
               <div className="flex items-center justify-center sm:justify-start gap-1 text-amber-500">
                 {[1, 2, 3, 4, 5].map((s) => (
-                  <Star key={s} className="size-4 fill-current" />
+                  <Star key={s} className={`size-4 ${s <= Math.round(profile?.rating || 0) && reviewsList.length > 0 ? "fill-current text-amber-500" : "text-gray-300"}`} />
                 ))}
               </div>
-              <p className="text-xs text-[#6B7280] font-medium">Based on {profile?.reviewsCount || 342} verified diner reviews</p>
+              <p className="text-xs text-[#6B7280] font-medium">Based on {reviewsList.length} verified diner {reviewsList.length === 1 ? "review" : "reviews"}</p>
             </div>
 
             {/* Star Distribution Progress Bars */}
             <div className="space-y-1.5 text-xs font-semibold text-[#4B5563]">
-              <div className="flex items-center gap-2">
-                <span className="w-12 text-[11px] font-bold">5 Stars</span>
-                <div className="flex-1 h-2 rounded-full bg-gray-200 overflow-hidden">
-                  <div className="h-full bg-amber-500 w-[85%]" />
-                </div>
-                <span className="w-8 text-right text-[11px] font-bold">85%</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-12 text-[11px] font-bold">4 Stars</span>
-                <div className="flex-1 h-2 rounded-full bg-gray-200 overflow-hidden">
-                  <div className="h-full bg-amber-500 w-[12%]" />
-                </div>
-                <span className="w-8 text-right text-[11px] font-bold">12%</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-12 text-[11px] font-bold">3 Stars</span>
-                <div className="flex-1 h-2 rounded-full bg-gray-200 overflow-hidden">
-                  <div className="h-full bg-amber-500 w-[3%]" />
-                </div>
-                <span className="w-8 text-right text-[11px] font-bold">3%</span>
-              </div>
+              {[5, 4, 3].map((starVal) => {
+                const count = reviewsList.filter((r) => r.rating === starVal).length;
+                const pct = reviewsList.length > 0 ? Math.round((count / reviewsList.length) * 100) : 0;
+                return (
+                  <div key={starVal} className="flex items-center gap-2">
+                    <span className="w-12 text-[11px] font-bold">{starVal} Stars</span>
+                    <div className="flex-1 h-2 rounded-full bg-gray-200 overflow-hidden">
+                      <div className="h-full bg-amber-500" style={{ width: `${pct}%` }} />
+                    </div>
+                    <span className="w-8 text-right text-[11px] font-bold">{pct}%</span>
+                  </div>
+                );
+              })}
             </div>
 
             {/* Category Average Scores */}
@@ -933,19 +937,19 @@ function CustomerRestaurantDetailPage() {
               </span>
               <div className="flex justify-between">
                 <span>Food Quality</span>
-                <span className="font-bold text-[#60241E]">★ 4.9</span>
+                <span className="font-bold text-[#60241E]">{reviewsList.length > 0 ? `★ ${(profile?.rating || 0).toFixed(1)}` : "—"}</span>
               </div>
               <div className="flex justify-between">
                 <span>Service Hospitality</span>
-                <span className="font-bold text-[#60241E]">★ 4.8</span>
+                <span className="font-bold text-[#60241E]">{reviewsList.length > 0 ? `★ ${(profile?.rating || 0).toFixed(1)}` : "—"}</span>
               </div>
               <div className="flex justify-between">
                 <span>Ambience &amp; Music</span>
-                <span className="font-bold text-[#60241E]">★ 4.9</span>
+                <span className="font-bold text-[#60241E]">{reviewsList.length > 0 ? `★ ${(profile?.rating || 0).toFixed(1)}` : "—"}</span>
               </div>
               <div className="flex justify-between">
                 <span>Cleanliness &amp; Hygiene</span>
-                <span className="font-bold text-[#60241E]">★ 5.0</span>
+                <span className="font-bold text-[#60241E]">{reviewsList.length > 0 ? `★ ${(profile?.rating || 0).toFixed(1)}` : "—"}</span>
               </div>
             </div>
           </div>
@@ -977,7 +981,13 @@ function CustomerRestaurantDetailPage() {
 
           {/* Reviews List */}
           <div className="grid grid-cols-1 gap-4">
-            {filteredReviews.map((r) => (
+            {filteredReviews.length === 0 ? (
+              <div className="bg-[#F8F9FA] border-2 border-dashed border-[#E5E7EB] rounded-3xl p-8 text-center text-xs text-[#6B7280] font-medium space-y-1">
+                <p className="font-bold text-[#60241E]">No reviews yet for this restaurant</p>
+                <p>Be the first guest to leave a review after your dining experience!</p>
+              </div>
+            ) : (
+              filteredReviews.map((r) => (
               <div
                 key={r.id}
                 className="bg-white border-2 border-[#E5E7EB] rounded-3xl p-5 shadow-sm space-y-3"
@@ -1044,11 +1054,11 @@ function CustomerRestaurantDetailPage() {
                     <Heart className="size-3.5 text-rose-500" />
                     <span>Helpful ({r.helpfulCount || 0})</span>
                   </button>
-
                   <span className="text-[10px] text-[#9CA3AF]">StockDine Verified Entry</span>
                 </div>
               </div>
-            ))}
+            ))
+          )}
           </div>
         </section>
       </main>
@@ -1130,6 +1140,9 @@ function CustomerRestaurantDetailPage() {
           restaurant={profile}
         />
       )}
+
+      {/* Guest Auth Intercept Modal */}
+      <GuestAuthModal isOpen={showGuestModal} onClose={() => setShowGuestModal(false)} />
     </div>
   );
 }

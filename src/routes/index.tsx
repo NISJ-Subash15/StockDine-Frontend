@@ -1,7 +1,9 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { GuestAuthModal } from "@/components/GuestAuthModal";
 import { useStockDineStore, formatCurrency } from "@/lib/stockdine-store";
+import { api, formatImageUrl } from "@/lib/api";
 import {
   Search,
   MapPin,
@@ -32,6 +34,9 @@ import {
   TrendingUp,
   Layers,
   ShoppingBag,
+  Bell,
+  Heart,
+  User,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -47,106 +52,6 @@ export const Route = createFileRoute("/")({
   }),
   component: LandingPage,
 });
-
-// Preset Popular Dishes dataset as required
-const POPULAR_DISHES_DATA = [
-  {
-    id: "pd-1",
-    name: "Chicken Biryani",
-    category: "Main Course",
-    price: 380,
-    discountPrice: 320,
-    portionsLeft: 14,
-    rating: 4.9,
-    image: "https://images.unsplash.com/photo-1633945274405-b6c8069047b0?auto=format&fit=crop&q=80&w=800",
-    badge: "Bestseller 🔥",
-    stockType: "Fast Selling",
-  },
-  {
-    id: "pd-2",
-    name: "Woodfired Pizza",
-    category: "Pizza",
-    price: 520,
-    discountPrice: 460,
-    portionsLeft: 8,
-    rating: 4.8,
-    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&q=80&w=800",
-    badge: "Chef's Special ⭐",
-    stockType: "Limited Stock",
-  },
-  {
-    id: "pd-3",
-    name: "Gourmet Burger",
-    category: "Starters",
-    price: 290,
-    discountPrice: 240,
-    portionsLeft: 18,
-    rating: 4.7,
-    image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&q=80&w=800",
-    badge: "Trending ⚡",
-    stockType: "Available",
-  },
-  {
-    id: "pd-4",
-    name: "Crispy Masala Dosa",
-    category: "Special Items",
-    price: 180,
-    discountPrice: 150,
-    portionsLeft: 22,
-    rating: 4.9,
-    image: "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&q=80&w=800",
-    badge: "Authentic 🍃",
-    stockType: "Available",
-  },
-  {
-    id: "pd-5",
-    name: "Chicken Shawarma",
-    category: "Starters",
-    price: 220,
-    discountPrice: 190,
-    portionsLeft: 6,
-    rating: 4.8,
-    image: "https://images.unsplash.com/photo-1529006557810-274b9b2fc783?auto=format&fit=crop&q=80&w=800",
-    badge: "Almost Sold Out ⚠️",
-    stockType: "Almost Sold Out",
-  },
-  {
-    id: "pd-6",
-    name: "Schezwan Fried Rice",
-    category: "Main Course",
-    price: 310,
-    discountPrice: 270,
-    portionsLeft: 16,
-    rating: 4.6,
-    image: "https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&q=80&w=800",
-    badge: "Spicy Delight 🌶️",
-    stockType: "Available",
-  },
-  {
-    id: "pd-7",
-    name: "Hakka Noodles",
-    category: "Main Course",
-    price: 280,
-    discountPrice: 240,
-    portionsLeft: 11,
-    rating: 4.7,
-    image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&q=80&w=800",
-    badge: "Wok Fresh 🥢",
-    stockType: "Fast Selling",
-  },
-  {
-    id: "pd-8",
-    name: "Paneer Butter Masala",
-    category: "Main Course",
-    price: 360,
-    discountPrice: 310,
-    portionsLeft: 15,
-    rating: 4.9,
-    image: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&q=80&w=800",
-    badge: "Vegetarian Premium 🧀",
-    stockType: "Available",
-  },
-];
 
 // Why StockDine Feature Cards
 const WHY_STOCKDINE_FEATURES = [
@@ -234,60 +139,87 @@ const HOW_IT_WORKS_STEPS = [
   },
 ];
 
-// Preset Nearby Restaurants dataset
-const NEARBY_RESTAURANTS_DATA = [
-  {
-    id: "heritage-spice",
-    name: "Heritage Spice Kitchen",
-    coverImage: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&q=80&w=800",
-    logo: "",
-    rating: 4.9,
-    reviewsCount: 1420,
-    priceRange: "₹₹ • North Indian & Muglai",
-    description: "Royal dining experience serving authentic dum biryanis, kebabs, and rich handi gravies.",
-    distanceKm: 1.2,
-    availableDishes: 28,
-  },
-  {
-    id: "la-piazza",
-    name: "La Piazza Trattoria",
-    coverImage: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=80&w=800",
-    logo: "",
-    rating: 4.8,
-    reviewsCount: 980,
-    priceRange: "₹₹₹ • Italian & Pizzeria",
-    description: "Woodfired sourdough pizzas, fresh handcrafted egg pastas, and imported Italian gelatos.",
-    distanceKm: 2.4,
-    availableDishes: 22,
-  },
-  {
-    id: "urban-burger",
-    name: "Urban Smash & Shack",
-    coverImage: "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&q=80&w=800",
-    logo: "",
-    rating: 4.7,
-    reviewsCount: 780,
-    priceRange: "₹ • Gourmet Burgers & Shakes",
-    description: "Double smashed tender beef & chicken burgers with secret smoked bacon jam and thick shakes.",
-    distanceKm: 3.1,
-    availableDishes: 19,
-  },
-];
-
 function LandingPage() {
   const navigate = useNavigate();
-  const { authSession, platformRestaurants } = useStockDineStore();
+  const { authSession } = useStockDineStore();
+
+  const isGuest = !authSession || !authSession.isLoggedIn;
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [authModalAction, setAuthModalAction] = useState("reserve a table");
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Search Card Form State
+  // Real MongoDB dataset states
+  const [realRestaurants, setRealRestaurants] = useState<any[]>([]);
+  const [realDishes, setRealDishes] = useState<any[]>([]);
+  const [isLoadingRestaurants, setIsLoadingRestaurants] = useState(true);
+  const [isLoadingDishes, setIsLoadingDishes] = useState(true);
+
+  // Search Card Form State & Autocomplete
   const [searchDish, setSearchDish] = useState("");
   const [searchRestaurant, setSearchRestaurant] = useState("");
   const [searchLocation, setSearchLocation] = useState("Indiranagar, Bengaluru");
   const [isLocating, setIsLocating] = useState(false);
 
-  // Track scroll position for sticky navbar blur & shadow
+  const [activeInput, setActiveInput] = useState<"dish" | "restaurant" | null>(null);
+  const [debouncedDishQuery, setDebouncedDishQuery] = useState("");
+  const [debouncedRestQuery, setDebouncedRestQuery] = useState("");
+
+  const [activeSection, setActiveSection] = useState("hero");
+
+  // Debounce search inputs
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedDishQuery(searchDish.trim().toLowerCase());
+    }, 200);
+    return () => clearTimeout(handler);
+  }, [searchDish]);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedRestQuery(searchRestaurant.trim().toLowerCase());
+    }, 200);
+    return () => clearTimeout(handler);
+  }, [searchRestaurant]);
+
+  // Fetch real data on mount
+  useEffect(() => {
+    let isMounted = true;
+    async function loadData() {
+      setIsLoadingRestaurants(true);
+      setIsLoadingDishes(true);
+      try {
+        const [restRes, dishRes] = await Promise.all([
+          api.restaurants.getAll().catch(() => ({ success: false, restaurants: [] })),
+          api.dishes.getAll({ availableOnly: "true" }).catch(() => ({ success: false, dishes: [] })),
+        ]);
+
+        if (isMounted) {
+          if (restRes && restRes.restaurants) {
+            setRealRestaurants(restRes.restaurants);
+          }
+          if (dishRes && dishRes.dishes) {
+            setRealDishes(dishRes.dishes);
+          }
+        }
+      } catch (err) {
+        console.error("Error fetching landing page data:", err);
+      } finally {
+        if (isMounted) {
+          setIsLoadingRestaurants(false);
+          setIsLoadingDishes(false);
+        }
+      }
+    }
+
+    loadData();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  // Track scroll position for sticky navbar blur & shadow, and track active section
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 20) {
@@ -295,8 +227,20 @@ function LandingPage() {
       } else {
         setIsScrolled(false);
       }
+
+      const navSections = ["hero", "popular-dishes", "nearby-restaurants", "why-stockdine", "footer"];
+      const scrollPosition = window.scrollY + 140;
+      for (let i = navSections.length - 1; i >= 0; i--) {
+        const el = document.getElementById(navSections[i]);
+        if (el && el.offsetTop <= scrollPosition) {
+          setActiveSection(navSections[i]);
+          break;
+        }
+      }
     };
-    window.addEventListener("scroll", handleScroll);
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -308,8 +252,30 @@ function LandingPage() {
     }, 800);
   };
 
+  const handleRestrictedAction = (actionName: string, onAllowed?: () => void) => {
+    if (isGuest) {
+      setAuthModalAction(actionName);
+      setShowAuthModal(true);
+    } else if (onAllowed) {
+      onAllowed();
+    }
+  };
+
   const handleExploreSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setActiveInput(null);
+    if (searchRestaurant.trim()) {
+      const matchedRest = realRestaurants.find((r) =>
+        (r.restaurantName || "").toLowerCase().includes(searchRestaurant.trim().toLowerCase())
+      );
+      if (matchedRest) {
+        navigate({
+          to: "/customer/restaurant/$restaurantId",
+          params: { restaurantId: matchedRest._id || matchedRest.restaurantId },
+        });
+        return;
+      }
+    }
     navigate({
       to: "/customer",
       search: {
@@ -320,7 +286,29 @@ function LandingPage() {
     });
   };
 
-  const restaurantList = platformRestaurants || [];
+  // Filter live suggestions
+  const matchingDishSuggestions = debouncedDishQuery
+    ? realDishes
+        .filter((d) => {
+          const name = (d.dishName || "").toLowerCase();
+          const cat = (d.category || "").toLowerCase();
+          const desc = (d.description || "").toLowerCase();
+          return name.includes(debouncedDishQuery) || cat.includes(debouncedDishQuery) || desc.includes(debouncedDishQuery);
+        })
+        .slice(0, 5)
+    : [];
+
+  const matchingRestSuggestions = debouncedRestQuery
+    ? realRestaurants
+        .filter((r) => {
+          const name = (r.restaurantName || "").toLowerCase();
+          const cuisine = (r.cuisine || "").toLowerCase();
+          const city = (r.city || "").toLowerCase();
+          const addr = (r.address || "").toLowerCase();
+          return name.includes(debouncedRestQuery) || cuisine.includes(debouncedRestQuery) || city.includes(debouncedRestQuery) || addr.includes(debouncedRestQuery);
+        })
+        .slice(0, 5)
+    : [];
 
   return (
     <div className="min-h-screen bg-[#FFFFFF] dark:bg-slate-950 text-[#1F2937] dark:text-slate-100 font-sans selection:bg-[#E77B49] selection:text-white transition-colors duration-300 relative overflow-x-hidden">
@@ -330,62 +318,151 @@ function LandingPage() {
       <nav
         className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? "bg-white/85 dark:bg-slate-950/85 backdrop-blur-xl shadow-md border-b border-border/40 py-3"
-            : "bg-transparent py-5"
+            ? "bg-white dark:bg-slate-950/95 backdrop-blur-xl shadow-md border-b border-slate-200/80 dark:border-slate-800 py-3"
+            : "bg-gradient-to-b from-black/40 via-black/15 to-transparent py-5"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           {/* Left: StockDine Logo */}
           <Link to="/" className="flex items-center gap-3 group cursor-pointer">
             <div>
-              <span className="font-serif italic text-2xl sm:text-3xl font-bold tracking-tight text-[#60241E] dark:text-[#E77B49] block leading-none">
+              <span
+                className={`font-serif italic text-2xl sm:text-3xl font-bold tracking-tight block leading-none transition-colors duration-300 ${
+                  isScrolled
+                    ? "text-[#60241E] dark:text-[#E77B49]"
+                    : "text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]"
+                }`}
+              >
                 StockDine
               </span>
-              <span className="text-[9px] uppercase tracking-[0.25em] text-[#E77B49] dark:text-slate-400 font-extrabold block mt-0.5">
+              <span
+                className={`text-[9px] uppercase tracking-[0.25em] font-extrabold block mt-0.5 transition-colors duration-300 ${
+                  isScrolled
+                    ? "text-[#E77B49] dark:text-slate-400"
+                    : "text-[#E77B49] drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]"
+                }`}
+              >
                 Live Dine-In OS
               </span>
             </div>
           </Link>
 
           {/* Center Nav Links (Desktop) */}
-          <div className="hidden md:flex items-center gap-8 text-xs font-extrabold tracking-wide uppercase text-[#1F2937]/80 dark:text-slate-300">
-            <a href="#hero" className="hover:text-[#E77B49] transition-colors">
-              Home
-            </a>
-            <a href="#popular-dishes" className="hover:text-[#E77B49] transition-colors">
-              Features
-            </a>
-            <a href="#nearby-restaurants" className="hover:text-[#E77B49] transition-colors">
-              Restaurants
-            </a>
-            <a href="#why-stockdine" className="hover:text-[#E77B49] transition-colors">
-              About
-            </a>
-            <a href="#footer" className="hover:text-[#E77B49] transition-colors">
-              Contact
-            </a>
+          <div className="hidden md:flex items-center gap-8 text-xs font-extrabold tracking-wide uppercase transition-colors duration-300">
+            {[
+              { id: "hero", label: "Home" },
+              { id: "popular-dishes", label: "Features" },
+              { id: "nearby-restaurants", label: "Restaurants" },
+              { id: "why-stockdine", label: "About" },
+              { id: "footer", label: "Contact" },
+            ].map((link) => {
+              const isActive = activeSection === link.id;
+              return (
+                <a
+                  key={link.id}
+                  href={`#${link.id}`}
+                  className={`transition-colors duration-200 py-1 ${
+                    isScrolled
+                      ? isActive
+                        ? "text-[#E77B49] font-black border-b-2 border-[#E77B49]"
+                        : "text-[#2D3748] dark:text-slate-200 hover:text-[#E77B49]"
+                      : isActive
+                        ? "text-[#E77B49] font-black drop-shadow-[0_1.5px_3px_rgba(0,0,0,0.8)] border-b-2 border-[#E77B49]"
+                        : "text-white hover:text-[#E77B49] drop-shadow-[0_1.5px_3px_rgba(0,0,0,0.7)]"
+                  }`}
+                >
+                  {link.label}
+                </a>
+              );
+            })}
           </div>
 
           {/* Right Action Buttons & Theme Toggle */}
           <div className="hidden md:flex items-center gap-3">
             <ThemeToggle />
 
-            <button
-              type="button"
-              onClick={() => navigate({ to: "/auth/select-role", search: { mode: "login" } })}
-              className="px-4.5 py-2.5 rounded-2xl text-xs font-extrabold text-[#60241E] dark:text-slate-200 hover:text-[#E77B49] transition-colors cursor-pointer"
-            >
-              Sign In
-            </button>
+            {!isGuest ? (
+              /* SIGNED IN STATE: Notifications, Favorites, My Bookings, Profile */
+              <div className="flex items-center gap-2 text-xs font-extrabold">
+                <button
+                  type="button"
+                  title="Notifications"
+                  onClick={() => alert("No new notifications")}
+                  className={`p-2.5 rounded-2xl transition-all relative cursor-pointer ${
+                    isScrolled
+                      ? "text-[#60241E] dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
+                      : "text-white bg-white/10 hover:bg-white/20 border border-white/30 backdrop-blur-md"
+                  }`}
+                >
+                  <Bell className="size-4" />
+                  <span className="absolute top-1.5 right-1.5 size-2 rounded-full bg-[#E77B49] animate-pulse" />
+                </button>
 
-            <button
-              type="button"
-              onClick={() => navigate({ to: "/auth/select-role", search: { mode: "signup" } })}
-              className="px-5 py-2.5 rounded-2xl bg-[#60241E] dark:bg-[#E77B49] hover:bg-[#4A1B17] dark:hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-md hover:shadow-lg transition-all active:scale-95 cursor-pointer flex items-center gap-2"
-            >
-              <span>Get Started</span>
-              <ArrowRight className="size-3.5" />
-            </button>
+                <Link
+                  to="/customer/favorites"
+                  className={`px-3.5 py-2 rounded-2xl transition-all flex items-center gap-1.5 cursor-pointer ${
+                    isScrolled
+                      ? "text-[#2D3748] dark:text-slate-200 hover:text-[#E77B49]"
+                      : "text-white bg-white/10 hover:bg-white/20 border border-white/30 backdrop-blur-md"
+                  }`}
+                >
+                  <Heart className="size-4 text-rose-500 fill-rose-500" />
+                  <span>Favorites</span>
+                </Link>
+
+                <Link
+                  to="/customer/bookings"
+                  className={`px-3.5 py-2 rounded-2xl transition-all flex items-center gap-1.5 cursor-pointer ${
+                    isScrolled
+                      ? "text-[#2D3748] dark:text-slate-200 hover:text-[#E77B49]"
+                      : "text-white bg-white/10 hover:bg-white/20 border border-white/30 backdrop-blur-md"
+                  }`}
+                >
+                  <Calendar className="size-4 text-[#E77B49]" />
+                  <span>My Bookings</span>
+                </Link>
+
+                <Link
+                  to="/customer/profile"
+                  className={`px-3.5 py-2 rounded-2xl text-white font-extrabold shadow-md transition-all flex items-center gap-1.5 cursor-pointer ${
+                    isScrolled
+                      ? "bg-[#60241E] dark:bg-[#E77B49] hover:bg-[#4A1B17] dark:hover:bg-[#D66A38]"
+                      : "bg-[#E77B49] hover:bg-[#D66A38] border border-white/20"
+                  }`}
+                >
+                  <User className="size-4" />
+                  <span>Profile</span>
+                </Link>
+              </div>
+            ) : (
+              /* GUEST SIGNED OUT STATE: Sign In & Get Started */
+              <>
+                <button
+                  type="button"
+                  onClick={() => navigate({ to: "/auth/select-role", search: { mode: "login" } })}
+                  className={`px-4.5 py-2.5 rounded-2xl text-xs font-extrabold transition-all cursor-pointer ${
+                    isScrolled
+                      ? "text-[#60241E] dark:text-slate-200 hover:text-[#E77B49]"
+                      : "text-white bg-white/10 hover:bg-white/20 border border-white/30 backdrop-blur-md hover:text-white shadow-sm"
+                  }`}
+                >
+                  Sign In
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => navigate({ to: "/auth/select-role", search: { mode: "signup" } })}
+                  className={`px-5 py-2.5 rounded-2xl text-white text-xs font-extrabold uppercase tracking-wider shadow-md hover:shadow-lg transition-all active:scale-95 cursor-pointer flex items-center gap-2 ${
+                    isScrolled
+                      ? "bg-[#60241E] dark:bg-[#E77B49] hover:bg-[#4A1B17] dark:hover:bg-[#D66A38]"
+                      : "bg-[#E77B49] hover:bg-[#D66A38] border border-white/20 shadow-lg"
+                  }`}
+                >
+                  <span>Get Started</span>
+                  <ArrowRight className="size-3.5" />
+                </button>
+              </>
+            )}
           </div>
 
           {/* Mobile Hamburger Button */}
@@ -394,7 +471,11 @@ function LandingPage() {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-2xl bg-[#60241E]/10 text-[#60241E] dark:text-slate-200"
+              className={`p-2 rounded-2xl transition-colors ${
+                isScrolled
+                  ? "bg-[#60241E]/10 text-[#60241E] dark:text-slate-200"
+                  : "bg-white/20 hover:bg-white/30 text-white border border-white/30 backdrop-blur-md"
+              }`}
               aria-label="Toggle Mobile Menu"
             >
               {mobileMenuOpen ? <X className="size-6" /> : <Menu className="size-6" />}
@@ -406,64 +487,83 @@ function LandingPage() {
         {mobileMenuOpen && (
           <div className="md:hidden bg-white/95 dark:bg-slate-950/95 backdrop-blur-2xl border-b border-border p-5 space-y-4 animate-in slide-in-from-top-4 duration-300">
             <div className="flex flex-col gap-3 text-sm font-extrabold uppercase text-[#1F2937] dark:text-slate-200">
-              <a
-                href="#hero"
-                onClick={() => setMobileMenuOpen(false)}
-                className="hover:text-[#E77B49] py-1 border-b border-border/30"
-              >
-                Home
-              </a>
-              <a
-                href="#popular-dishes"
-                onClick={() => setMobileMenuOpen(false)}
-                className="hover:text-[#E77B49] py-1 border-b border-border/30"
-              >
-                Features
-              </a>
-              <a
-                href="#nearby-restaurants"
-                onClick={() => setMobileMenuOpen(false)}
-                className="hover:text-[#E77B49] py-1 border-b border-border/30"
-              >
-                Restaurants
-              </a>
-              <a
-                href="#why-stockdine"
-                onClick={() => setMobileMenuOpen(false)}
-                className="hover:text-[#E77B49] py-1 border-b border-border/30"
-              >
-                About
-              </a>
-              <a
-                href="#footer"
-                onClick={() => setMobileMenuOpen(false)}
-                className="hover:text-[#E77B49] py-1"
-              >
-                Contact
-              </a>
+              {[
+                { id: "hero", label: "Home" },
+                { id: "popular-dishes", label: "Features" },
+                { id: "nearby-restaurants", label: "Restaurants" },
+                { id: "why-stockdine", label: "About" },
+                { id: "footer", label: "Contact" },
+              ].map((link) => {
+                const isActive = activeSection === link.id;
+                return (
+                  <a
+                    key={link.id}
+                    href={`#${link.id}`}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`py-1 border-b border-border/30 transition-colors ${
+                      isActive ? "text-[#E77B49] font-black" : "hover:text-[#E77B49]"
+                    }`}
+                  >
+                    {link.label}
+                  </a>
+                );
+              })}
             </div>
 
             <div className="pt-3 border-t border-border flex flex-col gap-2.5">
-              <button
-                type="button"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  navigate({ to: "/auth/select-role", search: { mode: "login" } });
-                }}
-                className="w-full py-3 rounded-2xl bg-secondary/30 text-[#60241E] dark:text-slate-200 font-extrabold text-xs cursor-pointer"
-              >
-                Sign In
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  navigate({ to: "/auth/select-role", search: { mode: "signup" } });
-                }}
-                className="w-full py-3 rounded-2xl bg-[#60241E] dark:bg-[#E77B49] text-white font-extrabold text-xs uppercase tracking-wider shadow-md cursor-pointer"
-              >
-                Get Started
-              </button>
+              {!isGuest ? (
+                <>
+                  <Link
+                    to="/customer/bookings"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="w-full py-2.5 rounded-2xl bg-[#E77B49]/15 text-[#60241E] dark:text-[#E77B49] font-extrabold text-xs flex items-center justify-center gap-2"
+                  >
+                    <Calendar className="size-4 text-[#E77B49]" />
+                    <span>My Bookings</span>
+                  </Link>
+
+                  <Link
+                    to="/customer/favorites"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="w-full py-2.5 rounded-2xl bg-rose-500/10 text-rose-600 font-extrabold text-xs flex items-center justify-center gap-2"
+                  >
+                    <Heart className="size-4 text-rose-500 fill-rose-500" />
+                    <span>Favorites</span>
+                  </Link>
+
+                  <Link
+                    to="/customer/profile"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="w-full py-3 rounded-2xl bg-[#60241E] dark:bg-[#E77B49] text-white font-extrabold text-xs flex items-center justify-center gap-2 uppercase tracking-wider shadow-md"
+                  >
+                    <User className="size-4" />
+                    <span>Profile</span>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      navigate({ to: "/auth/select-role", search: { mode: "login" } });
+                    }}
+                    className="w-full py-3 rounded-2xl bg-secondary/30 text-[#60241E] dark:text-slate-200 font-extrabold text-xs cursor-pointer"
+                  >
+                    Sign In
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      navigate({ to: "/auth/select-role", search: { mode: "signup" } });
+                    }}
+                    className="w-full py-3 rounded-2xl bg-[#60241E] dark:bg-[#E77B49] text-white font-extrabold text-xs uppercase tracking-wider shadow-md cursor-pointer"
+                  >
+                    Get Started
+                  </button>
+                </>
+              )}
             </div>
           </div>
         )}
@@ -478,10 +578,10 @@ function LandingPage() {
           <img
             src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&q=80&w=2000"
             alt="StockDine Restaurant Ambiance"
-            className="w-full h-full object-cover object-center scale-105 filter brightness-90 transition-transform duration-1000"
+            className="w-full h-full object-cover object-center scale-105 transition-transform duration-1000"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#60241E]/95 via-[#60241E]/80 to-[#60241E]/40 mix-blend-multiply" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(231,123,73,0.25),transparent_60%)] pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#60241E]/75 via-[#60241E]/50 to-black/25 mix-blend-multiply" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(231,123,73,0.18),transparent_65%)] pointer-events-none" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -523,7 +623,7 @@ function LandingPage() {
 
           {/* Right Glassmorphic Search Card Column */}
           <div className="lg:col-span-5">
-            <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl border-2 border-white/60 dark:border-slate-800 shadow-2xl p-6 sm:p-8 rounded-3xl space-y-5 relative overflow-hidden text-[#1F2937] dark:text-slate-100">
+            <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl border-2 border-white/60 dark:border-slate-800 shadow-2xl p-6 sm:p-8 rounded-3xl space-y-5 relative text-[#1F2937] dark:text-slate-100">
               <div className="flex justify-between items-center border-b border-border/50 pb-3">
                 <div className="flex items-center gap-2">
                   <Compass className="size-5 text-[#E77B49]" />
@@ -536,9 +636,9 @@ function LandingPage() {
                 </span>
               </div>
 
-              <form onSubmit={handleExploreSearchSubmit} className="space-y-4">
+              <form onSubmit={handleExploreSearchSubmit} className="space-y-4 relative">
                 {/* Input 1: Search Dish */}
-                <div>
+                <div className="relative">
                   <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#60241E] dark:text-slate-300 mb-1.5">
                     Search Dish
                   </label>
@@ -546,16 +646,62 @@ function LandingPage() {
                     <input
                       type="text"
                       value={searchDish}
+                      onFocus={() => setActiveInput("dish")}
                       onChange={(e) => setSearchDish(e.target.value)}
                       placeholder="e.g. Biryani, Woodfired Pizza, Dosa..."
                       className="w-full pl-10 pr-4 py-3 rounded-2xl bg-white dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#E77B49] shadow-sm"
                     />
                     <UtensilsCrossed className="absolute left-3.5 top-3.5 size-4 text-[#E77B49]" />
                   </div>
+
+                  {/* Dish Live Suggestions Dropdown */}
+                  {activeInput === "dish" && searchDish.trim().length > 0 && (
+                    <div className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-2xl shadow-2xl z-30 max-h-60 overflow-y-auto p-2 space-y-1 animate-in fade-in duration-150">
+                      <div className="px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-wider text-[#E77B49] border-b border-border/40">
+                        Dishes Found ({matchingDishSuggestions.length})
+                      </div>
+                      {matchingDishSuggestions.length > 0 ? (
+                        matchingDishSuggestions.map((dish) => (
+                          <button
+                            key={dish._id || dish.id}
+                            type="button"
+                            onClick={() => {
+                              setActiveInput(null);
+                              navigate({ to: "/customer/dishes", search: { dish: dish.dishName } });
+                            }}
+                            className="w-full p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/80 flex items-center justify-between text-left transition-colors cursor-pointer"
+                          >
+                            <div className="flex items-center gap-2.5 truncate">
+                              <img
+                                src={formatImageUrl(dish.dishImage)}
+                                alt={dish.dishName}
+                                className="size-8 rounded-lg object-cover shrink-0"
+                              />
+                              <div className="truncate">
+                                <span className="text-xs font-bold text-foreground block truncate">
+                                  {dish.dishName}
+                                </span>
+                                <span className="text-[10px] text-muted-foreground block truncate">
+                                  {dish.restaurant?.restaurantName || "Partner Restaurant"}
+                                </span>
+                              </div>
+                            </div>
+                            <span className="text-xs font-serif font-bold text-[#60241E] dark:text-[#E77B49] shrink-0 ml-2">
+                              {formatCurrency(dish.price)}
+                            </span>
+                          </button>
+                        ))
+                      ) : (
+                        <div className="p-3 text-center text-xs text-muted-foreground font-semibold">
+                          No matching dishes found.
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 {/* Input 2: Search Restaurant */}
-                <div>
+                <div className="relative">
                   <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#60241E] dark:text-slate-300 mb-1.5">
                     Search Restaurant
                   </label>
@@ -563,12 +709,61 @@ function LandingPage() {
                     <input
                       type="text"
                       value={searchRestaurant}
+                      onFocus={() => setActiveInput("restaurant")}
                       onChange={(e) => setSearchRestaurant(e.target.value)}
                       placeholder="e.g. Heritage Spice, Royal Pavilion..."
                       className="w-full pl-10 pr-4 py-3 rounded-2xl bg-white dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#E77B49] shadow-sm"
                     />
                     <Building2 className="absolute left-3.5 top-3.5 size-4 text-[#E77B49]" />
                   </div>
+
+                  {/* Restaurant Live Suggestions Dropdown */}
+                  {activeInput === "restaurant" && searchRestaurant.trim().length > 0 && (
+                    <div className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-2xl shadow-2xl z-30 max-h-60 overflow-y-auto p-2 space-y-1 animate-in fade-in duration-150">
+                      <div className="px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-wider text-[#E77B49] border-b border-border/40">
+                        Restaurants Found ({matchingRestSuggestions.length})
+                      </div>
+                      {matchingRestSuggestions.length > 0 ? (
+                        matchingRestSuggestions.map((rest) => (
+                          <button
+                            key={rest._id || rest.restaurantId}
+                            type="button"
+                            onClick={() => {
+                              setActiveInput(null);
+                              navigate({
+                                to: "/customer/restaurant/$restaurantId",
+                                params: { restaurantId: rest._id || rest.restaurantId },
+                              });
+                            }}
+                            className="w-full p-2.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800/80 flex items-center justify-between text-left transition-colors cursor-pointer"
+                          >
+                            <div className="flex items-center gap-2.5 truncate">
+                              <img
+                                src={formatImageUrl(rest.restaurantCover || rest.restaurantLogo)}
+                                alt={rest.restaurantName}
+                                className="size-8 rounded-lg object-cover shrink-0"
+                              />
+                              <div className="truncate">
+                                <span className="text-xs font-bold text-foreground block truncate">
+                                  {rest.restaurantName}
+                                </span>
+                                <span className="text-[10px] text-muted-foreground block truncate">
+                                  {rest.cuisine || "Multi-Cuisine"} • {rest.city || rest.address || "Bengaluru"}
+                                </span>
+                              </div>
+                            </div>
+                            <span className="text-[10px] font-extrabold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full shrink-0 ml-2">
+                              ★ {rest.rating || 4.8}
+                            </span>
+                          </button>
+                        ))
+                      ) : (
+                        <div className="p-3 text-center text-xs text-muted-foreground font-semibold">
+                          No matching restaurants found.
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 {/* Input 3: Current Location */}
@@ -580,7 +775,7 @@ function LandingPage() {
                     <button
                       type="button"
                       onClick={handleDetectLocation}
-                      className="text-[10px] font-bold text-[#E77B49] hover:underline flex items-center gap-1"
+                      className="text-[10px] font-bold text-[#E77B49] hover:underline flex items-center gap-1 cursor-pointer"
                     >
                       {isLocating ? (
                         <span className="inline-block size-3 border border-[#E77B49] border-t-transparent rounded-full animate-spin" />
@@ -645,73 +840,102 @@ function LandingPage() {
             </button>
           </div>
 
-          {/* Horizontal / Grid Card Layout */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {POPULAR_DISHES_DATA.map((dish) => (
-              <div
-                key={dish.id}
-                className="bg-white dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:border-[#E77B49] transition-all duration-300 flex flex-col justify-between group"
-              >
-                <div className="space-y-3">
-                  {/* High Quality Dish Image Container */}
-                  <div className="relative h-52 w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
-                    <img
-                      src={dish.image}
-                      alt={dish.name}
-                      loading="lazy"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute top-3 left-3 bg-[#60241E]/90 backdrop-blur-md text-white text-[10px] font-extrabold uppercase px-3 py-1 rounded-full shadow-md">
-                      {dish.badge}
-                    </div>
-
-                    <div className="absolute bottom-3 right-3 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md text-[#1F2937] dark:text-slate-100 text-[10px] font-extrabold px-2.5 py-1 rounded-xl shadow-md flex items-center gap-1 border border-border/50">
-                      <Star className="size-3 text-amber-500 fill-amber-500" />
-                      <span>{dish.rating}</span>
-                    </div>
-                  </div>
-
-                  {/* Card Content */}
-                  <div className="p-5 space-y-3">
-                    <div className="flex justify-between items-center">
-                      <span className="text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-[#60241E]/10 dark:bg-[#E77B49]/20 text-[#60241E] dark:text-[#E77B49]">
-                        {dish.category}
-                      </span>
-                      <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full flex items-center gap-1">
-                        <Flame className="size-3 text-emerald-500" />
-                        <span>{dish.portionsLeft} Portions</span>
-                      </span>
-                    </div>
-
-                    <h3 className="font-serif italic font-bold text-xl text-foreground truncate">
-                      {dish.name}
-                    </h3>
-
-                    <div className="flex items-baseline gap-2">
-                      <span className="font-serif font-bold text-lg text-[#60241E] dark:text-[#E77B49]">
-                        {formatCurrency(dish.discountPrice)}
-                      </span>
-                      <span className="text-xs font-medium text-muted-foreground line-through">
-                        {formatCurrency(dish.price)}
-                      </span>
-                    </div>
-                  </div>
+          {/* Loading Skeletons */}
+          {isLoadingDishes ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="bg-white dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-3xl p-4 space-y-4 animate-pulse">
+                  <div className="h-48 rounded-2xl bg-slate-200 dark:bg-slate-800" />
+                  <div className="h-4 w-3/4 bg-slate-200 dark:bg-slate-800 rounded-full" />
+                  <div className="h-4 w-1/2 bg-slate-200 dark:bg-slate-800 rounded-full" />
                 </div>
-
-                {/* Explore Button */}
-                <div className="p-5 pt-0">
-                  <button
-                    type="button"
-                    onClick={() => navigate({ to: "/customer", search: { q: dish.name } })}
-                    className="w-full py-3 rounded-2xl bg-secondary/30 hover:bg-[#E77B49] text-[#60241E] dark:text-slate-200 hover:text-white font-extrabold text-xs transition-all flex items-center justify-center gap-2 group-hover:bg-[#E77B49] group-hover:text-white shadow-xs active:scale-95 cursor-pointer"
-                  >
-                    <span>Explore &amp; Reserve</span>
-                    <ArrowRight className="size-3.5" />
-                  </button>
-                </div>
+              ))}
+            </div>
+          ) : realDishes.length === 0 ? (
+            /* Professional Empty State */
+            <div className="py-14 px-6 rounded-3xl bg-white dark:bg-slate-900 border-2 border-dashed border-border dark:border-slate-800 text-center space-y-3 shadow-xs">
+              <div className="size-14 rounded-2xl bg-[#E77B49]/10 text-[#E77B49] flex items-center justify-center mx-auto">
+                <UtensilsCrossed className="size-7" />
               </div>
-            ))}
-          </div>
+              <h3 className="font-serif italic font-bold text-xl text-foreground">No dishes available.</h3>
+              <p className="text-xs text-muted-foreground font-medium max-w-md mx-auto leading-relaxed">
+                Partner restaurants have not uploaded live menu items yet. New dishes will appear here in real time as kitchens update their stock.
+              </p>
+            </div>
+          ) : (
+            /* Real MongoDB Dishes Grid */
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {realDishes.slice(0, 10).map((dish) => {
+                const restName = dish.restaurant?.restaurantName || "StockDine Partner";
+                const imgUrl = formatImageUrl(dish.dishImage);
+                return (
+                  <div
+                    key={dish._id || dish.id}
+                    className="bg-white dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:border-[#E77B49] transition-all duration-300 flex flex-col justify-between group"
+                  >
+                    <div className="space-y-3">
+                      {/* Dish Image */}
+                      <div className="relative h-52 w-full overflow-hidden bg-slate-100 dark:bg-slate-800">
+                        <img
+                          src={imgUrl}
+                          alt={dish.dishName}
+                          loading="lazy"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute top-3 left-3 bg-[#60241E]/90 backdrop-blur-md text-white text-[10px] font-extrabold uppercase px-3 py-1 rounded-full shadow-md">
+                          {dish.isVeg ? "Veg 🍃" : "Non-Veg 🍗"}
+                        </div>
+
+                        <div className="absolute bottom-3 right-3 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md text-[#1F2937] dark:text-slate-100 text-[10px] font-extrabold px-2.5 py-1 rounded-xl shadow-md flex items-center gap-1 border border-border/50">
+                          <Star className="size-3 text-amber-500 fill-amber-500" />
+                          <span>{dish.rating ? dish.rating.toFixed(1) : "New"}</span>
+                        </div>
+                      </div>
+
+                      {/* Card Content */}
+                      <div className="p-5 space-y-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-[#60241E]/10 dark:bg-[#E77B49]/20 text-[#60241E] dark:text-[#E77B49]">
+                            {dish.category}
+                          </span>
+                          <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full flex items-center gap-1">
+                            <Flame className="size-3 text-emerald-500" />
+                            <span>{dish.portionsLeft > 0 ? `${dish.portionsLeft} Portions` : "Available"}</span>
+                          </span>
+                        </div>
+
+                        <h3 className="font-serif italic font-bold text-xl text-foreground truncate">
+                          {dish.dishName}
+                        </h3>
+
+                        <p className="text-[11px] text-muted-foreground font-semibold truncate">
+                          By {restName}
+                        </p>
+
+                        <div className="flex items-baseline gap-2">
+                          <span className="font-serif font-bold text-lg text-[#60241E] dark:text-[#E77B49]">
+                            {formatCurrency(dish.price)}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Explore Button */}
+                    <div className="p-5 pt-0">
+                      <button
+                        type="button"
+                        onClick={() => navigate({ to: "/customer/dishes", search: { dish: dish.dishName } })}
+                        className="w-full py-3 rounded-2xl bg-secondary/30 hover:bg-[#E77B49] text-[#60241E] dark:text-slate-200 hover:text-white font-extrabold text-xs transition-all flex items-center justify-center gap-2 group-hover:bg-[#E77B49] group-hover:text-white shadow-xs active:scale-95 cursor-pointer"
+                      >
+                        <span>Explore &amp; Reserve</span>
+                        <ArrowRight className="size-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </section>
 
@@ -732,90 +956,146 @@ function LandingPage() {
             </p>
           </div>
 
-          {/* Restaurant Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {NEARBY_RESTAURANTS_DATA.map((rest) => (
-              <div
-                key={rest.id}
-                className="bg-card dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:border-[#E77B49] transition-all duration-300 flex flex-col justify-between group"
-              >
-                <div>
-                  {/* Cover Image & Badges */}
-                  <div className="relative h-56 w-full overflow-hidden bg-slate-200 dark:bg-slate-800">
-                    <img
-                      src={rest.coverImage}
-                      alt={rest.name}
-                      loading="lazy"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-
-                    <div className="absolute top-3 left-3 flex items-center gap-2">
-                      <span className="bg-emerald-600 text-white text-[10px] font-extrabold uppercase px-3 py-1 rounded-full shadow-md flex items-center gap-1.5">
-                        <span className="size-2 rounded-full bg-white animate-pulse" />
-                        <span>Open Now</span>
-                      </span>
-                    </div>
-
-                    <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md text-white text-[10px] font-extrabold px-2.5 py-1 rounded-full flex items-center gap-1 shadow-md">
-                      <Star className="size-3 text-amber-400 fill-amber-400" />
-                      <span>{rest.rating} ({rest.reviewsCount}+)</span>
-                    </div>
-
-                  </div>
-
-                  {/* Card Info Details */}
-                  <div className="p-6 space-y-4">
-                    <div>
-                      <div className="flex items-center justify-between gap-2">
-                        <h3 className="font-serif italic font-bold text-2xl text-foreground truncate">
-                          {rest.name}
-                        </h3>
-                        <span className="text-xs font-bold text-[#E77B49] shrink-0">
-                          {rest.priceRange}
-                        </span>
-                      </div>
-                      <p className="text-xs text-muted-foreground font-medium mt-1 line-clamp-2">
-                        {rest.description}
-                      </p>
-                    </div>
-
-                    {/* Distance & Dishes Counter Badges */}
-                    <div className="grid grid-cols-2 gap-2 text-xs font-bold pt-1">
-                      <div className="p-2.5 rounded-2xl bg-secondary/30 dark:bg-slate-800/60 border border-border/50 flex items-center gap-2">
-                        <MapPin className="size-4 text-[#E77B49]" />
-                        <div>
-                          <span className="block text-[10px] text-muted-foreground uppercase font-extrabold">Distance</span>
-                          <span className="text-foreground">{rest.distanceKm || 1.2} km away</span>
-                        </div>
-                      </div>
-
-                      <div className="p-2.5 rounded-2xl bg-secondary/30 dark:bg-slate-800/60 border border-border/50 flex items-center gap-2">
-                        <UtensilsCrossed className="size-4 text-[#E77B49]" />
-                        <div>
-                          <span className="block text-[10px] text-muted-foreground uppercase font-extrabold">Live Items</span>
-                          <span className="text-foreground">24+ Available</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+          {/* Loading Skeletons */}
+          {isLoadingRestaurants ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="bg-card dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-3xl p-5 space-y-4 animate-pulse">
+                  <div className="h-56 rounded-2xl bg-slate-200 dark:bg-slate-800" />
+                  <div className="h-5 w-3/4 bg-slate-200 dark:bg-slate-800 rounded-full" />
+                  <div className="h-4 w-1/2 bg-slate-200 dark:bg-slate-800 rounded-full" />
                 </div>
-
-                {/* View Live Menu Button */}
-                <div className="p-6 pt-0">
-                  <button
-                    type="button"
-                    onClick={() => navigate({ to: "/customer/restaurant/$restaurantId", params: { restaurantId: rest.id } })}
-                    className="w-full py-3.5 rounded-2xl bg-[#60241E] dark:bg-[#E77B49] hover:bg-[#4A1B17] dark:hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all flex items-center justify-center gap-2 active:scale-95 cursor-pointer"
-                  >
-                    <span>View Live Menu</span>
-                    <ArrowRight className="size-4" />
-                  </button>
-                </div>
+              ))}
+            </div>
+          ) : realRestaurants.length === 0 ? (
+            /* Professional Empty State */
+            <div className="py-14 px-6 rounded-3xl bg-card dark:bg-slate-900 border-2 border-dashed border-border dark:border-slate-800 text-center space-y-3 shadow-xs">
+              <div className="size-14 rounded-2xl bg-[#60241E]/10 dark:bg-[#E77B49]/10 text-[#60241E] dark:text-[#E77B49] flex items-center justify-center mx-auto">
+                <Building2 className="size-7" />
               </div>
-            ))}
-          </div>
+              <h3 className="font-serif italic font-bold text-xl text-foreground">No restaurants found.</h3>
+              <p className="text-xs text-muted-foreground font-medium max-w-md mx-auto leading-relaxed">
+                No restaurants are available yet in your location. New partner restaurants will appear here soon.
+              </p>
+            </div>
+          ) : (
+            /* Restaurant Cards Grid */
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {realRestaurants.slice(0, 10).map((rest) => {
+                const restId = rest._id || rest.restaurantId;
+                const coverImg = formatImageUrl(rest.restaurantCover);
+                const availableTables = rest.availableTablesCount ?? 0;
+                const liveItems = rest.availableDishes ?? 0;
+                const isOpen = rest.isOpen !== false;
+                const logoImg = rest.restaurantLogo ? formatImageUrl(rest.restaurantLogo) : null;
+
+                return (
+                  <div
+                    key={restId}
+                    className="bg-card dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:border-[#E77B49] transition-all duration-300 flex flex-col justify-between group"
+                  >
+                    <div>
+                      {/* Cover Image & Badges */}
+                      <div className="relative h-56 w-full overflow-hidden bg-slate-200 dark:bg-slate-800">
+                        <img
+                          src={coverImg}
+                          alt={rest.restaurantName}
+                          loading="lazy"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute top-3 left-3 flex items-center gap-2">
+                          {logoImg && (
+                            <img src={logoImg} alt={rest.restaurantName} className="size-8 rounded-lg object-cover border border-white/20 shadow-sm" />
+                          )}
+                          <span className={`text-white text-[10px] font-extrabold uppercase px-3 py-1 rounded-full shadow-md flex items-center gap-1.5 ${isOpen ? "bg-emerald-600" : "bg-slate-600"}`}>
+                            <span className={`size-2 rounded-full bg-white ${isOpen ? "animate-pulse" : "opacity-50"}`} />
+                            <span>{isOpen ? "Open Now" : "Closed"}</span>
+                          </span>
+                        </div>
+
+                        <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md text-white text-[10px] font-extrabold px-2.5 py-1 rounded-full flex items-center gap-1 shadow-md">
+                          <Star className="size-3 text-amber-400 fill-amber-400" />
+                          <span>{rest.rating ? rest.rating.toFixed(1) : "New"}{rest.numReviews ? ` (${rest.numReviews})` : ""}</span>
+                        </div>
+                      </div>
+
+                      {/* Card Info Details */}
+                      <div className="p-6 space-y-4">
+                        <div>
+                          <div className="flex items-center justify-between gap-2">
+                            <h3 className="font-serif italic font-bold text-2xl text-foreground truncate">
+                              {rest.restaurantName}
+                            </h3>
+                            <span className="text-xs font-bold text-[#E77B49] shrink-0">
+                              {rest.cuisine || "Multi-Cuisine"}
+                            </span>
+                          </div>
+                          <p className="text-xs text-muted-foreground font-medium mt-1 line-clamp-2">
+                            {rest.description || `${rest.address || ""} ${rest.city ? `• ${rest.city}` : ""}`}
+                          </p>
+                        </div>
+
+                        {/* Badges Counter */}
+                        <div className="grid grid-cols-2 gap-2 text-xs font-bold pt-1">
+                          <div className="p-2.5 rounded-2xl bg-secondary/30 dark:bg-slate-800/60 border border-border/50 flex items-center gap-2">
+                            <Calendar className="size-4 text-[#E77B49]" />
+                            <div>
+                              <span className="block text-[10px] text-muted-foreground uppercase font-extrabold">Seating</span>
+                              <span className="text-foreground">
+                                {availableTables > 0 ? `${availableTables} Tables Free` : "Check In-Venue"}
+                              </span>
+                            </div>
+                          </div>
+
+                          <div className="p-2.5 rounded-2xl bg-secondary/30 dark:bg-slate-800/60 border border-border/50 flex items-center gap-2">
+                            <UtensilsCrossed className="size-4 text-[#E77B49]" />
+                            <div>
+                              <span className="block text-[10px] text-muted-foreground uppercase font-extrabold">Live Items</span>
+                              <span className="text-foreground">
+                                {liveItems > 0 ? `${liveItems} Available` : "Menu Loading"}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="p-6 pt-0 space-y-2">
+                      <button
+                        type="button"
+                        onClick={() => navigate({ to: "/customer/restaurant/$restaurantId", params: { restaurantId: restId } })}
+                        className="w-full py-3.5 rounded-2xl bg-[#60241E] dark:bg-[#E77B49] hover:bg-[#4A1B17] dark:hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all flex items-center justify-center gap-2 active:scale-95 cursor-pointer"
+                      >
+                        <span>View Live Menu</span>
+                        <ArrowRight className="size-4" />
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() =>
+                          handleRestrictedAction("reserve a table", () =>
+                            navigate({ to: "/customer/restaurant/$restaurantId", params: { restaurantId: restId } })
+                          )
+                        }
+                        className="w-full py-2.5 rounded-2xl bg-secondary/30 hover:bg-secondary/50 text-[#60241E] dark:text-slate-200 text-xs font-extrabold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+                      >
+                        <Calendar className="size-3.5 text-[#E77B49]" />
+                        <span>Reserve Table</span>
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
       </section>
+
+      {/* -------------------------------------------------- */}
+      {/* GUEST AUTHENTICATION MODAL */}
+      {/* -------------------------------------------------- */}
+      <GuestAuthModal isOpen={showAuthModal} onClose={() => setShowAuthModal(false)} />
 
       {/* -------------------------------------------------- */}
       {/* SECTION 5 – WHY STOCKDINE */}
@@ -1097,12 +1377,12 @@ function LandingPage() {
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
             {/* Column 1: Brand Info */}
             <div className="col-span-2 space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="size-10 rounded-2xl bg-[#E77B49] flex items-center justify-center text-white shadow-md">
-                  <ChefHat className="size-6" />
-                </div>
-                <span className="font-serif italic text-3xl font-bold tracking-tight text-white">
+              <div>
+                <span className="font-serif italic text-3xl font-bold tracking-tight text-white block leading-none">
                   StockDine
+                </span>
+                <span className="text-[9px] uppercase tracking-[0.25em] text-[#E77B49] font-extrabold block mt-1">
+                  Live Dine-In OS
                 </span>
               </div>
 

@@ -47,7 +47,8 @@ export const RestaurantCard: React.FC<RestaurantCardProps> = ({
           {/* Top Badges */}
           <div className="absolute top-3 left-3 flex flex-wrap items-center gap-2 z-10">
             <span className="bg-white/95 backdrop-blur-md px-3 py-1 rounded-full text-xs font-extrabold text-[#60241E] flex items-center gap-1 shadow-md border border-[#E5E7EB]">
-              <Star className="size-3.5 fill-amber-500 text-amber-500" /> {restaurant.rating} ({restaurant.reviewsCount})
+              <Star className="size-3.5 fill-amber-500 text-amber-500" />{" "}
+              {restaurant.reviewsCount > 0 ? `${restaurant.rating} (${restaurant.reviewsCount})` : "New"}
             </span>
             <span
               className={`px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase shadow-sm ${
