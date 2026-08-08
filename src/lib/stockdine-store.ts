@@ -335,6 +335,11 @@ function loadAuthSession(): AuthSession {
     return { userEmail: "", restaurantId: "", permissions: "both", isLoggedIn: false };
   }
   try {
+    const token = localStorage.getItem("stockdine_token");
+    if (!token) {
+      localStorage.removeItem("stockdine_auth_session");
+      return { userEmail: "", restaurantId: "", permissions: "both", isLoggedIn: false };
+    }
     const data = localStorage.getItem("stockdine_auth_session");
     if (data) {
       const parsed = JSON.parse(data);
@@ -768,6 +773,30 @@ export const stockDineStore = {
     notify();
   },
 
+  updateUserProfile: async (data: { name: string; mobile?: string; email?: string }): Promise<{ success: boolean; user?: any; message?: string }> => {
+    try {
+      const res: any = await api.auth.updateCustomerProfile(data);
+      if (res && res.success && (res.user || res.profile)) {
+        const updatedProf = res.user || res.profile;
+        currentAuthSession = {
+          ...currentAuthSession,
+          userEmail: updatedProf.email || updatedProf.mobile || currentAuthSession.userEmail,
+          profileData: {
+            ...currentAuthSession.profileData,
+            ...updatedProf,
+          },
+        };
+        saveAuthSession(currentAuthSession);
+        notify();
+        return { success: true, user: updatedProf, message: res.message || "Profile updated successfully" };
+      }
+      return { success: false, message: res?.message || "Failed to update profile" };
+    } catch (err: any) {
+      console.error("updateUserProfile error:", err);
+      return { success: false, message: err.message || "Failed to update profile" };
+    }
+  },
+
   signOut: () => {
     currentAuthSession = {
       userEmail: "",
@@ -776,8 +805,9 @@ export const stockDineStore = {
       isLoggedIn: false,
     };
     saveAuthSession(currentAuthSession);
-    localStorage.removeItem("stockdine_token");
     if (typeof window !== "undefined") {
+      localStorage.removeItem("stockdine_token");
+      localStorage.removeItem("stockdine_auth_session");
       sessionStorage.removeItem("stockdine_admin_unlocked");
     }
     notify();
@@ -1351,10 +1381,15 @@ export function useStockDineStore() {
           }).catch(() => {});
 
           stockDineStore.notify();
+        } else {
+          stockDineStore.signOut();
         }
       }).catch((err) => {
-        console.error("Token verification failed:", err);
+        console.error("Token verification failed, reverting to guest mode:", err);
+        stockDineStore.signOut();
       });
+    } else {
+      stockDineStore.signOut();
     }
 
     // Fetch live restaurants from MongoDB Atlas API
@@ -1499,6 +1534,7 @@ export function useStockDineStore() {
     setCurrency: stockDineStore.setCurrency,
     setLanguage: stockDineStore.setLanguage,
     setAuthSession: stockDineStore.setAuthSession,
+    updateUserProfile: stockDineStore.updateUserProfile,
     signOut: stockDineStore.signOut,
     addDish: stockDineStore.addDish,
     updateDish: stockDineStore.updateDish,

@@ -196,11 +196,13 @@ function LandingPage() {
         ]);
 
         if (isMounted) {
-          if (restRes && restRes.restaurants) {
-            setRealRestaurants(restRes.restaurants);
+          const rRes = restRes as any;
+          const dRes = dishRes as any;
+          if (rRes && rRes.restaurants) {
+            setRealRestaurants(rRes.restaurants);
           }
-          if (dishRes && dishRes.dishes) {
-            setRealDishes(dishRes.dishes);
+          if (dRes && dRes.dishes) {
+            setRealDishes(dRes.dishes);
           }
         }
       } catch (err) {

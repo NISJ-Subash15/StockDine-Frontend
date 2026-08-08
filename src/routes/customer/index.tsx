@@ -108,8 +108,10 @@ function HomePage() {
         ]);
 
         if (isMounted) {
-          if (restRes && restRes.restaurants && Array.isArray(restRes.restaurants)) {
-            const mappedRests: RestaurantDetails[] = restRes.restaurants.map((r: any) => ({
+          const rRes = restRes as any;
+          const dRes = dishRes as any;
+          if (rRes && rRes.restaurants && Array.isArray(rRes.restaurants)) {
+            const mappedRests: RestaurantDetails[] = rRes.restaurants.map((r: any) => ({
               id: r._id || r.restaurantId,
               name: r.restaurantName || "StockDine Partner",
               tagline: r.cuisine || "Multi-Cuisine",
@@ -135,8 +137,8 @@ function HomePage() {
             setRealRestaurants(mappedRests);
           }
 
-          if (dishRes && dishRes.dishes && Array.isArray(dishRes.dishes)) {
-            const mappedDishes: Dish[] = dishRes.dishes.map((d: any) => ({
+          if (dRes && dRes.dishes && Array.isArray(dRes.dishes)) {
+            const mappedDishes: Dish[] = dRes.dishes.map((d: any) => ({
               id: d._id || d.id,
               restaurantId: d.restaurant?._id || d.restaurant || "REST-1",
               restaurantName: d.restaurant?.restaurantName || "StockDine Partner",

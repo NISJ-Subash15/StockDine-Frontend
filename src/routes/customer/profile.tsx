@@ -4,6 +4,7 @@ import { User, Phone, ShieldCheck, LogOut, Edit3, Calendar, ChefHat, Sparkles, C
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useStockDineStore } from "@/lib/stockdine-store";
 import { api } from "@/lib/api";
+import { GuestAuthModal } from "@/components/GuestAuthModal";
 
 export const Route = createFileRoute("/customer/profile")({
   head: () => ({
@@ -17,44 +18,58 @@ export const Route = createFileRoute("/customer/profile")({
 
 function CustomerProfilePage() {
   const navigate = useNavigate();
-  const { authSession, signOut } = useStockDineStore();
+  const { authSession, updateUserProfile, signOut } = useStockDineStore();
 
-  const initialProf = authSession?.profileData || (authSession?.userEmail ? {
-    name: authSession.userEmail.includes("@") ? authSession.userEmail.split("@")[0] : "Customer Diner",
-    mobile: authSession.userEmail,
-    customerId: "CUST-LIVE",
-  } : null);
-
-  const [profileData, setProfileData] = useState<any>(initialProf);
-  const [loading, setLoading] = useState(!initialProf);
+  const isGuest = !authSession || !authSession.isLoggedIn;
+  const userProfile = authSession?.profileData;
+  const [profileData, setProfileData] = useState<any>(userProfile || null);
+  const [loading, setLoading] = useState(!userProfile && !isGuest);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [editName, setEditName] = useState(initialProf?.name || "");
-  const [editMobile, setEditMobile] = useState(initialProf?.mobile || initialProf?.email || "");
+  const [editName, setEditName] = useState(userProfile?.name || "");
+  const [editMobile, setEditMobile] = useState(userProfile?.mobile || userProfile?.email || "");
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState({ type: "", text: "" });
 
   useEffect(() => {
-    fetchProfile();
-  }, []);
+    if (!isGuest) {
+      fetchProfile();
+    }
+  }, [isGuest]);
+
+  useEffect(() => {
+    if (authSession?.profileData) {
+      setProfileData(authSession.profileData);
+      setEditName(authSession.profileData.name || "");
+      setEditMobile(authSession.profileData.mobile || authSession.profileData.email || "");
+    }
+  }, [authSession?.profileData]);
 
   const fetchProfile = async () => {
     setLoading(true);
+    setLoadError(null);
     try {
-      const res: any = await api.customers.getProfile();
-      if (res && res.success && res.customer) {
-        setProfileData(res.customer);
-        setEditName(res.customer.name || "");
-        setEditMobile(res.customer.mobile || "");
+      const authRes: any = await api.auth.getProfile();
+      if (authRes && authRes.success && (authRes.profile || authRes.user)) {
+        const prof = authRes.profile || authRes.user;
+        setProfileData(prof);
+        setEditName(prof.name || "");
+        setEditMobile(prof.mobile || prof.email || "");
       } else {
-        const authRes = await api.auth.getProfile();
-        if (authRes && authRes.success && authRes.profile) {
-          setProfileData(authRes.profile);
-          setEditName(authRes.profile.name || "");
-          setEditMobile(authRes.profile.mobile || "");
+        const custRes: any = await api.customers.getProfile();
+        if (custRes && custRes.success && custRes.customer) {
+          setProfileData(custRes.customer);
+          setEditName(custRes.customer.name || "");
+          setEditMobile(custRes.customer.mobile || "");
+        } else if (!authSession?.profileData) {
+          setLoadError("Unable to load your profile");
         }
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error("Failed to load customer profile", err);
+      if (!authSession?.profileData) {
+        setLoadError("Unable to load your profile.");
+      }
     } finally {
       setLoading(false);
     }
@@ -62,26 +77,32 @@ function CustomerProfilePage() {
 
   const handleSaveProfile = async (e: React.FormEvent) => {
     e.preventDefault();
+    const cleanName = editName.trim();
+    if (!cleanName) {
+      setMsg({ type: "error", text: "Name is required and cannot be empty." });
+      return;
+    }
+
     setSaving(true);
     setMsg({ type: "", text: "" });
 
     try {
-      const res: any = await api.customers.updateProfile({
-        name: editName,
-        mobile: editMobile,
+      const res = await updateUserProfile({
+        name: cleanName,
+        mobile: editMobile.trim(),
       });
 
       setSaving(false);
-      if (res.success && (res.customer || res.user)) {
-        setProfileData(res.customer || res.user);
+      if (res.success && res.user) {
+        setProfileData(res.user);
         setIsEditing(false);
-        setMsg({ type: "success", text: "Profile updated successfully in MongoDB Atlas!" });
+        setMsg({ type: "success", text: "Profile updated successfully!" });
       } else {
-        setMsg({ type: "error", text: "Failed to update profile." });
+        setMsg({ type: "error", text: res.message || "Unable to update your profile. Please try again." });
       }
     } catch (err: any) {
       setSaving(false);
-      setMsg({ type: "error", text: err.message || "Failed to save updates." });
+      setMsg({ type: "error", text: err.message || "Unable to update your profile. Please try again." });
     }
   };
 
@@ -97,6 +118,14 @@ function CustomerProfilePage() {
         year: "numeric",
       })
     : "Recently Joined";
+
+  if (isGuest) {
+    return (
+      <div className="min-h-screen bg-[#FFFFFF] dark:bg-slate-950 flex items-center justify-center p-4">
+        <GuestAuthModal isOpen={true} onClose={() => navigate({ to: "/customer" })} />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#FFFFFF] dark:bg-slate-950 text-[#1F2937] dark:text-slate-100 flex flex-col justify-between p-4 sm:p-6 lg:p-10 relative selection:bg-[#E77B49] selection:text-white transition-colors duration-300 overflow-x-hidden">
@@ -143,6 +172,27 @@ function CustomerProfilePage() {
               <p className="text-xs font-extrabold text-[#60241E] dark:text-slate-300 uppercase tracking-widest">
                 Fetching Real MongoDB Profile...
               </p>
+            </div>
+          ) : loadError ? (
+            <div className="rounded-3xl bg-white/80 dark:bg-slate-900/80 border border-rose-200 dark:border-rose-900/50 p-8 text-center space-y-4 shadow-xl">
+              <div className="size-14 rounded-full bg-rose-100 dark:bg-rose-950/60 text-rose-600 flex items-center justify-center mx-auto">
+                <AlertCircle className="size-8" />
+              </div>
+              <div>
+                <h3 className="font-serif italic text-2xl font-bold text-[#60241E] dark:text-slate-100">
+                  {loadError}
+                </h3>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Please verify your internet connection and backend server status.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={fetchProfile}
+                className="px-6 py-2.5 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all active:scale-95"
+              >
+                Retry
+              </button>
             </div>
           ) : (
             <div className="rounded-3xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-border/60 dark:border-slate-800 p-8 sm:p-10 shadow-2xl space-y-8">

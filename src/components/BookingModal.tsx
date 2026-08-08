@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   X,
   CheckCircle2,
@@ -15,8 +15,9 @@ import {
   Sparkles,
   RefreshCw,
   ChevronLeft,
+  User as UserIcon,
 } from "lucide-react";
-import { RestaurantDetails, Table, Dish, formatCurrency, Booking } from "@/lib/stockdine-store";
+import { RestaurantDetails, Table, Dish, formatCurrency, Booking, useStockDineStore } from "@/lib/stockdine-store";
 import { Link } from "@tanstack/react-router";
 import { api } from "@/lib/api";
 
@@ -53,6 +54,10 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   preSelectedDish,
   onConfirmBooking,
 }) => {
+  const { authSession } = useStockDineStore();
+  const isGuest = !authSession || !authSession.isLoggedIn;
+  const userProfile = authSession?.profileData;
+
   // Modal Step State: 1 = Form & Summary, 2 = Payment Gateway, 3 = Confirmation Success
   const [step, setStep] = useState<1 | 2 | 3>(1);
 
@@ -60,11 +65,18 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   const [selectedTableId, setSelectedTableId] = useState<string>(
     availableTables[0]?.id || "t1"
   );
-  const [customerName, setCustomerName] = useState("Aarav Sharma");
-  const [customerPhone, setCustomerPhone] = useState("+91 98765 43210");
+  const [customerName, setCustomerName] = useState(userProfile?.name || "");
+  const [customerPhone, setCustomerPhone] = useState(userProfile?.mobile || userProfile?.email || "");
   const [bookingDate, setBookingDate] = useState("Tonight");
   const [bookingTime, setBookingTime] = useState("8:30 PM");
   const [guestCount, setGuestCount] = useState(2);
+
+  useEffect(() => {
+    if (userProfile) {
+      if (userProfile.name) setCustomerName(userProfile.name);
+      if (userProfile.mobile || userProfile.email) setCustomerPhone(userProfile.mobile || userProfile.email);
+    }
+  }, [userProfile]);
 
   const [selectedDishes, setSelectedDishes] = useState<{ [dishId: string]: number }>(
     preSelectedDish ? { [preSelectedDish.id]: 1 } : {}
@@ -79,6 +91,41 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   const [completedBooking, setCompletedBooking] = useState<Booking | null>(null);
 
   if (!isOpen) return null;
+
+  if (isGuest) {
+    return (
+      <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4">
+        <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl space-y-5 text-center border-2 border-[#E5E7EB] relative animate-in fade-in zoom-in-95 duration-200">
+          <button
+            type="button"
+            onClick={onClose}
+            className="absolute top-4 right-4 text-[#6B7280] p-2 rounded-full hover:bg-[#F8F9FA] transition-colors"
+          >
+            <X className="size-5" />
+          </button>
+          <div className="size-16 rounded-2xl bg-amber-100 text-[#E77B49] flex items-center justify-center mx-auto border-2 border-amber-200 shadow-sm">
+            <ShieldCheck className="size-8" />
+          </div>
+          <div>
+            <h3 className="font-serif italic text-2xl font-bold text-[#60241E]">
+              Sign in to hold a table
+            </h3>
+            <p className="text-xs text-[#6B7280] mt-1.5 leading-relaxed font-medium">
+              Hold Table requires an authenticated customer profile. Sign in with your registered mobile or email to hold tables using your verified account details.
+            </p>
+          </div>
+          <Link
+            to="/login"
+            onClick={onClose}
+            className="w-full py-3.5 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all active:scale-95 flex items-center justify-center gap-2"
+          >
+            <span>Sign In to Continue</span>
+            <ArrowRight className="size-4" />
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   const handleDishQty = (id: string, delta: number) => {
     const current = selectedDishes[id] || 0;
@@ -187,11 +234,11 @@ Status: CONFIRMED & RESERVED
 
   return (
     <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4">
-      <div className="bg-white rounded-3xl p-6 max-w-lg w-full shadow-2xl space-y-4 relative border-2 border-[#E5E7EB] max-h-[90vh] overflow-y-auto animate-in fade-in zoom-in-95 duration-200">
+      <div className="bg-white dark:bg-slate-900 text-[#1F2937] dark:text-slate-100 rounded-3xl p-6 max-w-lg w-full shadow-2xl space-y-4 relative border-2 border-[#E5E7EB] dark:border-slate-800 max-h-[90vh] overflow-y-auto animate-in fade-in zoom-in-95 duration-200">
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 text-[#6B7280] p-2 rounded-full hover:bg-[#F8F9FA] transition-colors z-10"
+          className="absolute top-4 right-4 text-[#6B7280] dark:text-slate-400 p-2 rounded-full hover:bg-[#F8F9FA] dark:hover:bg-slate-800 transition-colors z-10 cursor-pointer"
         >
           <X className="size-5" />
         </button>
@@ -200,44 +247,54 @@ Status: CONFIRMED & RESERVED
         {step === 1 && (
           <form onSubmit={handleProceedToPayment} className="space-y-4">
             <div>
-              <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#60241E] bg-[#60241E]/10 px-2.5 py-0.5 rounded-full">
+              <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#60241E] dark:text-[#E77B49] bg-[#60241E]/10 dark:bg-[#E77B49]/20 px-2.5 py-0.5 rounded-full border border-[#E77B49]/20">
                 Step 1 of 2 — Reservation Details
               </span>
-              <h3 className="font-serif italic text-2xl font-bold text-[#60241E] mt-1">
+              <h3 className="font-serif italic text-2xl font-bold text-[#60241E] dark:text-slate-100 mt-1">
                 Reserve Table at {restaurant.name}
               </h3>
             </div>
 
             {/* Restaurant Cover Header */}
-            <div className="relative h-28 w-full rounded-2xl overflow-hidden border border-[#E5E7EB] shadow-xs">
+            <div className="relative h-28 w-full rounded-2xl overflow-hidden border border-[#E5E7EB] dark:border-slate-800 shadow-xs">
               <img src={restaurant.coverImage} alt={restaurant.name} className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent p-3 flex items-end">
                 <p className="text-xs text-white font-bold">{restaurant.address}</p>
               </div>
             </div>
 
-            {/* Contact Information */}
-            <div className="space-y-1.5">
-              <label className="block text-xs font-extrabold uppercase text-[#60241E]">
-                Contact Info
-              </label>
-              <div className="grid grid-cols-2 gap-2">
-                <input
-                  type="text"
-                  required
-                  value={customerName}
-                  onChange={(e) => setCustomerName(e.target.value)}
-                  placeholder="Full Name"
-                  className="p-3 rounded-2xl bg-[#F8F9FA] border border-[#E5E7EB] text-xs font-semibold text-[#1F2937]"
-                />
-                <input
-                  type="text"
-                  required
-                  value={customerPhone}
-                  onChange={(e) => setCustomerPhone(e.target.value)}
-                  placeholder="Phone Number"
-                  className="p-3 rounded-2xl bg-[#F8F9FA] border border-[#E5E7EB] text-xs font-semibold text-[#1F2937]"
-                />
+            {/* Verified Customer Information */}
+            <div className="space-y-1.5 p-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/80 border border-[#E5E7EB] dark:border-slate-700">
+              <div className="flex items-center justify-between">
+                <label className="block text-[11px] font-extrabold uppercase text-[#60241E] dark:text-[#E77B49]">
+                  Customer Details
+                </label>
+                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-100 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-300 dark:border-emerald-800">
+                  <ShieldCheck className="size-3 text-emerald-600 dark:text-emerald-400" />
+                  <span>Authenticated Profile</span>
+                </span>
+              </div>
+              <div className="grid grid-cols-2 gap-2 pt-1">
+                <div>
+                  <span className="text-[10px] text-[#6B7280] dark:text-slate-400 font-bold block">Name</span>
+                  <input
+                    type="text"
+                    required
+                    readOnly
+                    value={customerName || userProfile?.name || "Authenticated Diner"}
+                    className="w-full p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-[#E5E7EB] dark:border-slate-700 text-xs font-bold text-[#1F2937] dark:text-slate-100"
+                  />
+                </div>
+                <div>
+                  <span className="text-[10px] text-[#6B7280] dark:text-slate-400 font-bold block">Mobile / Email</span>
+                  <input
+                    type="text"
+                    required
+                    readOnly
+                    value={customerPhone || userProfile?.mobile || userProfile?.email || "Verified"}
+                    className="w-full p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-[#E5E7EB] dark:border-slate-700 text-xs font-bold text-[#1F2937] dark:text-slate-100"
+                  />
+                </div>
               </div>
             </div>
 

@@ -41,7 +41,7 @@ export const GuestAuthModal: React.FC<GuestAuthModalProps> = ({ isOpen, onClose 
             type="button"
             onClick={() => {
               onClose();
-              navigate({ to: "/auth/select-role", search: { mode: "login" } });
+              navigate({ to: "/login" });
             }}
             className="w-full py-3.5 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all active:scale-95 cursor-pointer flex items-center justify-center gap-2"
           >
@@ -53,7 +53,7 @@ export const GuestAuthModal: React.FC<GuestAuthModalProps> = ({ isOpen, onClose 
             type="button"
             onClick={() => {
               onClose();
-              navigate({ to: "/auth/select-role", search: { mode: "signup" } });
+              navigate({ to: "/signup" });
             }}
             className="w-full py-3 rounded-2xl bg-secondary/30 text-[#60241E] dark:text-slate-200 hover:bg-secondary/50 font-extrabold text-xs transition-all cursor-pointer"
           >

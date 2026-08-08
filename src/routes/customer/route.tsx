@@ -52,17 +52,18 @@ function CustomerLayout() {
   const { authSession } = useStockDineStore();
   const isGuest = !authSession || !authSession.isLoggedIn;
   const [showGuestModal, setShowGuestModal] = useState(false);
+  const visibleTabs = tabs;
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-[#1F2937] font-sans selection:bg-[#E77B49] selection:text-white relative">
+    <div className="min-h-screen bg-[#FFFFFF] dark:bg-slate-950 text-[#1F2937] dark:text-slate-100 font-sans selection:bg-[#E77B49] selection:text-white relative transition-colors duration-300">
       <main className="pb-28">
         <Outlet />
       </main>
 
       {/* Floating Glassmorphic Bottom Navigation Bar */}
       <nav className="fixed bottom-3 inset-x-3 sm:bottom-5 sm:inset-x-0 z-40 max-w-lg mx-auto">
-        <div className="glass-nav-premium rounded-3xl px-3 py-2 flex justify-around items-center shadow-lg border border-[#E5E7EB] backdrop-blur-2xl bg-[#FFFFFF]/95">
-          {tabs.map((t) => {
+        <div className="glass-nav-premium rounded-3xl px-3 py-2 flex justify-around items-center shadow-lg border border-[#E5E7EB] dark:border-slate-800 backdrop-blur-2xl bg-[#FFFFFF]/95 dark:bg-slate-900/95 transition-colors duration-300">
+          {visibleTabs.map((t) => {
             const active =
               t.to === "/customer" ? pathname === "/customer" : pathname.startsWith(t.to);
             return (
@@ -80,7 +81,7 @@ function CustomerLayout() {
                   "flex flex-col items-center gap-1 py-1.5 px-3 rounded-2xl transition-all relative group cursor-pointer " +
                   (active
                     ? "text-[#E77B49] font-extrabold scale-105"
-                    : "text-[#6B7280] hover:text-[#1F2937] opacity-80 hover:opacity-100")
+                    : "text-[#6B7280] dark:text-slate-400 hover:text-[#1F2937] dark:hover:text-slate-100 opacity-80 hover:opacity-100")
                 }
               >
                 <div className="relative">

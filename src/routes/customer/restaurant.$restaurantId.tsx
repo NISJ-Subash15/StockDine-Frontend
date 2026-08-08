@@ -260,9 +260,9 @@ function CustomerRestaurantDetailPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] text-[#1F2937] font-sans pb-28 selection:bg-[#E77B49] selection:text-white max-w-5xl mx-auto">
+    <div className="min-h-screen bg-[#FFFFFF] dark:bg-slate-950 text-[#1F2937] dark:text-slate-100 font-sans pb-28 selection:bg-[#E77B49] selection:text-white max-w-5xl mx-auto transition-colors duration-300">
       {/* Sticky Header Navigation Bar */}
-      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-[#E5E7EB] px-4 py-3.5 flex items-center justify-between shadow-xs">
+      <header className="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-[#E5E7EB] dark:border-slate-800 px-4 py-3.5 flex items-center justify-between shadow-xs transition-colors duration-300">
         <button
           type="button"
           onClick={() => {
@@ -272,17 +272,17 @@ function CustomerRestaurantDetailPage() {
               navigate({ to: "/customer" });
             }
           }}
-          className="flex items-center gap-1.5 text-xs font-extrabold text-[#60241E] hover:text-[#E77B49] transition-colors cursor-pointer"
+          className="flex items-center gap-1.5 text-xs font-extrabold text-[#60241E] dark:text-slate-200 hover:text-[#E77B49] transition-colors cursor-pointer"
         >
           <ChevronLeft className="size-4" /> Back to Discovery
         </button>
 
         <div className="flex items-center gap-3">
-          <ThemeToggle className="border-2 border-[#E5E7EB]" />
+          <ThemeToggle className="border-2 border-[#E5E7EB] dark:border-slate-700" />
           <button
             type="button"
             onClick={() => { if (isGuest) { setShowGuestModal(true); } else { setShowBookingModal(true); } }}
-            className="py-2 px-4 rounded-xl bg-[#E77B49] text-white text-xs font-extrabold hover:bg-[#D66A38] transition-all shadow-sm active:scale-95"
+            className="py-2 px-4 rounded-xl bg-[#E77B49] text-white text-xs font-extrabold hover:bg-[#D66A38] transition-all shadow-sm active:scale-95 cursor-pointer"
           >
             Book Table
           </button>
@@ -302,21 +302,21 @@ function CustomerRestaurantDetailPage() {
 
         {/* Header Content Overlay Card */}
         <div className="px-4 sm:px-6 -mt-20 relative z-10">
-          <div className="bg-white border-2 border-[#E5E7EB] rounded-3xl p-6 sm:p-8 shadow-xl space-y-4">
+          <div className="bg-white dark:bg-slate-900 border-2 border-[#E5E7EB] dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl space-y-4 transition-colors duration-300">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               <div>
                 <div className="flex items-center gap-2 mb-1">
                   <span className="text-[10px] uppercase font-extrabold tracking-widest text-[#E77B49] bg-[#E77B49]/10 px-2.5 py-0.5 rounded-full border border-[#E77B49]/20">
                     {profile?.category || "Fine Dining"}
                   </span>
-                  <span className="text-xs text-[#6B7280] font-bold">
+                  <span className="text-xs text-[#6B7280] dark:text-slate-400 font-bold">
                     {profile?.distanceKm || 1.2} km away • {profile?.travelTime || "12 mins"}
                   </span>
                 </div>
-                <h1 className="font-serif italic text-3xl sm:text-4xl font-bold text-[#60241E]">
+                <h1 className="font-serif italic text-3xl sm:text-4xl font-bold text-[#60241E] dark:text-slate-100">
                   {profile?.name || "StockDine Partner"}
                 </h1>
-                <p className="text-xs text-[#4B5563] font-medium flex items-center gap-1.5 mt-1">
+                <p className="text-xs text-[#4B5563] dark:text-slate-300 font-medium flex items-center gap-1.5 mt-1">
                   <MapPin className="size-3.5 text-[#E77B49] shrink-0" />
                   <span>{profile?.address || "Connaught Place, New Delhi"}</span>
                 </p>

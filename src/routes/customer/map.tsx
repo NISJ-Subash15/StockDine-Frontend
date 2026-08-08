@@ -26,6 +26,7 @@ import {
 } from "@/lib/stockdine-store";
 import { BookingModal } from "@/components/BookingModal";
 import { DirectionsModal } from "@/components/DirectionsModal";
+import { GuestAuthModal } from "@/components/GuestAuthModal";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 const defaultFallbackRestaurant: RestaurantDetails = {
@@ -65,7 +66,8 @@ export const Route = createFileRoute("/customer/map")({
 });
 
 function MapRadarPage() {
-  const { getAllRestaurantProfiles, getUniqueRestaurantList, dishes, tables, createBooking } = useStockDineStore();
+  const { getAllRestaurantProfiles, getUniqueRestaurantList, dishes, tables, createBooking, authSession } = useStockDineStore();
+  const isGuest = !authSession || !authSession.isLoggedIn;
 
   const profilesMap = getAllRestaurantProfiles();
   const rawRestaurants = getUniqueRestaurantList ? getUniqueRestaurantList() : Object.values(profilesMap);
@@ -94,6 +96,7 @@ function MapRadarPage() {
   );
 
   // Modal States
+  const [showGuestModal, setShowGuestModal] = useState(false);
   const [showBookingModal, setShowBookingModal] = useState(false);
   const [showDirectionsModal, setShowDirectionsModal] = useState(false);
   const [showMenuSheet, setShowMenuSheet] = useState(false);
@@ -351,7 +354,13 @@ function MapRadarPage() {
 
                 <button
                   type="button"
-                  onClick={() => setShowBookingModal(true)}
+                  onClick={() => {
+                    if (isGuest) {
+                      setShowGuestModal(true);
+                      return;
+                    }
+                    setShowBookingModal(true);
+                  }}
                   className="py-3 px-6 rounded-2xl bg-[#60241E] hover:bg-[#4A1B17] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all active:scale-95"
                 >
                   Hold Table Now
@@ -407,6 +416,9 @@ function MapRadarPage() {
           }}
         />
       )}
+
+      {/* Guest Intercept Modal */}
+      <GuestAuthModal isOpen={showGuestModal} onClose={() => setShowGuestModal(false)} />
     </div>
   );
 }

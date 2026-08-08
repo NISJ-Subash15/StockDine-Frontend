@@ -110,12 +110,13 @@ export const api = {
       }),
 
     updateCustomerProfile: (data: { name?: string; mobile?: string; email?: string }) =>
-      apiFetch<{ success: boolean; user: any; message: string }>("/auth/customer/profile", {
+      apiFetch<{ success: boolean; user: any; profile: any; message: string }>("/auth/profile", {
         method: "PUT",
         body: JSON.stringify(data),
       }),
 
-    getProfile: () => apiFetch<{ success: boolean; role: string; profile: any }>("/auth/profile"),
+    getProfile: () => apiFetch<{ success: boolean; role: string; profile: any; user: any }>("/auth/profile"),
+    me: () => apiFetch<{ success: boolean; role: string; profile: any; user: any }>("/auth/me"),
   },
 
   // Customers
@@ -302,6 +303,8 @@ export const api = {
       data instanceof FormData
         ? apiFetch("/tables", { method: "POST", body: data })
         : apiFetch("/tables", { method: "POST", body: JSON.stringify(data) }),
+
+    hold: (data: object) => apiFetch("/tables/hold", { method: "POST", body: JSON.stringify(data) }),
 
     edit: (id: string, data: FormData | object) =>
       data instanceof FormData

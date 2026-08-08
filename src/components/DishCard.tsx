@@ -21,36 +21,36 @@ export const DishCard: React.FC<DishCardProps> = ({
   const isAvailable = dish.availableToday && dish.portionsLeft > 0;
 
   return (
-    <div className="bg-white border-2 border-[#E5E7EB] rounded-3xl p-4 sm:p-5 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col justify-between h-full relative overflow-hidden">
+    <div className="bg-white dark:bg-slate-900 border-2 border-[#E5E7EB] dark:border-slate-800 rounded-3xl p-4 sm:p-5 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col justify-between h-full relative overflow-hidden">
       <div className="space-y-3">
         {/* Restaurant Header Overlay */}
-        <div className="flex items-center justify-between gap-2 pb-2 border-b border-[#E5E7EB]">
+        <div className="flex items-center justify-between gap-2 pb-2 border-b border-[#E5E7EB] dark:border-slate-800">
           <div className="flex items-center gap-2 min-w-0">
             {dish.restaurantLogo && (
               <img
                 src={dish.restaurantLogo}
                 alt={dish.restaurantName || "Restaurant"}
-                className="size-7 rounded-lg object-cover border border-[#E5E7EB] shrink-0"
+                className="size-7 rounded-lg object-cover border border-[#E5E7EB] dark:border-slate-700 shrink-0"
               />
             )}
             <div className="min-w-0">
               <Link
                 to="/customer/restaurant/$restaurantId"
                 params={{ restaurantId: dish.restaurantId }}
-                className="text-xs font-extrabold text-[#60241E] hover:text-[#E77B49] truncate block transition-colors"
+                className="text-xs font-extrabold text-[#60241E] dark:text-slate-200 hover:text-[#E77B49] truncate block transition-colors"
               >
                 {dish.restaurantName || "Partner Restaurant"}
               </Link>
             </div>
           </div>
 
-          <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-[#60241E]/10 text-[#60241E] shrink-0">
+          <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-[#60241E]/10 dark:bg-[#E77B49]/20 text-[#60241E] dark:text-[#E77B49] shrink-0">
             {dish.category}
           </span>
         </div>
 
         {/* Dish Image Container */}
-        <div className="relative h-48 sm:h-52 w-full rounded-2xl overflow-hidden border border-[#E5E7EB] shadow-xs">
+        <div className="relative h-48 sm:h-52 w-full rounded-2xl overflow-hidden border border-[#E5E7EB] dark:border-slate-800 shadow-xs">
           <img
             src={(typeof dish.dishImage === "string" ? dish.dishImage : dish.dishImage?.imageUrl) || dish.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=800"}
             alt={dish.name}
@@ -99,7 +99,7 @@ export const DishCard: React.FC<DishCardProps> = ({
           </div>
 
           {/* Top Right Rating Badge */}
-          <div className="absolute top-2.5 right-2.5 bg-white/95 backdrop-blur-md text-[#60241E] px-2.5 py-1 rounded-full text-xs font-extrabold flex items-center gap-1 shadow-sm border border-[#E5E7EB]">
+          <div className="absolute top-2.5 right-2.5 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md text-[#60241E] dark:text-slate-100 px-2.5 py-1 rounded-full text-xs font-extrabold flex items-center gap-1 shadow-sm border border-[#E5E7EB] dark:border-slate-800">
             <Star className="size-3.5 fill-amber-500 text-amber-500" />
             <span>{dish.rating || 4.9}</span>
           </div>
@@ -128,35 +128,35 @@ export const DishCard: React.FC<DishCardProps> = ({
         <div className="space-y-1">
           <h3
             onClick={() => onSelect && onSelect(dish)}
-            className="font-serif italic font-bold text-lg sm:text-xl text-[#60241E] leading-tight line-clamp-1 cursor-pointer hover:text-[#E77B49] transition-colors"
+            className="font-serif italic font-bold text-lg sm:text-xl text-[#60241E] dark:text-slate-100 leading-tight line-clamp-1 cursor-pointer hover:text-[#E77B49] transition-colors"
           >
             {dish.name}
           </h3>
 
-          <p className="text-xs text-[#4B5563] font-medium line-clamp-2 leading-relaxed">
+          <p className="text-xs text-[#4B5563] dark:text-slate-400 font-medium line-clamp-2 leading-relaxed">
             {dish.description}
           </p>
         </div>
       </div>
 
       {/* Footer Pricing & CTA */}
-      <div className="pt-3 mt-3 border-t border-[#E5E7EB] space-y-3">
+      <div className="pt-3 mt-3 border-t border-[#E5E7EB] dark:border-slate-800 space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex flex-col">
-            <span className="text-[10px] font-extrabold uppercase text-[#6B7280]">Price</span>
+            <span className="text-[10px] font-extrabold uppercase text-[#6B7280] dark:text-slate-400">Price</span>
             <div className="flex items-baseline gap-1.5">
-              <span className="font-serif italic font-bold text-xl text-[#60241E]">
+              <span className="font-serif italic font-bold text-xl text-[#60241E] dark:text-slate-100">
                 {formatCurrency(dish.discountPrice || dish.price)}
               </span>
               {dish.discountPrice && (
-                <span className="line-through text-xs text-[#9CA3AF]">
+                <span className="line-through text-xs text-[#9CA3AF] dark:text-slate-500">
                   {formatCurrency(dish.price)}
                 </span>
               )}
             </div>
           </div>
 
-          <span className="text-[11px] font-bold text-[#6B7280]">
+          <span className="text-[11px] font-bold text-[#6B7280] dark:text-slate-400">
             ⏱️ {dish.prepTime}
           </span>
         </div>
@@ -165,9 +165,9 @@ export const DishCard: React.FC<DishCardProps> = ({
           <Link
             to="/customer/restaurant/$restaurantId"
             params={{ restaurantId: dish.restaurantId }}
-            className="py-2.5 px-3 rounded-2xl bg-[#F8F9FA] hover:bg-[#E5E7EB] border border-[#D1D5DB] text-[#1F2937] text-xs font-extrabold text-center transition-all flex items-center justify-center gap-1 active:scale-95 shadow-xs"
+            className="py-2.5 px-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 hover:bg-[#E5E7EB] dark:hover:bg-slate-700 border border-[#D1D5DB] dark:border-slate-700 text-[#1F2937] dark:text-slate-200 text-xs font-extrabold text-center transition-all flex items-center justify-center gap-1 active:scale-95 shadow-xs cursor-pointer"
           >
-            <Eye className="size-3.5 text-[#60241E]" />
+            <Eye className="size-3.5 text-[#60241E] dark:text-[#E77B49]" />
             <span>View Venue</span>
           </Link>
 
@@ -179,10 +179,10 @@ export const DishCard: React.FC<DishCardProps> = ({
               }
             }}
             disabled={!isAvailable}
-            className={`py-2.5 px-3 rounded-2xl text-xs font-extrabold text-center shadow-md transition-all flex items-center justify-center gap-1 active:scale-95 ${
+            className={`py-2.5 px-3 rounded-2xl text-xs font-extrabold text-center shadow-md transition-all flex items-center justify-center gap-1 active:scale-95 cursor-pointer ${
               isAvailable
                 ? "bg-[#E77B49] hover:bg-[#D66A38] text-white"
-                : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                : "bg-gray-300 dark:bg-slate-800 text-gray-500 dark:text-slate-500 cursor-not-allowed"
             }`}
           >
             <Calendar className="size-3.5" />
