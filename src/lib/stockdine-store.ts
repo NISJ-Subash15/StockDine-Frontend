@@ -1282,118 +1282,115 @@ export const stockDineStore = {
   notify,
 };
 
-export function useStockDineStore() {
-  const [, setTick] = useState(0);
+let appInitialized = false;
 
-  useEffect(() => {
-    const unsubscribe = stockDineStore.subscribe(() => {
-      setTick((t) => t + 1);
-    });
+function initApp() {
+  if (appInitialized || typeof window === "undefined") return;
+  appInitialized = true;
 
-    // Check token and restore logged in user profile from MongoDB Atlas API
-    const token = typeof window !== "undefined" ? localStorage.getItem("stockdine_token") : null;
-    if (token) {
-      api.auth.getProfile().then((res: any) => {
-        if (res && res.success && res.profile) {
-          const prof = res.profile;
-          const role = res.role || prof.role || "customer";
-          if (role === "restaurant") {
-            const restId = prof._id || prof.restaurantId;
-            currentAuthSession = {
-              userEmail: prof.email,
-              restaurantId: restId,
-              permissions: "both",
-              isLoggedIn: true,
-              userRole: "restaurant",
-              profileData: prof,
-            };
+  const token = localStorage.getItem("stockdine_token");
+  if (token) {
+    api.auth.getProfile().then((res: any) => {
+      if (res && res.success && res.profile) {
+        const prof = res.profile;
+        const role = res.role || prof.role || "customer";
+        if (role === "restaurant") {
+          const restId = prof._id || prof.restaurantId;
+          currentAuthSession = {
+            userEmail: prof.email,
+            restaurantId: restId,
+            permissions: "both",
+            isLoggedIn: true,
+            userRole: "restaurant",
+            profileData: prof,
+          };
 
-            initialRestaurantProfiles[restId] = {
-              id: restId,
-              ownerId: prof.ownerName,
-              name: prof.restaurantName,
-              logo: prof.restaurantLogo || "",
-              coverImage: prof.restaurantCover || "",
-              interiorPhotos: [prof.restaurantCover || ""],
-              exteriorPhotos: [prof.restaurantLogo || ""],
-              address: prof.address || "",
-              city: prof.city || "",
-              state: prof.state || "",
-              country: prof.country || "India",
-              contactPhone: prof.mobileNumber || "",
-              contactEmail: prof.email || "",
-              openingHours: "11:00 AM - 11:00 PM",
-              cuisines: [prof.cuisine || "Multi-Cuisine"],
-              category: prof.restaurantType || "Fine Dining",
-              priceRange: "Moderate",
-              description: `${prof.restaurantName} offers fine dining and live stock intelligence.`,
-              rating: prof.rating || 5.0,
-              reviewsCount: prof.numReviews || 0,
-              isOpen: true,
-              availableTablesCount: 0,
-              coordinates: { latitude: prof.latitude || 0, longitude: prof.longitude || 0 },
-              amenities: {
-                parking: true, wifi: true, ac: true, outdoorSeating: true, familyFriendly: true, privateDining: true, liveMusic: true, wheelchairAccessible: true,
-              },
-              createdAt: prof.createdAt,
-            };
-          } else if (role === "customer") {
-            currentAuthSession = {
-              userEmail: prof.email || prof.mobile,
-              restaurantId: "",
-              permissions: "both",
-              isLoggedIn: true,
-              userRole: "customer",
-              profileData: prof,
-            };
-          } else if (role === "superadmin") {
-            currentAuthSession = {
-              userEmail: prof.email,
-              restaurantId: "HQ-SUPER",
-              permissions: "superadmin",
-              isLoggedIn: true,
-              userRole: "superadmin",
-              profileData: prof,
-            };
-          }
-          saveAuthSession(currentAuthSession);
-
-          // Fetch Staff for logged in restaurant from MongoDB Atlas
-          api.staff.getAll().then((staffRes: any) => {
-            if (staffRes && staffRes.success && Array.isArray(staffRes.staff)) {
-              initialKitchenStaff = staffRes.staff.map((s: any) => ({
-                id: s._id,
-                staffId: "STF-" + s._id.substring(s._id.length - 4),
-                name: s.name,
-                email: s.email || "",
-                phone: s.mobile || "",
-                mobile: s.mobile || "",
-                roleTitle: s.role || "Kitchen Staff",
-                role: s.role || "Kitchen Staff",
-                password: s.password || "",
-                profilePhoto: s.profilePhoto,
-                status: s.status || "Active",
-                createdAt: s.createdAt ? new Date(s.createdAt).toLocaleDateString() : "Just now",
-                restaurantId: s.restaurant?._id || s.restaurant || "",
-              }));
-              stockDineStore.notify();
-            }
-          }).catch(() => {});
-
-          stockDineStore.notify();
-        } else {
-          stockDineStore.signOut();
+          initialRestaurantProfiles[restId] = {
+            id: restId,
+            ownerId: prof.ownerName,
+            name: prof.restaurantName,
+            logo: prof.restaurantLogo || "",
+            coverImage: prof.restaurantCover || "",
+            interiorPhotos: [prof.restaurantCover || ""],
+            exteriorPhotos: [prof.restaurantLogo || ""],
+            address: prof.address || "",
+            city: prof.city || "",
+            state: prof.state || "",
+            country: prof.country || "India",
+            contactPhone: prof.mobileNumber || "",
+            contactEmail: prof.email || "",
+            openingHours: "11:00 AM - 11:00 PM",
+            cuisines: [prof.cuisine || "Multi-Cuisine"],
+            category: prof.restaurantType || "Fine Dining",
+            priceRange: "Moderate",
+            description: `${prof.restaurantName} offers fine dining and live stock intelligence.`,
+            rating: prof.rating || 5.0,
+            reviewsCount: prof.numReviews || 0,
+            isOpen: true,
+            availableTablesCount: 0,
+            coordinates: { latitude: prof.latitude || 0, longitude: prof.longitude || 0 },
+            amenities: {
+              parking: true, wifi: true, ac: true, outdoorSeating: true, familyFriendly: true, privateDining: true, liveMusic: true, wheelchairAccessible: true,
+            },
+            createdAt: prof.createdAt,
+          };
+        } else if (role === "customer") {
+          currentAuthSession = {
+            userEmail: prof.email || prof.mobile,
+            restaurantId: "",
+            permissions: "both",
+            isLoggedIn: true,
+            userRole: "customer",
+            profileData: prof,
+          };
+        } else if (role === "superadmin") {
+          currentAuthSession = {
+            userEmail: prof.email,
+            restaurantId: "HQ-SUPER",
+            permissions: "superadmin",
+            isLoggedIn: true,
+            userRole: "superadmin",
+            profileData: prof,
+          };
         }
-      }).catch((err) => {
-        console.error("Token verification failed, reverting to guest mode:", err);
-        stockDineStore.signOut();
-      });
-    } else {
-      stockDineStore.signOut();
-    }
+        saveAuthSession(currentAuthSession);
 
-    // Fetch live restaurants from MongoDB Atlas API
-    api.restaurants.getAll().then((res: any) => {
+        // Fetch Staff for logged in restaurant from MongoDB Atlas
+        api.staff.getAll().then((staffRes: any) => {
+          if (staffRes && staffRes.success && Array.isArray(staffRes.staff)) {
+            initialKitchenStaff = staffRes.staff.map((s: any) => ({
+              id: s._id,
+              staffId: "STF-" + s._id.substring(s._id.length - 4),
+              name: s.name,
+              email: s.email || "",
+              phone: s.mobile || "",
+              mobile: s.mobile || "",
+              roleTitle: s.role || "Kitchen Staff",
+              role: s.role || "Kitchen Staff",
+              password: s.password || "",
+              profilePhoto: s.profilePhoto,
+              status: s.status || "Active",
+              createdAt: s.createdAt ? new Date(s.createdAt).toLocaleDateString() : "Just now",
+              restaurantId: s.restaurant?._id || s.restaurant || "",
+            }));
+            stockDineStore.notify();
+          }
+        }).catch(() => {});
+
+        stockDineStore.notify();
+      }
+    }).catch((err: any) => {
+      if (err && err.message && (err.message.includes("401") || err.message.includes("Authentication required") || err.message.includes("Unauthorized"))) {
+        console.error("Token verification 401 response, signing out:", err.message);
+        stockDineStore.signOut();
+      } else {
+        console.warn("Network issue during token refresh, maintaining session:", err.message || err);
+      }
+    });
+  }
+
+  // Fetch live restaurants from MongoDB Atlas API
+  api.restaurants.getAll().then((res: any) => {
       if (res && res.success && Array.isArray(res.restaurants)) {
         const seenIds = new Set<string>();
         const uniquePlatform: PlatformRestaurant[] = [];
@@ -1509,7 +1506,20 @@ export function useStockDineStore() {
         stockDineStore.notify();
       }
     }).catch(() => {});
+}
 
+if (typeof window !== "undefined") {
+  initApp();
+}
+
+export function useStockDineStore() {
+  const [, setTick] = useState(0);
+
+  useEffect(() => {
+    initApp();
+    const unsubscribe = stockDineStore.subscribe(() => {
+      setTick((t) => t + 1);
+    });
     return unsubscribe;
   }, []);
 
