@@ -22,14 +22,14 @@ function CustomerProfilePage() {
 
   const isGuest = !authSession || !authSession.isLoggedIn;
   const userProfile = authSession?.profileData || (authSession?.userEmail ? {
-    name: authSession.userEmail.includes("@") ? authSession.userEmail.split("@")[0] : authSession.userEmail,
+    name: authSession.userEmail.includes("@") ? authSession.userEmail.split("@")[0] : `Diner (${authSession.userEmail.slice(-4)})`,
     mobile: authSession.userEmail,
     email: authSession.userEmail.includes("@") ? authSession.userEmail : "",
     role: "customer",
   } : {
-    name: "Subash Nethaji",
-    mobile: "+91 98765 43210",
-    email: "subash@stockdine.com",
+    name: "Valued Diner",
+    mobile: "+91 XXXXX XXXXX",
+    email: "",
     role: "customer",
   });
 
@@ -37,8 +37,8 @@ function CustomerProfilePage() {
   const [loading, setLoading] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [editName, setEditName] = useState(userProfile?.name || "Subash Nethaji");
-  const [editMobile, setEditMobile] = useState(userProfile?.mobile || userProfile?.email || "+91 98765 43210");
+  const [editName, setEditName] = useState(userProfile?.name || "Valued Diner");
+  const [editMobile, setEditMobile] = useState(userProfile?.mobile || userProfile?.email || "");
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState({ type: "", text: "" });
 

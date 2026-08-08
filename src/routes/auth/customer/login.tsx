@@ -86,15 +86,16 @@ function CustomerLoginPage() {
       setIsLoading(false);
       if (otp === "5820" || otp.length === 4) {
         localStorage.setItem("stockdine_token", "customer_session_token");
+        const cleanName = mobile ? `Diner (${mobile.slice(-4)})` : "Valued Diner";
         setAuthSession({
           userEmail: mobile,
           restaurantId: "",
           permissions: "both",
           isLoggedIn: true,
           profileData: {
-            name: "Subash Nethaji",
+            name: cleanName,
             mobile: mobile,
-            email: "subash@stockdine.com",
+            email: "",
             role: "customer",
           },
         });
