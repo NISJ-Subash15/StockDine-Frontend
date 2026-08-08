@@ -46,8 +46,16 @@ function CustomerProfilePage() {
   }, [authSession?.profileData]);
 
   const fetchProfile = async () => {
-    setLoading(true);
+    if (authSession?.profileData) {
+      setProfileData(authSession.profileData);
+      setEditName(authSession.profileData.name || "");
+      setEditMobile(authSession.profileData.mobile || authSession.profileData.email || "");
+      setLoading(false);
+    } else {
+      setLoading(true);
+    }
     setLoadError(null);
+
     try {
       const authRes: any = await api.auth.getProfile();
       if (authRes && authRes.success && (authRes.profile || authRes.user)) {
@@ -55,20 +63,22 @@ function CustomerProfilePage() {
         setProfileData(prof);
         setEditName(prof.name || "");
         setEditMobile(prof.mobile || prof.email || "");
+        setLoadError(null);
       } else {
         const custRes: any = await api.customers.getProfile();
         if (custRes && custRes.success && custRes.customer) {
           setProfileData(custRes.customer);
           setEditName(custRes.customer.name || "");
           setEditMobile(custRes.customer.mobile || "");
-        } else if (!authSession?.profileData) {
-          setLoadError("Unable to load your profile");
+          setLoadError(null);
+        } else if (!authSession?.profileData && !profileData) {
+          setLoadError("Unable to load your profile.");
         }
       }
     } catch (err: any) {
-      console.error("Failed to load customer profile", err);
-      if (!authSession?.profileData) {
-        setLoadError("Unable to load your profile.");
+      console.warn("Notice: getProfile API call fallback:", err.message || err);
+      if (!authSession?.profileData && !profileData) {
+        setLoadError("Unable to load your profile. Please verify your connection or backend server status.");
       }
     } finally {
       setLoading(false);
