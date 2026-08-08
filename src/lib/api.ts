@@ -119,6 +119,53 @@ export const api = {
     me: () => apiFetch<{ success: boolean; role: string; profile: any; user: any }>("/auth/me"),
   },
 
+  // Super Admin Endpoints
+  superAdmin: {
+    login: (credentials: { email: string; password: string }) =>
+      apiFetch<{ success: boolean; token: string; user: any; message?: string }>("/superadmin/login", {
+        method: "POST",
+        body: JSON.stringify(credentials),
+      }),
+    getStats: () => apiFetch<{ success: boolean; stats: any }>("/superadmin/dashboard-stats"),
+    getUsers: () => apiFetch<{ success: boolean; count: number; users: any[] }>("/superadmin/users"),
+    updateUserRole: (id: string, role: string) =>
+      apiFetch<{ success: boolean; message: string; user: any }>(`/superadmin/users/${id}/role`, {
+        method: "PATCH",
+        body: JSON.stringify({ role }),
+      }),
+    deleteUser: (id: string) =>
+      apiFetch<{ success: boolean; message: string }>(`/superadmin/users/${id}`, { method: "DELETE" }),
+    getRestaurants: () => apiFetch<{ success: boolean; count: number; restaurants: any[] }>("/superadmin/restaurants"),
+    approveRestaurant: (id: string) =>
+      apiFetch<{ success: boolean; message: string }>(`/superadmin/restaurants/${id}/approve`, { method: "PATCH" }),
+    rejectRestaurant: (id: string) =>
+      apiFetch<{ success: boolean; message: string }>(`/superadmin/restaurants/${id}/reject`, { method: "PATCH" }),
+    deleteRestaurant: (id: string) =>
+      apiFetch<{ success: boolean; message: string }>(`/superadmin/restaurants/${id}`, { method: "DELETE" }),
+    getBookings: () => apiFetch<{ success: boolean; count: number; bookings: any[] }>("/superadmin/bookings"),
+    updateBookingStatus: (id: string, status: string) =>
+      apiFetch<{ success: boolean; message: string }>(`/superadmin/bookings/${id}/status`, {
+        method: "PATCH",
+        body: JSON.stringify({ status }),
+      }),
+    getPayments: () => apiFetch<{ success: boolean; analytics: any }>("/superadmin/payments"),
+    getReviews: () => apiFetch<{ success: boolean; count: number; reviews: any[] }>("/superadmin/reviews"),
+    deleteReview: (id: string) =>
+      apiFetch<{ success: boolean; message: string }>(`/superadmin/reviews/${id}`, { method: "DELETE" }),
+    getCrm: () => apiFetch<{ success: boolean; count: number; tickets: any[] }>("/superadmin/crm"),
+    updateCrm: (id: string, data: object) =>
+      apiFetch<{ success: boolean; message: string }>(`/superadmin/crm/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify(data),
+      }),
+    getSettings: () => apiFetch<{ success: boolean; settings: any }>("/superadmin/settings"),
+    updateSettings: (data: object) =>
+      apiFetch<{ success: boolean; message: string; settings: any }>("/superadmin/settings", {
+        method: "PUT",
+        body: JSON.stringify(data),
+      }),
+  },
+
   // Customers
   customers: {
     getProfile: () => apiFetch<{ success: boolean; customer: any }>("/customers/profile"),
