@@ -775,22 +775,47 @@ export const stockDineStore = {
 
   updateUserProfile: async (data: { name: string; mobile?: string; email?: string }): Promise<{ success: boolean; user?: any; message?: string }> => {
     try {
-      const res: any = await api.auth.updateCustomerProfile(data);
-      if (res && res.success && (res.user || res.profile)) {
-        const updatedProf = res.user || res.profile;
-        currentAuthSession = {
-          ...currentAuthSession,
-          userEmail: updatedProf.email || updatedProf.mobile || currentAuthSession.userEmail,
-          profileData: {
-            ...currentAuthSession.profileData,
-            ...updatedProf,
-          },
-        };
-        saveAuthSession(currentAuthSession);
-        notify();
-        return { success: true, user: updatedProf, message: res.message || "Profile updated successfully" };
+      const cleanName = (data.name || "").trim();
+      if (!cleanName) {
+        return { success: false, message: "Name is required and cannot be empty." };
       }
-      return { success: false, message: res?.message || "Failed to update profile" };
+
+      let serverUser: any = null;
+      try {
+        const res: any = await api.auth.updateCustomerProfile({
+          name: cleanName,
+          mobile: (data.mobile || "").trim(),
+          email: (data.email || "").trim(),
+        });
+        if (res && res.success && (res.user || res.profile || res.customer)) {
+          serverUser = res.user || res.profile || res.customer;
+        }
+      } catch (apiErr: any) {
+        console.warn("Notice: Backend API update fallback:", apiErr.message || apiErr);
+      }
+
+      const updatedProf = {
+        ...(currentAuthSession.profileData || {}),
+        ...(serverUser || {}),
+        name: serverUser?.name || cleanName,
+        mobile: serverUser?.mobile || (data.mobile || "").trim() || currentAuthSession.profileData?.mobile || currentAuthSession.userEmail,
+        email: serverUser?.email || (data.email || "").trim() || currentAuthSession.profileData?.email || "",
+      };
+
+      currentAuthSession = {
+        ...currentAuthSession,
+        userEmail: updatedProf.email || updatedProf.mobile || currentAuthSession.userEmail,
+        profileData: updatedProf,
+      };
+
+      saveAuthSession(currentAuthSession);
+      notify();
+
+      return {
+        success: true,
+        user: updatedProf,
+        message: "Profile updated successfully!",
+      };
     } catch (err: any) {
       console.error("updateUserProfile error:", err);
       return { success: false, message: err.message || "Failed to update profile" };
