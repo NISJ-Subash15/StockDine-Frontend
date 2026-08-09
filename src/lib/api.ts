@@ -7,7 +7,13 @@ const getApiBaseUrl = (): string => {
   }
   if (typeof window !== "undefined" && window.location && window.location.hostname) {
     const host = window.location.hostname;
-    return `http://${host}:5000/api`;
+    const protocol = window.location.protocol === "https:" ? "https:" : "http:";
+
+    // If deployed on Vercel, Netlify, Render, Railway or custom domain (non-localhost)
+    if (host !== "localhost" && host !== "127.0.0.1" && !host.startsWith("192.168.") && !host.startsWith("172.")) {
+      return `/api`;
+    }
+    return `${protocol}//${host}:5000/api`;
   }
   return "http://localhost:5000/api";
 };
@@ -75,12 +81,12 @@ async function apiFetch<T>(endpoint: string, options: RequestInit = {}): Promise
         return data as T;
       } catch (fallbackErr: any) {
         console.error(`❌ API Fetch Error [${options.method || "GET"} ${fallbackUrl}]:`, fallbackErr.message || fallbackErr);
-        throw new Error(fallbackErr.message || `Cannot connect to backend server at http://127.0.0.1:5000. Please verify backend is running.`);
+        throw new Error(fallbackErr.message || `Cannot connect to backend server. Please verify backend is running.`);
       }
     }
 
     console.error(`❌ API Fetch Error [${options.method || "GET"} ${fullUrl}]:`, error.message || error);
-    throw new Error(error.message || `Cannot connect to backend server at ${fullUrl}. Please verify backend is running.`);
+    throw new Error(error.message || `Failed to fetch. Unable to connect to server at ${fullUrl}`);
   }
 }
 

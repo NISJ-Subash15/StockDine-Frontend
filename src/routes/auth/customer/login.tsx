@@ -184,6 +184,18 @@ function CustomerLoginPage() {
     }
   };
 
+  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, nextInputId?: string) => {
+    if (e.key === "Enter") {
+      if (nextInputId) {
+        e.preventDefault();
+        const nextElem = document.getElementById(nextInputId);
+        if (nextElem) {
+          nextElem.focus();
+        }
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#FFFFFF] dark:bg-slate-950 text-[#1F2937] dark:text-slate-100 flex flex-col justify-between p-4 sm:p-6 lg:p-10 relative selection:bg-[#E77B49] selection:text-white transition-colors duration-300 overflow-x-hidden">
       {/* Background Glow */}
@@ -251,10 +263,12 @@ function CustomerLoginPage() {
                 <div className="relative">
                   <Mail className="absolute left-3.5 top-3.5 size-4 text-[#6B7280]" />
                   <input
+                    id="login-email"
                     type="email"
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    onKeyDown={(e) => handleInputKeyDown(e, "login-password")}
                     placeholder="user@example.com"
                     className="w-full pl-10 pr-4 py-3.5 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/80 border border-border/60 text-xs font-bold text-[#1F2937] dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
                   />
@@ -283,6 +297,7 @@ function CustomerLoginPage() {
                 <div className="relative">
                   <Lock className="absolute left-3.5 top-3.5 size-4 text-[#6B7280]" />
                   <input
+                    id="login-password"
                     type={showPassword ? "text" : "password"}
                     required
                     value={password}

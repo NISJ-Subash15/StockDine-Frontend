@@ -469,10 +469,17 @@ function CustomerProfilePage() {
                       Full Name
                     </label>
                     <input
+                      id="edit-name"
                       type="text"
                       required
                       value={editName}
                       onChange={(e) => setEditName(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          document.getElementById("edit-mobile")?.focus();
+                        }
+                      }}
                       placeholder="Full Name"
                       className="w-full px-4 py-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border border-border/60 text-xs font-bold text-[#1F2937] dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
                     />
@@ -483,10 +490,17 @@ function CustomerProfilePage() {
                       Mobile Number
                     </label>
                     <input
+                      id="edit-mobile"
                       type="tel"
                       required
                       value={editMobile}
                       onChange={(e) => setEditMobile(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          document.getElementById("edit-avatar")?.focus();
+                        }
+                      }}
                       placeholder="+91 98765 43210"
                       className="w-full px-4 py-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border border-border/60 text-xs font-bold text-[#1F2937] dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
                     />
@@ -497,6 +511,7 @@ function CustomerProfilePage() {
                       Profile Photo URL (Optional)
                     </label>
                     <input
+                      id="edit-avatar"
                       type="url"
                       value={editAvatar}
                       onChange={(e) => setEditAvatar(e.target.value)}

@@ -134,6 +134,18 @@ function CustomerSignupPage() {
     }
   };
 
+  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, nextInputId?: string) => {
+    if (e.key === "Enter") {
+      if (nextInputId) {
+        e.preventDefault();
+        const nextElem = document.getElementById(nextInputId);
+        if (nextElem) {
+          nextElem.focus();
+        }
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#FFFFFF] dark:bg-slate-950 text-[#1F2937] dark:text-slate-100 flex flex-col justify-between p-4 sm:p-6 lg:p-10 relative selection:bg-[#E77B49] selection:text-white transition-colors duration-300 overflow-x-hidden">
       {/* Background Glow */}
@@ -202,9 +214,11 @@ function CustomerSignupPage() {
                 <div className="relative">
                   <User className="absolute left-3.5 top-3.5 size-4 text-[#6B7280]" />
                   <input
+                    id="signup-name"
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
+                    onKeyDown={(e) => handleInputKeyDown(e, "signup-email")}
                     placeholder="Subash Nethaji"
                     className="w-full pl-10 pr-4 py-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/80 border border-border/60 text-xs font-bold text-[#1F2937] dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
                   />
@@ -219,9 +233,11 @@ function CustomerSignupPage() {
                 <div className="relative">
                   <Mail className="absolute left-3.5 top-3.5 size-4 text-[#6B7280]" />
                   <input
+                    id="signup-email"
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    onKeyDown={(e) => handleInputKeyDown(e, "signup-mobile")}
                     placeholder="user@example.com"
                     className="w-full pl-10 pr-4 py-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/80 border border-border/60 text-xs font-bold text-[#1F2937] dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
                   />
@@ -236,9 +252,11 @@ function CustomerSignupPage() {
                 <div className="relative">
                   <Phone className="absolute left-3.5 top-3.5 size-4 text-[#6B7280]" />
                   <input
+                    id="signup-mobile"
                     type="tel"
                     value={mobile}
                     onChange={(e) => setMobile(e.target.value)}
+                    onKeyDown={(e) => handleInputKeyDown(e, "signup-password")}
                     placeholder="+91 98765 43210"
                     className="w-full pl-10 pr-4 py-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/80 border border-border/60 text-xs font-bold text-[#1F2937] dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
                   />
@@ -253,10 +271,12 @@ function CustomerSignupPage() {
                 <div className="relative">
                   <Lock className="absolute left-3.5 top-3.5 size-4 text-[#6B7280]" />
                   <input
+                    id="signup-password"
                     type={showPassword ? "text" : "password"}
                     minLength={6}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    onKeyDown={(e) => handleInputKeyDown(e, "signup-confirm-password")}
                     placeholder="••••••••"
                     className="w-full pl-10 pr-10 py-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/80 border border-border/60 text-xs font-bold text-[#1F2937] dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
                   />
@@ -278,6 +298,7 @@ function CustomerSignupPage() {
                 <div className="relative">
                   <Lock className="absolute left-3.5 top-3.5 size-4 text-[#6B7280]" />
                   <input
+                    id="signup-confirm-password"
                     type={showConfirmPassword ? "text" : "password"}
                     minLength={6}
                     value={confirmPassword}
