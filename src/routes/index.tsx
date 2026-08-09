@@ -324,7 +324,7 @@ function LandingPage() {
 
                 <button
                   type="button"
-                  onClick={() => navigate({ to: "/auth/customer/signup" })}
+                  onClick={() => navigate({ to: "/auth/select-role", search: { mode: "signup" } })}
                   className="px-4.5 py-2.5 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-md hover:shadow-lg transition-all active:scale-95 cursor-pointer flex items-center gap-2"
                 >
                   <span>Get Started</span>

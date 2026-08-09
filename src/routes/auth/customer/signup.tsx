@@ -312,10 +312,17 @@ function CustomerSignupPage() {
               </button>
             </form>
 
-            <div className="text-center pt-2 border-t border-border/40">
+            <div className="flex items-center justify-between pt-2 border-t border-border/40 text-xs font-extrabold">
+              <Link
+                to="/auth/select-role"
+                search={{ mode: "signup" }}
+                className="text-[#6B7280] hover:text-[#E77B49] transition-colors"
+              >
+                ← Role Selection
+              </Link>
               <Link
                 to="/auth/customer/login"
-                className="text-xs font-extrabold text-[#E77B49] hover:underline"
+                className="text-[#E77B49] hover:underline"
               >
                 Already have an account? Sign In
               </Link>
