@@ -92,10 +92,10 @@ export const MapMenuBottomSheet: React.FC<MapMenuBottomSheetProps> = ({
       <div className="flex-1" onClick={onClose} />
 
       {/* Bottom Sheet Card */}
-      <div className="bg-white rounded-t-3xl max-h-[85vh] w-full max-w-4xl mx-auto flex flex-col shadow-2xl border-t-2 border-[#E5E7EB] overflow-hidden selection:bg-[#E77B49] selection:text-white">
+      <div className="bg-white dark:bg-slate-900 text-[#1F2937] dark:text-slate-100 rounded-t-3xl max-h-[85vh] w-full max-w-4xl mx-auto flex flex-col shadow-2xl border-t-2 border-[#E5E7EB] dark:border-slate-800 overflow-hidden selection:bg-[#E77B49] selection:text-white">
         {/* Handle Bar & Top Header */}
-        <div className="p-4 bg-white border-b border-[#E5E7EB] sticky top-0 z-20 space-y-3">
-          <div className="w-12 h-1.5 bg-gray-300 rounded-full mx-auto" />
+        <div className="p-4 bg-white dark:bg-slate-900 border-b border-[#E5E7EB] dark:border-slate-800 sticky top-0 z-20 space-y-3">
+          <div className="w-12 h-1.5 bg-gray-300 dark:bg-slate-700 rounded-full mx-auto" />
 
           <div className="flex items-center justify-between gap-3">
             <div>
@@ -103,15 +103,14 @@ export const MapMenuBottomSheet: React.FC<MapMenuBottomSheetProps> = ({
                   <span className="text-[10px] font-extrabold uppercase bg-[#E77B49]/10 text-[#E77B49] px-2.5 py-0.5 rounded-full border border-[#E77B49]/20">
                     Live Menu
                   </span>
-                  <span className="text-xs text-[#6B7280] font-bold">
+                  <span className="text-xs text-[#6B7280] dark:text-slate-400 font-bold">
                     ★ {restaurant.rating} • {restaurant.distanceKm || 1.2} km away
                   </span>
                 </div>
-                <h3 className="font-serif italic text-2xl font-bold text-[#60241E]">
+                <h3 className="font-serif italic text-2xl font-bold text-[#60241E] dark:text-slate-100">
                   {restaurant.name}
                 </h3>
               </div>
-            </div>
 
             <div className="flex items-center gap-2">
               <button
@@ -263,10 +262,10 @@ export const MapMenuBottomSheet: React.FC<MapMenuBottomSheetProps> = ({
                         )}
                       </div>
 
-                      <h4 className="font-serif italic font-bold text-base text-[#60241E] truncate">
+                      <h4 className="font-serif italic font-bold text-base text-[#60241E] dark:text-slate-100 truncate">
                         {dish.name}
                       </h4>
-                      <p className="text-[11px] text-[#4B5563] line-clamp-2 leading-tight">
+                      <p className="text-[11px] text-[#4B5563] dark:text-slate-300 line-clamp-2 leading-tight">
                         {dish.description}
                       </p>
                       <p className="text-[10px] text-[#E77B49] font-bold">
@@ -275,8 +274,8 @@ export const MapMenuBottomSheet: React.FC<MapMenuBottomSheetProps> = ({
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between pt-2 border-t border-[#E5E7EB]">
-                    <span className="font-serif italic font-bold text-lg text-[#60241E]">
+                  <div className="flex items-center justify-between pt-2 border-t border-[#E5E7EB] dark:border-slate-700">
+                    <span className="font-serif italic font-bold text-lg text-[#60241E] dark:text-slate-100">
                       {formatCurrency(dish.discountPrice || dish.price)}
                     </span>
 
@@ -286,7 +285,7 @@ export const MapMenuBottomSheet: React.FC<MapMenuBottomSheetProps> = ({
                         onSelectDishToBook(dish);
                         onClose();
                       }}
-                      className="py-2 px-3 rounded-xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold transition-all shadow-xs flex items-center gap-1 active:scale-95"
+                      className="py-2 px-3 rounded-xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold transition-all shadow-xs flex items-center gap-1 active:scale-95 cursor-pointer"
                     >
                       <Plus className="size-3.5" />
                       <span>Hold &amp; Book</span>
@@ -299,14 +298,14 @@ export const MapMenuBottomSheet: React.FC<MapMenuBottomSheetProps> = ({
         </div>
 
         {/* Footer Actions Bar */}
-        <div className="p-4 bg-white border-t border-[#E5E7EB] flex gap-3">
+        <div className="p-4 bg-white dark:bg-slate-900 border-t border-[#E5E7EB] dark:border-slate-800 flex gap-3">
           <button
             type="button"
             onClick={() => {
               onClose();
               onOpenBookingModal();
             }}
-            className="flex-1 py-3 px-4 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all flex items-center justify-center gap-2 active:scale-95"
+            className="flex-1 py-3 px-4 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all flex items-center justify-center gap-2 active:scale-95 cursor-pointer"
           >
             <Calendar className="size-4" />
             <span>Book Table Now</span>
@@ -318,7 +317,7 @@ export const MapMenuBottomSheet: React.FC<MapMenuBottomSheetProps> = ({
               onClose();
               onOpenFullProfile(restaurant.id);
             }}
-            className="py-3 px-5 rounded-2xl bg-[#F8F9FA] hover:bg-[#60241E] hover:text-white text-[#60241E] text-xs font-extrabold border-2 border-[#E5E7EB] transition-all flex items-center justify-center gap-1.5"
+            className="py-3 px-5 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 hover:bg-[#60241E] dark:hover:bg-[#E77B49] hover:text-white text-[#60241E] dark:text-slate-200 text-xs font-extrabold border-2 border-[#E5E7EB] dark:border-slate-700 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <span>Full Profile</span>
             <ChevronRight className="size-4" />

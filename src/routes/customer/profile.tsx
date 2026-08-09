@@ -1,9 +1,10 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { User, Phone, ShieldCheck, LogOut, Edit3, Calendar, ChefHat, Sparkles, Check, AlertCircle } from "lucide-react";
+import { User, Phone, Mail, ShieldCheck, LogOut, Edit3, Calendar, ChefHat, Sparkles, Check, AlertCircle, Lock, KeyRound, X } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useStockDineStore } from "@/lib/stockdine-store";
 import { api } from "@/lib/api";
+import { GuestAuthModal } from "@/components/GuestAuthModal";
 
 export const Route = createFileRoute("/customer/profile")({
   head: () => ({
@@ -17,71 +18,154 @@ export const Route = createFileRoute("/customer/profile")({
 
 function CustomerProfilePage() {
   const navigate = useNavigate();
-  const { authSession, signOut } = useStockDineStore();
+  const { authSession, updateUserProfile, signOut } = useStockDineStore();
 
-  const initialProf = authSession?.profileData || (authSession?.userEmail ? {
-    name: authSession.userEmail.includes("@") ? authSession.userEmail.split("@")[0] : "Customer Diner",
-    mobile: authSession.userEmail,
-    customerId: "CUST-LIVE",
-  } : null);
+  const isGuest = !authSession || !authSession.isLoggedIn;
+  const userProfile = authSession?.profileData || (authSession?.userEmail ? {
+    name: authSession.userEmail.includes("@") ? authSession.userEmail.split("@")[0] : `Diner (${authSession.userEmail.slice(-4)})`,
+    mobile: authSession.userEmail.includes("@") ? "" : authSession.userEmail,
+    email: authSession.userEmail.includes("@") ? authSession.userEmail : "",
+    role: "customer",
+  } : {
+    name: "Valued Diner",
+    mobile: "",
+    email: "",
+    role: "customer",
+  });
 
-  const [profileData, setProfileData] = useState<any>(initialProf);
-  const [loading, setLoading] = useState(!initialProf);
+  const [profileData, setProfileData] = useState<any>(userProfile);
+  const [loading, setLoading] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  
+  // Profile Editing State
   const [isEditing, setIsEditing] = useState(false);
-  const [editName, setEditName] = useState(initialProf?.name || "");
-  const [editMobile, setEditMobile] = useState(initialProf?.mobile || initialProf?.email || "");
+  const [editName, setEditName] = useState(userProfile?.name || "");
+  const [editMobile, setEditMobile] = useState(userProfile?.mobile || "");
+  const [editAvatar, setEditAvatar] = useState(userProfile?.avatar || "");
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState({ type: "", text: "" });
 
+  // Change Password Modal State
+  const [showChangePassword, setShowChangePassword] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const [changeLoading, setChangeLoading] = useState(false);
+  const [changeMsg, setChangeMsg] = useState({ type: "", text: "" });
+
   useEffect(() => {
-    fetchProfile();
-  }, []);
+    if (!isGuest) {
+      fetchProfile();
+    }
+  }, [isGuest]);
+
+  useEffect(() => {
+    if (authSession?.profileData) {
+      setProfileData(authSession.profileData);
+      setEditName(authSession.profileData.name || "");
+      setEditMobile(authSession.profileData.mobile || "");
+      setEditAvatar(authSession.profileData.avatar || "");
+    }
+  }, [authSession?.profileData]);
 
   const fetchProfile = async () => {
-    setLoading(true);
     try {
-      const res: any = await api.customers.getProfile();
-      if (res && res.success && res.customer) {
-        setProfileData(res.customer);
-        setEditName(res.customer.name || "");
-        setEditMobile(res.customer.mobile || "");
+      const authRes: any = await api.auth.getProfile();
+      if (authRes && authRes.success && (authRes.profile || authRes.user)) {
+        const prof = authRes.profile || authRes.user;
+        setProfileData(prof);
+        setEditName(prof.name || "");
+        setEditMobile(prof.mobile || "");
+        setEditAvatar(prof.avatar || "");
       } else {
-        const authRes = await api.auth.getProfile();
-        if (authRes && authRes.success && authRes.profile) {
-          setProfileData(authRes.profile);
-          setEditName(authRes.profile.name || "");
-          setEditMobile(authRes.profile.mobile || "");
+        const custRes: any = await api.customers.getProfile();
+        if (custRes && custRes.success && custRes.customer) {
+          setProfileData(custRes.customer);
+          setEditName(custRes.customer.name || "");
+          setEditMobile(custRes.customer.mobile || "");
+          setEditAvatar(custRes.customer.avatar || "");
         }
       }
-    } catch (err) {
-      console.error("Failed to load customer profile", err);
-    } finally {
-      setLoading(false);
+    } catch (err: any) {
+      console.warn("Notice: Background profile refresh:", err.message || err);
     }
   };
 
   const handleSaveProfile = async (e: React.FormEvent) => {
     e.preventDefault();
+    const cleanName = editName.trim();
+    if (!cleanName || cleanName.length < 2) {
+      setMsg({ type: "error", text: "Full Name is required and must be at least 2 characters." });
+      return;
+    }
+
     setSaving(true);
     setMsg({ type: "", text: "" });
 
     try {
-      const res: any = await api.customers.updateProfile({
-        name: editName,
-        mobile: editMobile,
+      const res = await updateUserProfile({
+        name: cleanName,
+        mobile: editMobile.trim(),
+        avatar: editAvatar.trim(),
       });
 
       setSaving(false);
-      if (res.success && (res.customer || res.user)) {
-        setProfileData(res.customer || res.user);
+      if (res.success && res.user) {
+        setProfileData(res.user);
         setIsEditing(false);
-        setMsg({ type: "success", text: "Profile updated successfully in MongoDB Atlas!" });
+        setMsg({ type: "success", text: "Profile updated successfully" });
       } else {
-        setMsg({ type: "error", text: "Failed to update profile." });
+        setMsg({ type: "error", text: res.message || "Unable to update your profile. Please try again." });
       }
     } catch (err: any) {
       setSaving(false);
-      setMsg({ type: "error", text: err.message || "Failed to save updates." });
+      setMsg({ type: "error", text: err.message || "Unable to update your profile. Please try again." });
+    }
+  };
+
+  const handleChangePasswordSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setChangeMsg({ type: "", text: "" });
+
+    if (!currentPassword) {
+      setChangeMsg({ type: "error", text: "Please enter your current password." });
+      return;
+    }
+
+    if (!newPassword || newPassword.length < 6) {
+      setChangeMsg({ type: "error", text: "New password must be at least 6 characters long." });
+      return;
+    }
+
+    if (newPassword !== confirmNewPassword) {
+      setChangeMsg({ type: "error", text: "Passwords do not match." });
+      return;
+    }
+
+    setChangeLoading(true);
+    try {
+      const res = await api.auth.changePassword({
+        currentPassword,
+        newPassword,
+        confirmPassword: confirmNewPassword,
+      });
+
+      setChangeLoading(false);
+      if (res && res.success) {
+        setChangeMsg({ type: "success", text: "Password changed successfully!" });
+        setTimeout(() => {
+          setShowChangePassword(false);
+          setCurrentPassword("");
+          setNewPassword("");
+          setConfirmNewPassword("");
+          setChangeMsg({ type: "", text: "" });
+        }, 1200);
+      } else {
+        setChangeMsg({ type: "error", text: res.message || "Failed to change password." });
+      }
+    } catch (err: any) {
+      setChangeLoading(false);
+      setChangeMsg({ type: "error", text: err.message || "Failed to change password." });
     }
   };
 
@@ -93,10 +177,19 @@ function CustomerProfilePage() {
 
   const memberSinceFormatted = profileData?.createdAt
     ? new Date(profileData.createdAt).toLocaleDateString("en-US", {
+        day: "numeric",
         month: "long",
         year: "numeric",
       })
     : "Recently Joined";
+
+  if (isGuest) {
+    return (
+      <div className="min-h-screen bg-[#FFFFFF] dark:bg-slate-950 flex items-center justify-center p-4">
+        <GuestAuthModal isOpen={true} onClose={() => navigate({ to: "/customer" })} />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#FFFFFF] dark:bg-slate-950 text-[#1F2937] dark:text-slate-100 flex flex-col justify-between p-4 sm:p-6 lg:p-10 relative selection:bg-[#E77B49] selection:text-white transition-colors duration-300 overflow-x-hidden">
@@ -141,8 +234,26 @@ function CustomerProfilePage() {
             <div className="text-center py-20 space-y-3">
               <div className="size-10 border-4 border-[#E77B49] border-t-transparent rounded-full animate-spin mx-auto" />
               <p className="text-xs font-extrabold text-[#60241E] dark:text-slate-300 uppercase tracking-widest">
-                Fetching Real MongoDB Profile...
+                Loading Authenticated Profile...
               </p>
+            </div>
+          ) : loadError ? (
+            <div className="rounded-3xl bg-white/80 dark:bg-slate-900/80 border border-rose-200 dark:border-rose-900/50 p-8 text-center space-y-4 shadow-xl">
+              <div className="size-14 rounded-full bg-rose-100 dark:bg-rose-950/60 text-rose-600 flex items-center justify-center mx-auto">
+                <AlertCircle className="size-8" />
+              </div>
+              <div>
+                <h3 className="font-serif italic text-2xl font-bold text-[#60241E] dark:text-slate-100">
+                  {loadError}
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={fetchProfile}
+                className="px-6 py-2.5 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all active:scale-95"
+              >
+                Retry
+              </button>
             </div>
           ) : (
             <div className="rounded-3xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-border/60 dark:border-slate-800 p-8 sm:p-10 shadow-2xl space-y-8">
@@ -159,36 +270,37 @@ function CustomerProfilePage() {
                         "C"
                       )}
                     </div>
-                    <label className="absolute -bottom-1 -right-1 size-7 rounded-xl bg-[#E77B49] text-white flex items-center justify-center shadow-md cursor-pointer hover:scale-110 transition-transform">
-                      <Edit3 className="size-3.5" />
-                      <input
-                        type="file"
-                        accept="image/*"
-                        className="hidden"
-                        onChange={(e) => {
-                          if (e.target.files && e.target.files[0]) {
-                            const reader = new FileReader();
-                            reader.onload = (ev) => {
-                              if (ev.target?.result) {
-                                setProfileData({ ...profileData, avatar: ev.target.result as string });
-                                setMsg({ type: "success", text: "Profile photo updated!" });
-                              }
-                            };
-                            reader.readAsDataURL(e.target.files[0]);
-                          }
-                        }}
-                      />
-                    </label>
+                    {isEditing && (
+                      <label className="absolute -bottom-1 -right-1 size-7 rounded-xl bg-[#E77B49] text-white flex items-center justify-center shadow-md cursor-pointer hover:scale-110 transition-transform">
+                        <Edit3 className="size-3.5" />
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={(e) => {
+                            if (e.target.files && e.target.files[0]) {
+                              const reader = new FileReader();
+                              reader.onload = (ev) => {
+                                if (ev.target?.result) {
+                                  setEditAvatar(ev.target.result as string);
+                                }
+                              };
+                              reader.readAsDataURL(e.target.files[0]);
+                            }
+                          }}
+                        />
+                      </label>
+                    )}
                   </div>
 
                   <div className="space-y-1">
                     <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
                       <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#E77B49]/10 text-[#E77B49] text-[10px] font-extrabold uppercase tracking-widest border border-[#E77B49]/20">
                         <Sparkles className="size-3" />
-                        <span>StockDine Verified Diner</span>
+                        <span>Verified Customer</span>
                       </div>
-                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 text-[10px] font-extrabold uppercase border border-amber-500/20">
-                        <span>🏆 Gold VIP Member</span>
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-extrabold uppercase border border-emerald-500/20">
+                        <span>Role: {profileData?.role || "customer"}</span>
                       </span>
                     </div>
 
@@ -235,72 +347,118 @@ function CustomerProfilePage() {
                 </div>
               )}
 
-              {/* Profile Information Cards Grid */}
+              {/* Profile Information Display */}
               {!isEditing ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {/* Card 1: Name */}
-                  <div className="p-5 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/60 border border-border/50 space-y-1">
-                    <div className="flex items-center gap-2 text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-400">
-                      <User className="size-4 text-[#E77B49]" />
-                      <span>Full Name</span>
-                    </div>
-                    <p className="text-base font-bold text-[#1F2937] dark:text-slate-100">
-                      {profileData?.name || "Not Set"}
-                    </p>
-                  </div>
-
-                  {/* Card 2: Mobile */}
-                  <div className="p-5 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/60 border border-border/50 space-y-1">
-                    <div className="flex items-center gap-2 text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-400">
-                      <Phone className="size-4 text-[#E77B49]" />
-                      <span>Mobile Number</span>
-                    </div>
-                    <p className="text-base font-bold text-[#1F2937] dark:text-slate-100">
-                      {profileData?.mobile || "Mobile Verified"}
-                    </p>
-                  </div>
-
-                  {/* Card 4: Member Since */}
-                  <div className="p-5 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/60 border border-border/50 space-y-1">
-                    <div className="flex items-center gap-2 text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-400">
-                      <Calendar className="size-4 text-[#E77B49]" />
-                      <span>Member Since</span>
-                    </div>
-                    <p className="text-base font-bold text-[#1F2937] dark:text-slate-100">
-                      {memberSinceFormatted}
-                    </p>
-                  </div>
-
-                  {/* Card 5: Booking History */}
-                  <div className="p-5 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/60 border border-border/50 space-y-1">
-                    <div className="flex items-center justify-between">
+                <div className="space-y-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {/* Card 1: Full Name */}
+                    <div className="p-5 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/60 border border-border/50 space-y-1">
                       <div className="flex items-center gap-2 text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-400">
-                        <ChefHat className="size-4 text-[#E77B49]" />
-                        <span>Booking History</span>
+                        <User className="size-4 text-[#E77B49]" />
+                        <span>Full Name</span>
                       </div>
-                      <Link to="/customer/bookings" className="text-[10px] font-extrabold text-[#E77B49] hover:underline">
-                        View All →
-                      </Link>
+                      <p className="text-base font-bold text-[#1F2937] dark:text-slate-100">
+                        {profileData?.name || "Not Set"}
+                      </p>
                     </div>
-                    <p className="text-base font-bold text-[#1F2937] dark:text-slate-100">
-                      {Array.isArray(profileData?.bookingHistory) ? `${profileData.bookingHistory.length} Reservations` : "0 Reservations"}
-                    </p>
+
+                    {/* Card 2: Email Address (Read-only) */}
+                    <div className="p-5 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/60 border border-border/50 space-y-1">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2 text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-400">
+                          <Mail className="size-4 text-[#E77B49]" />
+                          <span>Email Address</span>
+                        </div>
+                        <span className="text-[10px] text-muted-foreground uppercase font-mono">Read-Only</span>
+                      </div>
+                      <p className="text-base font-bold text-[#1F2937] dark:text-slate-100">
+                        {profileData?.email || "No Email Provided"}
+                      </p>
+                    </div>
+
+                    {/* Card 3: Mobile Number */}
+                    <div className="p-5 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/60 border border-border/50 space-y-1">
+                      <div className="flex items-center gap-2 text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-400">
+                        <Phone className="size-4 text-[#E77B49]" />
+                        <span>Mobile Number</span>
+                      </div>
+                      <p className="text-base font-bold text-[#1F2937] dark:text-slate-100">
+                        {profileData?.mobile || "Not Set"}
+                      </p>
+                    </div>
+
+                    {/* Card 4: Account Role */}
+                    <div className="p-5 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/60 border border-border/50 space-y-1">
+                      <div className="flex items-center gap-2 text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-400">
+                        <ShieldCheck className="size-4 text-[#E77B49]" />
+                        <span>Account Role</span>
+                      </div>
+                      <p className="text-base font-bold text-[#1F2937] dark:text-slate-100 capitalize">
+                        {profileData?.role || "customer"}
+                      </p>
+                    </div>
+
+                    {/* Card 5: Member Since / Creation Date */}
+                    <div className="p-5 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/60 border border-border/50 space-y-1">
+                      <div className="flex items-center gap-2 text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-400">
+                        <Calendar className="size-4 text-[#E77B49]" />
+                        <span>Account Creation Date</span>
+                      </div>
+                      <p className="text-base font-bold text-[#1F2937] dark:text-slate-100">
+                        {memberSinceFormatted}
+                      </p>
+                    </div>
+
+                    {/* Card 6: Password Security Section */}
+                    <div className="p-5 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/60 border border-border/50 space-y-2">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2 text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-400">
+                          <Lock className="size-4 text-[#E77B49]" />
+                          <span>Password</span>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => setShowChangePassword(true)}
+                          className="text-xs font-extrabold text-[#E77B49] hover:underline cursor-pointer"
+                        >
+                          Change Password
+                        </button>
+                      </div>
+                      <p className="text-base font-mono font-bold tracking-widest text-[#1F2937] dark:text-slate-100">
+                        ••••••••
+                      </p>
+                    </div>
                   </div>
 
-                  {/* Card 6: Favourite Restaurants */}
-                  <div className="p-5 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/60 border border-border/50 space-y-1">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2 text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-400">
-                        <Sparkles className="size-4 text-[#E77B49]" />
-                        <span>Favourite Restaurants</span>
+                  {/* Summary Footer Stats */}
+                  <div className="grid grid-cols-2 gap-4 pt-2">
+                    <Link
+                      to="/customer/bookings"
+                      className="p-4 rounded-2xl bg-secondary/10 dark:bg-slate-800/80 border border-border/60 flex items-center justify-between hover:border-[#E77B49] transition-all"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <ChefHat className="size-5 text-[#E77B49]" />
+                        <div>
+                          <span className="text-xs font-extrabold block text-foreground">My Bookings</span>
+                          <span className="text-[10px] text-muted-foreground">View reservations & passes</span>
+                        </div>
                       </div>
-                      <Link to="/customer/favorites" className="text-[10px] font-extrabold text-[#E77B49] hover:underline">
-                        View Saved →
-                      </Link>
-                    </div>
-                    <p className="text-base font-bold text-[#1F2937] dark:text-slate-100">
-                      {Array.isArray(profileData?.favouriteRestaurants) ? `${profileData.favouriteRestaurants.length} Restaurants` : "0 Saved"}
-                    </p>
+                      <span className="text-xs font-bold text-[#E77B49]">View →</span>
+                    </Link>
+
+                    <Link
+                      to="/customer/favorites"
+                      className="p-4 rounded-2xl bg-secondary/10 dark:bg-slate-800/80 border border-border/60 flex items-center justify-between hover:border-[#E77B49] transition-all"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <Sparkles className="size-5 text-[#E77B49]" />
+                        <div>
+                          <span className="text-xs font-extrabold block text-foreground">Saved Favorites</span>
+                          <span className="text-[10px] text-muted-foreground">View favorite dining spots</span>
+                        </div>
+                      </div>
+                      <span className="text-xs font-bold text-[#E77B49]">View →</span>
+                    </Link>
                   </div>
                 </div>
               ) : (
@@ -315,6 +473,7 @@ function CustomerProfilePage() {
                       required
                       value={editName}
                       onChange={(e) => setEditName(e.target.value)}
+                      placeholder="Full Name"
                       className="w-full px-4 py-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border border-border/60 text-xs font-bold text-[#1F2937] dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
                     />
                   </div>
@@ -328,6 +487,20 @@ function CustomerProfilePage() {
                       required
                       value={editMobile}
                       onChange={(e) => setEditMobile(e.target.value)}
+                      placeholder="+91 98765 43210"
+                      className="w-full px-4 py-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border border-border/60 text-xs font-bold text-[#1F2937] dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-300 mb-1.5">
+                      Profile Photo URL (Optional)
+                    </label>
+                    <input
+                      type="url"
+                      value={editAvatar}
+                      onChange={(e) => setEditAvatar(e.target.value)}
+                      placeholder="https://example.com/photo.jpg"
                       className="w-full px-4 py-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border border-border/60 text-xs font-bold text-[#1F2937] dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
                     />
                   </div>
@@ -336,7 +509,7 @@ function CustomerProfilePage() {
                     <button
                       type="button"
                       onClick={() => setIsEditing(false)}
-                      className="px-5 py-3 rounded-2xl bg-secondary/10 text-xs font-extrabold text-[#60241E] dark:text-slate-300"
+                      className="px-5 py-3 rounded-2xl bg-secondary/10 text-xs font-extrabold text-[#60241E] dark:text-slate-300 cursor-pointer"
                     >
                       Cancel
                     </button>
@@ -346,7 +519,7 @@ function CustomerProfilePage() {
                       disabled={saving}
                       className="px-6 py-3 rounded-2xl bg-[#60241E] hover:bg-[#4A1B17] dark:bg-[#E77B49] dark:hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-lg active:scale-95 cursor-pointer"
                     >
-                      {saving ? "Saving..." : "Save Changes"}
+                      {saving ? "Saving Changes..." : "Save Changes"}
                     </button>
                   </div>
                 </form>
@@ -355,6 +528,110 @@ function CustomerProfilePage() {
           )}
         </div>
       </main>
+
+      {/* Change Password Modal */}
+      {showChangePassword && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-5 relative">
+            <button
+              type="button"
+              onClick={() => setShowChangePassword(false)}
+              className="absolute top-4 right-4 p-2 rounded-xl text-slate-400 hover:text-foreground hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            >
+              <X className="size-5" />
+            </button>
+
+            <div className="size-12 rounded-2xl bg-[#E77B49]/15 text-[#E77B49] flex items-center justify-center mx-auto">
+              <KeyRound className="size-6" />
+            </div>
+
+            <div className="text-center space-y-1">
+              <h3 className="font-serif italic font-bold text-2xl text-foreground">
+                Change Password
+              </h3>
+              <p className="text-xs text-muted-foreground font-medium">
+                Update your account password securely.
+              </p>
+            </div>
+
+            {changeMsg.text && (
+              <div
+                className={`p-3 rounded-2xl text-xs font-extrabold flex items-center gap-2 ${
+                  changeMsg.type === "success"
+                    ? "bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 text-emerald-800 dark:text-emerald-300"
+                    : "bg-rose-50 dark:bg-rose-950/50 border border-rose-200 text-rose-800 dark:text-rose-300"
+                }`}
+              >
+                {changeMsg.type === "success" ? <Check className="size-4 shrink-0" /> : <AlertCircle className="size-4 shrink-0" />}
+                <span>{changeMsg.text}</span>
+              </div>
+            )}
+
+            <form onSubmit={handleChangePasswordSubmit} className="space-y-4">
+              <div>
+                <label className="block text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-300 mb-1.5">
+                  Current Password
+                </label>
+                <input
+                  type="password"
+                  required
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                  placeholder="••••••••"
+                  className="w-full px-4 py-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border border-border/60 text-xs font-bold focus:outline-none focus:border-[#E77B49]"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-300 mb-1.5">
+                  New Password (Min 8 chars)
+                </label>
+                <input
+                  type="password"
+                  required
+                  minLength={8}
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  placeholder="••••••••"
+                  className="w-full px-4 py-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border border-border/60 text-xs font-bold focus:outline-none focus:border-[#E77B49]"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-300 mb-1.5">
+                  Confirm New Password
+                </label>
+                <input
+                  type="password"
+                  required
+                  minLength={8}
+                  value={confirmNewPassword}
+                  onChange={(e) => setConfirmNewPassword(e.target.value)}
+                  placeholder="••••••••"
+                  className="w-full px-4 py-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border border-border/60 text-xs font-bold focus:outline-none focus:border-[#E77B49]"
+                />
+              </div>
+
+              <div className="flex gap-2 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setShowChangePassword(false)}
+                  className="w-1/3 py-3 rounded-2xl bg-secondary/20 text-xs font-extrabold cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={changeLoading}
+                  className="w-2/3 py-3 rounded-2xl bg-[#60241E] dark:bg-[#E77B49] text-white text-xs font-extrabold uppercase tracking-wider shadow-md cursor-pointer"
+                >
+                  {changeLoading ? "Updating..." : "Update Password"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* Footer */}
       <footer className="relative z-10 max-w-4xl mx-auto w-full pt-6 pb-2 text-center text-[11px] text-[#6B7280] dark:text-slate-500 font-medium">

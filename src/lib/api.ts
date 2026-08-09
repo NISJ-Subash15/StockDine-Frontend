@@ -5,6 +5,10 @@ const getApiBaseUrl = (): string => {
   if (typeof process !== "undefined" && process.env && process.env.VITE_API_URL) {
     return process.env.VITE_API_URL.replace(/\/+$/, "");
   }
+  if (typeof window !== "undefined" && window.location && window.location.hostname) {
+    const host = window.location.hostname;
+    return `http://${host}:5000/api`;
+  }
   return "http://localhost:5000/api";
 };
 
@@ -89,12 +93,39 @@ export const api = {
         : apiFetch("/auth/signup", { method: "POST", body: JSON.stringify(formData) }),
 
     customerSignup: (data: object) =>
-      apiFetch("/auth/customer/signup", { method: "POST", body: JSON.stringify(data) }),
+      apiFetch<{ success: boolean; token: string; user: any; message?: string }>("/auth/customer/signup", {
+        method: "POST",
+        body: JSON.stringify(data),
+      }),
 
     login: (credentials: object) =>
       apiFetch<{ success: boolean; token: string; user: any; role: string; message?: string }>("/auth/login", {
         method: "POST",
         body: JSON.stringify(credentials),
+      }),
+
+    customerLogin: (credentials: object) =>
+      apiFetch<{ success: boolean; token: string; user: any; role: string; message?: string }>("/auth/login", {
+        method: "POST",
+        body: JSON.stringify(credentials),
+      }),
+
+    forgotPassword: (data: { email: string }) =>
+      apiFetch<{ success: boolean; message: string; resetToken?: string }>("/auth/forgot-password", {
+        method: "POST",
+        body: JSON.stringify(data),
+      }),
+
+    resetPassword: (data: { token: string; newPassword: string; confirmPassword?: string }) =>
+      apiFetch<{ success: boolean; message: string }>("/auth/reset-password", {
+        method: "POST",
+        body: JSON.stringify(data),
+      }),
+
+    changePassword: (data: { currentPassword: string; newPassword: string; confirmPassword?: string }) =>
+      apiFetch<{ success: boolean; message: string }>("/auth/change-password", {
+        method: "POST",
+        body: JSON.stringify(data),
       }),
 
     sendOtp: (data: { mobile: string; isSignup?: boolean }) =>
@@ -109,13 +140,61 @@ export const api = {
         body: JSON.stringify(data),
       }),
 
-    updateCustomerProfile: (data: { name?: string; mobile?: string; email?: string }) =>
-      apiFetch<{ success: boolean; user: any; message: string }>("/auth/customer/profile", {
+    updateCustomerProfile: (data: { name?: string; mobile?: string; email?: string; avatar?: string; profilePhoto?: string }) =>
+      apiFetch<{ success: boolean; user: any; profile: any; message: string }>("/auth/profile", {
         method: "PUT",
         body: JSON.stringify(data),
       }),
 
-    getProfile: () => apiFetch<{ success: boolean; role: string; profile: any }>("/auth/profile"),
+    getProfile: () => apiFetch<{ success: boolean; role: string; profile: any; user: any }>("/auth/profile"),
+    me: () => apiFetch<{ success: boolean; role: string; profile: any; user: any }>("/auth/me"),
+  },
+
+  // Super Admin Endpoints
+  superAdmin: {
+    login: (credentials: { email: string; password: string }) =>
+      apiFetch<{ success: boolean; token: string; user: any; message?: string }>("/superadmin/login", {
+        method: "POST",
+        body: JSON.stringify(credentials),
+      }),
+    getStats: () => apiFetch<{ success: boolean; stats: any }>("/superadmin/dashboard-stats"),
+    getUsers: () => apiFetch<{ success: boolean; count: number; users: any[] }>("/superadmin/users"),
+    updateUserRole: (id: string, role: string) =>
+      apiFetch<{ success: boolean; message: string; user: any }>(`/superadmin/users/${id}/role`, {
+        method: "PATCH",
+        body: JSON.stringify({ role }),
+      }),
+    deleteUser: (id: string) =>
+      apiFetch<{ success: boolean; message: string }>(`/superadmin/users/${id}`, { method: "DELETE" }),
+    getRestaurants: () => apiFetch<{ success: boolean; count: number; restaurants: any[] }>("/superadmin/restaurants"),
+    approveRestaurant: (id: string) =>
+      apiFetch<{ success: boolean; message: string }>(`/superadmin/restaurants/${id}/approve`, { method: "PATCH" }),
+    rejectRestaurant: (id: string) =>
+      apiFetch<{ success: boolean; message: string }>(`/superadmin/restaurants/${id}/reject`, { method: "PATCH" }),
+    deleteRestaurant: (id: string) =>
+      apiFetch<{ success: boolean; message: string }>(`/superadmin/restaurants/${id}`, { method: "DELETE" }),
+    getBookings: () => apiFetch<{ success: boolean; count: number; bookings: any[] }>("/superadmin/bookings"),
+    updateBookingStatus: (id: string, status: string) =>
+      apiFetch<{ success: boolean; message: string }>(`/superadmin/bookings/${id}/status`, {
+        method: "PATCH",
+        body: JSON.stringify({ status }),
+      }),
+    getPayments: () => apiFetch<{ success: boolean; analytics: any }>("/superadmin/payments"),
+    getReviews: () => apiFetch<{ success: boolean; count: number; reviews: any[] }>("/superadmin/reviews"),
+    deleteReview: (id: string) =>
+      apiFetch<{ success: boolean; message: string }>(`/superadmin/reviews/${id}`, { method: "DELETE" }),
+    getCrm: () => apiFetch<{ success: boolean; count: number; tickets: any[] }>("/superadmin/crm"),
+    updateCrm: (id: string, data: object) =>
+      apiFetch<{ success: boolean; message: string }>(`/superadmin/crm/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify(data),
+      }),
+    getSettings: () => apiFetch<{ success: boolean; settings: any }>("/superadmin/settings"),
+    updateSettings: (data: object) =>
+      apiFetch<{ success: boolean; message: string; settings: any }>("/superadmin/settings", {
+        method: "PUT",
+        body: JSON.stringify(data),
+      }),
   },
 
   // Customers
@@ -238,7 +317,7 @@ export const api = {
 
   // Dishes
   dishes: {
-    getAll: (params?: { restaurantId?: string; category?: string; search?: string; vegOnly?: string }) => {
+    getAll: (params?: { restaurantId?: string; category?: string; search?: string; vegOnly?: string | boolean; availableOnly?: string | boolean }) => {
       const query = new URLSearchParams(params as any).toString();
       return apiFetch(`/dishes${query ? `?${query}` : ""}`);
     },
@@ -303,6 +382,8 @@ export const api = {
         ? apiFetch("/tables", { method: "POST", body: data })
         : apiFetch("/tables", { method: "POST", body: JSON.stringify(data) }),
 
+    hold: (data: object) => apiFetch("/tables/hold", { method: "POST", body: JSON.stringify(data) }),
+
     edit: (id: string, data: FormData | object) =>
       data instanceof FormData
         ? apiFetch(`/tables/${id}`, { method: "PUT", body: data })
@@ -327,11 +408,18 @@ export const api = {
 
     getByRestaurant: (restaurantId: string) => apiFetch(`/reviews/restaurant/${restaurantId}`),
 
+    getFeatured: () => apiFetch<{ success: boolean; reviews: any[] }>("/reviews/featured"),
+
     reply: (id: string, reply: string) =>
       apiFetch(`/reviews/${id}/reply`, {
         method: "PATCH",
         body: JSON.stringify({ reply }),
       }),
+  },
+
+  // Intelligent Search
+  search: {
+    query: (q: string) => apiFetch<{ success: boolean; results: { dishes: any[]; restaurants: any[]; cuisines: string[] } }>(`/search?q=${encodeURIComponent(q)}`),
   },
 
   // QR Code

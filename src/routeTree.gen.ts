@@ -16,6 +16,7 @@ import { Route as KitchenRouteImport } from './routes/kitchen'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as StockdineSuperadminRouteImport } from './routes/stockdine-superadmin'
 import { Route as SuperAdminRouteImport } from './routes/super-admin'
 import { Route as AuthSelectRoleRouteImport } from './routes/auth/select-role'
 import { Route as AuthWorkspaceRouteImport } from './routes/auth/workspace'
@@ -27,6 +28,14 @@ import { Route as CustomerMapRouteImport } from './routes/customer/map'
 import { Route as CustomerProfileRouteImport } from './routes/customer/profile'
 import { Route as RestaurantAdminRouteImport } from './routes/restaurant/admin'
 import { Route as RestaurantKitchenRouteImport } from './routes/restaurant/kitchen'
+import { Route as StockdineSuperadminBookingsRouteImport } from './routes/stockdine-superadmin/bookings'
+import { Route as StockdineSuperadminCrmRouteImport } from './routes/stockdine-superadmin/crm'
+import { Route as StockdineSuperadminDashboardRouteImport } from './routes/stockdine-superadmin/dashboard'
+import { Route as StockdineSuperadminPaymentsRouteImport } from './routes/stockdine-superadmin/payments'
+import { Route as StockdineSuperadminRestaurantsRouteImport } from './routes/stockdine-superadmin/restaurants'
+import { Route as StockdineSuperadminReviewsRouteImport } from './routes/stockdine-superadmin/reviews'
+import { Route as StockdineSuperadminSettingsRouteImport } from './routes/stockdine-superadmin/settings'
+import { Route as StockdineSuperadminUsersRouteImport } from './routes/stockdine-superadmin/users'
 import { Route as AuthCustomerLoginRouteImport } from './routes/auth/customer/login'
 import { Route as AuthCustomerSignupRouteImport } from './routes/auth/customer/signup'
 import { Route as AuthRestaurantLoginRouteImport } from './routes/auth/restaurant/login'
@@ -66,6 +75,11 @@ const SignupRoute = SignupRouteImport.update({
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StockdineSuperadminRoute = StockdineSuperadminRouteImport.update({
+  id: '/stockdine-superadmin',
+  path: '/stockdine-superadmin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SuperAdminRoute = SuperAdminRouteImport.update({
@@ -123,6 +137,53 @@ const RestaurantKitchenRoute = RestaurantKitchenRouteImport.update({
   path: '/restaurant/kitchen',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StockdineSuperadminBookingsRoute =
+  StockdineSuperadminBookingsRouteImport.update({
+    id: '/bookings',
+    path: '/bookings',
+    getParentRoute: () => StockdineSuperadminRoute,
+  } as any)
+const StockdineSuperadminCrmRoute = StockdineSuperadminCrmRouteImport.update({
+  id: '/crm',
+  path: '/crm',
+  getParentRoute: () => StockdineSuperadminRoute,
+} as any)
+const StockdineSuperadminDashboardRoute =
+  StockdineSuperadminDashboardRouteImport.update({
+    id: '/dashboard',
+    path: '/dashboard',
+    getParentRoute: () => StockdineSuperadminRoute,
+  } as any)
+const StockdineSuperadminPaymentsRoute =
+  StockdineSuperadminPaymentsRouteImport.update({
+    id: '/payments',
+    path: '/payments',
+    getParentRoute: () => StockdineSuperadminRoute,
+  } as any)
+const StockdineSuperadminRestaurantsRoute =
+  StockdineSuperadminRestaurantsRouteImport.update({
+    id: '/restaurants',
+    path: '/restaurants',
+    getParentRoute: () => StockdineSuperadminRoute,
+  } as any)
+const StockdineSuperadminReviewsRoute =
+  StockdineSuperadminReviewsRouteImport.update({
+    id: '/reviews',
+    path: '/reviews',
+    getParentRoute: () => StockdineSuperadminRoute,
+  } as any)
+const StockdineSuperadminSettingsRoute =
+  StockdineSuperadminSettingsRouteImport.update({
+    id: '/settings',
+    path: '/settings',
+    getParentRoute: () => StockdineSuperadminRoute,
+  } as any)
+const StockdineSuperadminUsersRoute =
+  StockdineSuperadminUsersRouteImport.update({
+    id: '/users',
+    path: '/users',
+    getParentRoute: () => StockdineSuperadminRoute,
+  } as any)
 const AuthCustomerLoginRoute = AuthCustomerLoginRouteImport.update({
   id: '/auth/customer/login',
   path: '/auth/customer/login',
@@ -158,6 +219,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/stockdine-superadmin': typeof StockdineSuperadminRouteWithChildren
   '/super-admin': typeof SuperAdminRoute
   '/auth/select-role': typeof AuthSelectRoleRoute
   '/auth/workspace': typeof AuthWorkspaceRoute
@@ -168,6 +230,14 @@ export interface FileRoutesByFullPath {
   '/customer/profile': typeof CustomerProfileRoute
   '/restaurant/admin': typeof RestaurantAdminRoute
   '/restaurant/kitchen': typeof RestaurantKitchenRoute
+  '/stockdine-superadmin/bookings': typeof StockdineSuperadminBookingsRoute
+  '/stockdine-superadmin/crm': typeof StockdineSuperadminCrmRoute
+  '/stockdine-superadmin/dashboard': typeof StockdineSuperadminDashboardRoute
+  '/stockdine-superadmin/payments': typeof StockdineSuperadminPaymentsRoute
+  '/stockdine-superadmin/restaurants': typeof StockdineSuperadminRestaurantsRoute
+  '/stockdine-superadmin/reviews': typeof StockdineSuperadminReviewsRoute
+  '/stockdine-superadmin/settings': typeof StockdineSuperadminSettingsRoute
+  '/stockdine-superadmin/users': typeof StockdineSuperadminUsersRoute
   '/customer/': typeof CustomerIndexRoute
   '/auth/customer/login': typeof AuthCustomerLoginRoute
   '/auth/customer/signup': typeof AuthCustomerSignupRoute
@@ -182,6 +252,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/stockdine-superadmin': typeof StockdineSuperadminRouteWithChildren
   '/super-admin': typeof SuperAdminRoute
   '/auth/select-role': typeof AuthSelectRoleRoute
   '/auth/workspace': typeof AuthWorkspaceRoute
@@ -192,6 +263,14 @@ export interface FileRoutesByTo {
   '/customer/profile': typeof CustomerProfileRoute
   '/restaurant/admin': typeof RestaurantAdminRoute
   '/restaurant/kitchen': typeof RestaurantKitchenRoute
+  '/stockdine-superadmin/bookings': typeof StockdineSuperadminBookingsRoute
+  '/stockdine-superadmin/crm': typeof StockdineSuperadminCrmRoute
+  '/stockdine-superadmin/dashboard': typeof StockdineSuperadminDashboardRoute
+  '/stockdine-superadmin/payments': typeof StockdineSuperadminPaymentsRoute
+  '/stockdine-superadmin/restaurants': typeof StockdineSuperadminRestaurantsRoute
+  '/stockdine-superadmin/reviews': typeof StockdineSuperadminReviewsRoute
+  '/stockdine-superadmin/settings': typeof StockdineSuperadminSettingsRoute
+  '/stockdine-superadmin/users': typeof StockdineSuperadminUsersRoute
   '/customer': typeof CustomerIndexRoute
   '/auth/customer/login': typeof AuthCustomerLoginRoute
   '/auth/customer/signup': typeof AuthCustomerSignupRoute
@@ -208,6 +287,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/signup': typeof SignupRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/stockdine-superadmin': typeof StockdineSuperadminRouteWithChildren
   '/super-admin': typeof SuperAdminRoute
   '/auth/select-role': typeof AuthSelectRoleRoute
   '/auth/workspace': typeof AuthWorkspaceRoute
@@ -218,6 +298,14 @@ export interface FileRoutesById {
   '/customer/profile': typeof CustomerProfileRoute
   '/restaurant/admin': typeof RestaurantAdminRoute
   '/restaurant/kitchen': typeof RestaurantKitchenRoute
+  '/stockdine-superadmin/bookings': typeof StockdineSuperadminBookingsRoute
+  '/stockdine-superadmin/crm': typeof StockdineSuperadminCrmRoute
+  '/stockdine-superadmin/dashboard': typeof StockdineSuperadminDashboardRoute
+  '/stockdine-superadmin/payments': typeof StockdineSuperadminPaymentsRoute
+  '/stockdine-superadmin/restaurants': typeof StockdineSuperadminRestaurantsRoute
+  '/stockdine-superadmin/reviews': typeof StockdineSuperadminReviewsRoute
+  '/stockdine-superadmin/settings': typeof StockdineSuperadminSettingsRoute
+  '/stockdine-superadmin/users': typeof StockdineSuperadminUsersRoute
   '/customer/': typeof CustomerIndexRoute
   '/auth/customer/login': typeof AuthCustomerLoginRoute
   '/auth/customer/signup': typeof AuthCustomerSignupRoute
@@ -235,6 +323,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/signup'
     | '/sitemap.xml'
+    | '/stockdine-superadmin'
     | '/super-admin'
     | '/auth/select-role'
     | '/auth/workspace'
@@ -245,6 +334,14 @@ export interface FileRouteTypes {
     | '/customer/profile'
     | '/restaurant/admin'
     | '/restaurant/kitchen'
+    | '/stockdine-superadmin/bookings'
+    | '/stockdine-superadmin/crm'
+    | '/stockdine-superadmin/dashboard'
+    | '/stockdine-superadmin/payments'
+    | '/stockdine-superadmin/restaurants'
+    | '/stockdine-superadmin/reviews'
+    | '/stockdine-superadmin/settings'
+    | '/stockdine-superadmin/users'
     | '/customer/'
     | '/auth/customer/login'
     | '/auth/customer/signup'
@@ -259,6 +356,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/signup'
     | '/sitemap.xml'
+    | '/stockdine-superadmin'
     | '/super-admin'
     | '/auth/select-role'
     | '/auth/workspace'
@@ -269,6 +367,14 @@ export interface FileRouteTypes {
     | '/customer/profile'
     | '/restaurant/admin'
     | '/restaurant/kitchen'
+    | '/stockdine-superadmin/bookings'
+    | '/stockdine-superadmin/crm'
+    | '/stockdine-superadmin/dashboard'
+    | '/stockdine-superadmin/payments'
+    | '/stockdine-superadmin/restaurants'
+    | '/stockdine-superadmin/reviews'
+    | '/stockdine-superadmin/settings'
+    | '/stockdine-superadmin/users'
     | '/customer'
     | '/auth/customer/login'
     | '/auth/customer/signup'
@@ -284,6 +390,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/signup'
     | '/sitemap.xml'
+    | '/stockdine-superadmin'
     | '/super-admin'
     | '/auth/select-role'
     | '/auth/workspace'
@@ -294,6 +401,14 @@ export interface FileRouteTypes {
     | '/customer/profile'
     | '/restaurant/admin'
     | '/restaurant/kitchen'
+    | '/stockdine-superadmin/bookings'
+    | '/stockdine-superadmin/crm'
+    | '/stockdine-superadmin/dashboard'
+    | '/stockdine-superadmin/payments'
+    | '/stockdine-superadmin/restaurants'
+    | '/stockdine-superadmin/reviews'
+    | '/stockdine-superadmin/settings'
+    | '/stockdine-superadmin/users'
     | '/customer/'
     | '/auth/customer/login'
     | '/auth/customer/signup'
@@ -310,6 +425,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   SignupRoute: typeof SignupRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  StockdineSuperadminRoute: typeof StockdineSuperadminRouteWithChildren
   SuperAdminRoute: typeof SuperAdminRoute
   AuthSelectRoleRoute: typeof AuthSelectRoleRoute
   AuthWorkspaceRoute: typeof AuthWorkspaceRoute
@@ -370,6 +486,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/stockdine-superadmin': {
+      id: '/stockdine-superadmin'
+      path: '/stockdine-superadmin'
+      fullPath: '/stockdine-superadmin'
+      preLoaderRoute: typeof StockdineSuperadminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/super-admin': {
@@ -449,6 +572,62 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RestaurantKitchenRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/stockdine-superadmin/bookings': {
+      id: '/stockdine-superadmin/bookings'
+      path: '/bookings'
+      fullPath: '/stockdine-superadmin/bookings'
+      preLoaderRoute: typeof StockdineSuperadminBookingsRouteImport
+      parentRoute: typeof StockdineSuperadminRoute
+    }
+    '/stockdine-superadmin/crm': {
+      id: '/stockdine-superadmin/crm'
+      path: '/crm'
+      fullPath: '/stockdine-superadmin/crm'
+      preLoaderRoute: typeof StockdineSuperadminCrmRouteImport
+      parentRoute: typeof StockdineSuperadminRoute
+    }
+    '/stockdine-superadmin/dashboard': {
+      id: '/stockdine-superadmin/dashboard'
+      path: '/dashboard'
+      fullPath: '/stockdine-superadmin/dashboard'
+      preLoaderRoute: typeof StockdineSuperadminDashboardRouteImport
+      parentRoute: typeof StockdineSuperadminRoute
+    }
+    '/stockdine-superadmin/payments': {
+      id: '/stockdine-superadmin/payments'
+      path: '/payments'
+      fullPath: '/stockdine-superadmin/payments'
+      preLoaderRoute: typeof StockdineSuperadminPaymentsRouteImport
+      parentRoute: typeof StockdineSuperadminRoute
+    }
+    '/stockdine-superadmin/restaurants': {
+      id: '/stockdine-superadmin/restaurants'
+      path: '/restaurants'
+      fullPath: '/stockdine-superadmin/restaurants'
+      preLoaderRoute: typeof StockdineSuperadminRestaurantsRouteImport
+      parentRoute: typeof StockdineSuperadminRoute
+    }
+    '/stockdine-superadmin/reviews': {
+      id: '/stockdine-superadmin/reviews'
+      path: '/reviews'
+      fullPath: '/stockdine-superadmin/reviews'
+      preLoaderRoute: typeof StockdineSuperadminReviewsRouteImport
+      parentRoute: typeof StockdineSuperadminRoute
+    }
+    '/stockdine-superadmin/settings': {
+      id: '/stockdine-superadmin/settings'
+      path: '/settings'
+      fullPath: '/stockdine-superadmin/settings'
+      preLoaderRoute: typeof StockdineSuperadminSettingsRouteImport
+      parentRoute: typeof StockdineSuperadminRoute
+    }
+    '/stockdine-superadmin/users': {
+      id: '/stockdine-superadmin/users'
+      path: '/users'
+      fullPath: '/stockdine-superadmin/users'
+      preLoaderRoute: typeof StockdineSuperadminUsersRouteImport
+      parentRoute: typeof StockdineSuperadminRoute
+    }
     '/auth/customer/login': {
       id: '/auth/customer/login'
       path: '/auth/customer/login'
@@ -511,6 +690,31 @@ const CustomerRouteRouteWithChildren = CustomerRouteRoute._addFileChildren(
   CustomerRouteRouteChildren,
 )
 
+interface StockdineSuperadminRouteChildren {
+  StockdineSuperadminBookingsRoute: typeof StockdineSuperadminBookingsRoute
+  StockdineSuperadminCrmRoute: typeof StockdineSuperadminCrmRoute
+  StockdineSuperadminDashboardRoute: typeof StockdineSuperadminDashboardRoute
+  StockdineSuperadminPaymentsRoute: typeof StockdineSuperadminPaymentsRoute
+  StockdineSuperadminRestaurantsRoute: typeof StockdineSuperadminRestaurantsRoute
+  StockdineSuperadminReviewsRoute: typeof StockdineSuperadminReviewsRoute
+  StockdineSuperadminSettingsRoute: typeof StockdineSuperadminSettingsRoute
+  StockdineSuperadminUsersRoute: typeof StockdineSuperadminUsersRoute
+}
+
+const StockdineSuperadminRouteChildren: StockdineSuperadminRouteChildren = {
+  StockdineSuperadminBookingsRoute: StockdineSuperadminBookingsRoute,
+  StockdineSuperadminCrmRoute: StockdineSuperadminCrmRoute,
+  StockdineSuperadminDashboardRoute: StockdineSuperadminDashboardRoute,
+  StockdineSuperadminPaymentsRoute: StockdineSuperadminPaymentsRoute,
+  StockdineSuperadminRestaurantsRoute: StockdineSuperadminRestaurantsRoute,
+  StockdineSuperadminReviewsRoute: StockdineSuperadminReviewsRoute,
+  StockdineSuperadminSettingsRoute: StockdineSuperadminSettingsRoute,
+  StockdineSuperadminUsersRoute: StockdineSuperadminUsersRoute,
+}
+
+const StockdineSuperadminRouteWithChildren =
+  StockdineSuperadminRoute._addFileChildren(StockdineSuperadminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CustomerRouteRoute: CustomerRouteRouteWithChildren,
@@ -519,6 +723,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   SignupRoute: SignupRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  StockdineSuperadminRoute: StockdineSuperadminRouteWithChildren,
   SuperAdminRoute: SuperAdminRoute,
   AuthSelectRoleRoute: AuthSelectRoleRoute,
   AuthWorkspaceRoute: AuthWorkspaceRoute,

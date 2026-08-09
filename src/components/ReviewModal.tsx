@@ -16,10 +16,11 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
   onClose,
   restaurant,
   bookingId,
-  customerName = "Aarav Sharma",
+  customerName,
   onSuccess,
 }) => {
-  const { addReviewWithReward } = useStockDineStore();
+  const { addReviewWithReward, authSession } = useStockDineStore();
+  const activeCustomerName = customerName || authSession?.profileData?.name || "Verified Diner";
 
   const [overallRating, setOverallRating] = useState<number>(5);
   const [foodRating, setFoodRating] = useState<number>(5);
@@ -53,7 +54,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
       addReviewWithReward(
         {
           restaurantId: restaurant.id,
-          customerName,
+          customerName: activeCustomerName,
           customerAvatar:
             "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200",
           rating: overallRating,

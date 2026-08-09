@@ -27,6 +27,7 @@ import {
 import { api } from "@/lib/api";
 import { DishCard } from "@/components/DishCard";
 import { BookingModal } from "@/components/BookingModal";
+import { GuestAuthModal } from "@/components/GuestAuthModal";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 const defaultFallbackRestaurant: RestaurantDetails = {
@@ -167,7 +168,15 @@ function DishesPage() {
 
   const categories = ["All", "Starters", "Main Course", "Pizza", "Desserts", "Drinks"];
 
+  const { authSession } = useStockDineStore();
+  const isGuest = !authSession || !authSession.isLoggedIn;
+  const [showGuestAuthModal, setShowGuestAuthModal] = useState(false);
+
   const handleOpenBookingForDish = (dish: Dish) => {
+    if (isGuest) {
+      setShowGuestAuthModal(true);
+      return;
+    }
     const rest = restaurantMap[dish.restaurantId] || restaurantList[0] || defaultFallbackRestaurant;
     setBookingTargetRestaurant(rest);
     setBookingPreselectedDish(dish);
@@ -406,6 +415,9 @@ function DishesPage() {
           }}
         />
       )}
+
+      {/* Guest Auth Intercept Modal */}
+      <GuestAuthModal isOpen={showGuestAuthModal} onClose={() => setShowGuestAuthModal(false)} />
     </div>
   );
 }

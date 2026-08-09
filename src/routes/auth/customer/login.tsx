@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Phone, ArrowRight, Sparkles, AlertCircle, ShieldCheck, KeyRound } from "lucide-react";
+import { Mail, Lock, Eye, EyeOff, ArrowRight, ShieldCheck, AlertCircle, KeyRound, CheckCircle2, X } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useStockDineStore } from "@/lib/stockdine-store";
 import { api } from "@/lib/api";
@@ -9,7 +9,7 @@ export const Route = createFileRoute("/auth/customer/login")({
   head: () => ({
     meta: [
       { title: "Customer Sign In — StockDine" },
-      { name: "description", content: "Sign in using your registered mobile number with OTP verification." },
+      { name: "description", content: "Sign in using your Email Address and Password." },
     ],
   }),
   component: CustomerLoginPage,
@@ -19,82 +19,168 @@ function CustomerLoginPage() {
   const navigate = useNavigate();
   const { setAuthSession } = useStockDineStore();
 
-  const [mobile, setMobile] = useState("");
-  const [otp, setOtp] = useState("");
-  const [otpSent, setOtpSent] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
-  const [infoMsg, setInfoMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
 
-  const handleSendOtp = async (e: React.FormEvent) => {
+  // Forgot Password State
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [resetEmail, setResetEmail] = useState("");
+  const [resetTokenInput, setResetTokenInput] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const [resetStep, setResetStep] = useState<1 | 2>(1); // 1 = Request, 2 = Reset
+  const [resetLoading, setResetLoading] = useState(false);
+  const [resetError, setResetError] = useState("");
+  const [resetSuccess, setResetSuccess] = useState("");
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg("");
-    setInfoMsg("");
+    setSuccessMsg("");
 
-    if (!mobile.trim()) {
-      setErrorMsg("Please enter your registered Mobile Number.");
+    const cleanEmail = email.trim().toLowerCase();
+    if (!cleanEmail) {
+      setErrorMsg("Please enter your Email Address.");
+      return;
+    }
+
+    if (!password) {
+      setErrorMsg("Please enter your Password.");
       return;
     }
 
     setIsLoading(true);
     try {
-      const res = await api.auth.sendOtp({ mobile, isSignup: false });
+      const res = await api.auth.customerLogin({ email: cleanEmail, password });
       setIsLoading(false);
-      if (res.success) {
-        setOtpSent(true);
-        const code = res.otp || "5820";
-        setOtp(code);
-        setInfoMsg(`OTP code generated for ${mobile}: ${code} (Auto-filled below for instant sign in)`);
+
+      if (res && res.success && res.token) {
+        localStorage.setItem("stockdine_token", res.token);
+        const userProf = res.user || {
+          email: cleanEmail,
+          name: cleanEmail.split("@")[0],
+          role: res.role || "customer",
+        };
+
+        setAuthSession({
+          userEmail: cleanEmail,
+          restaurantId: "",
+          permissions: "both",
+          isLoggedIn: true,
+          userRole: res.role || "customer",
+          profileData: userProf,
+        });
+
+        // Optionally fetch real profile from database
+        try {
+          const profRes: any = await api.auth.getProfile();
+          if (profRes && profRes.success && (profRes.profile || profRes.user)) {
+            const realProf = profRes.profile || profRes.user;
+            setAuthSession({
+              userEmail: realProf.email || cleanEmail,
+              restaurantId: "",
+              permissions: "both",
+              isLoggedIn: true,
+              userRole: realProf.role || "customer",
+              profileData: realProf,
+            });
+          }
+        } catch (pErr) {}
+
+        setSuccessMsg("Signed in successfully! Redirecting...");
+        setTimeout(() => {
+          navigate({ to: "/customer", replace: true });
+        }, 800);
       } else {
-        setErrorMsg(res.message || "No account found. Please Sign Up first.");
+        setErrorMsg("Invalid email or password.");
       }
     } catch (err: any) {
       setIsLoading(false);
-      setOtpSent(true);
-      setOtp("5820");
-      setInfoMsg(`OTP code generated for ${mobile}: 5820 (Auto-filled below for instant sign in)`);
+      setErrorMsg("Invalid email or password.");
     }
   };
 
-  const handleVerifyOtp = async (e: React.FormEvent) => {
+  const handleRequestReset = async (e: React.FormEvent) => {
     e.preventDefault();
-    setErrorMsg("");
+    setResetError("");
+    setResetSuccess("");
 
-    if (!otp.trim()) {
-      setErrorMsg("Please enter the OTP code.");
+    const cleanEmail = resetEmail.trim().toLowerCase();
+    if (!cleanEmail) {
+      setResetError("Please enter your Email Address.");
       return;
     }
 
-    setIsLoading(true);
+    setResetLoading(true);
     try {
-      const res = await api.auth.verifyOtp({ mobile, otp });
-      setIsLoading(false);
-
-      if (res.success && res.token) {
-        localStorage.setItem("stockdine_token", res.token);
-        setAuthSession({
-          userEmail: res.user?.email || mobile,
-          restaurantId: "",
-          permissions: "both",
-          isLoggedIn: true,
-        });
-        navigate({ to: "/customer", replace: true });
+      const res = await api.auth.forgotPassword({ email: cleanEmail });
+      setResetLoading(false);
+      if (res && res.success) {
+        setResetSuccess(res.message || "Password reset token sent.");
+        if (res.resetToken) {
+          setResetTokenInput(res.resetToken);
+          setResetSuccess(`Password reset token generated: ${res.resetToken}`);
+        }
+        setResetStep(2);
       } else {
-        setErrorMsg(res.message || "Invalid OTP entered.");
+        setResetError(res.message || "Failed to process request.");
       }
     } catch (err: any) {
-      setIsLoading(false);
-      if (otp === "5820") {
-        setAuthSession({
-          userEmail: mobile,
-          restaurantId: "",
-          permissions: "both",
-          isLoggedIn: true,
-        });
-        navigate({ to: "/customer", replace: true });
+      setResetLoading(false);
+      setResetError(err.message || "Failed to process request.");
+    }
+  };
+
+  const handleResetPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setResetError("");
+    setResetSuccess("");
+
+    if (!resetTokenInput.trim()) {
+      setResetError("Please enter the Reset Token.");
+      return;
+    }
+
+    if (!newPassword || newPassword.length < 6) {
+      setResetError("New password must be at least 6 characters long.");
+      return;
+    }
+
+    if (newPassword !== confirmNewPassword) {
+      setResetError("Passwords do not match.");
+      return;
+    }
+
+    setResetLoading(true);
+    try {
+      const res = await api.auth.resetPassword({
+        token: resetTokenInput.trim(),
+        newPassword,
+        confirmPassword: confirmNewPassword,
+      });
+      setResetLoading(false);
+
+      if (res && res.success) {
+        setResetSuccess("Password reset successfully! Please sign in below.");
+        setTimeout(() => {
+          setShowForgotPassword(false);
+          setEmail(resetEmail);
+          setResetStep(1);
+          setResetTokenInput("");
+          setNewPassword("");
+          setConfirmNewPassword("");
+        }, 1500);
       } else {
-        setErrorMsg("Verification failed. Enter code 5820.");
+        setResetError(res.message || "Failed to reset password.");
       }
+    } catch (err: any) {
+      setResetLoading(false);
+      setResetError(err.message || "Password reset failed. Invalid or expired token.");
     }
   };
 
@@ -121,7 +207,7 @@ function CustomerLoginPage() {
             to="/auth/customer/signup"
             className="text-xs font-extrabold text-[#60241E] dark:text-slate-200 hover:text-[#E77B49] transition-colors flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-secondary/10 dark:bg-slate-800/80 border border-border/60"
           >
-            <span>New Diner? Register</span>
+            <span>Create Account</span>
             <ArrowRight className="size-3.5" />
           </Link>
           <ThemeToggle />
@@ -138,7 +224,7 @@ function CustomerLoginPage() {
                 Customer Sign In
               </h1>
               <p className="text-xs text-[#6B7280] dark:text-slate-400 font-medium">
-                Enter your Mobile Number to log in via instant OTP verification.
+                Enter your Email Address and Password to sign in.
               </p>
             </div>
 
@@ -149,109 +235,244 @@ function CustomerLoginPage() {
               </div>
             )}
 
-            {infoMsg && (
-              <div className="p-3.5 rounded-2xl bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-900 text-amber-800 dark:text-amber-300 text-xs font-extrabold flex items-center gap-2">
-                <Sparkles className="size-4 shrink-0 text-amber-600" />
-                <span>{infoMsg}</span>
+            {successMsg && (
+              <div className="p-3.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-900 text-emerald-700 dark:text-emerald-300 text-xs font-extrabold flex items-center gap-2">
+                <CheckCircle2 className="size-4 shrink-0" />
+                <span>{successMsg}</span>
               </div>
             )}
 
-            {!otpSent ? (
-              /* STEP 1: Mobile Number Form */
-              <form onSubmit={handleSendOtp} className="space-y-4">
-                <div>
-                  <label className="block text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-300 mb-1.5">
-                    Mobile Number
-                  </label>
-                  <div className="relative">
-                    <Phone className="absolute left-3.5 top-3.5 size-4 text-[#6B7280]" />
-                    <input
-                      type="tel"
-                      required
-                      value={mobile}
-                      onChange={(e) => setMobile(e.target.value)}
-                      placeholder="+91 98765 43210"
-                      className="w-full pl-10 pr-4 py-3.5 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/80 border border-border/60 text-xs font-bold text-[#1F2937] dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
-                    />
-                  </div>
+            {/* Email + Password Form */}
+            <form onSubmit={handleLogin} noValidate className="space-y-4">
+              <div>
+                <label className="block text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-300 mb-1.5">
+                  Email Address
+                </label>
+                <div className="relative">
+                  <Mail className="absolute left-3.5 top-3.5 size-4 text-[#6B7280]" />
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="user@example.com"
+                    className="w-full pl-10 pr-4 py-3.5 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/80 border border-border/60 text-xs font-bold text-[#1F2937] dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
+                  />
                 </div>
+              </div>
 
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className="w-full py-4 rounded-2xl bg-[#60241E] hover:bg-[#4A1B17] dark:bg-[#E77B49] dark:hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-lg hover:shadow-xl transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer mt-2"
-                >
-                  {isLoading ? (
-                    <span>Sending OTP...</span>
-                  ) : (
-                    <>
-                      <span>Receive OTP Code</span>
-                      <ArrowRight className="size-4" />
-                    </>
-                  )}
-                </button>
-              </form>
-            ) : (
-              /* STEP 2: OTP Verification Form */
-              <form onSubmit={handleVerifyOtp} className="space-y-4 animate-in fade-in duration-300">
-                <div>
-                  <label className="block text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-300 mb-1.5">
-                    Enter Verification OTP
+              <div>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="block text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-300">
+                    Password
                   </label>
-                  <div className="relative">
-                    <KeyRound className="absolute left-3.5 top-3.5 size-4 text-[#6B7280]" />
-                    <input
-                      type="text"
-                      maxLength={6}
-                      required
-                      value={otp}
-                      onChange={(e) => setOtp(e.target.value)}
-                      placeholder="5820"
-                      className="w-full pl-10 pr-4 py-3.5 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/80 border border-border/60 text-sm font-extrabold tracking-widest text-[#1F2937] dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
-                    />
-                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowForgotPassword(true);
+                      setResetEmail(email);
+                      setResetStep(1);
+                      setResetError("");
+                      setResetSuccess("");
+                    }}
+                    className="text-xs font-extrabold text-[#E77B49] hover:underline cursor-pointer"
+                  >
+                    Forgot Password?
+                  </button>
                 </div>
+                <div className="relative">
+                  <Lock className="absolute left-3.5 top-3.5 size-4 text-[#6B7280]" />
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="w-full pl-10 pr-10 py-3.5 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/80 border border-border/60 text-xs font-bold text-[#1F2937] dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3.5 top-3.5 text-[#6B7280] hover:text-[#1F2937] dark:hover:text-slate-200"
+                  >
+                    {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+                  </button>
+                </div>
+              </div>
 
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className="w-full py-4 rounded-2xl bg-[#60241E] hover:bg-[#4A1B17] dark:bg-[#E77B49] dark:hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-lg hover:shadow-xl transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer mt-2"
-                >
-                  {isLoading ? (
-                    <span>Verifying...</span>
-                  ) : (
-                    <>
-                      <span>Verify & Sign In</span>
-                      <ShieldCheck className="size-4" />
-                    </>
-                  )}
-                </button>
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="w-full py-4 rounded-2xl bg-[#60241E] hover:bg-[#4A1B17] dark:bg-[#E77B49] dark:hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-lg hover:shadow-xl transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer mt-2"
+              >
+                {isLoading ? (
+                  <span>Signing In...</span>
+                ) : (
+                  <>
+                    <span>Sign In</span>
+                    <ShieldCheck className="size-4" />
+                  </>
+                )}
+              </button>
+            </form>
 
-                <button
-                  type="button"
-                  onClick={() => setOtpSent(false)}
-                  className="w-full text-center text-xs font-extrabold text-[#6B7280] hover:text-[#E77B49] transition-colors pt-1 cursor-pointer"
-                >
-                  ← Edit Mobile Number
-                </button>
-              </form>
-            )}
-
-            <div className="text-center pt-2">
+            <div className="flex items-center justify-between pt-2 border-t border-border/40 text-xs font-extrabold">
               <Link
                 to="/auth/select-role"
                 search={{ mode: "login" }}
-                className="text-xs font-extrabold text-[#6B7280] hover:text-[#E77B49] transition-colors"
+                className="text-[#6B7280] hover:text-[#E77B49] transition-colors"
               >
-                ← Back to Role Selection
+                ← Role Selection
+              </Link>
+              <Link
+                to="/auth/customer/signup"
+                className="text-[#E77B49] hover:underline"
+              >
+                Create Account →
               </Link>
             </div>
           </div>
         </div>
       </main>
 
+      {/* Forgot Password Modal */}
+      {showForgotPassword && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-5 relative">
+            <button
+              type="button"
+              onClick={() => setShowForgotPassword(false)}
+              className="absolute top-4 right-4 p-2 rounded-xl text-slate-400 hover:text-foreground hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            >
+              <X className="size-5" />
+            </button>
+
+            <div className="size-12 rounded-2xl bg-[#E77B49]/15 text-[#E77B49] flex items-center justify-center mx-auto">
+              <KeyRound className="size-6" />
+            </div>
+
+            <div className="text-center space-y-1">
+              <h3 className="font-serif italic font-bold text-2xl text-foreground">
+                Reset Password
+              </h3>
+              <p className="text-xs text-muted-foreground font-medium">
+                {resetStep === 1
+                  ? "Enter your registered Email Address to receive a password reset token."
+                  : "Enter your Reset Token and new Password below."}
+              </p>
+            </div>
+
+            {resetError && (
+              <div className="p-3 rounded-2xl bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-900 text-rose-700 dark:text-rose-300 text-xs font-extrabold flex items-center gap-2">
+                <AlertCircle className="size-4 shrink-0" />
+                <span>{resetError}</span>
+              </div>
+            )}
+
+            {resetSuccess && (
+              <div className="p-3 rounded-2xl bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 text-emerald-800 dark:text-emerald-300 text-xs font-extrabold flex items-center gap-2">
+                <CheckCircle2 className="size-4 shrink-0" />
+                <span>{resetSuccess}</span>
+              </div>
+            )}
+
+            {resetStep === 1 ? (
+              <form onSubmit={handleRequestReset} className="space-y-4">
+                <div>
+                  <label className="block text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-300 mb-1.5">
+                    Email Address
+                  </label>
+                  <div className="relative">
+                    <Mail className="absolute left-3.5 top-3.5 size-4 text-[#6B7280]" />
+                    <input
+                      type="email"
+                      required
+                      value={resetEmail}
+                      onChange={(e) => setResetEmail(e.target.value)}
+                      placeholder="user@example.com"
+                      className="w-full pl-10 pr-4 py-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border border-border/60 text-xs font-bold focus:outline-none focus:border-[#E77B49]"
+                    />
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={resetLoading}
+                  className="w-full py-3.5 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all active:scale-95 cursor-pointer"
+                >
+                  {resetLoading ? "Generating Reset Token..." : "Send Reset Link"}
+                </button>
+              </form>
+            ) : (
+              <form onSubmit={handleResetPassword} className="space-y-4">
+                <div>
+                  <label className="block text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-300 mb-1.5">
+                    Reset Token
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={resetTokenInput}
+                    onChange={(e) => setResetTokenInput(e.target.value)}
+                    placeholder="Enter reset token"
+                    className="w-full px-4 py-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border border-border/60 text-xs font-mono font-bold focus:outline-none focus:border-[#E77B49]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-300 mb-1.5">
+                    New Password (Min 8 chars)
+                  </label>
+                  <input
+                    type="password"
+                    required
+                    minLength={8}
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="w-full px-4 py-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border border-border/60 text-xs font-bold focus:outline-none focus:border-[#E77B49]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-300 mb-1.5">
+                    Confirm New Password
+                  </label>
+                  <input
+                    type="password"
+                    required
+                    minLength={8}
+                    value={confirmNewPassword}
+                    onChange={(e) => setConfirmNewPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="w-full px-4 py-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border border-border/60 text-xs font-bold focus:outline-none focus:border-[#E77B49]"
+                  />
+                </div>
+
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setResetStep(1)}
+                    className="w-1/3 py-3 rounded-2xl bg-secondary/20 text-xs font-extrabold cursor-pointer"
+                  >
+                    ← Back
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={resetLoading}
+                    className="w-2/3 py-3 rounded-2xl bg-[#60241E] dark:bg-[#E77B49] text-white text-xs font-extrabold uppercase tracking-wider shadow-md cursor-pointer"
+                  >
+                    {resetLoading ? "Resetting..." : "Reset Password"}
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Footer */}
-      <footer className="relative z-10 max-w-4xl mx-auto w-full pt-6 pb-2 text-center text-[11px] text-[#6B7280] dark:text-slate-500 font-medium">
+      <footer className="relative z-10 max-w-4xl mx-auto w-full pt-4 pb-2 text-center text-[11px] text-[#6B7280] dark:text-slate-500 font-medium">
         © StockDine Inc. All rights reserved.
       </footer>
     </div>

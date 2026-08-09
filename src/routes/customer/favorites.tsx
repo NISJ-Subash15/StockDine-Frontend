@@ -1,9 +1,10 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { ArrowLeft, Heart, Star, MapPin, ArrowRight, Building2 } from "lucide-react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useStockDineStore } from "@/lib/stockdine-store";
 import { api } from "@/lib/api";
+import { GuestAuthModal } from "@/components/GuestAuthModal";
 
 export const Route = createFileRoute("/customer/favorites")({
   head: () => ({
@@ -16,9 +17,11 @@ export const Route = createFileRoute("/customer/favorites")({
 });
 
 function FavoritesPage() {
-  const { getAllRestaurantProfiles } = useStockDineStore();
+  const navigate = useNavigate();
+  const { getAllRestaurantProfiles, authSession } = useStockDineStore();
+  const isGuest = !authSession || !authSession.isLoggedIn;
   const [favourites, setFavourites] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!isGuest);
 
   useEffect(() => {
     async function loadFavourites() {
@@ -46,8 +49,20 @@ function FavoritesPage() {
         setLoading(false);
       }
     }
-    loadFavourites();
-  }, []);
+    if (!isGuest) {
+      loadFavourites();
+    } else {
+      setLoading(false);
+    }
+  }, [isGuest]);
+
+  if (isGuest) {
+    return (
+      <div className="min-h-screen bg-[#FFFFFF] dark:bg-slate-950 flex items-center justify-center p-4">
+        <GuestAuthModal isOpen={true} onClose={() => navigate({ to: "/customer" })} />
+      </div>
+    );
+  }
 
   return (
     <div className="px-4 sm:px-6 pt-8 max-w-xl mx-auto pb-28 selection:bg-[#E77B49] selection:text-white bg-[#FFFFFF] dark:bg-slate-950 min-h-screen transition-colors duration-300">
