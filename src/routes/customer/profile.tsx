@@ -18,7 +18,7 @@ export const Route = createFileRoute("/customer/profile")({
 
 function CustomerProfilePage() {
   const navigate = useNavigate();
-  const { authSession, updateUserProfile, signOut } = useStockDineStore();
+  const { authSession, setAuthSession, updateUserProfile, signOut } = useStockDineStore();
 
   const isGuest = !authSession || !authSession.isLoggedIn;
   const userProfile = authSession?.profileData || (authSession?.userEmail ? {
@@ -77,6 +77,11 @@ function CustomerProfilePage() {
         setEditName(prof.name || "");
         setEditMobile(prof.mobile || "");
         setEditAvatar(prof.avatar || "");
+        setAuthSession({
+          ...authSession,
+          userEmail: prof.email || prof.mobile || authSession.userEmail,
+          profileData: prof,
+        });
       } else {
         const custRes: any = await api.customers.getProfile();
         if (custRes && custRes.success && custRes.customer) {
@@ -84,6 +89,11 @@ function CustomerProfilePage() {
           setEditName(custRes.customer.name || "");
           setEditMobile(custRes.customer.mobile || "");
           setEditAvatar(custRes.customer.avatar || "");
+          setAuthSession({
+            ...authSession,
+            userEmail: custRes.customer.email || custRes.customer.mobile || authSession.userEmail,
+            profileData: custRes.customer,
+          });
         }
       }
     } catch (err: any) {
