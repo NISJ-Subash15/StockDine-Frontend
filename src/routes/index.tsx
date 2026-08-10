@@ -153,8 +153,8 @@ function LandingPage() {
   const [isSearching, setIsSearching] = useState(false);
   const [showSearchDropdown, setShowSearchDropdown] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
-  // Video Error / Fallback State
-  const [videoError, setVideoError] = useState(false);
+  // Video Error / Fallback State (default to true to use crisp hero background image cleanly)
+  const [videoError, setVideoError] = useState(true);
 
   // Real Database Data state
   const [dishes, setDishes] = useState<any[]>([]);

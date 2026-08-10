@@ -5,15 +5,16 @@ const getApiBaseUrl = (): string => {
   if (typeof process !== "undefined" && process.env && process.env.VITE_API_URL) {
     return process.env.VITE_API_URL.replace(/\/+$/, "");
   }
-  if (typeof window !== "undefined" && window.location && window.location.hostname) {
+  if (typeof window !== "undefined" && window.location) {
     const host = window.location.hostname;
     const protocol = window.location.protocol === "https:" ? "https:" : "http:";
 
-    // If deployed on Vercel, Netlify, Render, Railway or custom domain (non-localhost)
-    if (host !== "localhost" && host !== "127.0.0.1" && !host.startsWith("192.168.") && !host.startsWith("172.")) {
-      return `/api`;
+    // If local dev environment (localhost, 127.0.0.1, or local IP)
+    if (host === "localhost" || host === "127.0.0.1" || host.startsWith("192.168.") || host.startsWith("172.")) {
+      return `${protocol}//${host}:5000/api`;
     }
-    return `${protocol}//${host}:5000/api`;
+    // Deployed production environment (Vercel, Netlify, Render, Railway)
+    return `/api`;
   }
   return "http://localhost:5000/api";
 };
@@ -50,43 +51,48 @@ async function apiFetch<T>(endpoint: string, options: RequestInit = {}): Promise
 
   const baseUrl = getApiBaseUrl();
   const cleanEndpoint = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;
-  const fullUrl = `${baseUrl}${cleanEndpoint}`;
+  const primaryUrl = `${baseUrl}${cleanEndpoint}`;
 
-  try {
-    const response = await fetch(fullUrl, {
+  // Helper to execute fetch request
+  const doFetch = async (targetUrl: string) => {
+    const response = await fetch(targetUrl, {
       ...options,
       headers,
     });
-
     const data = await response.json().catch(() => ({}));
-
     if (!response.ok) {
-      throw new Error(data.message || `API Error: ${response.status}`);
+      const err: any = new Error(data.message || `API Error: ${response.status}`);
+      err.status = response.status;
+      throw err;
+    }
+    return data as T;
+  };
+
+  try {
+    return await doFetch(primaryUrl);
+  } catch (error: any) {
+    // If primary attempt returned 404 or network failure, attempt fallback URLs for localhost / 127.0.0.1 backend
+    const fallbackUrls: string[] = [];
+    if (!primaryUrl.includes("localhost:5000")) {
+      fallbackUrls.push(`http://localhost:5000/api${cleanEndpoint}`);
+    }
+    if (!primaryUrl.includes("127.0.0.1:5000")) {
+      fallbackUrls.push(`http://127.0.0.1:5000/api${cleanEndpoint}`);
     }
 
-    return data as T;
-  } catch (error: any) {
-    // If fetch failed on localhost (common IPv6 vs IPv4 issue on Windows), retry using 127.0.0.1
-    if (fullUrl.includes("localhost:5000")) {
-      const fallbackUrl = fullUrl.replace("localhost:5000", "127.0.0.1:5000");
+    for (const fallbackUrl of fallbackUrls) {
       try {
-        const response = await fetch(fallbackUrl, {
-          ...options,
-          headers,
-        });
-        const data = await response.json().catch(() => ({}));
-        if (!response.ok) {
-          throw new Error(data.message || `API Error: ${response.status}`);
+        return await doFetch(fallbackUrl);
+      } catch (fbErr: any) {
+        // Continue trying fallback URLs if status was 404 or network failure
+        if (fbErr.status !== 404 && fbErr.status !== undefined) {
+          throw fbErr; // Re-throw non-404 business errors (e.g. 400 Bad Request, 401 Unauthorized)
         }
-        return data as T;
-      } catch (fallbackErr: any) {
-        console.error(`❌ API Fetch Error [${options.method || "GET"} ${fallbackUrl}]:`, fallbackErr.message || fallbackErr);
-        throw new Error(fallbackErr.message || `Cannot connect to backend server. Please verify backend is running.`);
       }
     }
 
-    console.error(`❌ API Fetch Error [${options.method || "GET"} ${fullUrl}]:`, error.message || error);
-    throw new Error(error.message || `Failed to fetch. Unable to connect to server at ${fullUrl}`);
+    console.error(`❌ API Fetch Error [${options.method || "GET"} ${primaryUrl}]:`, error.message || error);
+    throw error;
   }
 }
 
