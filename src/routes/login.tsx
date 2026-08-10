@@ -70,9 +70,7 @@ const COUNTRIES: Country[] = [
 function LoginPage() {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    navigate({ to: "/auth/select-role", search: { mode: "login" }, replace: true });
-  }, [navigate]);
+
 
   const searchParams: { view?: string; registered?: string; email?: string } = useSearch({ strict: false });
 

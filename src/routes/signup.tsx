@@ -84,9 +84,7 @@ const RESTAURANT_TYPES = [
 function SignupPage() {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    navigate({ to: "/auth/select-role", search: { mode: "signup" }, replace: true });
-  }, [navigate]);
+
 
   const { registerRestaurantAdmin, checkEmailExists, checkRestaurantExists, setAuthSession } = useStockDineStore();
 
