@@ -277,18 +277,18 @@ function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col justify-between p-4 sm:p-6 lg:p-10 relative selection:bg-[#E77B49] selection:text-white transition-colors duration-300">
+    <div className="min-h-screen bg-background text-foreground flex flex-col justify-between p-4 sm:p-6 lg:p-10 relative selection:bg-[#d2d0c1] selection:text-white transition-colors duration-300">
       {/* Background Lights */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(231,123,73,0.08),transparent_70%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(210,208,193,0.08),transparent_70%)] pointer-events-none" />
 
       {/* Header */}
       <header className="relative z-10 flex items-center justify-between max-w-4xl mx-auto w-full pt-2 pb-6">
         <Link to="/" className="group flex items-center gap-3">
           <div>
-            <span className="font-serif italic text-3xl font-bold text-[#60241E] dark:text-[#E77B49] tracking-tight block leading-none">
+            <span className="font-serif italic text-3xl font-bold text-[#111111] dark:text-[#d2d0c1] tracking-tight block leading-none">
               StockDine
             </span>
-            <span className="text-[9px] uppercase tracking-[0.3em] text-[#E77B49] font-extrabold block mt-1">
+            <span className="text-[9px] uppercase tracking-[0.3em] text-[#d2d0c1] font-extrabold block mt-1">
               Partner Registration
             </span>
           </div>
@@ -297,7 +297,7 @@ function SignupPage() {
         <div className="flex items-center gap-3">
           <Link
             to="/login"
-            className="text-xs font-extrabold text-[#60241E] dark:text-slate-200 hover:text-[#E77B49] transition-colors flex items-center gap-1.5 px-3 py-2 rounded-xl bg-secondary/10 dark:bg-slate-800/80 border border-border/60"
+            className="text-xs font-extrabold text-[#111111] dark:text-slate-200 hover:text-[#d2d0c1] transition-colors flex items-center gap-1.5 px-3 py-2 rounded-xl bg-secondary/10 dark:bg-[#383838]/80 border border-border/60"
           >
             <span>Existing Owner? Sign In</span>
             <ArrowRight className="size-3.5" />
@@ -309,14 +309,14 @@ function SignupPage() {
       {/* Main Container */}
       <main className="relative z-10 flex-1 flex items-center justify-center py-6">
         <div className="w-full max-w-3xl mx-auto">
-          <div className="glass-card-premium rounded-3xl p-6 sm:p-10 shadow-2xl border border-border bg-card dark:bg-slate-900/90 dark:border-slate-800 transition-all animate-splash-in relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-40 h-40 bg-[#E77B49]/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="glass-card-premium rounded-3xl p-6 sm:p-10 shadow-2xl border border-[#E5E5E5] bg-card dark:bg-[#222222]/90 dark:border-[#404040] transition-all animate-splash-in relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-40 h-40 bg-[#d2d0c1]/10 rounded-full blur-3xl pointer-events-none" />
 
             {/* Stepper Header Progress */}
             <div className="mb-8">
               <div className="flex items-center justify-between mb-4">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#E77B49]/10 text-[#E77B49] text-xs font-bold border border-[#E77B49]/20">
-                  <Sparkles className="size-3.5 fill-current" />
+                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#F5F5F5] dark:bg-[#d2d0c1]/20 text-[#111111] dark:text-[#d2d0c1] text-xs font-bold border border-[#E5E5E5]">
+                  <Sparkles className="size-3.5 fill-current text-[#d2d0c1]" />
                   <span>Step {step} of 4 — {step === 1 ? "Owner Details" : step === 2 ? "Restaurant Profile" : step === 3 ? "Business Specs" : "Account Setup"}</span>
                 </div>
                 <span className="text-xs font-bold text-muted-foreground">
@@ -325,9 +325,9 @@ function SignupPage() {
               </div>
 
               {/* Progress Bar */}
-              <div className="w-full h-2 rounded-full bg-secondary/30 dark:bg-slate-800 overflow-hidden">
+              <div className="w-full h-2 rounded-full bg-secondary/30 dark:bg-[#383838] overflow-hidden">
                 <div
-                  className="h-full bg-gradient-to-r from-[#60241E] via-[#95271D] to-[#E77B49] transition-all duration-500 rounded-full"
+                  className="h-full bg-[#111111] dark:bg-[#d2d0c1] transition-all duration-500 rounded-full"
                   style={{ width: `${(step / 4) * 100}%` }}
                 />
               </div>
@@ -345,12 +345,12 @@ function SignupPage() {
                     type="button"
                     disabled={s.num > step}
                     onClick={() => setStep(s.num as any)}
-                    className={`py-2 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-1.5 ${
+                    className={`py-2 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                       step === s.num
-                        ? "bg-[#60241E] dark:bg-[#E77B49] text-white shadow-md"
+                        ? "bg-[#111111] dark:bg-[#d2d0c1] text-white shadow-md"
                         : step > s.num
                         ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30"
-                        : "bg-secondary/10 dark:bg-slate-800/40 text-muted-foreground opacity-60"
+                        : "bg-secondary/10 dark:bg-[#383838]/40 text-muted-foreground opacity-60"
                     }`}
                   >
                     {step > s.num ? (
@@ -378,7 +378,7 @@ function SignupPage() {
             {step === 1 && (
               <form onSubmit={handleNextStep1} className="space-y-5">
                 <div className="text-center sm:text-left mb-6">
-                  <h1 className="font-serif italic text-3xl sm:text-4xl text-[#60241E] dark:text-slate-100 font-bold tracking-tight">
+                  <h1 className="font-serif italic text-3xl sm:text-4xl text-[#111111] dark:text-slate-100 font-bold tracking-tight">
                     Owner & Admin Profile
                   </h1>
                   <p className="text-xs sm:text-sm text-muted-foreground mt-1 font-medium">
@@ -388,7 +388,7 @@ function SignupPage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#60241E] dark:text-slate-300 mb-1.5">
+                    <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#111111] dark:text-slate-300 mb-1.5">
                       Owner Full Name *
                     </label>
                     <div className="relative flex items-center">
@@ -398,14 +398,14 @@ function SignupPage() {
                         value={ownerName}
                         onChange={(e) => setOwnerName(e.target.value)}
                         placeholder="e.g. Chef Marcus Vance"
-                        className="w-full pl-10 pr-4 py-3 rounded-2xl bg-white dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#E77B49] shadow-sm"
+                        className="w-full pl-10 pr-4 py-3 rounded-2xl bg-white dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-foreground text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#111111] shadow-sm"
                       />
-                      <User className="absolute left-3.5 size-4 text-[#E77B49] pointer-events-none" />
+                      <User className="absolute left-3.5 size-4 text-[#333333] pointer-events-none" />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#60241E] dark:text-slate-300 mb-1.5">
+                    <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#111111] dark:text-slate-300 mb-1.5">
                       Email Address *
                     </label>
                     <div className="relative flex items-center">
@@ -415,15 +415,15 @@ function SignupPage() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="marcus@heritagekitchen.com"
-                        className="w-full pl-10 pr-4 py-3 rounded-2xl bg-white dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#E77B49] shadow-sm"
+                        className="w-full pl-10 pr-4 py-3 rounded-2xl bg-white dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-foreground text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#111111] shadow-sm"
                       />
-                      <Mail className="absolute left-3.5 size-4 text-[#E77B49] pointer-events-none" />
+                      <Mail className="absolute left-3.5 size-4 text-[#333333] pointer-events-none" />
                     </div>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#60241E] dark:text-slate-300 mb-1.5">
+                  <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#111111] dark:text-slate-300 mb-1.5">
                     Mobile Phone Number *
                   </label>
                   <div className="relative flex items-center">
@@ -433,15 +433,15 @@ function SignupPage() {
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       placeholder="+1 (555) 987-6543 or +91 98765 43210"
-                      className="w-full pl-10 pr-4 py-3 rounded-2xl bg-white dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#E77B49] shadow-sm"
+                      className="w-full pl-10 pr-4 py-3 rounded-2xl bg-white dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-foreground text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#111111] shadow-sm"
                     />
-                    <Phone className="absolute left-3.5 size-4 text-[#E77B49] pointer-events-none" />
+                    <Phone className="absolute left-3.5 size-4 text-[#333333] pointer-events-none" />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#60241E] dark:text-slate-300 mb-1.5">
+                    <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#111111] dark:text-slate-300 mb-1.5">
                       Password *
                     </label>
                     <div className="relative flex items-center">
@@ -451,13 +451,13 @@ function SignupPage() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="At least 6 characters"
-                        className="w-full pl-10 pr-10 py-3 rounded-2xl bg-white dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#E77B49] shadow-sm"
+                        className="w-full pl-10 pr-10 py-3 rounded-2xl bg-white dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-foreground text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#111111] shadow-sm"
                       />
-                      <Lock className="absolute left-3.5 size-4 text-[#E77B49] pointer-events-none" />
+                      <Lock className="absolute left-3.5 size-4 text-[#333333] pointer-events-none" />
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3.5 text-muted-foreground hover:text-foreground"
+                        className="absolute right-3.5 text-muted-foreground hover:text-foreground cursor-pointer"
                       >
                         {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                       </button>
@@ -465,7 +465,7 @@ function SignupPage() {
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#60241E] dark:text-slate-300 mb-1.5">
+                    <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#111111] dark:text-slate-300 mb-1.5">
                       Confirm Password *
                     </label>
                     <div className="relative flex items-center">
@@ -475,13 +475,13 @@ function SignupPage() {
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         placeholder="Re-enter password"
-                        className="w-full pl-10 pr-10 py-3 rounded-2xl bg-white dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#E77B49] shadow-sm"
+                        className="w-full pl-10 pr-10 py-3 rounded-2xl bg-white dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-foreground text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#111111] shadow-sm"
                       />
-                      <Lock className="absolute left-3.5 size-4 text-[#E77B49] pointer-events-none" />
+                      <Lock className="absolute left-3.5 size-4 text-[#333333] pointer-events-none" />
                       <button
                         type="button"
                         onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                        className="absolute right-3.5 text-muted-foreground hover:text-foreground"
+                        className="absolute right-3.5 text-muted-foreground hover:text-foreground cursor-pointer"
                         title={showConfirmPassword ? "Hide password" : "Show password"}
                       >
                         {showConfirmPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
@@ -491,7 +491,7 @@ function SignupPage() {
                 </div>
 
                 {password && (
-                  <div className="p-3 rounded-2xl bg-secondary/10 dark:bg-slate-800 border border-border text-xs font-semibold flex items-center justify-between">
+                  <div className="p-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border border-[#E5E5E5] text-xs font-semibold flex items-center justify-between">
                     <span className="text-muted-foreground">Password Strength:</span>
                     <span
                       className={`font-extrabold ${
@@ -510,10 +510,10 @@ function SignupPage() {
                 <div className="pt-4 flex justify-end">
                   <button
                     type="submit"
-                    className="w-full sm:w-auto px-8 h-13 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white font-extrabold text-sm shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2"
+                    className="w-full sm:w-auto px-8 h-13 rounded-2xl bg-[#111111] hover:bg-[#333333] dark:bg-[#d2d0c1] dark:hover:bg-[#D66A38] text-white font-extrabold text-sm shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <span>Proceed to Restaurant Profile</span>
-                    <ArrowRight className="size-4" />
+                    <ArrowRight className="size-4 text-[#d2d0c1]" />
                   </button>
                 </div>
               </form>
@@ -525,7 +525,7 @@ function SignupPage() {
             {step === 2 && (
               <form onSubmit={handleNextStep2} className="space-y-5">
                 <div className="text-center sm:text-left mb-6">
-                  <h1 className="font-serif italic text-3xl sm:text-4xl text-[#60241E] dark:text-slate-100 font-bold tracking-tight">
+                  <h1 className="font-serif italic text-3xl sm:text-4xl text-[#111111] dark:text-slate-100 font-bold tracking-tight">
                     Restaurant Details
                   </h1>
                   <p className="text-xs sm:text-sm text-muted-foreground mt-1 font-medium">
@@ -534,7 +534,7 @@ function SignupPage() {
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#60241E] dark:text-slate-300 mb-1.5">
+                  <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#111111] dark:text-slate-300 mb-1.5">
                     Restaurant / Venue Name *
                   </label>
                   <div className="relative flex items-center">
@@ -544,26 +544,26 @@ function SignupPage() {
                       value={restaurantName}
                       onChange={(e) => setRestaurantName(e.target.value)}
                       placeholder="e.g. Royal Heritage Spice & Grill"
-                      className="w-full pl-10 pr-4 py-3 rounded-2xl bg-white dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#E77B49] shadow-sm"
+                      className="w-full pl-10 pr-4 py-3 rounded-2xl bg-white dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-foreground text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#111111] shadow-sm"
                     />
-                    <Store className="absolute left-3.5 size-4 text-[#E77B49] pointer-events-none" />
+                    <Store className="absolute left-3.5 size-4 text-[#333333] pointer-events-none" />
                   </div>
                 </div>
 
                 {/* Cover Banner Preset */}
                 <div>
                   <div>
-                    <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#60241E] dark:text-slate-300 mb-1.5">
+                    <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#111111] dark:text-slate-300 mb-1.5">
                       Restaurant Cover Banner
                     </label>
                     <div className="flex gap-2 items-center mb-2">
-                      <img src={coverImageUrl} alt="Cover Preview" className="h-12 w-20 rounded-2xl object-cover border-2 border-[#E77B49] shadow-sm shrink-0" />
+                      <img src={coverImageUrl} alt="Cover Preview" className="h-12 w-20 rounded-2xl object-cover border-2 border-[#111111] shadow-sm shrink-0" />
                       <input
                         type="url"
                         value={coverImageUrl}
                         onChange={(e) => setCoverImageUrl(e.target.value)}
                         placeholder="Image URL..."
-                        className="flex-1 px-3 py-2 text-xs rounded-xl bg-white dark:bg-slate-800 border border-border dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-[#E77B49]"
+                        className="flex-1 px-3 py-2 text-xs rounded-xl bg-white dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] focus:outline-none focus:ring-2 focus:ring-[#111111]"
                       />
                     </div>
                     <div className="flex flex-wrap gap-1.5">
@@ -572,10 +572,10 @@ function SignupPage() {
                           key={idx}
                           type="button"
                           onClick={() => setCoverImageUrl(p.url)}
-                          className={`text-[10px] px-2.5 py-1 rounded-lg border font-bold transition-all ${
+                          className={`text-[10px] px-2.5 py-1 rounded-lg border font-bold transition-all cursor-pointer ${
                             coverImageUrl === p.url
-                              ? "bg-[#E77B49] text-white border-[#E77B49]"
-                              : "bg-secondary/10 dark:bg-slate-800 border-border hover:bg-secondary/20"
+                              ? "bg-[#111111] text-white border-[#111111]"
+                              : "bg-[#F5F5F5] dark:bg-[#383838] border-[#E5E5E5] hover:bg-secondary/20"
                           }`}
                         >
                           {p.label}
@@ -587,7 +587,7 @@ function SignupPage() {
 
                 {/* Address & City */}
                 <div>
-                  <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#60241E] dark:text-slate-300 mb-1.5">
+                  <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#111111] dark:text-slate-300 mb-1.5">
                     Street Address *
                   </label>
                   <div className="relative flex items-center">
@@ -597,15 +597,15 @@ function SignupPage() {
                       value={address}
                       onChange={(e) => setAddress(e.target.value)}
                       placeholder="e.g. 104 Connaught Place, Block B"
-                      className="w-full pl-10 pr-4 py-3 rounded-2xl bg-white dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#E77B49] shadow-sm"
+                      className="w-full pl-10 pr-4 py-3 rounded-2xl bg-white dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-foreground text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#111111] shadow-sm"
                     />
-                    <MapPin className="absolute left-3.5 size-4 text-[#E77B49] pointer-events-none" />
+                    <MapPin className="absolute left-3.5 size-4 text-[#333333] pointer-events-none" />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   <div>
-                    <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#60241E] dark:text-slate-300 mb-1.5">
+                    <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#111111] dark:text-slate-300 mb-1.5">
                       City *
                     </label>
                     <input
@@ -614,12 +614,12 @@ function SignupPage() {
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
                       placeholder="New Delhi"
-                      className="w-full px-3 py-2.5 rounded-xl bg-white dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#E77B49]"
+                      className="w-full px-3 py-2.5 rounded-xl bg-white dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-foreground text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#111111]"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#60241E] dark:text-slate-300 mb-1.5">
+                    <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#111111] dark:text-slate-300 mb-1.5">
                       State / Region
                     </label>
                     <input
@@ -627,12 +627,12 @@ function SignupPage() {
                       value={state}
                       onChange={(e) => setState(e.target.value)}
                       placeholder="Delhi"
-                      className="w-full px-3 py-2.5 rounded-xl bg-white dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#E77B49]"
+                      className="w-full px-3 py-2.5 rounded-xl bg-white dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-foreground text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#111111]"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#60241E] dark:text-slate-300 mb-1.5">
+                    <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#111111] dark:text-slate-300 mb-1.5">
                       Country *
                     </label>
                     <input
@@ -641,12 +641,12 @@ function SignupPage() {
                       value={country}
                       onChange={(e) => setCountry(e.target.value)}
                       placeholder="India"
-                      className="w-full px-3 py-2.5 rounded-xl bg-white dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#E77B49]"
+                      className="w-full px-3 py-2.5 rounded-xl bg-white dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-foreground text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#111111]"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#60241E] dark:text-slate-300 mb-1.5">
+                    <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#111111] dark:text-slate-300 mb-1.5">
                       PIN/ZIP Code *
                     </label>
                     <input
@@ -655,16 +655,16 @@ function SignupPage() {
                       value={zipCode}
                       onChange={(e) => setZipCode(e.target.value)}
                       placeholder="110001"
-                      className="w-full px-3 py-2.5 rounded-xl bg-white dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#E77B49]"
+                      className="w-full px-3 py-2.5 rounded-xl bg-white dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-foreground text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#111111]"
                     />
                   </div>
                 </div>
 
                 {/* Google Maps Pin Simulation */}
-                <div className="p-4 rounded-2xl bg-secondary/10 dark:bg-slate-800/60 border border-border space-y-2">
+                <div className="p-4 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838]/60 border border-[#E5E5E5] space-y-2">
                   <div className="flex items-center justify-between">
-                    <label className="text-xs font-bold text-[#60241E] dark:text-slate-200 flex items-center gap-1.5">
-                      <Compass className="size-4 text-[#E77B49]" />
+                    <label className="text-xs font-bold text-[#111111] dark:text-slate-200 flex items-center gap-1.5">
+                      <Compass className="size-4 text-[#d2d0c1]" />
                       <span>Google Maps Location Pin</span>
                     </label>
                     <span className="text-[11px] font-mono text-muted-foreground">
@@ -673,10 +673,10 @@ function SignupPage() {
                   </div>
 
                   <div className="h-28 rounded-xl bg-slate-900 relative overflow-hidden flex items-center justify-center border border-slate-700">
-                    <div className="absolute inset-0 bg-[radial-gradient(#E77B49_1px,transparent_1px)] [background-size:16px_16px] opacity-20" />
+                    <div className="absolute inset-0 bg-[radial-gradient(#d2d0c1_1px,transparent_1px)] [background-size:16px_16px] opacity-20" />
                     <div className="relative text-center space-y-1">
-                      <div className="size-10 rounded-full bg-[#E77B49] text-white flex items-center justify-center mx-auto shadow-lg animate-bounce">
-                        <MapPin className="size-5 fill-current" />
+                      <div className="size-10 rounded-full bg-[#111111] text-white flex items-center justify-center mx-auto shadow-lg animate-bounce border border-[#d2d0c1]">
+                        <MapPin className="size-5 fill-current text-[#d2d0c1]" />
                       </div>
                       <p className="text-[11px] font-bold text-slate-200">
                         {restaurantName || "Your Restaurant Location"}
@@ -692,7 +692,7 @@ function SignupPage() {
                   <button
                     type="button"
                     onClick={() => setStep(1)}
-                    className="px-5 h-12 rounded-2xl bg-secondary/20 hover:bg-secondary/30 text-foreground font-extrabold text-xs transition-all flex items-center gap-1.5"
+                    className="px-5 h-12 rounded-2xl bg-[#F5F5F5] hover:bg-secondary/30 text-foreground font-extrabold text-xs transition-all flex items-center gap-1.5 border border-[#E5E5E5] cursor-pointer"
                   >
                     <ArrowLeft className="size-4" />
                     <span>Back</span>
@@ -700,10 +700,10 @@ function SignupPage() {
 
                   <button
                     type="submit"
-                    className="px-8 h-12 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white font-extrabold text-xs shadow-lg active:scale-95 transition-all flex items-center gap-2"
+                    className="px-8 h-12 rounded-2xl bg-[#111111] hover:bg-[#333333] dark:bg-[#d2d0c1] dark:hover:bg-[#D66A38] text-white font-extrabold text-xs shadow-lg active:scale-95 transition-all flex items-center gap-2 cursor-pointer"
                   >
                     <span>Business Specifications</span>
-                    <ArrowRight className="size-4" />
+                    <ArrowRight className="size-4 text-[#d2d0c1]" />
                   </button>
                 </div>
               </form>
@@ -715,7 +715,7 @@ function SignupPage() {
             {step === 3 && (
               <form onSubmit={handleNextStep3} className="space-y-5">
                 <div className="text-center sm:text-left mb-6">
-                  <h1 className="font-serif italic text-3xl sm:text-4xl text-[#60241E] dark:text-slate-100 font-bold tracking-tight">
+                  <h1 className="font-serif italic text-3xl sm:text-4xl text-[#111111] dark:text-slate-100 font-bold tracking-tight">
                     Business & Capacity
                   </h1>
                   <p className="text-xs sm:text-sm text-muted-foreground mt-1 font-medium">
@@ -724,7 +724,7 @@ function SignupPage() {
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#60241E] dark:text-slate-300 mb-2">
+                  <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#111111] dark:text-slate-300 mb-2">
                     Restaurant Type *
                   </label>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -733,10 +733,10 @@ function SignupPage() {
                         key={t}
                         type="button"
                         onClick={() => setRestaurantType(t)}
-                        className={`p-3 rounded-2xl text-xs font-bold border transition-all text-left flex items-center justify-between ${
+                        className={`p-3 rounded-2xl text-xs font-bold border transition-all text-left flex items-center justify-between cursor-pointer ${
                           restaurantType === t
-                            ? "bg-[#60241E] dark:bg-[#E77B49] text-white border-transparent shadow-md"
-                            : "bg-white dark:bg-slate-800 border-border dark:border-slate-700 text-foreground hover:bg-secondary/10"
+                            ? "bg-[#111111] dark:bg-[#d2d0c1] text-white border-transparent shadow-md"
+                            : "bg-white dark:bg-[#383838] border-[#E5E5E5] dark:border-[#404040] text-foreground hover:bg-secondary/10"
                         }`}
                       >
                         <span>{t}</span>
@@ -747,7 +747,7 @@ function SignupPage() {
                 </div>
 
                 <div>
-                  <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#60241E] dark:text-slate-300 mb-2">
+                  <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#111111] dark:text-slate-300 mb-2">
                     Cuisine Types Offered *
                   </label>
                   <div className="flex flex-wrap gap-2">
@@ -758,10 +758,10 @@ function SignupPage() {
                           key={c}
                           type="button"
                           onClick={() => toggleCuisine(c)}
-                          className={`px-3.5 py-2 rounded-xl text-xs font-bold border transition-all flex items-center gap-1.5 ${
+                          className={`px-3.5 py-2 rounded-xl text-xs font-bold border transition-all flex items-center gap-1.5 cursor-pointer ${
                             isSelected
-                              ? "bg-[#E77B49] text-white border-[#E77B49] shadow-sm"
-                              : "bg-white dark:bg-slate-800 border-border dark:border-slate-700 text-foreground hover:border-[#E77B49]"
+                              ? "bg-[#111111] dark:bg-[#d2d0c1] text-white border-[#111111] dark:border-[#d2d0c1] shadow-sm"
+                              : "bg-white dark:bg-[#383838] border-[#E5E5E5] dark:border-[#404040] text-foreground hover:border-[#111111]"
                           }`}
                         >
                           {isSelected && <Check className="size-3.5" />}
@@ -774,7 +774,7 @@ function SignupPage() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#60241E] dark:text-slate-300 mb-1.5">
+                    <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#111111] dark:text-slate-300 mb-1.5">
                       Opening Time *
                     </label>
                     <div className="relative flex items-center">
@@ -784,14 +784,14 @@ function SignupPage() {
                         value={openingHours}
                         onChange={(e) => setOpeningHours(e.target.value)}
                         placeholder="09:00 AM"
-                        className="w-full pl-10 pr-4 py-3 rounded-2xl bg-white dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#E77B49] shadow-sm"
+                        className="w-full pl-10 pr-4 py-3 rounded-2xl bg-white dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-foreground text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#111111] shadow-sm"
                       />
-                      <Clock className="absolute left-3.5 size-4 text-[#E77B49] pointer-events-none" />
+                      <Clock className="absolute left-3.5 size-4 text-[#333333] pointer-events-none" />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#60241E] dark:text-slate-300 mb-1.5">
+                    <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#111111] dark:text-slate-300 mb-1.5">
                       Closing Time *
                     </label>
                     <div className="relative flex items-center">
@@ -801,16 +801,16 @@ function SignupPage() {
                         value={closingHours}
                         onChange={(e) => setClosingHours(e.target.value)}
                         placeholder="11:00 PM"
-                        className="w-full pl-10 pr-4 py-3 rounded-2xl bg-white dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#E77B49] shadow-sm"
+                        className="w-full pl-10 pr-4 py-3 rounded-2xl bg-white dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-foreground text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#111111] shadow-sm"
                       />
-                      <Clock className="absolute left-3.5 size-4 text-[#E77B49] pointer-events-none" />
+                      <Clock className="absolute left-3.5 size-4 text-[#333333] pointer-events-none" />
                     </div>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#60241E] dark:text-slate-300 mb-1.5">
+                    <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#111111] dark:text-slate-300 mb-1.5">
                       Total Number of Tables *
                     </label>
                     <div className="relative flex items-center">
@@ -821,14 +821,14 @@ function SignupPage() {
                         required
                         value={numberOfTables}
                         onChange={(e) => setNumberOfTables(parseInt(e.target.value) || 1)}
-                        className="w-full pl-10 pr-4 py-3 rounded-2xl bg-white dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#E77B49] shadow-sm"
+                        className="w-full pl-10 pr-4 py-3 rounded-2xl bg-white dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-foreground text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#111111] shadow-sm"
                       />
-                      <Grid className="absolute left-3.5 size-4 text-[#E77B49] pointer-events-none" />
+                      <Grid className="absolute left-3.5 size-4 text-[#333333] pointer-events-none" />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#60241E] dark:text-slate-300 mb-1.5">
+                    <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#111111] dark:text-slate-300 mb-1.5">
                       Total Seating Capacity *
                     </label>
                     <div className="relative flex items-center">
@@ -839,9 +839,9 @@ function SignupPage() {
                         required
                         value={seatingCapacity}
                         onChange={(e) => setSeatingCapacity(parseInt(e.target.value) || 1)}
-                        className="w-full pl-10 pr-4 py-3 rounded-2xl bg-white dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#E77B49] shadow-sm"
+                        className="w-full pl-10 pr-4 py-3 rounded-2xl bg-white dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-foreground text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#111111] shadow-sm"
                       />
-                      <Users className="absolute left-3.5 size-4 text-[#E77B49] pointer-events-none" />
+                      <Users className="absolute left-3.5 size-4 text-[#333333] pointer-events-none" />
                     </div>
                   </div>
                 </div>
@@ -850,7 +850,7 @@ function SignupPage() {
                   <button
                     type="button"
                     onClick={() => setStep(2)}
-                    className="px-5 h-12 rounded-2xl bg-secondary/20 hover:bg-secondary/30 text-foreground font-extrabold text-xs transition-all flex items-center gap-1.5"
+                    className="px-5 h-12 rounded-2xl bg-[#F5F5F5] hover:bg-secondary/30 text-foreground font-extrabold text-xs transition-all flex items-center gap-1.5 border border-[#E5E5E5] cursor-pointer"
                   >
                     <ArrowLeft className="size-4" />
                     <span>Back</span>
@@ -858,10 +858,10 @@ function SignupPage() {
 
                   <button
                     type="submit"
-                    className="px-8 h-12 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white font-extrabold text-xs shadow-lg active:scale-95 transition-all flex items-center gap-2"
+                    className="px-8 h-12 rounded-2xl bg-[#111111] hover:bg-[#333333] dark:bg-[#d2d0c1] dark:hover:bg-[#D66A38] text-white font-extrabold text-xs shadow-lg active:scale-95 transition-all flex items-center gap-2 cursor-pointer"
                   >
                     <span>Final Confirmation</span>
-                    <ArrowRight className="size-4" />
+                    <ArrowRight className="size-4 text-[#d2d0c1]" />
                   </button>
                 </div>
               </form>
@@ -873,7 +873,7 @@ function SignupPage() {
             {step === 4 && (
               <form onSubmit={handleFinalRegister} className="space-y-6">
                 <div className="text-center sm:text-left mb-6">
-                  <h1 className="font-serif italic text-3xl sm:text-4xl text-[#60241E] dark:text-slate-100 font-bold tracking-tight">
+                  <h1 className="font-serif italic text-3xl sm:text-4xl text-[#111111] dark:text-slate-100 font-bold tracking-tight">
                     Confirm &amp; Register
                   </h1>
                   <p className="text-xs sm:text-sm text-muted-foreground mt-1 font-medium">
@@ -882,13 +882,13 @@ function SignupPage() {
                 </div>
 
                 {/* Summary Card */}
-                <div className="bg-secondary/10 dark:bg-slate-800/80 rounded-3xl p-5 border border-border space-y-4">
-                  <div className="flex items-center gap-4 pb-4 border-b border-border">
-                    <img src={logoUrl} alt={restaurantName} className="size-14 rounded-2xl object-cover border-2 border-[#E77B49] shadow-md" />
+                <div className="bg-[#F5F5F5] dark:bg-[#383838]/80 rounded-3xl p-5 border border-[#E5E5E5] space-y-4">
+                  <div className="flex items-center gap-4 pb-4 border-b border-[#E5E5E5]">
+                    <img src={logoUrl} alt={restaurantName} className="size-14 rounded-2xl object-cover border-2 border-[#111111] shadow-md" />
                     <div>
-                      <h2 className="font-serif text-xl font-bold text-[#60241E] dark:text-slate-100">{restaurantName}</h2>
+                      <h2 className="font-serif text-xl font-bold text-[#111111] dark:text-slate-100">{restaurantName}</h2>
                       <p className="text-xs text-muted-foreground font-medium">{restaurantType} • {selectedCuisines.join(", ")}</p>
-                      <p className="text-xs text-[#E77B49] font-bold mt-0.5">{address}, {city}, {country}</p>
+                      <p className="text-xs text-[#d2d0c1] font-bold mt-0.5">{address}, {city}, {country}</p>
                     </div>
                   </div>
 
@@ -922,27 +922,27 @@ function SignupPage() {
 
                 {/* Checkboxes */}
                 <div className="space-y-3 pt-2">
-                  <label className="flex items-start gap-3 p-3.5 rounded-2xl bg-white dark:bg-slate-800 border border-border cursor-pointer transition-all hover:border-[#E77B49]">
+                  <label className="flex items-start gap-3 p-3.5 rounded-2xl bg-white dark:bg-[#383838] border border-[#E5E5E5] cursor-pointer transition-all hover:border-[#111111]">
                     <input
                       type="checkbox"
                       checked={acceptTerms}
                       onChange={(e) => setAcceptTerms(e.target.checked)}
-                      className="size-5 mt-0.5 text-[#E77B49] rounded focus:ring-[#E77B49]"
+                      className="size-5 mt-0.5 text-[#111111] rounded focus:ring-[#111111]"
                     />
                     <span className="text-xs font-semibold text-foreground leading-relaxed">
-                      I agree to the <span className="text-[#E77B49] underline font-bold">StockDine Partner Terms &amp; Conditions</span> and commission agreement (10% platform fee).
+                      I agree to the <span className="text-[#111111] dark:text-[#d2d0c1] underline font-bold">StockDine Partner Terms &amp; Conditions</span> and commission agreement (10% platform fee).
                     </span>
                   </label>
 
-                  <label className="flex items-start gap-3 p-3.5 rounded-2xl bg-white dark:bg-slate-800 border border-border cursor-pointer transition-all hover:border-[#E77B49]">
+                  <label className="flex items-start gap-3 p-3.5 rounded-2xl bg-white dark:bg-[#383838] border border-[#E5E5E5] cursor-pointer transition-all hover:border-[#111111]">
                     <input
                       type="checkbox"
                       checked={acceptPrivacy}
                       onChange={(e) => setAcceptPrivacy(e.target.checked)}
-                      className="size-5 mt-0.5 text-[#E77B49] rounded focus:ring-[#E77B49]"
+                      className="size-5 mt-0.5 text-[#111111] rounded focus:ring-[#111111]"
                     />
                     <span className="text-xs font-semibold text-foreground leading-relaxed">
-                      I agree to the <span className="text-[#E77B49] underline font-bold">Privacy Policy</span> and data handling protocols for guest dine-in bookings.
+                      I agree to the <span className="text-[#111111] dark:text-[#d2d0c1] underline font-bold">Privacy Policy</span> and data handling protocols for guest dine-in bookings.
                     </span>
                   </label>
                 </div>
@@ -951,7 +951,7 @@ function SignupPage() {
                   <button
                     type="button"
                     onClick={() => setStep(3)}
-                    className="px-5 h-13 rounded-2xl bg-secondary/20 hover:bg-secondary/30 text-foreground font-extrabold text-xs transition-all flex items-center gap-1.5"
+                    className="px-5 h-13 rounded-2xl bg-[#F5F5F5] hover:bg-secondary/30 text-foreground font-extrabold text-xs transition-all flex items-center gap-1.5 border border-[#E5E5E5] cursor-pointer"
                   >
                     <ArrowLeft className="size-4" />
                     <span>Back</span>
@@ -960,7 +960,7 @@ function SignupPage() {
                   <button
                     type="submit"
                     disabled={isSubmitting || !acceptTerms || !acceptPrivacy}
-                    className="flex-1 sm:flex-initial px-8 h-13 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white font-extrabold text-sm shadow-xl active:scale-95 transition-all disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2"
+                    className="flex-1 sm:flex-initial px-8 h-13 rounded-2xl bg-[#111111] hover:bg-[#333333] dark:bg-[#d2d0c1] dark:hover:bg-[#D66A38] text-white font-extrabold text-sm shadow-xl active:scale-95 transition-all disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2 cursor-pointer"
                   >
                     {isSubmitting ? (
                       <>
@@ -969,7 +969,7 @@ function SignupPage() {
                       </>
                     ) : (
                       <>
-                        <ShieldCheck className="size-5" />
+                        <ShieldCheck className="size-5 text-[#d2d0c1]" />
                         <span>Register Restaurant Now</span>
                       </>
                     )}

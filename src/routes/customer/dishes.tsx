@@ -189,25 +189,25 @@ function DishesPage() {
   );
 
   return (
-    <div className="flex flex-col max-w-5xl mx-auto selection:bg-[#E77B49] selection:text-white pb-28 bg-background text-foreground px-4 sm:px-6 transition-colors duration-300">
+    <div className="flex flex-col max-w-5xl mx-auto selection:bg-[#d2d0c1] selection:text-white pb-28 bg-background text-foreground px-4 sm:px-6 transition-colors duration-300">
       {/* Top Header Bar */}
-      <header className="py-6 border-b border-border dark:border-slate-800 mb-6 space-y-4">
+      <header className="py-6 border-b border-border dark:border-[#404040] mb-6 space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <button
               type="button"
               onClick={() => navigate({ to: "/customer" })}
-              className="p-2.5 rounded-2xl bg-card dark:bg-slate-900 border border-border dark:border-slate-800 text-foreground hover:bg-secondary/20 transition-colors shadow-xs"
+              className="p-2.5 rounded-2xl bg-card dark:bg-[#222222] border border-border dark:border-[#404040] text-foreground hover:bg-secondary/20 transition-colors shadow-xs cursor-pointer"
               title="Back to Home"
             >
-              <ChevronLeft className="size-4 text-[#E77B49]" />
+              <ChevronLeft className="size-4 text-[#d2d0c1]" />
             </button>
             <div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#60241E]/10 dark:bg-[#E77B49]/20 text-[#60241E] dark:text-[#E77B49] text-[10px] font-extrabold uppercase tracking-widest">
-                <Flame className="size-3 text-[#E77B49] fill-current" />
+              <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#F5F5F5] dark:bg-[#d2d0c1]/20 text-[#111111] dark:text-[#d2d0c1] text-[10px] font-extrabold uppercase tracking-widest border border-[#E5E5E5]">
+                <Flame className="size-3 text-[#d2d0c1] fill-current" />
                 <span>Live Menu Inventory</span>
               </div>
-              <h1 className="text-2xl sm:text-3xl font-serif italic text-[#60241E] dark:text-slate-100 font-bold tracking-tight mt-0.5">
+              <h1 className="text-2xl sm:text-3xl font-serif italic text-[#111111] dark:text-slate-100 font-bold tracking-tight mt-0.5">
                 Signature Delicacies
               </h1>
             </div>
@@ -224,14 +224,14 @@ function DishesPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search dishes by name, ingredients, or restaurant..."
-              className="w-full h-11 pl-11 pr-10 rounded-2xl bg-card dark:bg-slate-900 border-2 border-border dark:border-slate-800 text-foreground text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#E77B49] shadow-xs placeholder:text-muted-foreground/60"
+              className="w-full h-11 pl-11 pr-10 rounded-2xl bg-card dark:bg-[#222222] border border-[#E5E5E5] dark:border-[#404040] text-foreground text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#111111] shadow-xs placeholder:text-muted-foreground/60"
             />
-            <Search className="absolute left-4 top-3.5 size-4 text-[#E77B49] pointer-events-none" />
+            <Search className="absolute left-4 top-3.5 size-4 text-[#333333] pointer-events-none" />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery("")}
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1 text-muted-foreground hover:text-foreground"
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1 text-muted-foreground hover:text-foreground cursor-pointer"
               >
                 <X className="size-4" />
               </button>
@@ -241,13 +241,13 @@ function DishesPage() {
           <button
             type="button"
             onClick={() => setShowFilterDrawer(!showFilterDrawer)}
-            className={`h-11 px-4 rounded-2xl border-2 text-xs font-extrabold transition-all flex items-center gap-2 shrink-0 ${
+            className={`h-11 px-4 rounded-2xl border text-xs font-extrabold transition-all flex items-center gap-2 shrink-0 cursor-pointer ${
               selectedDiet !== "All" || onlyAvailable || bestsellersOnly
-                ? "bg-[#60241E] text-white border-[#60241E] shadow-sm"
-                : "bg-card dark:bg-slate-900 border-border dark:border-slate-800 text-foreground"
+                ? "bg-[#111111] text-white border-[#111111] shadow-sm"
+                : "bg-card dark:bg-[#222222] border-border dark:border-[#404040] text-foreground"
             }`}
           >
-            <SlidersHorizontal className="size-4 text-[#E77B49]" />
+            <SlidersHorizontal className="size-4 text-[#d2d0c1]" />
             <span className="hidden sm:inline">Filters</span>
           </button>
         </div>
@@ -259,10 +259,10 @@ function DishesPage() {
               key={cat}
               type="button"
               onClick={() => setSelectedCategory(cat)}
-              className={`px-4 py-2 rounded-2xl text-xs font-extrabold transition-all shrink-0 ${
+              className={`px-4 py-2 rounded-2xl text-xs font-extrabold transition-all shrink-0 cursor-pointer ${
                 selectedCategory === cat
-                  ? "bg-[#60241E] text-white shadow-md scale-102"
-                  : "bg-card dark:bg-slate-900 border border-border dark:border-slate-800 text-muted-foreground hover:bg-secondary/20"
+                  ? "bg-[#111111] text-white shadow-md scale-102"
+                  : "bg-card dark:bg-[#222222] border border border-[#E5E5E5] dark:border-[#404040] text-muted-foreground hover:bg-secondary/20"
               }`}
             >
               {cat}
@@ -273,10 +273,10 @@ function DishesPage() {
 
       {/* Filter Drawer / Quick Controls */}
       {showFilterDrawer && (
-        <div className="bg-card dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-3xl p-4 sm:p-6 mb-6 shadow-md space-y-4 animate-in slide-in-from-top duration-200">
-          <div className="flex items-center justify-between border-b border-border dark:border-slate-800 pb-3">
-            <h3 className="font-serif italic font-bold text-lg text-[#60241E] dark:text-slate-100 flex items-center gap-2">
-              <SlidersHorizontal className="size-4 text-[#E77B49]" />
+        <div className="bg-card dark:bg-[#222222] border border-[#E5E5E5] dark:border-[#404040] rounded-3xl p-4 sm:p-6 mb-6 shadow-md space-y-4 animate-in slide-in-from-top duration-200">
+          <div className="flex items-center justify-between border-b border-border dark:border-[#404040] pb-3">
+            <h3 className="font-serif italic font-bold text-lg text-[#111111] dark:text-slate-100 flex items-center gap-2">
+              <SlidersHorizontal className="size-4 text-[#d2d0c1]" />
               <span>Refine Dishes</span>
             </h3>
             <button
@@ -286,7 +286,7 @@ function DishesPage() {
                 setOnlyAvailable(false);
                 setBestsellersOnly(false);
               }}
-              className="text-xs font-bold text-[#E77B49] hover:underline"
+              className="text-xs font-bold text-[#d2d0c1] hover:underline cursor-pointer"
             >
               Reset All
             </button>
@@ -296,14 +296,14 @@ function DishesPage() {
             {/* Diet Filter */}
             <div>
               <label className="block text-muted-foreground mb-1.5 uppercase text-[10px]">Dietary Preference</label>
-              <div className="flex rounded-xl overflow-hidden border border-border dark:border-slate-800 p-0.5 bg-secondary/10">
+              <div className="flex rounded-xl overflow-hidden border border-border dark:border-[#404040] p-0.5 bg-secondary/10">
                 {(["All", "Veg", "Non-Veg", "Vegan"] as const).map((diet) => (
                   <button
                     key={diet}
                     type="button"
                     onClick={() => setSelectedDiet(diet)}
-                    className={`flex-1 py-1.5 text-[10px] font-extrabold rounded-lg transition-all ${
-                      selectedDiet === diet ? "bg-[#60241E] text-white shadow-xs" : "text-muted-foreground"
+                    className={`flex-1 py-1.5 text-[10px] font-extrabold rounded-lg transition-all cursor-pointer ${
+                      selectedDiet === diet ? "bg-[#111111] text-white shadow-xs" : "text-muted-foreground"
                     }`}
                   >
                     {diet}
@@ -319,7 +319,7 @@ function DishesPage() {
                   type="checkbox"
                   checked={onlyAvailable}
                   onChange={(e) => setOnlyAvailable(e.target.checked)}
-                  className="accent-[#E77B49] size-4"
+                  className="accent-[#d2d0c1] size-4"
                 />
                 <span className="text-foreground">Available Today Only</span>
               </label>
@@ -329,7 +329,7 @@ function DishesPage() {
                   type="checkbox"
                   checked={bestsellersOnly}
                   onChange={(e) => setBestsellersOnly(e.target.checked)}
-                  className="accent-[#E77B49] size-4"
+                  className="accent-[#d2d0c1] size-4"
                 />
                 <span className="text-foreground">Chef Bestsellers Only ⭐</span>
               </label>
@@ -341,16 +341,16 @@ function DishesPage() {
       {/* Main Dishes Grid Section */}
       <section className="space-y-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-serif italic font-bold text-[#60241E] dark:text-slate-100">
+          <h2 className="text-xl font-serif italic font-bold text-[#111111] dark:text-slate-100">
             Available Menu Delicacies ({filteredDishes.length})
           </h2>
           <span className="text-xs text-muted-foreground font-semibold">Live Portion Tracking</span>
         </div>
 
         {filteredDishes.length === 0 ? (
-          <div className="bg-card dark:bg-slate-900 border-2 border-dashed border-border dark:border-slate-800 rounded-3xl p-12 text-center space-y-3">
-            <Utensils className="size-10 text-[#E77B49] mx-auto opacity-50" />
-            <h3 className="font-serif italic text-xl font-bold text-[#60241E] dark:text-slate-100">
+          <div className="bg-card dark:bg-[#222222] border border-dashed border-border dark:border-[#404040] rounded-3xl p-12 text-center space-y-3">
+            <Utensils className="size-10 text-[#d2d0c1] mx-auto opacity-50" />
+            <h3 className="font-serif italic text-xl font-bold text-[#111111] dark:text-slate-100">
               No signature dishes found
             </h3>
             <p className="text-xs text-muted-foreground max-w-sm mx-auto">
@@ -365,7 +365,7 @@ function DishesPage() {
                 setOnlyAvailable(false);
                 setBestsellersOnly(false);
               }}
-              className="py-2.5 px-5 rounded-2xl bg-[#E77B49] text-white text-xs font-extrabold shadow-sm hover:bg-[#D66A38] transition-all"
+              className="py-2.5 px-5 rounded-2xl bg-[#111111] hover:bg-[#333333] text-white text-xs font-extrabold shadow-sm transition-all cursor-pointer"
             >
               Show All Dishes
             </button>

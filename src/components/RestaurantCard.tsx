@@ -31,7 +31,7 @@ export const RestaurantCard: React.FC<RestaurantCardProps> = ({
   return (
     <div
       onClick={handleCardClick}
-      className="bg-white border-2 border-[#E5E7EB] rounded-3xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col justify-between cursor-pointer"
+      className="bg-white dark:bg-[#222222] border border-[#E5E5E5] dark:border-[#404040] rounded-3xl overflow-hidden shadow-sm sd-hover-lift group flex flex-col justify-between cursor-pointer"
     >
       <div>
         {/* Banner Cover Image */}
@@ -40,19 +40,19 @@ export const RestaurantCard: React.FC<RestaurantCardProps> = ({
             src={restaurant.coverImage}
             alt={restaurant.name}
             loading="lazy"
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            className="w-full h-full object-cover sd-image-zoom"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
 
           {/* Top Badges */}
           <div className="absolute top-3 left-3 flex flex-wrap items-center gap-2 z-10">
-            <span className="bg-white/95 backdrop-blur-md px-3 py-1 rounded-full text-xs font-extrabold text-[#60241E] flex items-center gap-1 shadow-md border border-[#E5E7EB]">
-              <Star className="size-3.5 fill-amber-500 text-amber-500" />{" "}
+            <span className="bg-white/95 backdrop-blur-md px-3 py-1 rounded-full text-xs font-extrabold text-[#111111] flex items-center gap-1 shadow-md border border-[#E5E5E5]">
+              <Star className="size-3.5 fill-[#d2d0c1] text-[#d2d0c1]" />{" "}
               {restaurant.reviewsCount > 0 ? `${restaurant.rating} (${restaurant.reviewsCount})` : "New"}
             </span>
             <span
               className={`px-2.5 py-1 rounded-full text-[10px] font-extrabold uppercase shadow-sm ${
-                isOpen ? "bg-emerald-600 text-white" : "bg-rose-600 text-white"
+                isOpen ? "bg-emerald-600 text-white" : "bg-slate-700 text-white"
               }`}
             >
               {isOpen ? "Open Now" : "Closed"}
@@ -61,10 +61,10 @@ export const RestaurantCard: React.FC<RestaurantCardProps> = ({
 
           {/* Distance & Travel Time Badge */}
           <div className="absolute top-3 right-3 bg-black/70 backdrop-blur-md text-white px-3 py-1 rounded-full text-[11px] font-extrabold border border-white/20 flex items-center gap-1.5 shadow-sm">
-            <MapPin className="size-3 text-[#E77B49]" />
+            <MapPin className="size-3 text-[#d2d0c1]" />
             <span>{restaurant.distanceKm || 1.2} km</span>
             <span className="opacity-60">•</span>
-            <Clock className="size-3 text-[#E77B49]" />
+            <Clock className="size-3 text-[#d2d0c1]" />
             <span>{travelTimeText}</span>
           </div>
 
@@ -74,7 +74,7 @@ export const RestaurantCard: React.FC<RestaurantCardProps> = ({
               {restaurant.name}
             </h3>
             <p className="text-[11px] text-white/90 font-medium flex items-center gap-1 truncate mt-0.5">
-              <MapPin className="size-3 text-[#E77B49] shrink-0" />
+              <MapPin className="size-3 text-[#d2d0c1] shrink-0" />
               <span className="truncate">{restaurant.address || `${restaurant.city}, ${restaurant.country}`}</span>
             </p>
           </div>
@@ -82,16 +82,16 @@ export const RestaurantCard: React.FC<RestaurantCardProps> = ({
 
         {/* Details Content */}
         <div className="p-4 space-y-3">
-          <p className="text-xs text-[#4B5563] font-medium line-clamp-2 leading-relaxed">
+          <p className="text-xs text-[#333333] font-medium line-clamp-2 leading-relaxed">
             {restaurant.description}
           </p>
 
           <div className="flex flex-wrap items-center gap-2 text-xs font-semibold">
-            <span className="text-[#60241E] bg-[#60241E]/10 px-2.5 py-1 rounded-full font-bold">
+            <span className="text-[#111111] bg-[#F5F5F5] px-2.5 py-1 rounded-full font-bold border border-[#E5E5E5]">
               {restaurant.priceRange}
             </span>
-            <span className="text-[#6B7280] flex items-center gap-1.5 font-medium">
-              <Utensils className="size-3.5 text-[#E77B49]" />
+            <span className="text-[#737373] flex items-center gap-1.5 font-medium">
+              <Utensils className="size-3.5 text-[#d2d0c1]" />
               {Array.isArray(restaurant.cuisines) ? restaurant.cuisines.join(" • ") : restaurant.cuisines}
             </span>
           </div>
@@ -100,13 +100,13 @@ export const RestaurantCard: React.FC<RestaurantCardProps> = ({
 
       {/* Available Tables & Action Buttons Footer */}
       <div className="p-4 pt-0 space-y-3">
-        <div className="flex items-center justify-between pt-3 border-t border-[#E5E7EB]">
-          <span className="text-xs font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200 flex items-center gap-1.5">
-            <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
+        <div className="flex items-center justify-between pt-3 border-t border-[#E5E5E5]">
+          <span className="text-xs font-bold text-[#111111] bg-[#d2d0c1]/10 px-3 py-1 rounded-full border border-[#d2d0c1]/30 flex items-center gap-1.5">
+            <span className="size-2 rounded-full bg-[#d2d0c1] animate-pulse" />
             {restaurant.availableTablesCount || 5} Tables Available
           </span>
 
-          <span className="text-[11px] font-bold text-[#6B7280]">
+          <span className="text-[11px] font-bold text-[#737373]">
             {restaurant.category || "Fine Dining"}
           </span>
         </div>
@@ -115,10 +115,10 @@ export const RestaurantCard: React.FC<RestaurantCardProps> = ({
           <Link
             to="/customer/restaurant/$restaurantId"
             params={{ restaurantId: restaurant.id }}
-            className="py-2.5 px-3 rounded-2xl bg-[#F8F9FA] hover:bg-[#E5E7EB] border border-[#D1D5DB] text-[#1F2937] text-xs font-extrabold text-center transition-all flex items-center justify-center gap-1.5 active:scale-95 shadow-xs"
+            className="py-2.5 px-3 rounded-2xl bg-[#F5F5F5] hover:bg-[#E5E5E5] border border-[#E5E5E5] text-[#111111] text-xs font-extrabold text-center transition-all flex items-center justify-center gap-1.5 active:scale-95 shadow-xs"
           >
-            <Eye className="size-3.5 text-[#60241E]" />
-            <span>View Restaurant</span>
+            <Eye className="size-3.5 text-[#111111]" />
+            <span>View Details</span>
           </Link>
 
           <button
@@ -129,9 +129,9 @@ export const RestaurantCard: React.FC<RestaurantCardProps> = ({
                 onBookNow(restaurant);
               }
             }}
-            className="py-2.5 px-3 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold text-center shadow-md transition-all flex items-center justify-center gap-1.5 active:scale-95"
+            className="py-2.5 px-3 rounded-2xl bg-[#111111] hover:bg-[#333333] text-white text-xs font-extrabold text-center shadow-md transition-all flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer"
           >
-            <Calendar className="size-3.5" />
+            <Calendar className="size-3.5 text-[#d2d0c1]" />
             <span>Book Table</span>
           </button>
         </div>

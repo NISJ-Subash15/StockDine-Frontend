@@ -782,7 +782,7 @@ export function AdminPage() {
   const occupancyRate = Math.round((tables.filter((t) => t.status === "Occupied" || t.status === "Reserved").length / tables.length) * 100);
 
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto selection:bg-[#E77B49] selection:text-white pb-28 transition-colors duration-300">
+    <div className="min-h-screen bg-background text-foreground font-sans p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto selection:bg-[#d2d0c1] selection:text-white pb-28 transition-colors duration-300">
       {/* Toast Notification Banner */}
       {checkInSuccessMsg && (
         <div className="fixed top-4 right-4 z-50 bg-emerald-700 text-white px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3 border-2 border-emerald-500 animate-in slide-in-from-top duration-300">
@@ -792,13 +792,13 @@ export function AdminPage() {
       )}
 
       {/* Header Bar */}
-      <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 pb-4 border-b border-border dark:border-slate-800">
+      <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 pb-4 border-b border-border dark:border-[#404040]">
         <div>
-          <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-[#60241E] dark:text-[#E77B49]">
-            <Building2 className="size-4 text-[#E77B49]" />
+          <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-[#111111] dark:text-[#d2d0c1]">
+            <Building2 className="size-4 text-[#d2d0c1]" />
             <span>Admin Executive Operating System</span>
           </div>
-          <h1 className="font-serif italic text-3xl sm:text-4xl font-bold mt-1 text-[#60241E] dark:text-slate-100">
+          <h1 className="font-serif italic text-3xl sm:text-4xl font-bold mt-1 text-[#111111] dark:text-slate-100">
             {currentProfile?.name || "Heritage Spice Kitchen"}
           </h1>
           <p className="text-xs text-muted-foreground mt-0.5 font-medium">
@@ -811,10 +811,10 @@ export function AdminPage() {
           <button
             type="button"
             onClick={() => navigate({ to: "/kitchen" })}
-            className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-[#60241E] dark:text-slate-200 bg-[#60241E]/10 dark:bg-slate-800 hover:bg-[#60241E] hover:text-white dark:hover:bg-[#E77B49] border border-[#60241E]/20 dark:border-slate-700 rounded-2xl px-4 py-2.5 transition-all shadow-sm active:scale-95 cursor-pointer"
+            className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-[#111111] dark:text-slate-200 bg-[#111111]/10 dark:bg-[#383838] hover:bg-[#111111] hover:text-white dark:hover:bg-[#d2d0c1] border border-[#111111]/20 dark:border-[#404040] rounded-2xl px-4 py-2.5 transition-all shadow-sm active:scale-95 cursor-pointer"
             title="Switch to Kitchen Portal"
           >
-            <ChefHat className="size-4 text-[#E77B49]" />
+            <ChefHat className="size-4 text-[#d2d0c1]" />
             <span>Switch to Kitchen Portal</span>
           </button>
 
@@ -828,10 +828,10 @@ export function AdminPage() {
                 navigate({ to: "/auth/workspace" });
               }
             }}
-            className="flex items-center gap-1.5 text-xs uppercase font-extrabold tracking-wider text-[#60241E] dark:text-slate-200 hover:text-[#E77B49] border border-[#60241E]/20 dark:border-slate-700 rounded-2xl px-3.5 py-2.5 bg-[#60241E]/10 dark:bg-slate-800 hover:bg-[#60241E]/20 transition-all shadow-sm active:scale-95 cursor-pointer"
+            className="flex items-center gap-1.5 text-xs uppercase font-extrabold tracking-wider text-[#111111] dark:text-slate-200 hover:text-[#d2d0c1] border border-[#111111]/20 dark:border-[#404040] rounded-2xl px-3.5 py-2.5 bg-[#111111]/10 dark:bg-[#383838] hover:bg-[#111111]/20 transition-all shadow-sm active:scale-95 cursor-pointer"
             title="Back to Previous Page"
           >
-            <ArrowLeft className="size-3.5 text-[#E77B49]" />
+            <ArrowLeft className="size-3.5 text-[#d2d0c1]" />
             <span>Back</span>
           </button>
         </div>
@@ -839,10 +839,10 @@ export function AdminPage() {
 
       {/* Real-Time Live Telemetry Bar */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-6">
-        <div className="bg-[#F8F9FA] dark:bg-slate-900 border-2 border-[#E5E7EB] dark:border-slate-800 rounded-2xl p-3.5 shadow-sm">
-          <span className="text-[10px] font-extrabold uppercase text-[#6B7280] dark:text-slate-400">Today's Bookings</span>
-          <p className="font-serif italic text-2xl font-bold text-[#60241E] dark:text-[#E77B49] mt-0.5">{todayBookingsCount}</p>
-          <span className="text-[10px] font-semibold text-[#E77B49]">Total Reservations</span>
+        <div className="bg-[#F5F5F5] dark:bg-[#222222] border-2 border-[#E5E5E5] dark:border-[#404040] rounded-2xl p-3.5 shadow-sm">
+          <span className="text-[10px] font-extrabold uppercase text-[#737373] dark:text-slate-400">Today's Bookings</span>
+          <p className="font-serif italic text-2xl font-bold text-[#111111] dark:text-[#d2d0c1] mt-0.5">{todayBookingsCount}</p>
+          <span className="text-[10px] font-semibold text-[#d2d0c1]">Total Reservations</span>
         </div>
 
         <div className="bg-emerald-50 dark:bg-emerald-950/40 border-2 border-emerald-200 dark:border-emerald-800/60 rounded-2xl p-3.5 shadow-sm">
@@ -853,16 +853,16 @@ export function AdminPage() {
           </span>
         </div>
 
-        <div className="bg-[#F8F9FA] dark:bg-slate-900 border-2 border-[#E5E7EB] dark:border-slate-800 rounded-2xl p-3.5 shadow-sm">
-          <span className="text-[10px] font-extrabold uppercase text-[#6B7280] dark:text-slate-400">Upcoming</span>
-          <p className="font-serif italic text-2xl font-bold text-[#60241E] dark:text-[#E77B49] mt-0.5">{upcomingCount}</p>
-          <span className="text-[10px] font-semibold text-[#6B7280] dark:text-slate-400">Confirmed Pipeline</span>
+        <div className="bg-[#F5F5F5] dark:bg-[#222222] border-2 border-[#E5E5E5] dark:border-[#404040] rounded-2xl p-3.5 shadow-sm">
+          <span className="text-[10px] font-extrabold uppercase text-[#737373] dark:text-slate-400">Upcoming</span>
+          <p className="font-serif italic text-2xl font-bold text-[#111111] dark:text-[#d2d0c1] mt-0.5">{upcomingCount}</p>
+          <span className="text-[10px] font-semibold text-[#737373] dark:text-slate-400">Confirmed Pipeline</span>
         </div>
 
-        <div className="bg-white dark:bg-slate-900 border-2 border-[#E5E7EB] dark:border-slate-800 rounded-2xl p-3.5 shadow-sm">
-          <span className="text-[10px] font-extrabold uppercase text-[#6B7280] dark:text-slate-400">Available Tables</span>
+        <div className="bg-white dark:bg-[#222222] border-2 border-[#E5E5E5] dark:border-[#404040] rounded-2xl p-3.5 shadow-sm">
+          <span className="text-[10px] font-extrabold uppercase text-[#737373] dark:text-slate-400">Available Tables</span>
           <p className="font-serif italic text-2xl font-bold text-emerald-700 dark:text-emerald-400 mt-0.5">{availableTablesCount}</p>
-          <span className="text-[10px] font-semibold text-[#6B7280] dark:text-slate-400">Ready for Guests</span>
+          <span className="text-[10px] font-semibold text-[#737373] dark:text-slate-400">Ready for Guests</span>
         </div>
 
         <div className="bg-amber-50 dark:bg-amber-950/40 border-2 border-amber-200 dark:border-amber-800/60 rounded-2xl p-3.5 shadow-sm">
@@ -871,22 +871,22 @@ export function AdminPage() {
           <span className="text-[10px] font-semibold text-amber-700 dark:text-amber-400">In Dining Service</span>
         </div>
 
-        <div className="bg-[#60241E] dark:bg-slate-800 text-white border-2 border-[#60241E] dark:border-slate-700 rounded-2xl p-3.5 shadow-md">
+        <div className="bg-[#111111] dark:bg-[#383838] text-white border-2 border-[#111111] dark:border-[#404040] rounded-2xl p-3.5 shadow-md">
           <span className="text-[10px] font-extrabold uppercase text-white/80">Pending Check-ins</span>
           <p className="font-serif italic text-2xl font-bold text-white mt-0.5">{pendingCheckInsCount}</p>
-          <span className="text-[10px] font-semibold text-[#E77B49]">Awaiting Arrival</span>
+          <span className="text-[10px] font-semibold text-[#d2d0c1]">Awaiting Arrival</span>
         </div>
       </div>
 
       {/* Main Module Tabs (Bookings & QR Code Scanner Highlighted) */}
-      <div className="flex gap-2 mb-6 border-b-2 border-[#E5E7EB] dark:border-slate-800 pb-3 overflow-x-auto text-xs font-extrabold">
+      <div className="flex gap-2 mb-6 border-b-2 border-[#E5E5E5] dark:border-[#404040] pb-3 overflow-x-auto text-xs font-extrabold">
         <button
           type="button"
           onClick={() => setActiveTab("bookings")}
           className={`px-4 py-2.5 rounded-2xl transition-all flex items-center gap-2 shrink-0 ${
             activeTab === "bookings"
-              ? "bg-[#60241E] text-white shadow-md ring-2 ring-[#E77B49]"
-              : "bg-[#E77B49]/15 dark:bg-slate-800 border-2 border-[#E77B49]/40 dark:border-slate-700 text-[#60241E] dark:text-slate-200 hover:bg-[#E77B49] hover:text-white"
+              ? "bg-[#111111] text-white shadow-md ring-2 ring-[#d2d0c1]"
+              : "bg-[#d2d0c1]/15 dark:bg-[#383838] border-2 border-[#d2d0c1]/40 dark:border-[#404040] text-[#111111] dark:text-slate-200 hover:bg-[#d2d0c1] hover:text-white"
           }`}
         >
           <Calendar className="size-4" />
@@ -898,11 +898,11 @@ export function AdminPage() {
           onClick={() => setActiveTab("qr-scanner")}
           className={`px-4 py-2.5 rounded-2xl transition-all flex items-center gap-2 shrink-0 ${
             activeTab === "qr-scanner"
-              ? "bg-[#60241E] text-white shadow-md ring-2 ring-[#E77B49]"
-              : "bg-[#60241E]/10 dark:bg-slate-800 border-2 border-[#60241E]/30 dark:border-slate-700 text-[#60241E] dark:text-slate-200 hover:bg-[#60241E] hover:text-white"
+              ? "bg-[#111111] text-white shadow-md ring-2 ring-[#d2d0c1]"
+              : "bg-[#111111]/10 dark:bg-[#383838] border-2 border-[#111111]/30 dark:border-[#404040] text-[#111111] dark:text-slate-200 hover:bg-[#111111] hover:text-white"
           }`}
         >
-          <QrCode className="size-4 text-[#E77B49]" />
+          <QrCode className="size-4 text-[#d2d0c1]" />
           <span>QR Scanner Pass</span>
         </button>
 
@@ -911,8 +911,8 @@ export function AdminPage() {
           onClick={() => setActiveTab("analytics")}
           className={`px-4 py-2.5 rounded-2xl transition-all flex items-center gap-2 shrink-0 ${
             activeTab === "analytics"
-              ? "bg-[#60241E] text-white shadow-md"
-              : "bg-[#F8F9FA] dark:bg-slate-800 border border-[#E5E7EB] dark:border-slate-700 text-[#6B7280] dark:text-slate-300 hover:text-[#1F2937] dark:hover:text-white"
+              ? "bg-[#111111] text-white shadow-md"
+              : "bg-[#F5F5F5] dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-[#737373] dark:text-slate-300 hover:text-[#111111] dark:hover:text-white"
           }`}
         >
           <BarChart3 className="size-4" />
@@ -924,8 +924,8 @@ export function AdminPage() {
           onClick={() => setActiveTab("tables")}
           className={`px-4 py-2.5 rounded-2xl transition-all flex items-center gap-2 shrink-0 ${
             activeTab === "tables"
-              ? "bg-[#60241E] text-white shadow-md"
-              : "bg-[#F8F9FA] dark:bg-slate-800 border border-[#E5E7EB] dark:border-slate-700 text-[#6B7280] dark:text-slate-300 hover:text-[#1F2937] dark:hover:text-white"
+              ? "bg-[#111111] text-white shadow-md"
+              : "bg-[#F5F5F5] dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-[#737373] dark:text-slate-300 hover:text-[#111111] dark:hover:text-white"
           }`}
         >
           <LayoutGrid className="size-4" />
@@ -937,8 +937,8 @@ export function AdminPage() {
           onClick={() => setActiveTab("food")}
           className={`px-4 py-2.5 rounded-2xl transition-all flex items-center gap-2 shrink-0 ${
             activeTab === "food"
-              ? "bg-[#60241E] text-white shadow-md"
-              : "bg-[#F8F9FA] dark:bg-slate-800 border border-[#E5E7EB] dark:border-slate-700 text-[#6B7280] dark:text-slate-300 hover:text-[#1F2937] dark:hover:text-white"
+              ? "bg-[#111111] text-white shadow-md"
+              : "bg-[#F5F5F5] dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-[#737373] dark:text-slate-300 hover:text-[#111111] dark:hover:text-white"
           }`}
         >
           <UtensilsCrossed className="size-4" />
@@ -950,8 +950,8 @@ export function AdminPage() {
           onClick={() => setActiveTab("gallery")}
           className={`px-4 py-2.5 rounded-2xl transition-all flex items-center gap-2 shrink-0 ${
             activeTab === "gallery"
-              ? "bg-[#60241E] text-white shadow-md"
-              : "bg-[#F8F9FA] dark:bg-slate-800 border border-[#E5E7EB] dark:border-slate-700 text-[#6B7280] dark:text-slate-300 hover:text-[#1F2937] dark:hover:text-white"
+              ? "bg-[#111111] text-white shadow-md"
+              : "bg-[#F5F5F5] dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-[#737373] dark:text-slate-300 hover:text-[#111111] dark:hover:text-white"
           }`}
         >
           <Sparkles className="size-4" />
@@ -963,8 +963,8 @@ export function AdminPage() {
           onClick={() => setActiveTab("profile")}
           className={`px-4 py-2.5 rounded-2xl transition-all flex items-center gap-2 shrink-0 ${
             activeTab === "profile"
-              ? "bg-[#60241E] text-white shadow-md"
-              : "bg-[#F8F9FA] dark:bg-slate-800 border border-[#E5E7EB] dark:border-slate-700 text-[#6B7280] dark:text-slate-300 hover:text-[#1F2937] dark:hover:text-white"
+              ? "bg-[#111111] text-white shadow-md"
+              : "bg-[#F5F5F5] dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-[#737373] dark:text-slate-300 hover:text-[#111111] dark:hover:text-white"
           }`}
         >
           <Building2 className="size-4" />
@@ -976,8 +976,8 @@ export function AdminPage() {
           onClick={() => setActiveTab("staff")}
           className={`px-4 py-2.5 rounded-2xl transition-all flex items-center gap-2 shrink-0 ${
             activeTab === "staff"
-              ? "bg-[#60241E] text-white shadow-md"
-              : "bg-[#F8F9FA] dark:bg-slate-800 border border-[#E5E7EB] dark:border-slate-700 text-[#6B7280] dark:text-slate-300 hover:text-[#1F2937] dark:hover:text-white"
+              ? "bg-[#111111] text-white shadow-md"
+              : "bg-[#F5F5F5] dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-[#737373] dark:text-slate-300 hover:text-[#111111] dark:hover:text-white"
           }`}
         >
           <Users className="size-4" />
@@ -989,8 +989,8 @@ export function AdminPage() {
           onClick={() => setActiveTab("reviews")}
           className={`px-4 py-2.5 rounded-2xl transition-all flex items-center gap-2 shrink-0 ${
             activeTab === "reviews"
-              ? "bg-[#60241E] text-white shadow-md"
-              : "bg-[#F8F9FA] dark:bg-slate-800 border border-[#E5E7EB] dark:border-slate-700 text-[#6B7280] dark:text-slate-300 hover:text-[#1F2937] dark:hover:text-white"
+              ? "bg-[#111111] text-white shadow-md"
+              : "bg-[#F5F5F5] dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-[#737373] dark:text-slate-300 hover:text-[#111111] dark:hover:text-white"
           }`}
         >
           <Award className="size-4" />
@@ -1002,11 +1002,11 @@ export function AdminPage() {
           onClick={() => setActiveTab("security")}
           className={`px-4 py-2.5 rounded-2xl transition-all flex items-center gap-2 shrink-0 ${
             activeTab === "security"
-              ? "bg-[#60241E] text-white shadow-md ring-2 ring-[#E77B49]"
-              : "bg-[#F8F9FA] dark:bg-slate-800 border border-[#E5E7EB] dark:border-slate-700 text-[#6B7280] dark:text-slate-300 hover:text-[#1F2937] dark:hover:text-white"
+              ? "bg-[#111111] text-white shadow-md ring-2 ring-[#d2d0c1]"
+              : "bg-[#F5F5F5] dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-[#737373] dark:text-slate-300 hover:text-[#111111] dark:hover:text-white"
           }`}
         >
-          <Lock className="size-4 text-[#E77B49]" />
+          <Lock className="size-4 text-[#d2d0c1]" />
           <span>Security &amp; Passwords 🔒</span>
         </button>
       </div>
@@ -1014,15 +1014,15 @@ export function AdminPage() {
       {/* ==================== TAB 1: BOOKINGS MODULE (PRIMARY FEATURE) ==================== */}
       {activeTab === "bookings" && (
         <div className="space-y-6">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[#F8F9FA] p-5 rounded-3xl border-2 border-[#E5E7EB]">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[#F5F5F5] p-5 rounded-3xl border-2 border-[#E5E5E5]">
             <div>
-              <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#E77B49] bg-[#E77B49]/10 px-3 py-1 rounded-full border border-[#E77B49]/20">
+              <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#d2d0c1] bg-[#d2d0c1]/10 px-3 py-1 rounded-full border border-[#d2d0c1]/20">
                 PRIMARY ADMIN MODULE
               </span>
-              <h2 className="font-serif italic text-2xl sm:text-3xl font-bold text-[#60241E] mt-1.5">
+              <h2 className="font-serif italic text-2xl sm:text-3xl font-bold text-[#111111] mt-1.5">
                 Bookings &amp; Reservation Management
               </h2>
-              <p className="text-xs text-[#6B7280] font-medium mt-0.5">
+              <p className="text-xs text-[#737373] font-medium mt-0.5">
                 Manage upcoming customer arrivals, verify pre-ordered food items, and execute table check-ins.
               </p>
             </div>
@@ -1030,28 +1030,28 @@ export function AdminPage() {
             <button
               type="button"
               onClick={() => setActiveTab("qr-scanner")}
-              className="py-3 px-5 rounded-2xl bg-[#60241E] hover:bg-[#4A1B17] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all flex items-center gap-2 active:scale-95"
+              className="py-3 px-5 rounded-2xl bg-[#111111] hover:bg-[#333333] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all flex items-center gap-2 active:scale-95"
             >
-              <QrCode className="size-4 text-[#E77B49]" />
+              <QrCode className="size-4 text-[#d2d0c1]" />
               <span>Launch QR Scanner</span>
             </button>
           </div>
 
           {/* Search Bar & Filter Chips */}
-          <div className="bg-white border-2 border-[#E5E7EB] rounded-3xl p-4 shadow-sm space-y-3">
+          <div className="bg-white border-2 border-[#E5E5E5] rounded-3xl p-4 shadow-sm space-y-3">
             <div className="relative">
-              <Search className="absolute left-3.5 top-3 size-4 text-[#E77B49]" />
+              <Search className="absolute left-3.5 top-3 size-4 text-[#d2d0c1]" />
               <input
                 type="text"
                 value={bookingSearchQuery}
                 onChange={(e) => setBookingSearchQuery(e.target.value)}
                 placeholder="Search by Booking ID (e.g. BK-7491), Customer Name, or Phone..."
-                className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-[#F8F9FA] text-[#1F2937] text-xs font-semibold placeholder:text-[#9CA3AF] border border-[#E5E7EB] focus:outline-none focus:ring-2 focus:ring-[#E77B49]"
+                className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-[#F5F5F5] text-[#111111] text-xs font-semibold placeholder:text-[#9CA3AF] border border-[#E5E5E5] focus:outline-none focus:ring-2 focus:ring-[#d2d0c1]"
               />
             </div>
 
             <div className="flex items-center gap-1.5 overflow-x-auto text-xs font-bold pb-1">
-              <span className="text-[10px] text-[#60241E] uppercase font-extrabold mr-1 shrink-0">
+              <span className="text-[10px] text-[#111111] uppercase font-extrabold mr-1 shrink-0">
                 Filter Status:
               </span>
               {(["All", "Today", "Upcoming", "Pending", "Checked In", "Completed", "Cancelled"] as const).map(
@@ -1062,8 +1062,8 @@ export function AdminPage() {
                     onClick={() => setBookingStatusFilter(status)}
                     className={`px-3.5 py-1.5 rounded-full transition-all shrink-0 ${
                       bookingStatusFilter === status
-                        ? "bg-[#60241E] text-white shadow-xs"
-                        : "bg-[#F8F9FA] border border-[#E5E7EB] text-[#6B7280] hover:text-[#1F2937]"
+                        ? "bg-[#111111] text-white shadow-xs"
+                        : "bg-[#F5F5F5] border border-[#E5E5E5] text-[#737373] hover:text-[#111111]"
                     }`}
                   >
                     {status}
@@ -1076,8 +1076,8 @@ export function AdminPage() {
           {/* Bookings List Cards Grid */}
           <div className="grid grid-cols-1 gap-4">
             {filteredBookingsList.length === 0 ? (
-              <div className="p-12 text-center bg-card dark:bg-slate-900 border-2 border-dashed border-border dark:border-slate-800 rounded-3xl space-y-3">
-                <div className="size-16 rounded-2xl bg-[#60241E]/10 dark:bg-[#E77B49]/20 text-[#60241E] dark:text-[#E77B49] flex items-center justify-center mx-auto">
+              <div className="p-12 text-center bg-card dark:bg-[#222222] border-2 border-dashed border-border dark:border-[#404040] rounded-3xl space-y-3">
+                <div className="size-16 rounded-2xl bg-[#111111]/10 dark:bg-[#d2d0c1]/20 text-[#111111] dark:text-[#d2d0c1] flex items-center justify-center mx-auto">
                   <Calendar className="size-8 stroke-[2]" />
                 </div>
                 <h3 className="font-serif italic font-bold text-xl text-foreground">No bookings available.</h3>
@@ -1101,17 +1101,17 @@ export function AdminPage() {
                       ? "border-gray-200 bg-gray-50/50"
                       : isCancelled
                       ? "border-rose-200 bg-rose-50/30"
-                      : "border-[#E5E7EB]"
+                      : "border-[#E5E5E5]"
                   }`}
                 >
                   {/* Card Top Row */}
-                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-3 border-b border-[#E5E7EB]">
+                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-3 border-b border-[#E5E5E5]">
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-mono text-xs font-extrabold bg-[#60241E] text-white px-2.5 py-0.5 rounded-lg shadow-xs">
+                        <span className="font-mono text-xs font-extrabold bg-[#111111] text-white px-2.5 py-0.5 rounded-lg shadow-xs">
                           {b.bookingId}
                         </span>
-                        <h3 className="font-serif italic text-2xl font-bold text-[#60241E]">
+                        <h3 className="font-serif italic text-2xl font-bold text-[#111111]">
                           {b.customerName}
                         </h3>
                         <span
@@ -1131,7 +1131,7 @@ export function AdminPage() {
 
                       <p className="text-xs text-[#4B5563] font-medium flex flex-wrap items-center gap-2 mt-1">
                         <span className="flex items-center gap-1">
-                          <Phone className="size-3 text-[#E77B49]" />
+                          <Phone className="size-3 text-[#d2d0c1]" />
                           <a href={`tel:${b.customerPhone}`} className="hover:underline font-bold">
                             {b.customerPhone}
                           </a>
@@ -1149,7 +1149,7 @@ export function AdminPage() {
                       <span className="text-xs font-extrabold uppercase text-emerald-800 bg-emerald-100 border border-emerald-300 px-3 py-1 rounded-full">
                         Advance Paid: {formatCurrency(b.advanceAmount)}
                       </span>
-                      <span className="text-[11px] font-bold text-[#6B7280]">
+                      <span className="text-[11px] font-bold text-[#737373]">
                         Remaining at Venue: {formatCurrency(b.remainingAmount || Math.max(0, b.totalAmount - b.advanceAmount))}
                       </span>
                     </div>
@@ -1157,17 +1157,17 @@ export function AdminPage() {
 
                   {/* Pre-Ordered Food Items Summary */}
                   <div>
-                    <span className="text-[10px] uppercase font-extrabold text-[#60241E] block mb-1.5">
+                    <span className="text-[10px] uppercase font-extrabold text-[#111111] block mb-1.5">
                       Food Pre-Order Summary ({b.items?.length || 0} Items Total)
                     </span>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 text-xs">
                       {b.items?.map((item, idx) => (
                         <div
                           key={idx}
-                          className="p-2.5 rounded-xl bg-[#F8F9FA] border border-[#E5E7EB] flex justify-between items-center font-medium"
+                          className="p-2.5 rounded-xl bg-[#F5F5F5] border border-[#E5E5E5] flex justify-between items-center font-medium"
                         >
                           <span>{item.name} × {item.quantity}</span>
-                          <span className="font-bold text-[#60241E]">
+                          <span className="font-bold text-[#111111]">
                             {formatCurrency(item.price * item.quantity)}
                           </span>
                         </div>
@@ -1176,11 +1176,11 @@ export function AdminPage() {
                   </div>
 
                   {/* Quick Actions Footer Bar */}
-                  <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-[#E5E7EB]">
+                  <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-[#E5E5E5]">
                     <div className="flex items-center gap-2">
                       <a
                         href={`tel:${b.customerPhone}`}
-                        className="py-2 px-3 rounded-xl bg-[#F8F9FA] hover:bg-[#60241E] hover:text-white text-[#60241E] text-xs font-extrabold border border-[#E5E7EB] transition-all flex items-center gap-1"
+                        className="py-2 px-3 rounded-xl bg-[#F5F5F5] hover:bg-[#111111] hover:text-white text-[#111111] text-xs font-extrabold border border-[#E5E5E5] transition-all flex items-center gap-1"
                       >
                         <Phone className="size-3.5" />
                         <span>Call</span>
@@ -1192,7 +1192,7 @@ export function AdminPage() {
                           setSelectedScanBooking(b);
                           setActiveTab("qr-scanner");
                         }}
-                        className="py-2 px-3 rounded-xl bg-[#60241E]/10 text-[#60241E] hover:bg-[#60241E] hover:text-white text-xs font-extrabold border border-[#60241E]/20 transition-all flex items-center gap-1"
+                        className="py-2 px-3 rounded-xl bg-[#111111]/10 text-[#111111] hover:bg-[#111111] hover:text-white text-xs font-extrabold border border-[#111111]/20 transition-all flex items-center gap-1"
                       >
                         <QrCode className="size-3.5" />
                         <span>QR Pass</span>
@@ -1215,7 +1215,7 @@ export function AdminPage() {
                         <button
                           type="button"
                           onClick={() => handleCompleteBooking(b)}
-                          className="py-2.5 px-4 rounded-xl bg-[#60241E] hover:bg-[#4A1B17] text-white text-xs font-extrabold shadow-md transition-all active:scale-95"
+                          className="py-2.5 px-4 rounded-xl bg-[#111111] hover:bg-[#333333] text-white text-xs font-extrabold shadow-md transition-all active:scale-95"
                         >
                           Mark Dining Complete
                         </button>
@@ -1242,7 +1242,7 @@ export function AdminPage() {
       {/* ==================== TAB 2: DEDICATED QR CODE SCANNER ==================== */}
       {activeTab === "qr-scanner" && (
         <div className="space-y-6 max-w-3xl mx-auto">
-          <div className="bg-[#60241E] text-white p-6 sm:p-8 rounded-3xl shadow-xl space-y-3">
+          <div className="bg-[#111111] text-white p-6 sm:p-8 rounded-3xl shadow-xl space-y-3">
             <div className="flex items-center gap-2">
               <span className="text-[10px] uppercase font-extrabold tracking-widest text-white/80 bg-white/20 px-3 py-1 rounded-full">
                 EXECUTIVE DEDICATED MODULE
@@ -1259,7 +1259,7 @@ export function AdminPage() {
           {/* Scanner Viewfinder Simulation Box */}
           <div className="bg-slate-950 text-white rounded-3xl p-8 border-2 border-slate-800 shadow-2xl relative overflow-hidden flex flex-col items-center justify-center space-y-6 min-h-[300px]">
             {/* Viewfinder Target Frame */}
-            <div className="relative size-56 sm:size-64 border-4 border-dashed border-[#E77B49] rounded-3xl flex items-center justify-center bg-black/40 overflow-hidden shadow-inner">
+            <div className="relative size-56 sm:size-64 border-4 border-dashed border-[#d2d0c1] rounded-3xl flex items-center justify-center bg-black/40 overflow-hidden shadow-inner">
               {/* Laser Line Animation */}
               <div className="absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-red-500 to-transparent shadow-[0_0_15px_#ef4444] animate-pulse" />
               <Camera className="size-12 text-white/40" />
@@ -1285,11 +1285,11 @@ export function AdminPage() {
                 value={qrScanInput}
                 onChange={(e) => setQrScanInput(e.target.value)}
                 placeholder="Enter Booking ID (e.g. BK-7491) or Phone..."
-                className="flex-1 px-4 py-2.5 rounded-2xl bg-slate-900 border border-slate-700 text-white text-xs font-semibold placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-[#E77B49]"
+                className="flex-1 px-4 py-2.5 rounded-2xl bg-slate-900 border border-slate-700 text-white text-xs font-semibold placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-[#d2d0c1]"
               />
               <button
                 type="submit"
-                className="py-2.5 px-4 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold transition-all shadow-md active:scale-95"
+                className="py-2.5 px-4 rounded-2xl bg-[#d2d0c1] hover:bg-[#D66A38] text-white text-xs font-extrabold transition-all shadow-md active:scale-95"
               >
                 Search ID
               </button>
@@ -1298,20 +1298,20 @@ export function AdminPage() {
 
           {/* Instant Verification Sheet */}
           {selectedScanBooking && (
-            <div className="bg-white border-2 border-[#E5E7EB] rounded-3xl p-6 shadow-xl space-y-5 animate-in slide-in-from-bottom duration-300">
-              <div className="flex justify-between items-start border-b border-[#E5E7EB] pb-4">
+            <div className="bg-white border-2 border-[#E5E5E5] rounded-3xl p-6 shadow-xl space-y-5 animate-in slide-in-from-bottom duration-300">
+              <div className="flex justify-between items-start border-b border-[#E5E5E5] pb-4">
                 <div className="flex items-center gap-3">
-                  <div className="size-12 rounded-2xl bg-[#60241E] text-white flex items-center justify-center font-bold text-lg font-serif">
+                  <div className="size-12 rounded-2xl bg-[#111111] text-white flex items-center justify-center font-bold text-lg font-serif">
                     {selectedScanBooking.customerName.charAt(0)}
                   </div>
                   <div>
-                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#E77B49] bg-[#E77B49]/10 px-2.5 py-0.5 rounded-full">
+                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#d2d0c1] bg-[#d2d0c1]/10 px-2.5 py-0.5 rounded-full">
                       Verified Check-in Pass
                     </span>
-                    <h3 className="font-serif italic text-2xl font-bold text-[#60241E] mt-0.5">
+                    <h3 className="font-serif italic text-2xl font-bold text-[#111111] mt-0.5">
                       {selectedScanBooking.customerName}
                     </h3>
-                    <p className="text-xs text-[#6B7280] font-medium">
+                    <p className="text-xs text-[#737373] font-medium">
                       Phone: {selectedScanBooking.customerPhone} • Booking Ref: {selectedScanBooking.bookingId}
                     </p>
                   </div>
@@ -1330,19 +1330,19 @@ export function AdminPage() {
 
               {/* Receipt Details Grid */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs font-semibold">
-                <div className="bg-[#F8F9FA] p-3 rounded-2xl border border-[#E5E7EB]">
-                  <span className="text-[10px] text-[#6B7280] uppercase">Assigned Table</span>
-                  <p className="text-[#60241E] text-sm font-bold">{selectedScanBooking.tableNumber}</p>
+                <div className="bg-[#F5F5F5] p-3 rounded-2xl border border-[#E5E5E5]">
+                  <span className="text-[10px] text-[#737373] uppercase">Assigned Table</span>
+                  <p className="text-[#111111] text-sm font-bold">{selectedScanBooking.tableNumber}</p>
                 </div>
 
-                <div className="bg-[#F8F9FA] p-3 rounded-2xl border border-[#E5E7EB]">
-                  <span className="text-[10px] text-[#6B7280] uppercase">Guests Count</span>
-                  <p className="text-[#60241E] text-sm font-bold">{selectedScanBooking.guests || 2} Persons</p>
+                <div className="bg-[#F5F5F5] p-3 rounded-2xl border border-[#E5E5E5]">
+                  <span className="text-[10px] text-[#737373] uppercase">Guests Count</span>
+                  <p className="text-[#111111] text-sm font-bold">{selectedScanBooking.guests || 2} Persons</p>
                 </div>
 
-                <div className="bg-[#F8F9FA] p-3 rounded-2xl border border-[#E5E7EB]">
-                  <span className="text-[10px] text-[#6B7280] uppercase">Reservation Time</span>
-                  <p className="text-[#60241E] text-sm font-bold">{selectedScanBooking.time}</p>
+                <div className="bg-[#F5F5F5] p-3 rounded-2xl border border-[#E5E5E5]">
+                  <span className="text-[10px] text-[#737373] uppercase">Reservation Time</span>
+                  <p className="text-[#111111] text-sm font-bold">{selectedScanBooking.time}</p>
                 </div>
 
                 <div className="bg-emerald-50 p-3 rounded-2xl border border-emerald-200">
@@ -1353,19 +1353,19 @@ export function AdminPage() {
 
               {/* Pre-Ordered Food Breakdown */}
               <div className="space-y-2">
-                <h4 className="text-xs font-extrabold uppercase tracking-wider text-[#60241E]">
+                <h4 className="text-xs font-extrabold uppercase tracking-wider text-[#111111]">
                   Pre-Ordered Food Items ({selectedScanBooking.items?.length || 0})
                 </h4>
-                <div className="bg-[#F8F9FA] border border-[#E5E7EB] rounded-2xl p-4 space-y-2 text-xs">
+                <div className="bg-[#F5F5F5] border border-[#E5E5E5] rounded-2xl p-4 space-y-2 text-xs">
                   {selectedScanBooking.items?.map((item, idx) => (
                     <div key={idx} className="flex justify-between items-center font-medium">
                       <span>{item.name} × {item.quantity}</span>
-                      <span className="font-bold text-[#60241E]">
+                      <span className="font-bold text-[#111111]">
                         {formatCurrency(item.price * item.quantity)}
                       </span>
                     </div>
                   ))}
-                  <div className="pt-2 border-t border-[#E5E7EB] flex justify-between items-center text-sm font-bold text-[#60241E]">
+                  <div className="pt-2 border-t border-[#E5E5E5] flex justify-between items-center text-sm font-bold text-[#111111]">
                     <span>Total Bill Value</span>
                     <span>{formatCurrency(selectedScanBooking.totalAmount)}</span>
                   </div>
@@ -1390,9 +1390,9 @@ export function AdminPage() {
                     setCheckInSuccessMsg(`Kitchen notified to prepare orders for ${selectedScanBooking.tableNumber}`);
                     setTimeout(() => setCheckInSuccessMsg(null), 4000);
                   }}
-                  className="py-3.5 px-6 rounded-2xl bg-[#60241E] hover:bg-[#4A1B17] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all flex items-center justify-center gap-2 active:scale-95"
+                  className="py-3.5 px-6 rounded-2xl bg-[#111111] hover:bg-[#333333] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all flex items-center justify-center gap-2 active:scale-95"
                 >
-                  <Flame className="size-4 text-[#E77B49]" />
+                  <Flame className="size-4 text-[#d2d0c1]" />
                   <span>Start Food Order</span>
                 </button>
               </div>
@@ -1406,50 +1406,50 @@ export function AdminPage() {
       {/* ANALYTICS TAB */}
       {activeTab === "analytics" && (
         <div className="space-y-6">
-          <div className="bg-[#F8F9FA] dark:bg-slate-900 border-2 border-[#E5E7EB] dark:border-slate-800 rounded-3xl p-6 shadow-sm">
-            <h2 className="text-2xl font-serif italic font-bold text-[#60241E] dark:text-slate-100">Executive Performance Analytics</h2>
-            <p className="text-xs text-[#6B7280] dark:text-slate-400 font-medium mt-0.5">Real-time table turnover, daily revenue stream, peak hours, and customer satisfaction metrics.</p>
+          <div className="bg-[#F5F5F5] dark:bg-[#222222] border-2 border-[#E5E5E5] dark:border-[#404040] rounded-3xl p-6 shadow-sm">
+            <h2 className="text-2xl font-serif italic font-bold text-[#111111] dark:text-slate-100">Executive Performance Analytics</h2>
+            <p className="text-xs text-[#737373] dark:text-slate-400 font-medium mt-0.5">Real-time table turnover, daily revenue stream, peak hours, and customer satisfaction metrics.</p>
           </div>
 
           {/* Top Metric Cards */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="bg-white dark:bg-slate-900 border-2 border-[#E5E7EB] dark:border-slate-800 rounded-3xl p-5 shadow-sm space-y-1">
-              <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#6B7280]">Total Revenue</span>
-              <p className="text-2xl font-bold font-mono text-[#60241E] dark:text-[#E77B49]">{formatCurrency(bookings.reduce((sum, b) => sum + (b.totalAmount || 1200), 14500))}</p>
+            <div className="bg-white dark:bg-[#222222] border-2 border-[#E5E5E5] dark:border-[#404040] rounded-3xl p-5 shadow-sm space-y-1">
+              <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#737373]">Total Revenue</span>
+              <p className="text-2xl font-bold font-mono text-[#111111] dark:text-[#d2d0c1]">{formatCurrency(bookings.reduce((sum, b) => sum + (b.totalAmount || 1200), 14500))}</p>
               <span className="text-[10px] font-bold text-emerald-600">↑ 18.5% vs last week</span>
             </div>
 
-            <div className="bg-white dark:bg-slate-900 border-2 border-[#E5E7EB] dark:border-slate-800 rounded-3xl p-5 shadow-sm space-y-1">
-              <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#6B7280]">Total Bookings</span>
-              <p className="text-2xl font-bold font-mono text-[#1F2937] dark:text-slate-100">{bookings.length + 24} Reservations</p>
+            <div className="bg-white dark:bg-[#222222] border-2 border-[#E5E5E5] dark:border-[#404040] rounded-3xl p-5 shadow-sm space-y-1">
+              <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#737373]">Total Bookings</span>
+              <p className="text-2xl font-bold font-mono text-[#111111] dark:text-slate-100">{bookings.length + 24} Reservations</p>
               <span className="text-[10px] font-bold text-emerald-600">↑ 12 new today</span>
             </div>
 
-            <div className="bg-white dark:bg-slate-900 border-2 border-[#E5E7EB] dark:border-slate-800 rounded-3xl p-5 shadow-sm space-y-1">
-              <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#6B7280]">Cancelled / No-Show</span>
+            <div className="bg-white dark:bg-[#222222] border-2 border-[#E5E5E5] dark:border-[#404040] rounded-3xl p-5 shadow-sm space-y-1">
+              <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#737373]">Cancelled / No-Show</span>
               <p className="text-2xl font-bold font-mono text-rose-600">{bookings.filter((b) => b.bookingStatus === "Cancelled").length || 1}</p>
               <span className="text-[10px] font-bold text-rose-500">Low cancellation rate (2.1%)</span>
             </div>
 
-            <div className="bg-white dark:bg-slate-900 border-2 border-[#E5E7EB] dark:border-slate-800 rounded-3xl p-5 shadow-sm space-y-1">
-              <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#6B7280]">Customer Satisfaction</span>
+            <div className="bg-white dark:bg-[#222222] border-2 border-[#E5E5E5] dark:border-[#404040] rounded-3xl p-5 shadow-sm space-y-1">
+              <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#737373]">Customer Satisfaction</span>
               <p className="text-2xl font-bold font-mono text-amber-500">4.8 ★ / 5.0</p>
-              <span className="text-[10px] font-bold text-[#6B7280]">Based on {adminReviewsList.length || 38} reviews</span>
+              <span className="text-[10px] font-bold text-[#737373]">Based on {adminReviewsList.length || 38} reviews</span>
             </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Occupancy Trends Graph */}
-            <div className="bg-white dark:bg-slate-900 border-2 border-[#E5E7EB] dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-4">
+            <div className="bg-white dark:bg-[#222222] border-2 border-[#E5E5E5] dark:border-[#404040] rounded-3xl p-6 shadow-sm space-y-4">
               <div className="flex justify-between items-center">
                 <div>
-                  <h3 className="font-serif italic font-bold text-xl text-[#60241E] dark:text-slate-100">Peak Occupancy Hours</h3>
+                  <h3 className="font-serif italic font-bold text-xl text-[#111111] dark:text-slate-100">Peak Occupancy Hours</h3>
                   <p className="text-xs text-[#4B5563] dark:text-slate-400 font-medium">Peak hours: 7:30 PM - 9:30 PM (95% Table Utilization)</p>
                 </div>
-                <BarChart3 className="size-6 text-[#E77B49]" />
+                <BarChart3 className="size-6 text-[#d2d0c1]" />
               </div>
 
-              <div className="h-44 pt-4 flex items-end justify-between gap-2 border-b border-[#E5E7EB] dark:border-slate-800 pb-2">
+              <div className="h-44 pt-4 flex items-end justify-between gap-2 border-b border-[#E5E5E5] dark:border-[#404040] pb-2">
                 {[
                   { time: "12 PM", pct: 40 },
                   { time: "1.5 PM", pct: 75 },
@@ -1460,20 +1460,20 @@ export function AdminPage() {
                   { time: "10.5 PM", pct: 50 },
                 ].map((bar) => (
                   <div key={bar.time} className="flex-1 flex flex-col items-center gap-1 group">
-                    <span className="text-[9px] font-bold text-[#E77B49] opacity-0 group-hover:opacity-100 transition-opacity">{bar.pct}%</span>
+                    <span className="text-[9px] font-bold text-[#d2d0c1] opacity-0 group-hover:opacity-100 transition-opacity">{bar.pct}%</span>
                     <div
-                      className="w-full bg-[#E77B49]/20 group-hover:bg-[#E77B49] rounded-t-xl transition-all duration-300"
+                      className="w-full bg-[#d2d0c1]/20 group-hover:bg-[#d2d0c1] rounded-t-xl transition-all duration-300"
                       style={{ height: `${bar.pct}%` }}
                     />
-                    <span className="text-[9px] font-bold text-[#6B7280]">{bar.time}</span>
+                    <span className="text-[9px] font-bold text-[#737373]">{bar.time}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Popular Dishes Breakdown */}
-            <div className="bg-white dark:bg-slate-900 border-2 border-[#E5E7EB] dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-4">
-              <h3 className="font-serif italic font-bold text-xl text-[#60241E] dark:text-slate-100">Top Revenue Dishes</h3>
+            <div className="bg-white dark:bg-[#222222] border-2 border-[#E5E5E5] dark:border-[#404040] rounded-3xl p-6 shadow-sm space-y-4">
+              <h3 className="font-serif italic font-bold text-xl text-[#111111] dark:text-slate-100">Top Revenue Dishes</h3>
               <div className="space-y-3">
                 {[
                   { name: "Slow-Cooked Mutton Biryani", orders: 142, revenue: 63900, pct: 85 },
@@ -1484,10 +1484,10 @@ export function AdminPage() {
                   <div key={idx} className="space-y-1">
                     <div className="flex justify-between text-xs font-bold text-foreground">
                       <span>{dish.name}</span>
-                      <span className="font-mono text-[#E77B49]">{formatCurrency(dish.revenue)} ({dish.orders} orders)</span>
+                      <span className="font-mono text-[#d2d0c1]">{formatCurrency(dish.revenue)} ({dish.orders} orders)</span>
                     </div>
-                    <div className="h-2 w-full bg-gray-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                      <div className="h-full bg-[#60241E] dark:bg-[#E77B49] rounded-full transition-all duration-500" style={{ width: `${dish.pct}%` }} />
+                    <div className="h-2 w-full bg-gray-100 dark:bg-[#383838] rounded-full overflow-hidden">
+                      <div className="h-full bg-[#111111] dark:bg-[#d2d0c1] rounded-full transition-all duration-500" style={{ width: `${dish.pct}%` }} />
                     </div>
                   </div>
                 ))}
@@ -1500,12 +1500,12 @@ export function AdminPage() {
       {/* RESTAURANT PROFILE TAB */}
       {activeTab === "profile" && (
         <div className="space-y-6 max-w-4xl mx-auto">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-[#F8F9FA] p-6 rounded-3xl border-2 border-[#E5E7EB]">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-[#F5F5F5] p-6 rounded-3xl border-2 border-[#E5E5E5]">
             <div>
-              <h2 className="font-serif italic text-2xl font-bold text-[#60241E] dark:text-slate-100">
+              <h2 className="font-serif italic text-2xl font-bold text-[#111111] dark:text-slate-100">
                 Restaurant Profile Settings
               </h2>
-              <p className="text-xs text-[#6B7280] dark:text-slate-400 font-medium mt-0.5">
+              <p className="text-xs text-[#737373] dark:text-slate-400 font-medium mt-0.5">
                 Manage your official restaurant identity, brand assets, operating hours, compliance credentials, and location details stored in MongoDB.
               </p>
             </div>
@@ -1599,23 +1599,23 @@ export function AdminPage() {
                 setIsSavingProfile(false);
               }
             }}
-            className="bg-card dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6"
+            className="bg-card dark:bg-[#222222] border-2 border-border dark:border-[#404040] rounded-3xl p-6 sm:p-8 shadow-sm space-y-6"
           >
             {/* 1. Basic Identity & System ID */}
             <div className="space-y-4">
-              <h3 className="font-serif italic font-bold text-xl text-[#60241E] dark:text-slate-100 border-b border-border dark:border-slate-800 pb-2">
+              <h3 className="font-serif italic font-bold text-xl text-[#111111] dark:text-slate-100 border-b border-border dark:border-[#404040] pb-2">
                 Restaurant Identity &amp; Credentials
               </h3>
 
               {/* Read-Only Auto-Generated Restaurant ID Banner */}
-              <div className="p-4 rounded-2xl bg-secondary/10 dark:bg-slate-800/80 border-2 border-border dark:border-slate-700 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+              <div className="p-4 rounded-2xl bg-secondary/10 dark:bg-[#383838]/80 border-2 border-border dark:border-[#404040] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                 <div className="space-y-1">
-                  <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#E77B49]">
+                  <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#d2d0c1]">
                     System Assigned Identifier (Read-Only)
                   </span>
                   <div className="flex items-center gap-2">
                     <span className="text-xs font-bold text-foreground">Restaurant ID:</span>
-                    <span className="font-mono text-sm font-bold px-3 py-1 rounded-xl bg-card dark:bg-slate-900 border border-border dark:border-slate-700 text-[#60241E] dark:text-[#E77B49] shadow-xs select-all">
+                    <span className="font-mono text-sm font-bold px-3 py-1 rounded-xl bg-card dark:bg-[#222222] border border-border dark:border-[#404040] text-[#111111] dark:text-[#d2d0c1] shadow-xs select-all">
                       {currentRestId}
                     </span>
                   </div>
@@ -1630,7 +1630,7 @@ export function AdminPage() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-bold">
                 <div>
-                  <label className="block text-[#60241E] dark:text-slate-300 mb-1">
+                  <label className="block text-[#111111] dark:text-slate-300 mb-1">
                     Restaurant Name <span className="text-rose-500">*</span>
                   </label>
                   <input
@@ -1639,12 +1639,12 @@ export function AdminPage() {
                     value={profileForm.name || ""}
                     onChange={(e) => setProfileForm({ ...profileForm, name: e.target.value })}
                     placeholder="e.g. Royal Mughlai Feast"
-                    className="w-full p-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground font-semibold focus:outline-none focus:border-[#E77B49]"
+                    className="w-full p-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border-2 border-border dark:border-[#404040] text-foreground font-semibold focus:outline-none focus:border-[#d2d0c1]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[#60241E] dark:text-slate-300 mb-1">
+                  <label className="block text-[#111111] dark:text-slate-300 mb-1">
                     Owner Name <span className="text-rose-500">*</span>
                   </label>
                   <input
@@ -1653,12 +1653,12 @@ export function AdminPage() {
                     value={profileForm.ownerName || ""}
                     onChange={(e) => setProfileForm({ ...profileForm, ownerName: e.target.value })}
                     placeholder="e.g. Rajesh Sharma"
-                    className="w-full p-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground font-semibold focus:outline-none focus:border-[#E77B49]"
+                    className="w-full p-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border-2 border-border dark:border-[#404040] text-foreground font-semibold focus:outline-none focus:border-[#d2d0c1]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[#60241E] dark:text-slate-300 mb-1">
+                  <label className="block text-[#111111] dark:text-slate-300 mb-1">
                     Registered Email Address <span className="text-muted-foreground text-[10px]">(Non-Editable)</span>
                   </label>
                   <div className="relative">
@@ -1667,14 +1667,14 @@ export function AdminPage() {
                       readOnly
                       disabled
                       value={profileForm.contactEmail || ""}
-                      className="w-full p-3 pr-10 rounded-2xl bg-secondary/20 dark:bg-slate-800/50 border-2 border-border dark:border-slate-700 text-muted-foreground font-mono font-bold cursor-not-allowed"
+                      className="w-full p-3 pr-10 rounded-2xl bg-secondary/20 dark:bg-[#383838]/50 border-2 border-border dark:border-[#404040] text-muted-foreground font-mono font-bold cursor-not-allowed"
                     />
                     <Lock className="absolute right-3.5 top-3.5 size-4 text-muted-foreground" />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-[#60241E] dark:text-slate-300 mb-1">
+                  <label className="block text-[#111111] dark:text-slate-300 mb-1">
                     Mobile Number <span className="text-rose-500">*</span>
                   </label>
                   <input
@@ -1683,21 +1683,21 @@ export function AdminPage() {
                     value={profileForm.contactPhone || ""}
                     onChange={(e) => setProfileForm({ ...profileForm, contactPhone: e.target.value })}
                     placeholder="e.g. +91 9876543210"
-                    className="w-full p-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground font-semibold focus:outline-none focus:border-[#E77B49]"
+                    className="w-full p-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border-2 border-border dark:border-[#404040] text-foreground font-semibold focus:outline-none focus:border-[#d2d0c1]"
                   />
                 </div>
               </div>
             </div>
 
             {/* 2. Address & Location */}
-            <div className="space-y-4 pt-2 border-t border-border dark:border-slate-800">
-              <h3 className="font-serif italic font-bold text-xl text-[#60241E] dark:text-slate-100 border-b border-border dark:border-slate-800 pb-2">
+            <div className="space-y-4 pt-2 border-t border-border dark:border-[#404040]">
+              <h3 className="font-serif italic font-bold text-xl text-[#111111] dark:text-slate-100 border-b border-border dark:border-[#404040] pb-2">
                 Restaurant Location &amp; Address
               </h3>
 
               <div className="space-y-4 text-xs font-bold">
                 <div>
-                  <label className="block text-[#60241E] dark:text-slate-300 mb-1">
+                  <label className="block text-[#111111] dark:text-slate-300 mb-1">
                     Street Address <span className="text-rose-500">*</span>
                   </label>
                   <input
@@ -1706,13 +1706,13 @@ export function AdminPage() {
                     value={profileForm.address || ""}
                     onChange={(e) => setProfileForm({ ...profileForm, address: e.target.value })}
                     placeholder="e.g. Plot 42, Connaught Place, Block C"
-                    className="w-full p-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground font-semibold focus:outline-none focus:border-[#E77B49]"
+                    className="w-full p-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border-2 border-border dark:border-[#404040] text-foreground font-semibold focus:outline-none focus:border-[#d2d0c1]"
                   />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div>
-                    <label className="block text-[#60241E] dark:text-slate-300 mb-1">
+                    <label className="block text-[#111111] dark:text-slate-300 mb-1">
                       City <span className="text-rose-500">*</span>
                     </label>
                     <input
@@ -1721,12 +1721,12 @@ export function AdminPage() {
                       value={profileForm.city || ""}
                       onChange={(e) => setProfileForm({ ...profileForm, city: e.target.value })}
                       placeholder="e.g. New Delhi"
-                      className="w-full p-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground font-semibold focus:outline-none focus:border-[#E77B49]"
+                      className="w-full p-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border-2 border-border dark:border-[#404040] text-foreground font-semibold focus:outline-none focus:border-[#d2d0c1]"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[#60241E] dark:text-slate-300 mb-1">
+                    <label className="block text-[#111111] dark:text-slate-300 mb-1">
                       State <span className="text-rose-500">*</span>
                     </label>
                     <input
@@ -1735,12 +1735,12 @@ export function AdminPage() {
                       value={profileForm.state || ""}
                       onChange={(e) => setProfileForm({ ...profileForm, state: e.target.value })}
                       placeholder="e.g. Delhi"
-                      className="w-full p-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground font-semibold focus:outline-none focus:border-[#E77B49]"
+                      className="w-full p-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border-2 border-border dark:border-[#404040] text-foreground font-semibold focus:outline-none focus:border-[#d2d0c1]"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[#60241E] dark:text-slate-300 mb-1">
+                    <label className="block text-[#111111] dark:text-slate-300 mb-1">
                       Country <span className="text-rose-500">*</span>
                     </label>
                     <input
@@ -1749,13 +1749,13 @@ export function AdminPage() {
                       value={profileForm.country || "India"}
                       onChange={(e) => setProfileForm({ ...profileForm, country: e.target.value })}
                       placeholder="e.g. India"
-                      className="w-full p-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground font-semibold focus:outline-none focus:border-[#E77B49]"
+                      className="w-full p-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border-2 border-border dark:border-[#404040] text-foreground font-semibold focus:outline-none focus:border-[#d2d0c1]"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-[#60241E] dark:text-slate-300 mb-1">
+                  <label className="block text-[#111111] dark:text-slate-300 mb-1">
                     Pincode / Zipcode <span className="text-rose-500">*</span>
                   </label>
                   <input
@@ -1764,21 +1764,21 @@ export function AdminPage() {
                     value={profileForm.pincode || ""}
                     onChange={(e) => setProfileForm({ ...profileForm, pincode: e.target.value })}
                     placeholder="e.g. 110001"
-                    className="w-full sm:w-1/2 p-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground font-semibold focus:outline-none focus:border-[#E77B49]"
+                    className="w-full sm:w-1/2 p-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border-2 border-border dark:border-[#404040] text-foreground font-semibold focus:outline-none focus:border-[#d2d0c1]"
                   />
                 </div>
               </div>
             </div>
 
             {/* 3. Operating Hours & Cuisine */}
-            <div className="space-y-4 pt-2 border-t border-border dark:border-slate-800">
-              <h3 className="font-serif italic font-bold text-xl text-[#60241E] dark:text-slate-100 border-b border-border dark:border-slate-800 pb-2">
+            <div className="space-y-4 pt-2 border-t border-border dark:border-[#404040]">
+              <h3 className="font-serif italic font-bold text-xl text-[#111111] dark:text-slate-100 border-b border-border dark:border-[#404040] pb-2">
                 Operations &amp; Cuisine Types
               </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs font-bold">
                 <div>
-                  <label className="block text-[#60241E] dark:text-slate-300 mb-1">
+                  <label className="block text-[#111111] dark:text-slate-300 mb-1">
                     Opening Time <span className="text-rose-500">*</span>
                   </label>
                   <input
@@ -1787,12 +1787,12 @@ export function AdminPage() {
                     value={profileForm.openingHours || ""}
                     onChange={(e) => setProfileForm({ ...profileForm, openingHours: e.target.value })}
                     placeholder="e.g. 11:00 AM"
-                    className="w-full p-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground font-semibold focus:outline-none focus:border-[#E77B49]"
+                    className="w-full p-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border-2 border-border dark:border-[#404040] text-foreground font-semibold focus:outline-none focus:border-[#d2d0c1]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[#60241E] dark:text-slate-300 mb-1">
+                  <label className="block text-[#111111] dark:text-slate-300 mb-1">
                     Closing Time <span className="text-rose-500">*</span>
                   </label>
                   <input
@@ -1801,12 +1801,12 @@ export function AdminPage() {
                     value={profileForm.closingHours || ""}
                     onChange={(e) => setProfileForm({ ...profileForm, closingHours: e.target.value })}
                     placeholder="e.g. 11:00 PM"
-                    className="w-full p-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground font-semibold focus:outline-none focus:border-[#E77B49]"
+                    className="w-full p-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border-2 border-border dark:border-[#404040] text-foreground font-semibold focus:outline-none focus:border-[#d2d0c1]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[#60241E] dark:text-slate-300 mb-1">
+                  <label className="block text-[#111111] dark:text-slate-300 mb-1">
                     Primary Cuisine <span className="text-rose-500">*</span>
                   </label>
                   <input
@@ -1815,13 +1815,13 @@ export function AdminPage() {
                     value={profileForm.cuisine || ""}
                     onChange={(e) => setProfileForm({ ...profileForm, cuisine: e.target.value })}
                     placeholder="e.g. North Indian, Mughlai, Chinese"
-                    className="w-full p-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground font-semibold focus:outline-none focus:border-[#E77B49]"
+                    className="w-full p-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border-2 border-border dark:border-[#404040] text-foreground font-semibold focus:outline-none focus:border-[#d2d0c1]"
                   />
                 </div>
               </div>
 
               <div className="text-xs font-bold">
-                <label className="block text-[#60241E] dark:text-slate-300 mb-1">
+                <label className="block text-[#111111] dark:text-slate-300 mb-1">
                   Restaurant Description <span className="text-rose-500">*</span>
                 </label>
                 <textarea
@@ -1830,20 +1830,20 @@ export function AdminPage() {
                   value={profileForm.description || ""}
                   onChange={(e) => setProfileForm({ ...profileForm, description: e.target.value })}
                   placeholder="Describe your dining atmosphere, specialities, culinary story, and signature offerings..."
-                  className="w-full p-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground font-semibold focus:outline-none focus:border-[#E77B49]"
+                  className="w-full p-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border-2 border-border dark:border-[#404040] text-foreground font-semibold focus:outline-none focus:border-[#d2d0c1]"
                 />
               </div>
             </div>
 
             {/* 4. Compliance & Optional Business IDs */}
-            <div className="space-y-4 pt-2 border-t border-border dark:border-slate-800">
-              <h3 className="font-serif italic font-bold text-xl text-[#60241E] dark:text-slate-100 border-b border-border dark:border-slate-800 pb-2">
+            <div className="space-y-4 pt-2 border-t border-border dark:border-[#404040]">
+              <h3 className="font-serif italic font-bold text-xl text-[#111111] dark:text-slate-100 border-b border-border dark:border-[#404040] pb-2">
                 Business Compliance &amp; Tax Credentials <span className="text-muted-foreground text-xs font-normal">(Optional)</span>
               </h3>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-bold">
                 <div>
-                  <label className="block text-[#60241E] dark:text-slate-300 mb-1">
+                  <label className="block text-[#111111] dark:text-slate-300 mb-1">
                     GST Number <span className="text-muted-foreground font-normal">(Optional)</span>
                   </label>
                   <input
@@ -1851,12 +1851,12 @@ export function AdminPage() {
                     value={profileForm.gstNumber || ""}
                     onChange={(e) => setProfileForm({ ...profileForm, gstNumber: e.target.value })}
                     placeholder="e.g. 07AAAAA0000A1Z5"
-                    className="w-full p-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground font-mono font-semibold focus:outline-none focus:border-[#E77B49]"
+                    className="w-full p-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border-2 border-border dark:border-[#404040] text-foreground font-mono font-semibold focus:outline-none focus:border-[#d2d0c1]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[#60241E] dark:text-slate-300 mb-1">
+                  <label className="block text-[#111111] dark:text-slate-300 mb-1">
                     FSSAI License Number <span className="text-muted-foreground font-normal">(Optional)</span>
                   </label>
                   <input
@@ -1864,18 +1864,18 @@ export function AdminPage() {
                     value={profileForm.fssaiNumber || ""}
                     onChange={(e) => setProfileForm({ ...profileForm, fssaiNumber: e.target.value })}
                     placeholder="e.g. 10020011000123"
-                    className="w-full p-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground font-mono font-semibold focus:outline-none focus:border-[#E77B49]"
+                    className="w-full p-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border-2 border-border dark:border-[#404040] text-foreground font-mono font-semibold focus:outline-none focus:border-[#d2d0c1]"
                   />
                 </div>
               </div>
             </div>
 
             {/* 5. Brand Media File Uploads (Cover Banner Image) */}
-            <div className="space-y-6 pt-4 border-t border-border dark:border-slate-800">
-              <div className="flex items-center justify-between border-b border-border dark:border-slate-800 pb-2">
+            <div className="space-y-6 pt-4 border-t border-border dark:border-[#404040]">
+              <div className="flex items-center justify-between border-b border-border dark:border-[#404040] pb-2">
                 <div>
-                  <h3 className="font-serif italic font-bold text-xl text-[#60241E] dark:text-slate-100 flex items-center gap-2">
-                    <Sparkles className="size-5 text-[#E77B49]" />
+                  <h3 className="font-serif italic font-bold text-xl text-[#111111] dark:text-slate-100 flex items-center gap-2">
+                    <Sparkles className="size-5 text-[#d2d0c1]" />
                     <span>Restaurant Cover Banner File Upload</span>
                   </h3>
                   <p className="text-xs text-muted-foreground font-medium">
@@ -1899,9 +1899,9 @@ export function AdminPage() {
 
               <div className="max-w-xl">
                 {/* RESTAURANT COVER BANNER FILE UPLOADER */}
-                <div className="bg-[#F8F9FA] dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-3xl p-5 space-y-4 shadow-sm">
+                <div className="bg-[#F5F5F5] dark:bg-[#222222] border-2 border-border dark:border-[#404040] rounded-3xl p-5 space-y-4 shadow-sm">
                   <div className="flex items-center justify-between">
-                    <label className="block text-xs font-extrabold uppercase tracking-wider text-[#60241E] dark:text-[#E77B49]">
+                    <label className="block text-xs font-extrabold uppercase tracking-wider text-[#111111] dark:text-[#d2d0c1]">
                       Cover Banner Image
                     </label>
                     <span className="text-[10px] font-bold text-muted-foreground uppercase">PNG, JPG, WEBP (Max 5MB)</span>
@@ -1923,12 +1923,12 @@ export function AdminPage() {
                     }}
                     className={`relative rounded-2xl border-2 border-dashed p-4 transition-all flex flex-col items-center justify-center gap-3 text-center ${
                       isDragOverCover
-                        ? "border-[#E77B49] bg-[#E77B49]/10"
-                        : "border-border dark:border-slate-700 bg-card dark:bg-slate-800/80"
+                        ? "border-[#d2d0c1] bg-[#d2d0c1]/10"
+                        : "border-border dark:border-[#404040] bg-card dark:bg-[#383838]/80"
                     }`}
                   >
                     {profileForm.coverImage ? (
-                      <div className="relative group w-full h-28 rounded-2xl overflow-hidden shadow-md border-2 border-[#E77B49]/40 shrink-0">
+                      <div className="relative group w-full h-28 rounded-2xl overflow-hidden shadow-md border-2 border-[#d2d0c1]/40 shrink-0">
                         <img
                           src={formatImageUrl(profileForm.coverImage)}
                           alt="Restaurant Cover Preview"
@@ -1948,7 +1948,7 @@ export function AdminPage() {
                         </button>
                       </div>
                     ) : (
-                      <div className="w-full h-20 rounded-2xl bg-[#60241E]/10 dark:bg-slate-700 flex items-center justify-center text-[#E77B49]">
+                      <div className="w-full h-20 rounded-2xl bg-[#111111]/10 dark:bg-slate-700 flex items-center justify-center text-[#d2d0c1]">
                         <Camera className="size-8" />
                       </div>
                     )}
@@ -1968,7 +1968,7 @@ export function AdminPage() {
                       <button
                         type="button"
                         onClick={() => coverFileInputRef.current?.click()}
-                        className="px-4 py-2 rounded-xl bg-[#60241E] dark:bg-[#E77B49] text-white text-xs font-extrabold hover:bg-[#4A1B17] dark:hover:bg-[#D66A38] transition-all flex items-center gap-2 shadow-sm active:scale-95 cursor-pointer"
+                        className="px-4 py-2 rounded-xl bg-[#111111] dark:bg-[#d2d0c1] text-white text-xs font-extrabold hover:bg-[#333333] dark:hover:bg-[#D66A38] transition-all flex items-center gap-2 shadow-sm active:scale-95 cursor-pointer"
                       >
                         <Upload className="size-3.5" />
                         <span>Upload Cover File</span>
@@ -1980,8 +1980,8 @@ export function AdminPage() {
             </div>
 
             {/* 6. Guest Amenities */}
-            <div className="space-y-3 pt-2 border-t border-border dark:border-slate-800">
-              <h3 className="font-serif italic font-bold text-xl text-[#60241E] dark:text-slate-100 border-b border-border dark:border-slate-800 pb-2">
+            <div className="space-y-3 pt-2 border-t border-border dark:border-[#404040]">
+              <h3 className="font-serif italic font-bold text-xl text-[#111111] dark:text-slate-100 border-b border-border dark:border-[#404040] pb-2">
                 Guest Amenities
               </h3>
 
@@ -2012,12 +2012,12 @@ export function AdminPage() {
                       }
                       className={`p-3 rounded-2xl border-2 text-left transition-all flex items-center justify-between ${
                         isChecked
-                          ? "bg-[#60241E] text-white border-[#60241E] shadow-sm"
-                          : "bg-secondary/10 dark:bg-slate-800 text-muted-foreground border-border dark:border-slate-700"
+                          ? "bg-[#111111] text-white border-[#111111] shadow-sm"
+                          : "bg-secondary/10 dark:bg-[#383838] text-muted-foreground border-border dark:border-[#404040]"
                       }`}
                     >
                       <span>{item.label}</span>
-                      <span className={`size-3 rounded-full ${isChecked ? "bg-[#E77B49]" : "bg-gray-300"}`} />
+                      <span className={`size-3 rounded-full ${isChecked ? "bg-[#d2d0c1]" : "bg-gray-300"}`} />
                     </button>
                   );
                 })}
@@ -2025,11 +2025,11 @@ export function AdminPage() {
             </div>
 
             {/* Save Profile Button */}
-            <div className="pt-4 border-t border-border dark:border-slate-800">
+            <div className="pt-4 border-t border-border dark:border-[#404040]">
               <button
                 type="submit"
                 disabled={isSavingProfile}
-                className="w-full py-4 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                className="w-full py-4 rounded-2xl bg-[#d2d0c1] hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
               >
                 {isSavingProfile ? (
                   <span>Saving Profile to MongoDB...</span>
@@ -2048,15 +2048,15 @@ export function AdminPage() {
       {/* GALLERY MANAGEMENT TAB */}
       {activeTab === "gallery" && (
         <div className="space-y-6">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[#F8F9FA] p-6 rounded-3xl border-2 border-[#E5E7EB]">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[#F5F5F5] p-6 rounded-3xl border-2 border-[#E5E5E5]">
             <div>
-              <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#E77B49] bg-[#E77B49]/10 px-3 py-1 rounded-full border border-[#E77B49]/20">
+              <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#d2d0c1] bg-[#d2d0c1]/10 px-3 py-1 rounded-full border border-[#d2d0c1]/20">
                 MEDIA &amp; VISUAL ASSETS
               </span>
-              <h2 className="font-serif italic text-2xl sm:text-3xl font-bold text-[#60241E] mt-1.5">
+              <h2 className="font-serif italic text-2xl sm:text-3xl font-bold text-[#111111] mt-1.5">
                 Restaurant Photo &amp; Media Gallery
               </h2>
-              <p className="text-xs text-[#6B7280] font-medium mt-0.5">
+              <p className="text-xs text-[#737373] font-medium mt-0.5">
                 Upload and organize photos of interior dining halls, signature dishes, outdoor seating, VIP suites, and events.
               </p>
             </div>
@@ -2064,7 +2064,7 @@ export function AdminPage() {
             <button
               type="button"
               onClick={() => setShowGalleryModal(true)}
-              className="py-3 px-5 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold shadow-md transition-all flex items-center gap-2 active:scale-95 shrink-0"
+              className="py-3 px-5 rounded-2xl bg-[#d2d0c1] hover:bg-[#D66A38] text-white text-xs font-extrabold shadow-md transition-all flex items-center gap-2 active:scale-95 shrink-0"
             >
               <Plus className="size-4" />
               <span>Add Photo to Gallery</span>
@@ -2073,7 +2073,7 @@ export function AdminPage() {
 
           {/* Gallery Category Filter Chips */}
           <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs font-bold">
-            <span className="text-[10px] text-[#60241E] uppercase font-extrabold mr-1 shrink-0">
+            <span className="text-[10px] text-[#111111] uppercase font-extrabold mr-1 shrink-0">
               Filter Category:
             </span>
             {["All", "Interior", "Exterior", "Dining Area", "VIP Rooms", "Events", "Food Highlights", "Food", "Tables"].map(
@@ -2084,8 +2084,8 @@ export function AdminPage() {
                   onClick={() => setGalleryCategoryFilter(cat)}
                   className={`px-3 py-1.5 rounded-full transition-all shrink-0 ${
                     galleryCategoryFilter === cat
-                      ? "bg-[#60241E] text-white shadow-xs"
-                      : "bg-[#F8F9FA] text-[#6B7280] border border-[#E5E7EB] hover:text-[#1F2937]"
+                      ? "bg-[#111111] text-white shadow-xs"
+                      : "bg-[#F5F5F5] text-[#737373] border border-[#E5E5E5] hover:text-[#111111]"
                   }`}
                 >
                   {cat}
@@ -2105,7 +2105,7 @@ export function AdminPage() {
               .map((img) => (
                 <div
                   key={img.id}
-                  className="bg-white border-2 border-[#E5E7EB] rounded-3xl overflow-hidden shadow-sm flex flex-col justify-between group hover:border-[#E77B49] transition-all"
+                  className="bg-white border-2 border-[#E5E5E5] rounded-3xl overflow-hidden shadow-sm flex flex-col justify-between group hover:border-[#d2d0c1] transition-all"
                 >
                   <div className="relative h-48 w-full overflow-hidden bg-gray-100">
                     <img
@@ -2113,17 +2113,17 @@ export function AdminPage() {
                       alt={img.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
-                    <span className="absolute top-3 left-3 bg-[#60241E]/90 backdrop-blur-xs text-white text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full shadow-xs">
+                    <span className="absolute top-3 left-3 bg-[#111111]/90 backdrop-blur-xs text-white text-[10px] font-extrabold uppercase px-2.5 py-1 rounded-full shadow-xs">
                       {img.category}
                     </span>
                   </div>
 
                   <div className="p-4 flex items-center justify-between gap-3">
                     <div className="min-w-0 flex-1">
-                      <h4 className="font-serif italic font-bold text-base text-[#60241E] truncate">
+                      <h4 className="font-serif italic font-bold text-base text-[#111111] truncate">
                         {img.title}
                       </h4>
-                      <p className="text-[10px] text-[#6B7280] font-medium">Order #{img.order || 1}</p>
+                      <p className="text-[10px] text-[#737373] font-medium">Order #{img.order || 1}</p>
                     </div>
 
                     <button
@@ -2146,8 +2146,8 @@ export function AdminPage() {
         <div className="space-y-6">
           <div className="flex justify-between items-center">
             <div>
-              <h2 className="text-2xl font-serif italic font-bold text-[#60241E]">Live Food Menu Catalog</h2>
-              <p className="text-xs text-[#6B7280] font-medium">Manage portions, prices, and today's kitchen availability.</p>
+              <h2 className="text-2xl font-serif italic font-bold text-[#111111]">Live Food Menu Catalog</h2>
+              <p className="text-xs text-[#737373] font-medium">Manage portions, prices, and today's kitchen availability.</p>
             </div>
 
             <button
@@ -2174,7 +2174,7 @@ export function AdminPage() {
                 });
                 setShowFoodModal(true);
               }}
-              className="py-2.5 px-4 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold shadow-md transition-all flex items-center gap-1.5 active:scale-95"
+              className="py-2.5 px-4 rounded-2xl bg-[#d2d0c1] hover:bg-[#D66A38] text-white text-xs font-extrabold shadow-md transition-all flex items-center gap-1.5 active:scale-95"
             >
               <Plus className="size-4" />
               <span>Add Dish</span>
@@ -2182,8 +2182,8 @@ export function AdminPage() {
           </div>
 
           {dishes.length === 0 ? (
-            <div className="p-12 text-center bg-card dark:bg-slate-900 border-2 border-dashed border-border dark:border-slate-800 rounded-3xl space-y-4">
-              <div className="size-16 rounded-2xl bg-[#E77B49]/10 text-[#E77B49] flex items-center justify-center mx-auto">
+            <div className="p-12 text-center bg-card dark:bg-[#222222] border-2 border-dashed border-border dark:border-[#404040] rounded-3xl space-y-4">
+              <div className="size-16 rounded-2xl bg-[#d2d0c1]/10 text-[#d2d0c1] flex items-center justify-center mx-auto">
                 <UtensilsCrossed className="size-8 stroke-[2]" />
               </div>
               <div>
@@ -2216,7 +2216,7 @@ export function AdminPage() {
                   });
                   setShowFoodModal(true);
                 }}
-                className="py-3 px-5 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold shadow-md transition-all inline-flex items-center gap-2 active:scale-95 cursor-pointer"
+                className="py-3 px-5 rounded-2xl bg-[#d2d0c1] hover:bg-[#D66A38] text-white text-xs font-extrabold shadow-md transition-all inline-flex items-center gap-2 active:scale-95 cursor-pointer"
               >
                 <Plus className="size-4" />
                 <span>Add Your First Dish</span>
@@ -2228,9 +2228,9 @@ export function AdminPage() {
                 const mainImg = (typeof d.dishImage === "string" ? d.dishImage : d.dishImage?.imageUrl) || d.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=800";
                 const isAvailable = d.availableToday && d.portionsLeft > 0;
                 return (
-                  <div key={d.id} className="bg-card dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-3xl p-5 shadow-sm space-y-3 flex flex-col justify-between hover:border-[#E77B49] transition-all">
+                  <div key={d.id} className="bg-card dark:bg-[#222222] border-2 border-border dark:border-[#404040] rounded-3xl p-5 shadow-sm space-y-3 flex flex-col justify-between hover:border-[#d2d0c1] transition-all">
                     <div className="flex gap-4">
-                      <div className="relative size-24 rounded-2xl overflow-hidden border border-border dark:border-slate-800 shrink-0 bg-slate-100 dark:bg-slate-800">
+                      <div className="relative size-24 rounded-2xl overflow-hidden border border-border dark:border-[#404040] shrink-0 bg-slate-100 dark:bg-[#383838]">
                         <img src={mainImg} alt={d.name} loading="lazy" className="w-full h-full object-cover" />
                         <span className={`absolute top-1.5 left-1.5 size-4 rounded-md flex items-center justify-center border ${d.isVeg !== false ? "border-emerald-600 bg-white" : "border-red-600 bg-white"}`}>
                           <span className={`size-2 rounded-full ${d.isVeg !== false ? "bg-emerald-600" : "bg-red-600"}`} />
@@ -2239,7 +2239,7 @@ export function AdminPage() {
 
                       <div className="space-y-1 min-w-0 flex-1">
                         <div className="flex items-center justify-between gap-1">
-                          <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-[#60241E]/10 dark:bg-[#E77B49]/20 text-[#60241E] dark:text-[#E77B49]">
+                          <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-[#111111]/10 dark:bg-[#d2d0c1]/20 text-[#111111] dark:text-[#d2d0c1]">
                             {d.category}
                           </span>
                           <span className={`text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full ${isAvailable ? "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400" : "bg-rose-500/10 text-rose-600 dark:text-rose-400"}`}>
@@ -2249,20 +2249,20 @@ export function AdminPage() {
                         <h3 className="font-serif italic font-bold text-lg text-foreground truncate">{d.name}</h3>
                         <p className="text-xs text-muted-foreground line-clamp-2">{d.description}</p>
                         <div className="flex items-center gap-2 pt-0.5">
-                          <span className="text-xs font-extrabold text-[#E77B49]">{formatCurrency(d.discountPrice || d.price)}</span>
+                          <span className="text-xs font-extrabold text-[#d2d0c1]">{formatCurrency(d.discountPrice || d.price)}</span>
                           {d.isVegan && <span className="text-[9px] font-extrabold uppercase bg-emerald-600 text-white px-1.5 py-0.2 rounded-md">Vegan</span>}
                           {d.isOrganic && <span className="text-[9px] font-extrabold uppercase bg-teal-700 text-white px-1.5 py-0.2 rounded-md">Organic</span>}
                         </div>
                       </div>
                     </div>
 
-                    <div className="flex justify-between items-center pt-2 border-t border-border dark:border-slate-800">
-                      <span className="text-[10px] font-bold text-[#60241E] dark:text-slate-300 bg-secondary/30 px-2.5 py-0.5 rounded-full">
+                    <div className="flex justify-between items-center pt-2 border-t border-border dark:border-[#404040]">
+                      <span className="text-[10px] font-bold text-[#111111] dark:text-slate-300 bg-secondary/30 px-2.5 py-0.5 rounded-full">
                         {d.portionsLeft} Portions Left
                       </span>
 
                       <div className="flex items-center gap-1">
-                        <button type="button" onClick={() => handleEditDish(d)} className="p-2 rounded-xl text-[#60241E] dark:text-slate-200 hover:bg-secondary/30" title="Edit Dish">
+                        <button type="button" onClick={() => handleEditDish(d)} className="p-2 rounded-xl text-[#111111] dark:text-slate-200 hover:bg-secondary/30" title="Edit Dish">
                           <Edit2 className="size-4" />
                         </button>
                         <button type="button" onClick={() => deleteDish(d.id)} className="p-2 rounded-xl text-rose-600 hover:bg-rose-500/10" title="Delete Dish">
@@ -2282,10 +2282,10 @@ export function AdminPage() {
       {activeTab === "tables" && (
         <div className="space-y-6">
           {/* Header & Controls Bar */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[#F8F9FA] dark:bg-slate-900 border-2 border-[#E5E7EB] dark:border-slate-800 p-6 rounded-3xl shadow-sm">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[#F5F5F5] dark:bg-[#222222] border-2 border-[#E5E5E5] dark:border-[#404040] p-6 rounded-3xl shadow-sm">
             <div>
-              <h2 className="text-2xl font-serif italic font-bold text-[#60241E] dark:text-slate-100">Table Management</h2>
-              <p className="text-xs text-[#6B7280] dark:text-slate-400 font-medium">Configure seating capacity, table types, uploaded photos, and live table status stored in MongoDB.</p>
+              <h2 className="text-2xl font-serif italic font-bold text-[#111111] dark:text-slate-100">Table Management</h2>
+              <p className="text-xs text-[#737373] dark:text-slate-400 font-medium">Configure seating capacity, table types, uploaded photos, and live table status stored in MongoDB.</p>
             </div>
 
             <button
@@ -2308,7 +2308,7 @@ export function AdminPage() {
                 });
                 setShowTableModal(true);
               }}
-              className="py-3 px-5 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold shadow-md transition-all flex items-center gap-2 active:scale-95 cursor-pointer shrink-0"
+              className="py-3 px-5 rounded-2xl bg-[#d2d0c1] hover:bg-[#D66A38] text-white text-xs font-extrabold shadow-md transition-all flex items-center gap-2 active:scale-95 cursor-pointer shrink-0"
             >
               <Plus className="size-4" />
               <span>Add Table</span>
@@ -2325,7 +2325,7 @@ export function AdminPage() {
                 value={tableSearchQuery}
                 onChange={(e) => setTableSearchQuery(e.target.value)}
                 placeholder="Search by table number, name, or type (e.g. TABLE 01, Window)..."
-                className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-white dark:bg-slate-900 border-2 border-[#E5E7EB] dark:border-slate-800 text-xs font-bold text-foreground focus:outline-none focus:border-[#E77B49]"
+                className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-white dark:bg-[#222222] border-2 border-[#E5E5E5] dark:border-[#404040] text-xs font-bold text-foreground focus:outline-none focus:border-[#d2d0c1]"
               />
               {tableSearchQuery && (
                 <button type="button" onClick={() => setTableSearchQuery("")} className="absolute right-3 top-3 text-muted-foreground hover:text-foreground">
@@ -2336,11 +2336,11 @@ export function AdminPage() {
 
             {/* Status Filter Dropdown */}
             <div className="flex items-center gap-2 w-full sm:w-auto">
-              <span className="text-xs font-bold text-[#60241E] dark:text-slate-300 shrink-0">Filter Status:</span>
+              <span className="text-xs font-bold text-[#111111] dark:text-slate-300 shrink-0">Filter Status:</span>
               <select
                 value={tableStatusFilter}
                 onChange={(e) => setTableStatusFilter(e.target.value as any)}
-                className="w-full sm:w-auto px-4 py-2.5 rounded-2xl bg-white dark:bg-slate-900 border-2 border-[#E5E7EB] dark:border-slate-800 text-xs font-extrabold text-[#60241E] dark:text-slate-100 focus:outline-none focus:border-[#E77B49] cursor-pointer"
+                className="w-full sm:w-auto px-4 py-2.5 rounded-2xl bg-white dark:bg-[#222222] border-2 border-[#E5E5E5] dark:border-[#404040] text-xs font-extrabold text-[#111111] dark:text-slate-100 focus:outline-none focus:border-[#d2d0c1] cursor-pointer"
               >
                 <option value="All">All Tables</option>
                 <option value="Available">Available (Green)</option>
@@ -2370,8 +2370,8 @@ export function AdminPage() {
 
             if (filteredTables.length === 0) {
               return (
-                <div className="p-12 text-center bg-card dark:bg-slate-900 border-2 border-dashed border-border dark:border-slate-800 rounded-3xl space-y-4">
-                  <div className="size-16 rounded-2xl bg-[#60241E]/10 dark:bg-[#E77B49]/20 text-[#60241E] dark:text-[#E77B49] flex items-center justify-center mx-auto">
+                <div className="p-12 text-center bg-card dark:bg-[#222222] border-2 border-dashed border-border dark:border-[#404040] rounded-3xl space-y-4">
+                  <div className="size-16 rounded-2xl bg-[#111111]/10 dark:bg-[#d2d0c1]/20 text-[#111111] dark:text-[#d2d0c1] flex items-center justify-center mx-auto">
                     <LayoutGrid className="size-8 stroke-[2]" />
                   </div>
                   <div>
@@ -2395,10 +2395,10 @@ export function AdminPage() {
                   return (
                     <div
                       key={t.id}
-                      className="bg-white dark:bg-slate-900 border-2 border-[#E5E7EB] dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
+                      className="bg-white dark:bg-[#222222] border-2 border-[#E5E5E5] dark:border-[#404040] rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
                     >
                       {/* Top Table Image Thumbnail & Status Badge */}
-                      <div className="relative h-44 w-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                      <div className="relative h-44 w-full bg-slate-100 dark:bg-[#383838] overflow-hidden">
                         <img
                           src={tableImgSrc}
                           alt={t.tableName || t.tableNumber}
@@ -2413,7 +2413,7 @@ export function AdminPage() {
                             currentStatus === "Available"
                               ? "bg-emerald-600"
                               : currentStatus === "Reserved"
-                              ? "bg-[#E77B49]"
+                              ? "bg-[#d2d0c1]"
                               : currentStatus === "Occupied"
                               ? "bg-rose-600"
                               : "bg-gray-500"
@@ -2424,7 +2424,7 @@ export function AdminPage() {
 
                         {/* Table Number Badge */}
                         <div className="absolute bottom-3 left-3 flex items-center gap-2">
-                          <span className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-md px-3 py-1 rounded-xl text-xs font-extrabold text-[#60241E] dark:text-[#E77B49] shadow-sm font-mono border border-white/20">
+                          <span className="bg-white/90 dark:bg-[#222222]/90 backdrop-blur-md px-3 py-1 rounded-xl text-xs font-extrabold text-[#111111] dark:text-[#d2d0c1] shadow-sm font-mono border border-white/20">
                             {t.tableNumber}
                           </span>
                         </div>
@@ -2434,10 +2434,10 @@ export function AdminPage() {
                       <div className="p-5 space-y-3 flex-1 flex flex-col justify-between">
                         <div className="space-y-1">
                           <div className="flex items-center justify-between">
-                            <h3 className="font-serif italic font-bold text-xl text-[#60241E] dark:text-slate-100">
+                            <h3 className="font-serif italic font-bold text-xl text-[#111111] dark:text-slate-100">
                               {t.tableName || `Table ${t.tableNumber}`}
                             </h3>
-                            <span className="text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-secondary/20 text-[#60241E] dark:text-slate-300">
+                            <span className="text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-secondary/20 text-[#111111] dark:text-slate-300">
                               {t.tableType || t.type || "Regular"}
                             </span>
                           </div>
@@ -2454,15 +2454,15 @@ export function AdminPage() {
                         </div>
 
                         {/* Status Management Selector & Action Buttons */}
-                        <div className="pt-3 border-t border-[#E5E7EB] dark:border-slate-800 space-y-3">
+                        <div className="pt-3 border-t border-[#E5E5E5] dark:border-[#404040] space-y-3">
                           <div className="flex items-center justify-between gap-2">
-                            <label className="text-[11px] font-extrabold uppercase text-[#60241E] dark:text-slate-400">
+                            <label className="text-[11px] font-extrabold uppercase text-[#111111] dark:text-slate-400">
                               Status:
                             </label>
                             <select
                               value={currentStatus}
                               onChange={(e) => updateTable(t.id, { status: e.target.value as any })}
-                              className="text-xs font-extrabold bg-[#F8F9FA] dark:bg-slate-800 border-2 border-[#E5E7EB] dark:border-slate-700 rounded-xl px-3 py-1.5 text-[#60241E] dark:text-slate-100 focus:outline-none focus:border-[#E77B49] cursor-pointer"
+                              className="text-xs font-extrabold bg-[#F5F5F5] dark:bg-[#383838] border-2 border-[#E5E5E5] dark:border-[#404040] rounded-xl px-3 py-1.5 text-[#111111] dark:text-slate-100 focus:outline-none focus:border-[#d2d0c1] cursor-pointer"
                             >
                               <option value="Available">Available (Green)</option>
                               <option value="Reserved">Reserved (Orange)</option>
@@ -2475,7 +2475,7 @@ export function AdminPage() {
                             <button
                               type="button"
                               onClick={() => handleEditTable(t)}
-                              className="py-2 px-3.5 rounded-xl bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 text-[#60241E] dark:text-slate-200 text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer"
+                              className="py-2 px-3.5 rounded-xl bg-gray-100 dark:bg-[#383838] hover:bg-gray-200 dark:hover:bg-slate-700 text-[#111111] dark:text-slate-200 text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer"
                             >
                               <Edit2 className="size-3.5" />
                               <span>Edit</span>
@@ -2509,8 +2509,8 @@ export function AdminPage() {
         <div className="space-y-6">
           <div className="flex justify-between items-center">
             <div>
-              <h2 className="text-2xl font-serif italic font-bold text-[#60241E] dark:text-slate-100">Restaurant Staff Directory</h2>
-              <p className="text-xs text-[#6B7280] dark:text-slate-400 font-medium">Manage chefs, cashiers, waiters, managers, and staff access accounts stored in MongoDB.</p>
+              <h2 className="text-2xl font-serif italic font-bold text-[#111111] dark:text-slate-100">Restaurant Staff Directory</h2>
+              <p className="text-xs text-[#737373] dark:text-slate-400 font-medium">Manage chefs, cashiers, waiters, managers, and staff access accounts stored in MongoDB.</p>
             </div>
 
             <button
@@ -2520,7 +2520,7 @@ export function AdminPage() {
                 setStaffForm({ name: "", mobile: "", email: "", role: "Kitchen Staff", password: "" });
                 setShowStaffModal(true);
               }}
-              className="py-2.5 px-4 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold shadow-md transition-all flex items-center gap-1.5 active:scale-95"
+              className="py-2.5 px-4 rounded-2xl bg-[#d2d0c1] hover:bg-[#D66A38] text-white text-xs font-extrabold shadow-md transition-all flex items-center gap-1.5 active:scale-95"
             >
               <UserPlus className="size-4" />
               <span>Add Staff Member</span>
@@ -2528,22 +2528,22 @@ export function AdminPage() {
           </div>
 
           {kitchenStaff.length === 0 ? (
-            <div className="bg-[#F8F9FA] dark:bg-slate-900 border-2 border-dashed border-[#E5E7EB] dark:border-slate-800 rounded-3xl p-10 text-center space-y-3">
-              <Users className="size-10 text-[#E77B49] mx-auto opacity-50" />
-              <h3 className="font-serif italic text-xl font-bold text-[#60241E] dark:text-slate-100">No Staff Members Added Yet</h3>
-              <p className="text-xs text-[#6B7280] dark:text-slate-400">Click "Add Staff Member" to add staff members to your restaurant team in MongoDB Atlas.</p>
+            <div className="bg-[#F5F5F5] dark:bg-[#222222] border-2 border-dashed border-[#E5E5E5] dark:border-[#404040] rounded-3xl p-10 text-center space-y-3">
+              <Users className="size-10 text-[#d2d0c1] mx-auto opacity-50" />
+              <h3 className="font-serif italic text-xl font-bold text-[#111111] dark:text-slate-100">No Staff Members Added Yet</h3>
+              <p className="text-xs text-[#737373] dark:text-slate-400">Click "Add Staff Member" to add staff members to your restaurant team in MongoDB Atlas.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {kitchenStaff.map((s) => (
-                <div key={s.id} className="bg-white dark:bg-slate-900 border-2 border-[#E5E7EB] dark:border-slate-800 rounded-3xl p-5 shadow-sm space-y-3">
+                <div key={s.id} className="bg-white dark:bg-[#222222] border-2 border-[#E5E5E5] dark:border-[#404040] rounded-3xl p-5 shadow-sm space-y-3">
                   <div className="flex justify-between items-start gap-3">
                     <div className="flex items-center gap-3">
-                      <img src={s.profilePhoto || "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=500&auto=format&fit=crop&q=60"} alt={s.name} className="size-12 rounded-2xl object-cover border border-[#E5E7EB] dark:border-slate-800 shrink-0" />
+                      <img src={s.profilePhoto || "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=500&auto=format&fit=crop&q=60"} alt={s.name} className="size-12 rounded-2xl object-cover border border-[#E5E5E5] dark:border-[#404040] shrink-0" />
                       <div className="min-w-0">
-                        <span className="text-[10px] font-extrabold uppercase text-[#E77B49]">{s.staffId}</span>
-                        <h3 className="font-bold text-base text-[#1F2937] dark:text-slate-100 truncate">{s.name}</h3>
-                        <p className="text-xs text-[#6B7280] dark:text-slate-400 font-semibold">{s.roleTitle || s.role} • {s.mobile || s.phone}</p>
+                        <span className="text-[10px] font-extrabold uppercase text-[#d2d0c1]">{s.staffId}</span>
+                        <h3 className="font-bold text-base text-[#111111] dark:text-slate-100 truncate">{s.name}</h3>
+                        <p className="text-xs text-[#737373] dark:text-slate-400 font-semibold">{s.roleTitle || s.role} • {s.mobile || s.phone}</p>
                         {s.email && <p className="text-[11px] text-muted-foreground truncate">{s.email}</p>}
                         {s.createdAt && <p className="text-[10px] text-muted-foreground/70 mt-0.5">Added: {s.createdAt}</p>}
                       </div>
@@ -2553,8 +2553,8 @@ export function AdminPage() {
                     </span>
                   </div>
 
-                  <div className="flex justify-between items-center pt-2 border-t border-[#E5E7EB] dark:border-slate-800">
-                    <button type="button" onClick={() => toggleKitchenStaffStatus(s.id)} className="text-xs font-bold text-[#60241E] dark:text-[#E77B49] hover:underline">
+                  <div className="flex justify-between items-center pt-2 border-t border-[#E5E5E5] dark:border-[#404040]">
+                    <button type="button" onClick={() => toggleKitchenStaffStatus(s.id)} className="text-xs font-bold text-[#111111] dark:text-[#d2d0c1] hover:underline">
                       Toggle Status ({s.status === "Active" ? "Disable" : "Enable"})
                     </button>
                     <div className="flex items-center gap-1">
@@ -2571,7 +2571,7 @@ export function AdminPage() {
                           });
                           setShowStaffModal(true);
                         }}
-                        className="p-2 rounded-xl text-[#60241E] dark:text-[#E77B49] hover:bg-gray-100 dark:hover:bg-slate-800"
+                        className="p-2 rounded-xl text-[#111111] dark:text-[#d2d0c1] hover:bg-gray-100 dark:hover:bg-[#383838]"
                         title="Edit Staff"
                       >
                         <Edit2 className="size-4" />
@@ -2592,17 +2592,17 @@ export function AdminPage() {
       {activeTab === "reviews" && (
         <div className="space-y-6">
           <div>
-            <h2 className="text-2xl font-serif italic font-bold text-[#60241E]">Customer Reviews Management</h2>
-            <p className="text-xs text-[#6B7280] font-medium">Monitor diner ratings and publish management responses.</p>
+            <h2 className="text-2xl font-serif italic font-bold text-[#111111]">Customer Reviews Management</h2>
+            <p className="text-xs text-[#737373] font-medium">Monitor diner ratings and publish management responses.</p>
           </div>
 
           <div className="space-y-4">
             {adminReviewsList.map((r) => (
-              <div key={r.id} className="bg-white border-2 border-[#E5E7EB] rounded-3xl p-5 shadow-sm space-y-3">
+              <div key={r.id} className="bg-white border-2 border-[#E5E5E5] rounded-3xl p-5 shadow-sm space-y-3">
                 <div className="flex justify-between items-start">
                   <div>
-                    <h3 className="font-bold text-sm text-[#1F2937]">{r.customerName}</h3>
-                    <p className="text-[10px] text-[#6B7280]">{r.date}</p>
+                    <h3 className="font-bold text-sm text-[#111111]">{r.customerName}</h3>
+                    <p className="text-[10px] text-[#737373]">{r.date}</p>
                   </div>
                   <span className="text-xs font-bold text-amber-500">★ {r.rating}.0</span>
                 </div>
@@ -2618,21 +2618,21 @@ export function AdminPage() {
       {activeTab === "security" && (
         <div className="space-y-6 max-w-3xl mx-auto">
           <div>
-            <h2 className="text-2xl font-serif italic font-bold text-[#60241E] dark:text-slate-100">
+            <h2 className="text-2xl font-serif italic font-bold text-[#111111] dark:text-slate-100">
               Admin Security Settings
             </h2>
-            <p className="text-xs text-[#6B7280] dark:text-slate-400 font-medium">
+            <p className="text-xs text-[#737373] dark:text-slate-400 font-medium">
               Manage your Restaurant Admin Portal password protection and access security credentials stored in MongoDB.
             </p>
           </div>
 
-          <div className="bg-card dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
+          <div className="bg-card dark:bg-[#222222] border-2 border-border dark:border-[#404040] rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
             {/* 1. TOP OPTION: Admin Portal Password Protection Toggle */}
-            <div className="p-5 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/80 border-2 border-border dark:border-slate-700 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div className="p-5 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838]/80 border-2 border-border dark:border-[#404040] flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
-                  <ShieldCheck className="size-5 text-[#E77B49]" />
-                  <h3 className="font-serif italic font-bold text-lg text-[#60241E] dark:text-slate-100">
+                  <ShieldCheck className="size-5 text-[#d2d0c1]" />
+                  <h3 className="font-serif italic font-bold text-lg text-[#111111] dark:text-slate-100">
                     Admin Portal Password Protection
                   </h3>
                 </div>
@@ -2675,7 +2675,7 @@ export function AdminPage() {
               >
                 <span className="sr-only">Toggle Admin Portal Password Protection</span>
                 <span
-                  className={`pointer-events-none flex items-center justify-center size-7 transform rounded-full bg-white text-[9px] font-extrabold text-[#60241E] shadow-lg ring-0 transition duration-200 ease-in-out ${
+                  className={`pointer-events-none flex items-center justify-center size-7 transform rounded-full bg-white text-[9px] font-extrabold text-[#111111] shadow-lg ring-0 transition duration-200 ease-in-out ${
                     profileForm.adminPasswordProtection !== false ? "translate-x-12 text-emerald-700" : "translate-x-0 text-slate-600"
                   }`}
                 >
@@ -2721,13 +2721,13 @@ export function AdminPage() {
               </div>
             ) : (
               <form onSubmit={handleAdminPassChange} className="space-y-4 pt-2">
-                <p className="text-xs text-[#6B7280] dark:text-slate-400 font-medium">
+                <p className="text-xs text-[#737373] dark:text-slate-400 font-medium">
                   Manage your Restaurant Admin Portal password. Your password is securely hashed using bcrypt and stored in MongoDB.
                 </p>
 
                 <div className="space-y-4 text-xs font-bold">
                   <div>
-                    <label className="block text-[#60241E] dark:text-slate-200 mb-1">
+                    <label className="block text-[#111111] dark:text-slate-200 mb-1">
                       Current Password <span className="text-rose-500">*</span>
                     </label>
                     <div className="relative">
@@ -2737,7 +2737,7 @@ export function AdminPage() {
                         value={currentAdminPass}
                         onChange={(e) => setCurrentAdminPass(e.target.value)}
                         placeholder="Enter your current Admin Password"
-                        className="w-full p-3 pr-10 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground font-semibold focus:outline-none focus:border-[#E77B49]"
+                        className="w-full p-3 pr-10 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border-2 border-border dark:border-[#404040] text-foreground font-semibold focus:outline-none focus:border-[#d2d0c1]"
                       />
                       <button
                         type="button"
@@ -2750,7 +2750,7 @@ export function AdminPage() {
                   </div>
 
                   <div>
-                    <label className="block text-[#60241E] dark:text-slate-200 mb-1">
+                    <label className="block text-[#111111] dark:text-slate-200 mb-1">
                       New Password <span className="text-rose-500">*</span>
                     </label>
                     <div className="relative">
@@ -2761,7 +2761,7 @@ export function AdminPage() {
                         value={newAdminPass}
                         onChange={(e) => setNewAdminPass(e.target.value)}
                         placeholder="Enter your new Admin Password"
-                        className="w-full p-3 pr-10 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground font-semibold focus:outline-none focus:border-[#E77B49]"
+                        className="w-full p-3 pr-10 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border-2 border-border dark:border-[#404040] text-foreground font-semibold focus:outline-none focus:border-[#d2d0c1]"
                       />
                       <button
                         type="button"
@@ -2774,7 +2774,7 @@ export function AdminPage() {
                   </div>
 
                   <div>
-                    <label className="block text-[#60241E] dark:text-slate-200 mb-1">
+                    <label className="block text-[#111111] dark:text-slate-200 mb-1">
                       Confirm New Password <span className="text-rose-500">*</span>
                     </label>
                     <div className="relative">
@@ -2784,7 +2784,7 @@ export function AdminPage() {
                         value={confirmAdminPass}
                         onChange={(e) => setConfirmAdminPass(e.target.value)}
                         placeholder="Re-enter your new Admin Password"
-                        className="w-full p-3 pr-10 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground font-semibold focus:outline-none focus:border-[#E77B49]"
+                        className="w-full p-3 pr-10 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border-2 border-border dark:border-[#404040] text-foreground font-semibold focus:outline-none focus:border-[#d2d0c1]"
                       />
                       <button
                         type="button"
@@ -2801,7 +2801,7 @@ export function AdminPage() {
                   <button
                     type="submit"
                     disabled={isSubmittingPass}
-                    className="w-full py-4 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                    className="w-full py-4 rounded-2xl bg-[#d2d0c1] hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                   >
                     {isSubmittingPass ? (
                       <span>Updating Password...</span>
@@ -2822,9 +2822,9 @@ export function AdminPage() {
       {/* FOOD FORM MODAL */}
       {showFoodModal && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-card dark:bg-slate-900 rounded-3xl p-6 max-w-lg w-full shadow-2xl space-y-4 border-2 border-border dark:border-slate-800 my-8">
-            <div className="flex justify-between items-center pb-2 border-b border-border dark:border-slate-800">
-              <h3 className="font-serif italic text-2xl font-bold text-[#60241E] dark:text-slate-100">
+          <div className="bg-card dark:bg-[#222222] rounded-3xl p-6 max-w-lg w-full shadow-2xl space-y-4 border-2 border-border dark:border-[#404040] my-8">
+            <div className="flex justify-between items-center pb-2 border-b border-border dark:border-[#404040]">
+              <h3 className="font-serif italic text-2xl font-bold text-[#111111] dark:text-slate-100">
                 {editingDishId ? "Edit Dish Details & Image" : "Add New Dish to Catalog"}
               </h3>
               <button type="button" onClick={() => setShowFoodModal(false)} className="p-2 rounded-full hover:bg-secondary/20">
@@ -2835,13 +2835,13 @@ export function AdminPage() {
             <form onSubmit={handleFoodSubmit} className="space-y-4 text-xs">
               {/* Dish Image Upload Section */}
               <div className="space-y-2">
-                <label className="block font-bold text-[#60241E] dark:text-slate-200">
+                <label className="block font-bold text-[#111111] dark:text-slate-200">
                   Dish Image <span className="text-rose-500">*</span>
                 </label>
 
                 <div className="flex flex-col sm:flex-row gap-3 items-center">
                   {/* Current Image Preview */}
-                  <div className="relative size-28 rounded-2xl overflow-hidden border-2 border-[#E77B49] shadow-md shrink-0 bg-slate-100 dark:bg-slate-800 group">
+                  <div className="relative size-28 rounded-2xl overflow-hidden border-2 border-[#d2d0c1] shadow-md shrink-0 bg-slate-100 dark:bg-[#383838] group">
                     <img
                       src={foodForm.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=800"}
                       alt="Dish Preview"
@@ -2866,8 +2866,8 @@ export function AdminPage() {
                       }}
                       className={`border-2 border-dashed rounded-2xl p-3 text-center transition-all cursor-pointer ${
                         isDragOverFoodImage
-                          ? "border-[#E77B49] bg-[#E77B49]/10"
-                          : "border-border dark:border-slate-700 bg-secondary/10 hover:border-[#E77B49]"
+                          ? "border-[#d2d0c1] bg-[#d2d0c1]/10"
+                          : "border-border dark:border-[#404040] bg-secondary/10 hover:border-[#d2d0c1]"
                       }`}
                     >
                       <input
@@ -2882,7 +2882,7 @@ export function AdminPage() {
                         }}
                       />
                       <label htmlFor="food-image-input" className="cursor-pointer space-y-1 block">
-                        <Upload className="size-5 text-[#E77B49] mx-auto" />
+                        <Upload className="size-5 text-[#d2d0c1] mx-auto" />
                         <p className="font-bold text-foreground">Click to upload from device or drag &amp; drop</p>
                         <p className="text-[10px] text-muted-foreground">Accepts JPG, PNG, WEBP (Auto-optimized)</p>
                       </label>
@@ -2892,7 +2892,7 @@ export function AdminPage() {
                       <button
                         type="button"
                         onClick={() => document.getElementById("food-image-input")?.click()}
-                        className="flex-1 py-1.5 rounded-xl bg-[#60241E]/10 dark:bg-slate-800 text-[#60241E] dark:text-slate-200 font-extrabold hover:bg-[#60241E] hover:text-white transition-colors text-[11px]"
+                        className="flex-1 py-1.5 rounded-xl bg-[#111111]/10 dark:bg-[#383838] text-[#111111] dark:text-slate-200 font-extrabold hover:bg-[#111111] hover:text-white transition-colors text-[11px]"
                       >
                         Replace Image
                       </button>
@@ -2940,7 +2940,7 @@ export function AdminPage() {
                             },
                           })
                         }
-                        className="px-2.5 py-1 rounded-lg bg-secondary/20 hover:bg-[#E77B49] hover:text-white font-bold text-[10px] shrink-0 border border-border dark:border-slate-700 transition-colors"
+                        className="px-2.5 py-1 rounded-lg bg-secondary/20 hover:bg-[#d2d0c1] hover:text-white font-bold text-[10px] shrink-0 border border-border dark:border-[#404040] transition-colors"
                       >
                         {preset.name}
                       </button>
@@ -2951,24 +2951,24 @@ export function AdminPage() {
 
               {/* Form Input Grid */}
               <div>
-                <label className="block font-bold text-[#60241E] dark:text-slate-200 mb-1">Dish Name</label>
+                <label className="block font-bold text-[#111111] dark:text-slate-200 mb-1">Dish Name</label>
                 <input
                   type="text"
                   required
                   value={foodForm.name}
                   onChange={(e) => setFoodForm({ ...foodForm, name: e.target.value })}
                   placeholder="e.g. Royal Mughlai Paneer Tikka"
-                  className="w-full p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-border dark:border-slate-700 text-foreground font-semibold"
+                  className="w-full p-2.5 rounded-xl bg-white dark:bg-[#383838] border border-border dark:border-[#404040] text-foreground font-semibold"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <label className="block font-bold text-[#60241E] dark:text-slate-200 mb-1">Category</label>
+                  <label className="block font-bold text-[#111111] dark:text-slate-200 mb-1">Category</label>
                   <select
                     value={foodForm.category}
                     onChange={(e) => setFoodForm({ ...foodForm, category: e.target.value })}
-                    className="w-full p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-border dark:border-slate-700 text-foreground font-semibold"
+                    className="w-full p-2.5 rounded-xl bg-white dark:bg-[#383838] border border-border dark:border-[#404040] text-foreground font-semibold"
                   >
                     <option value="Starters">Starters</option>
                     <option value="Main Course">Main Course</option>
@@ -2980,32 +2980,32 @@ export function AdminPage() {
                 </div>
 
                 <div>
-                  <label className="block font-bold text-[#60241E] dark:text-slate-200 mb-1">Price (₹)</label>
+                  <label className="block font-bold text-[#111111] dark:text-slate-200 mb-1">Price (₹)</label>
                   <input
                     type="number"
                     required
                     value={foodForm.price}
                     onChange={(e) => setFoodForm({ ...foodForm, price: sanitizeNumberInput(e.target.value) })}
-                    className="w-full p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-border dark:border-slate-700 text-foreground font-semibold"
+                    className="w-full p-2.5 rounded-xl bg-white dark:bg-[#383838] border border-border dark:border-[#404040] text-foreground font-semibold"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <label className="block font-bold text-[#60241E] dark:text-slate-200 mb-1">Portions Left</label>
+                  <label className="block font-bold text-[#111111] dark:text-slate-200 mb-1">Portions Left</label>
                   <input
                     type="number"
                     required
                     value={foodForm.portionsLeft}
                     onChange={(e) => setFoodForm({ ...foodForm, portionsLeft: sanitizeNumberInput(e.target.value) })}
-                    className="w-full p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-border dark:border-slate-700 text-foreground font-semibold"
+                    className="w-full p-2.5 rounded-xl bg-white dark:bg-[#383838] border border-border dark:border-[#404040] text-foreground font-semibold"
                   />
                 </div>
 
                 <div>
-                  <label className="block font-bold text-[#60241E] dark:text-slate-200 mb-1">Dietary Type</label>
-                  <div className="flex rounded-xl overflow-hidden border border-border dark:border-slate-700 p-0.5 bg-secondary/10">
+                  <label className="block font-bold text-[#111111] dark:text-slate-200 mb-1">Dietary Type</label>
+                  <div className="flex rounded-xl overflow-hidden border border-border dark:border-[#404040] p-0.5 bg-secondary/10">
                     <button
                       type="button"
                       onClick={() => setFoodForm({ ...foodForm, isVeg: true })}
@@ -3029,13 +3029,13 @@ export function AdminPage() {
               </div>
 
               {/* Tags & Availability Switches */}
-              <div className="flex flex-wrap items-center justify-between gap-2 p-3 rounded-2xl bg-secondary/10 border border-border dark:border-slate-800">
+              <div className="flex flex-wrap items-center justify-between gap-2 p-3 rounded-2xl bg-secondary/10 border border-border dark:border-[#404040]">
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={foodForm.isVegan}
                     onChange={(e) => setFoodForm({ ...foodForm, isVegan: e.target.checked })}
-                    className="accent-[#E77B49]"
+                    className="accent-[#d2d0c1]"
                   />
                   <span className="font-bold text-foreground">Vegan 🌱</span>
                 </label>
@@ -3045,7 +3045,7 @@ export function AdminPage() {
                     type="checkbox"
                     checked={foodForm.isOrganic}
                     onChange={(e) => setFoodForm({ ...foodForm, isOrganic: e.target.checked })}
-                    className="accent-[#E77B49]"
+                    className="accent-[#d2d0c1]"
                   />
                   <span className="font-bold text-foreground">Organic 🌿</span>
                 </label>
@@ -3055,21 +3055,21 @@ export function AdminPage() {
                     type="checkbox"
                     checked={foodForm.availableToday}
                     onChange={(e) => setFoodForm({ ...foodForm, availableToday: e.target.checked })}
-                    className="accent-[#E77B49]"
+                    className="accent-[#d2d0c1]"
                   />
                   <span className="font-bold text-foreground">Available Now ✅</span>
                 </label>
               </div>
 
               <div>
-                <label className="block font-bold text-[#60241E] dark:text-slate-200 mb-1">Description</label>
+                <label className="block font-bold text-[#111111] dark:text-slate-200 mb-1">Description</label>
                 <textarea
                   rows={2}
                   required
                   value={foodForm.description}
                   onChange={(e) => setFoodForm({ ...foodForm, description: e.target.value })}
                   placeholder="Fresh ingredients, aromatic spices..."
-                  className="w-full p-2.5 rounded-xl bg-white dark:bg-slate-800 border border-border dark:border-slate-700 text-foreground font-medium"
+                  className="w-full p-2.5 rounded-xl bg-white dark:bg-[#383838] border border-border dark:border-[#404040] text-foreground font-medium"
                 />
               </div>
 
@@ -3083,7 +3083,7 @@ export function AdminPage() {
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 py-3 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase shadow-md transition-all active:scale-95"
+                  className="flex-1 py-3 rounded-2xl bg-[#d2d0c1] hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase shadow-md transition-all active:scale-95"
                 >
                   {editingDishId ? "Save Changes" : "Save Dish"}
                 </button>
@@ -3096,12 +3096,12 @@ export function AdminPage() {
       {/* DELETE TABLE CONFIRMATION MODAL */}
       {showDeleteTableModal && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 max-w-sm w-full shadow-2xl space-y-4 border-2 border-[#E5E7EB] dark:border-slate-800 text-center animate-in zoom-in-95 duration-200">
+          <div className="bg-white dark:bg-[#222222] rounded-3xl p-6 max-w-sm w-full shadow-2xl space-y-4 border-2 border-[#E5E5E5] dark:border-[#404040] text-center animate-in zoom-in-95 duration-200">
             <div className="size-14 rounded-2xl bg-rose-100 dark:bg-rose-950/50 text-rose-600 flex items-center justify-center mx-auto">
               <Trash2 className="size-7 stroke-[2.2]" />
             </div>
             <div>
-              <h3 className="font-serif italic text-xl font-bold text-[#60241E] dark:text-slate-100">
+              <h3 className="font-serif italic text-xl font-bold text-[#111111] dark:text-slate-100">
                 Delete Table Confirmation
               </h3>
               <p className="text-xs text-muted-foreground font-medium mt-1">
@@ -3115,7 +3115,7 @@ export function AdminPage() {
                   setShowDeleteTableModal(false);
                   setDeletingTableId(null);
                 }}
-                className="flex-1 py-3 rounded-2xl bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 font-bold hover:bg-gray-200 dark:hover:bg-slate-700 text-xs cursor-pointer"
+                className="flex-1 py-3 rounded-2xl bg-gray-100 dark:bg-[#383838] text-gray-700 dark:text-slate-300 font-bold hover:bg-gray-200 dark:hover:bg-slate-700 text-xs cursor-pointer"
               >
                 Cancel
               </button>
@@ -3140,10 +3140,10 @@ export function AdminPage() {
       {/* ADD / EDIT TABLE FORM MODAL */}
       {showTableModal && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-4 border-2 border-[#E5E7EB] dark:border-slate-800 max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-200">
-            <div className="flex justify-between items-center pb-2 border-b border-[#E5E7EB] dark:border-slate-800">
+          <div className="bg-white dark:bg-[#222222] rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-4 border-2 border-[#E5E5E5] dark:border-[#404040] max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-200">
+            <div className="flex justify-between items-center pb-2 border-b border-[#E5E5E5] dark:border-[#404040]">
               <div>
-                <h3 className="font-serif italic text-2xl font-bold text-[#60241E] dark:text-slate-100">
+                <h3 className="font-serif italic text-2xl font-bold text-[#111111] dark:text-slate-100">
                   {editingTableId ? "Edit Dining Table" : "Add Dining Table"}
                 </h3>
                 <p className="text-xs text-muted-foreground">Configure table details and upload image file</p>
@@ -3151,7 +3151,7 @@ export function AdminPage() {
               <button
                 type="button"
                 onClick={() => setShowTableModal(false)}
-                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-800 text-[#6B7280]"
+                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-[#383838] text-[#737373]"
               >
                 <X className="size-5" />
               </button>
@@ -3180,7 +3180,7 @@ export function AdminPage() {
 
               {/* Table Name */}
               <div>
-                <label className="block text-[#60241E] dark:text-slate-200 mb-1">
+                <label className="block text-[#111111] dark:text-slate-200 mb-1">
                   Table Name <span className="text-rose-500">*</span>
                 </label>
                 <input
@@ -3189,14 +3189,14 @@ export function AdminPage() {
                   value={tableForm.tableName}
                   onChange={(e) => setTableForm({ ...tableForm, tableName: e.target.value })}
                   placeholder="e.g. Royal Window Table, Garden Booth"
-                  className="w-full p-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border border-[#E5E7EB] dark:border-slate-700 text-[#1F2937] dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
+                  className="w-full p-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-[#111111] dark:text-slate-100 focus:outline-none focus:border-[#d2d0c1]"
                 />
               </div>
 
               {/* Table Number & Seating Capacity Grid */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[#60241E] dark:text-slate-200 mb-1">
+                  <label className="block text-[#111111] dark:text-slate-200 mb-1">
                     Table Number <span className="text-rose-500">*</span>
                   </label>
                   <input
@@ -3205,12 +3205,12 @@ export function AdminPage() {
                     value={tableForm.tableNumber}
                     onChange={(e) => setTableForm({ ...tableForm, tableNumber: e.target.value })}
                     placeholder="e.g. TABLE 01"
-                    className="w-full p-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border border-[#E5E7EB] dark:border-slate-700 font-mono text-[#1F2937] dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
+                    className="w-full p-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] font-mono text-[#111111] dark:text-slate-100 focus:outline-none focus:border-[#d2d0c1]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[#60241E] dark:text-slate-200 mb-1">
+                  <label className="block text-[#111111] dark:text-slate-200 mb-1">
                     Seating Capacity <span className="text-rose-500">*</span>
                   </label>
                   <input
@@ -3219,7 +3219,7 @@ export function AdminPage() {
                     required
                     value={tableForm.capacity}
                     onChange={(e) => setTableForm({ ...tableForm, capacity: sanitizeNumberInput(e.target.value) })}
-                    className="w-full p-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border border-[#E5E7EB] dark:border-slate-700 text-[#1F2937] dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
+                    className="w-full p-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-[#111111] dark:text-slate-100 focus:outline-none focus:border-[#d2d0c1]"
                   />
                 </div>
               </div>
@@ -3227,11 +3227,11 @@ export function AdminPage() {
               {/* Table Type & Initial Status Grid */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[#60241E] dark:text-slate-200 mb-1">Table Type</label>
+                  <label className="block text-[#111111] dark:text-slate-200 mb-1">Table Type</label>
                   <select
                     value={tableForm.tableType || "Regular"}
                     onChange={(e) => setTableForm({ ...tableForm, tableType: e.target.value as any, section: e.target.value })}
-                    className="w-full p-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border border-[#E5E7EB] dark:border-slate-700 text-[#1F2937] dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
+                    className="w-full p-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-[#111111] dark:text-slate-100 focus:outline-none focus:border-[#d2d0c1]"
                   >
                     <option value="Regular">Regular</option>
                     <option value="Window">Window</option>
@@ -3244,11 +3244,11 @@ export function AdminPage() {
                 </div>
 
                 <div>
-                  <label className="block text-[#60241E] dark:text-slate-200 mb-1">Status</label>
+                  <label className="block text-[#111111] dark:text-slate-200 mb-1">Status</label>
                   <select
                     value={tableForm.status || "Available"}
                     onChange={(e) => setTableForm({ ...tableForm, status: e.target.value as any })}
-                    className="w-full p-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border border-[#E5E7EB] dark:border-slate-700 text-[#1F2937] dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
+                    className="w-full p-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-[#111111] dark:text-slate-100 focus:outline-none focus:border-[#d2d0c1]"
                   >
                     <option value="Available">Available (Green)</option>
                     <option value="Reserved">Reserved (Orange)</option>
@@ -3260,9 +3260,9 @@ export function AdminPage() {
 
               {/* Table Image Upload Area */}
               <div>
-                <label className="block text-[#60241E] dark:text-slate-200 mb-1">Table Image</label>
+                <label className="block text-[#111111] dark:text-slate-200 mb-1">Table Image</label>
                 {tableImagePreview ? (
-                  <div className="relative rounded-2xl overflow-hidden border-2 border-[#E77B49] bg-slate-100 dark:bg-slate-800 group shadow-sm">
+                  <div className="relative rounded-2xl overflow-hidden border-2 border-[#d2d0c1] bg-slate-100 dark:bg-[#383838] group shadow-sm">
                     <img
                       src={tableImagePreview}
                       alt="Selected Table Preview"
@@ -3272,7 +3272,7 @@ export function AdminPage() {
                       <button
                         type="button"
                         onClick={() => tableFileInputRef.current?.click()}
-                        className="py-1.5 px-3 rounded-xl bg-white text-[#60241E] text-xs font-extrabold shadow-md hover:bg-gray-100 flex items-center gap-1 transition-all active:scale-95 cursor-pointer"
+                        className="py-1.5 px-3 rounded-xl bg-white text-[#111111] text-xs font-extrabold shadow-md hover:bg-gray-100 flex items-center gap-1 transition-all active:scale-95 cursor-pointer"
                       >
                         <Upload className="size-3.5" />
                         <span>Change</span>
@@ -3311,14 +3311,14 @@ export function AdminPage() {
                     onClick={() => tableFileInputRef.current?.click()}
                     className={`border-2 border-dashed rounded-2xl p-5 text-center transition-all cursor-pointer ${
                       isDragOverTableImage
-                        ? "border-[#E77B49] bg-[#E77B49]/10"
-                        : "border-border dark:border-slate-700 bg-[#F8F9FA] dark:bg-slate-800 hover:border-[#E77B49]"
+                        ? "border-[#d2d0c1] bg-[#d2d0c1]/10"
+                        : "border-border dark:border-[#404040] bg-[#F5F5F5] dark:bg-[#383838] hover:border-[#d2d0c1]"
                     }`}
                   >
-                    <div className="size-10 rounded-2xl bg-[#E77B49]/10 text-[#E77B49] flex items-center justify-center mx-auto mb-1.5">
+                    <div className="size-10 rounded-2xl bg-[#d2d0c1]/10 text-[#d2d0c1] flex items-center justify-center mx-auto mb-1.5">
                       <Upload className="size-5 stroke-[2.5]" />
                     </div>
-                    <h4 className="font-serif italic font-bold text-xs text-[#60241E] dark:text-slate-100">
+                    <h4 className="font-serif italic font-bold text-xs text-[#111111] dark:text-slate-100">
                       Click to Browse local image or Drag &amp; Drop
                     </h4>
                     <p className="text-[10px] text-muted-foreground mt-0.5 font-medium">
@@ -3330,13 +3330,13 @@ export function AdminPage() {
 
               {/* Description */}
               <div>
-                <label className="block text-[#60241E] dark:text-slate-200 mb-1">Description</label>
+                <label className="block text-[#111111] dark:text-slate-200 mb-1">Description</label>
                 <textarea
                   rows={2}
                   value={tableForm.description}
                   onChange={(e) => setTableForm({ ...tableForm, description: e.target.value })}
                   placeholder="Optional details e.g. Near scenic window, intimate seating..."
-                  className="w-full p-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border border-[#E5E7EB] dark:border-slate-700 text-[#1F2937] dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
+                  className="w-full p-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-[#111111] dark:text-slate-100 focus:outline-none focus:border-[#d2d0c1]"
                 />
               </div>
 
@@ -3345,13 +3345,13 @@ export function AdminPage() {
                 <button
                   type="button"
                   onClick={() => setShowTableModal(false)}
-                  className="flex-1 py-3 rounded-2xl bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 font-bold hover:bg-gray-200 dark:hover:bg-slate-700 text-xs"
+                  className="flex-1 py-3 rounded-2xl bg-gray-100 dark:bg-[#383838] text-gray-700 dark:text-slate-300 font-bold hover:bg-gray-200 dark:hover:bg-slate-700 text-xs"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 py-3 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all active:scale-95 cursor-pointer"
+                  className="flex-1 py-3 rounded-2xl bg-[#d2d0c1] hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all active:scale-95 cursor-pointer"
                 >
                   {editingTableId ? "Update Table" : "Save Table"}
                 </button>
@@ -3364,58 +3364,58 @@ export function AdminPage() {
       {/* STAFF FORM MODAL */}
       {showStaffModal && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-slate-900 text-foreground rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-4 border-2 border-[#E5E7EB] dark:border-slate-800">
+          <div className="bg-white dark:bg-[#222222] text-foreground rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-4 border-2 border-[#E5E5E5] dark:border-[#404040]">
             <div className="flex justify-between items-center">
-              <h3 className="font-serif italic text-2xl font-bold text-[#60241E] dark:text-slate-100">
+              <h3 className="font-serif italic text-2xl font-bold text-[#111111] dark:text-slate-100">
                 {editingStaffId ? "Edit Staff Member" : "Add Staff Member"}
               </h3>
-              <button type="button" onClick={() => setShowStaffModal(false)} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-800">
+              <button type="button" onClick={() => setShowStaffModal(false)} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-[#383838]">
                 <X className="size-5" />
               </button>
             </div>
 
             <form onSubmit={handleStaffSubmit} className="space-y-3 text-xs font-bold">
               <div>
-                <label className="block font-bold text-[#60241E] dark:text-slate-200 mb-1">Staff Name</label>
+                <label className="block font-bold text-[#111111] dark:text-slate-200 mb-1">Staff Name</label>
                 <input
                   type="text"
                   required
                   value={staffForm.name}
                   onChange={(e) => setStaffForm({ ...staffForm, name: e.target.value })}
                   placeholder="e.g. Rahul Sharma"
-                  className="w-full p-2.5 rounded-xl border border-[#E5E7EB] dark:border-slate-700 bg-white dark:bg-slate-800 text-foreground"
+                  className="w-full p-2.5 rounded-xl border border-[#E5E5E5] dark:border-[#404040] bg-white dark:bg-[#383838] text-foreground"
                 />
               </div>
 
               <div>
-                <label className="block font-bold text-[#60241E] dark:text-slate-200 mb-1">Mobile Number</label>
+                <label className="block font-bold text-[#111111] dark:text-slate-200 mb-1">Mobile Number</label>
                 <input
                   type="tel"
                   required
                   value={staffForm.mobile}
                   onChange={(e) => setStaffForm({ ...staffForm, mobile: e.target.value })}
                   placeholder="e.g. +91 9876543210"
-                  className="w-full p-2.5 rounded-xl border border-[#E5E7EB] dark:border-slate-700 bg-white dark:bg-slate-800 text-foreground"
+                  className="w-full p-2.5 rounded-xl border border-[#E5E5E5] dark:border-[#404040] bg-white dark:bg-[#383838] text-foreground"
                 />
               </div>
 
               <div>
-                <label className="block font-bold text-[#60241E] dark:text-slate-200 mb-1">Email Address</label>
+                <label className="block font-bold text-[#111111] dark:text-slate-200 mb-1">Email Address</label>
                 <input
                   type="email"
                   value={staffForm.email}
                   onChange={(e) => setStaffForm({ ...staffForm, email: e.target.value })}
                   placeholder="e.g. rahul@restaurant.com"
-                  className="w-full p-2.5 rounded-xl border border-[#E5E7EB] dark:border-slate-700 bg-white dark:bg-slate-800 text-foreground"
+                  className="w-full p-2.5 rounded-xl border border-[#E5E5E5] dark:border-[#404040] bg-white dark:bg-[#383838] text-foreground"
                 />
               </div>
 
               <div>
-                <label className="block font-bold text-[#60241E] dark:text-slate-200 mb-1">Role</label>
+                <label className="block font-bold text-[#111111] dark:text-slate-200 mb-1">Role</label>
                 <select
                   value={staffForm.role}
                   onChange={(e) => setStaffForm({ ...staffForm, role: e.target.value as any })}
-                  className="w-full p-2.5 rounded-xl border border-[#E5E7EB] dark:border-slate-700 bg-white dark:bg-slate-800 text-foreground font-semibold"
+                  className="w-full p-2.5 rounded-xl border border-[#E5E5E5] dark:border-[#404040] bg-white dark:bg-[#383838] text-foreground font-semibold"
                 >
                   <option value="Kitchen Staff">Kitchen Staff</option>
                   <option value="Cashier">Cashier</option>
@@ -3425,14 +3425,14 @@ export function AdminPage() {
               </div>
 
               <div>
-                <label className="block font-bold text-[#60241E] dark:text-slate-200 mb-1">Password</label>
+                <label className="block font-bold text-[#111111] dark:text-slate-200 mb-1">Password</label>
                 <div className="relative">
                   <input
                     type={showStaffPass ? "text" : "password"}
                     value={staffForm.password || ""}
                     onChange={(e) => setStaffForm({ ...staffForm, password: e.target.value })}
                     placeholder="Staff Portal Access Password"
-                    className="w-full p-2.5 pr-10 rounded-xl border border-[#E5E7EB] dark:border-slate-700 bg-white dark:bg-slate-800 text-foreground"
+                    className="w-full p-2.5 pr-10 rounded-xl border border-[#E5E5E5] dark:border-[#404040] bg-white dark:bg-[#383838] text-foreground"
                   />
                   <button
                     type="button"
@@ -3445,7 +3445,7 @@ export function AdminPage() {
                 </div>
               </div>
 
-              <button type="submit" className="w-full py-3 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white font-extrabold uppercase shadow-md transition-all active:scale-95">
+              <button type="submit" className="w-full py-3 rounded-2xl bg-[#d2d0c1] hover:bg-[#D66A38] text-white font-extrabold uppercase shadow-md transition-all active:scale-95">
                 {editingStaffId ? "Update Staff Member" : "Save Staff Member"}
               </button>
             </form>
@@ -3456,15 +3456,15 @@ export function AdminPage() {
       {/* GALLERY ADD PHOTO MODAL */}
       {showGalleryModal && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-4 border-2 border-[#E5E7EB]">
+          <div className="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-4 border-2 border-[#E5E5E5]">
             <div className="flex justify-between items-center">
-              <h3 className="font-serif italic text-2xl font-bold text-[#60241E]">
+              <h3 className="font-serif italic text-2xl font-bold text-[#111111]">
                 Add Photo to Gallery
               </h3>
               <button
                 type="button"
                 onClick={() => setShowGalleryModal(false)}
-                className="p-2 rounded-full hover:bg-gray-100 text-[#6B7280]"
+                className="p-2 rounded-full hover:bg-gray-100 text-[#737373]"
               >
                 <X className="size-5" />
               </button>
@@ -3486,12 +3486,12 @@ export function AdminPage() {
 
               {/* Image Upload Box / Preview Area */}
               <div>
-                <label className="block text-[#60241E] dark:text-slate-200 mb-1.5 uppercase tracking-wider text-[11px]">
+                <label className="block text-[#111111] dark:text-slate-200 mb-1.5 uppercase tracking-wider text-[11px]">
                   Gallery Image File <span className="text-rose-500">*</span>
                 </label>
 
                 {galleryImagePreview ? (
-                  <div className="relative rounded-2xl overflow-hidden border-2 border-[#E77B49] bg-slate-100 dark:bg-slate-800 group shadow-md">
+                  <div className="relative rounded-2xl overflow-hidden border-2 border-[#d2d0c1] bg-slate-100 dark:bg-[#383838] group shadow-md">
                     <img
                       src={galleryImagePreview}
                       alt="Selected Preview"
@@ -3501,7 +3501,7 @@ export function AdminPage() {
                       <button
                         type="button"
                         onClick={() => galleryFileInputRef.current?.click()}
-                        className="py-2 px-3.5 rounded-xl bg-white text-[#60241E] text-xs font-extrabold shadow-md hover:bg-gray-100 flex items-center gap-1.5 transition-all active:scale-95 cursor-pointer"
+                        className="py-2 px-3.5 rounded-xl bg-white text-[#111111] text-xs font-extrabold shadow-md hover:bg-gray-100 flex items-center gap-1.5 transition-all active:scale-95 cursor-pointer"
                       >
                         <Upload className="size-3.5" />
                         <span>Change Image</span>
@@ -3539,14 +3539,14 @@ export function AdminPage() {
                     onClick={() => galleryFileInputRef.current?.click()}
                     className={`border-2 border-dashed rounded-2xl p-6 text-center transition-all cursor-pointer ${
                       isDragOverGallery
-                        ? "border-[#E77B49] bg-[#E77B49]/10"
-                        : "border-border dark:border-slate-700 bg-[#F8F9FA] dark:bg-slate-800 hover:border-[#E77B49]"
+                        ? "border-[#d2d0c1] bg-[#d2d0c1]/10"
+                        : "border-border dark:border-[#404040] bg-[#F5F5F5] dark:bg-[#383838] hover:border-[#d2d0c1]"
                     }`}
                   >
-                    <div className="size-12 rounded-2xl bg-[#E77B49]/10 text-[#E77B49] flex items-center justify-center mx-auto mb-2">
+                    <div className="size-12 rounded-2xl bg-[#d2d0c1]/10 text-[#d2d0c1] flex items-center justify-center mx-auto mb-2">
                       <Upload className="size-6 stroke-[2.5]" />
                     </div>
-                    <h4 className="font-serif italic font-bold text-sm text-[#60241E] dark:text-slate-100">
+                    <h4 className="font-serif italic font-bold text-sm text-[#111111] dark:text-slate-100">
                       Click to Browse local files or Drag &amp; Drop
                     </h4>
                     <p className="text-[10px] text-muted-foreground mt-1 font-medium">
@@ -3557,11 +3557,11 @@ export function AdminPage() {
               </div>
 
               <div>
-                <label className="block text-[#60241E] dark:text-slate-200 mb-1">Category</label>
+                <label className="block text-[#111111] dark:text-slate-200 mb-1">Category</label>
                 <select
                   value={galleryForm.category}
                   onChange={(e) => setGalleryForm({ ...galleryForm, category: e.target.value as any })}
-                  className="w-full p-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border border-[#E5E7EB] dark:border-slate-700 text-[#1F2937] dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
+                  className="w-full p-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-[#111111] dark:text-slate-100 focus:outline-none focus:border-[#d2d0c1]"
                 >
                   <option value="Interior">Interior</option>
                   <option value="Exterior">Exterior</option>
@@ -3575,26 +3575,26 @@ export function AdminPage() {
               </div>
 
               <div>
-                <label className="block text-[#60241E] dark:text-slate-200 mb-1">Photo Title / Caption</label>
+                <label className="block text-[#111111] dark:text-slate-200 mb-1">Photo Title / Caption</label>
                 <input
                   type="text"
                   required
                   value={galleryForm.title}
                   onChange={(e) => setGalleryForm({ ...galleryForm, title: e.target.value })}
                   placeholder="e.g. Royal Sitar Courtyard Dining"
-                  className="w-full p-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border border-[#E5E7EB] dark:border-slate-700 text-[#1F2937] dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
+                  className="w-full p-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-[#111111] dark:text-slate-100 focus:outline-none focus:border-[#d2d0c1]"
                 />
               </div>
 
               {isUploadingGallery && (
                 <div className="space-y-1.5 pt-1">
-                  <div className="flex justify-between text-[11px] font-extrabold text-[#60241E] dark:text-[#E77B49]">
+                  <div className="flex justify-between text-[11px] font-extrabold text-[#111111] dark:text-[#d2d0c1]">
                     <span>Uploading image to backend...</span>
                     <span>{galleryUploadProgress}%</span>
                   </div>
                   <div className="h-2 w-full bg-gray-200 dark:bg-slate-700 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-[#E77B49] transition-all duration-150"
+                      className="h-full bg-[#d2d0c1] transition-all duration-150"
                       style={{ width: `${galleryUploadProgress}%` }}
                     />
                   </div>
@@ -3604,7 +3604,7 @@ export function AdminPage() {
               <button
                 type="submit"
                 disabled={isUploadingGallery}
-                className="w-full py-3.5 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                className="w-full py-3.5 rounded-2xl bg-[#d2d0c1] hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
               >
                 {isUploadingGallery ? (
                   <span>Uploading to Server...</span>

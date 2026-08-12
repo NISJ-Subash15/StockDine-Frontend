@@ -42,21 +42,21 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   }, [error]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#FFFFFF] px-4 selection:bg-[#E77B49] selection:text-white">
-      <div className="max-w-md w-full text-center bg-[#F8F9FA] border-2 border-[#E5E7EB] rounded-3xl p-8 shadow-xl space-y-4">
-        <div className="size-14 rounded-2xl bg-[#95271D]/10 text-[#95271D] flex items-center justify-center mx-auto">
+    <div className="flex min-h-screen items-center justify-center bg-[#FFFFFF] px-4 selection:bg-[#d2d0c1] selection:text-white">
+      <div className="max-w-md w-full text-center bg-[#F5F5F5] border-2 border-[#E5E5E5] rounded-3xl p-8 shadow-xl space-y-4">
+        <div className="size-14 rounded-2xl bg-[#111111]/10 text-[#111111] flex items-center justify-center mx-auto">
           <span className="font-serif italic font-bold text-2xl">!</span>
         </div>
 
-        <h1 className="text-2xl font-serif italic font-bold tracking-tight text-[#60241E]">
+        <h1 className="text-2xl font-serif italic font-bold tracking-tight text-[#111111]">
           This page didn't load
         </h1>
-        <p className="text-xs text-[#6B7280] font-medium leading-relaxed">
+        <p className="text-xs text-[#737373] font-medium leading-relaxed">
           Something went wrong on our end. You can try refreshing or head back home.
         </p>
 
         {error?.message && (
-          <div className="p-3 rounded-2xl bg-white border border-[#E5E7EB] text-[11px] text-[#95271D] font-mono text-left max-h-24 overflow-y-auto">
+          <div className="p-3 rounded-2xl bg-white border border-[#E5E5E5] text-[11px] text-[#333333] font-mono text-left max-h-24 overflow-y-auto">
             {error.message}
           </div>
         )}
@@ -67,13 +67,13 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
               router.invalidate();
               reset();
             }}
-            className="inline-flex items-center justify-center rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] px-5 py-2.5 text-xs font-extrabold text-white transition-all shadow-md active:scale-95"
+            className="inline-flex items-center justify-center rounded-2xl bg-[#111111] hover:bg-[#333333] px-5 py-2.5 text-xs font-extrabold text-white transition-all shadow-md active:scale-95 cursor-pointer"
           >
             Try again
           </button>
           <a
             href="/"
-            className="inline-flex items-center justify-center rounded-2xl border-2 border-[#E5E7EB] bg-white px-5 py-2.5 text-xs font-extrabold text-[#1F2937] transition-all hover:bg-[#F8F9FA]"
+            className="inline-flex items-center justify-center rounded-2xl border-2 border-[#E5E5E5] bg-white px-5 py-2.5 text-xs font-extrabold text-[#111111] transition-all hover:bg-[#F5F5F5]"
           >
             Go home
           </a>

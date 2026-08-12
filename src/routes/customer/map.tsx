@@ -138,23 +138,23 @@ function MapRadarPage() {
   const cuisinesList = ["All", "North Indian", "Mughlai", "French", "Japanese", "Italian", "Fine Dining"];
 
   return (
-    <div className="flex flex-col max-w-6xl mx-auto selection:bg-[#E77B49] selection:text-white pb-28 bg-background text-foreground px-4 sm:px-6 transition-colors duration-300">
+    <div className="flex flex-col max-w-6xl mx-auto selection:bg-[#d2d0c1] selection:text-white pb-28 bg-background text-foreground px-4 sm:px-6 transition-colors duration-300">
       {/* Top Navigation Header */}
-      <header className="py-6 border-b border-border dark:border-slate-800 mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <header className="py-6 border-b border-border dark:border-[#404040] mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div className="flex items-center gap-3">
           <Link
             to="/customer"
-            className="p-2.5 rounded-2xl bg-card dark:bg-slate-900 border border-border dark:border-slate-800 text-foreground hover:bg-secondary/20 transition-colors shadow-xs"
+            className="p-2.5 rounded-2xl bg-card dark:bg-[#222222] border border-border dark:border-[#404040] text-foreground hover:bg-secondary/20 transition-colors shadow-xs"
             title="Back to Customer Portal"
           >
-            <ChevronLeft className="size-4 text-[#E77B49]" />
+            <ChevronLeft className="size-4 text-[#d2d0c1]" />
           </Link>
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#60241E]/10 dark:bg-[#E77B49]/20 text-[#60241E] dark:text-[#E77B49] text-[10px] font-extrabold uppercase tracking-widest">
-              <Compass className="size-3 text-[#E77B49]" />
+            <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#F5F5F5] dark:bg-[#d2d0c1]/20 text-[#111111] dark:text-[#d2d0c1] text-[10px] font-extrabold uppercase tracking-widest border border-[#E5E5E5]">
+              <Compass className="size-3 text-[#d2d0c1]" />
               <span>Live Location Radar</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-serif italic text-[#60241E] dark:text-slate-100 font-bold tracking-tight mt-0.5">
+            <h1 className="text-2xl sm:text-3xl font-serif italic text-[#111111] dark:text-slate-100 font-bold tracking-tight mt-0.5">
               Interactive Radar Map
             </h1>
           </div>
@@ -175,14 +175,14 @@ function MapRadarPage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search venue by name, address, or city..."
-                className="w-full h-11 pl-11 pr-10 rounded-2xl bg-card dark:bg-slate-900 border-2 border-border dark:border-slate-800 text-foreground text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#E77B49] shadow-xs placeholder:text-muted-foreground/60"
+                className="w-full h-11 pl-11 pr-10 rounded-2xl bg-card dark:bg-[#222222] border border-[#E5E5E5] dark:border-[#404040] text-foreground text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#111111] shadow-xs placeholder:text-muted-foreground/60"
               />
-              <Search className="absolute left-4 top-3.5 size-4 text-[#E77B49] pointer-events-none" />
+              <Search className="absolute left-4 top-3.5 size-4 text-[#333333] pointer-events-none" />
               {searchQuery && (
                 <button
                   type="button"
                   onClick={() => setSearchQuery("")}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1 text-muted-foreground hover:text-foreground"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1 text-muted-foreground hover:text-foreground cursor-pointer"
                 >
                   <X className="size-4" />
                 </button>
@@ -196,10 +196,10 @@ function MapRadarPage() {
                   key={c}
                   type="button"
                   onClick={() => setSelectedCuisine(c)}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all shrink-0 ${
+                  className={`px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all shrink-0 cursor-pointer ${
                     selectedCuisine === c
-                      ? "bg-[#60241E] text-white shadow-xs"
-                      : "bg-card dark:bg-slate-900 border border-border dark:border-slate-800 text-muted-foreground hover:bg-secondary/20"
+                      ? "bg-[#111111] text-white shadow-xs"
+                      : "bg-card dark:bg-[#222222] border border-border dark:border-[#404040] text-muted-foreground hover:bg-secondary/20"
                   }`}
                 >
                   {c}
@@ -211,7 +211,7 @@ function MapRadarPage() {
           {/* Venues List */}
           <div className="space-y-3 max-h-[500px] overflow-y-auto pr-1">
             {filteredRestaurants.length === 0 ? (
-              <div className="bg-card dark:bg-slate-900 border-2 border-dashed border-border dark:border-slate-800 rounded-3xl p-8 text-center text-xs text-muted-foreground">
+              <div className="bg-card dark:bg-[#222222] border border-dashed border-border dark:border-[#404040] rounded-3xl p-8 text-center text-xs text-muted-foreground">
                 No partner venues matching "{searchQuery}".
               </div>
             ) : (
@@ -221,25 +221,25 @@ function MapRadarPage() {
                   <div
                     key={rest.id}
                     onClick={() => setSelectedRestId(rest.id)}
-                    className={`p-4 rounded-3xl border-2 transition-all cursor-pointer space-y-3 ${
+                    className={`p-4 rounded-3xl border transition-all cursor-pointer space-y-3 ${
                       isSelected
-                        ? "bg-[#60241E]/5 dark:bg-[#E77B49]/10 border-[#E77B49] shadow-md"
-                        : "bg-card dark:bg-slate-900 border-border dark:border-slate-800 hover:border-[#E77B49]/40"
+                        ? "bg-[#F5F5F5] dark:bg-[#d2d0c1]/10 border-[#111111] dark:border-[#d2d0c1] shadow-md"
+                        : "bg-card dark:bg-[#222222] border-border dark:border-[#404040] hover:border-[#111111]/40"
                     }`}
                   >
                     <div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between">
-                          <h3 className="font-serif italic text-lg font-bold text-[#60241E] dark:text-slate-100 truncate">
+                          <h3 className="font-serif italic text-lg font-bold text-[#111111] dark:text-slate-100 truncate">
                             {rest.name}
                           </h3>
-                          <span className="text-xs font-extrabold text-[#E77B49] flex items-center gap-1">
-                            <Star className="size-3.5 fill-amber-500 text-amber-500" />
+                          <span className="text-xs font-extrabold text-[#d2d0c1] flex items-center gap-1">
+                            <Star className="size-3.5 fill-[#d2d0c1] text-[#d2d0c1]" />
                             <span>{rest.rating?.toFixed(1) || "5.0"}</span>
                           </span>
                         </div>
                         <p className="text-xs text-muted-foreground flex items-center gap-1 font-medium truncate mt-0.5">
-                          <MapPin className="size-3 text-[#E77B49]" /> {rest.address || rest.city || "Local Venue"}
+                          <MapPin className="size-3 text-[#d2d0c1]" /> {rest.address || rest.city || "Local Venue"}
                         </p>
                         <div className="flex items-center gap-2 mt-2">
                           <span className="text-[10px] font-extrabold uppercase px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
@@ -261,18 +261,18 @@ function MapRadarPage() {
         {/* Right Side: Interactive Map Radar View & Selected Venue Banner */}
         <div className="lg:col-span-7 space-y-6">
           {/* Simulated Vector Radar Canvas Map */}
-          <div className="relative w-full h-[380px] rounded-3xl bg-slate-900 overflow-hidden border-2 border-border dark:border-slate-800 shadow-xl flex items-center justify-center">
+          <div className="relative w-full h-[380px] rounded-3xl bg-slate-900 overflow-hidden border border-border dark:border-[#404040] shadow-xl flex items-center justify-center">
             {/* Map Grid Gridlines */}
             <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:32px_32px]" />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(231,123,73,0.15),transparent_70%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(210,208,193,0.15),transparent_70%)]" />
 
             {/* Radar Pulse Animation */}
-            <div className="absolute size-64 rounded-full border border-[#E77B49]/30 animate-ping opacity-40 pointer-events-none" />
-            <div className="absolute size-96 rounded-full border border-[#E77B49]/20 pointer-events-none" />
+            <div className="absolute size-64 rounded-full border border-[#d2d0c1]/30 animate-ping opacity-40 pointer-events-none" />
+            <div className="absolute size-96 rounded-full border border-[#d2d0c1]/20 pointer-events-none" />
 
             {/* Center User Location Pointer */}
             <div className="absolute z-20 flex flex-col items-center gap-1 pointer-events-none">
-              <div className="size-5 rounded-full bg-[#E77B49] text-white flex items-center justify-center shadow-lg ring-4 ring-[#E77B49]/30">
+              <div className="size-5 rounded-full bg-[#d2d0c1] text-white flex items-center justify-center shadow-lg ring-4 ring-[#d2d0c1]/30">
                 <Navigation className="size-3 fill-current" />
               </div>
               <span className="text-[9px] font-extrabold uppercase tracking-wider text-white bg-black/60 px-2 py-0.5 rounded-full backdrop-blur-xs">
@@ -290,18 +290,18 @@ function MapRadarPage() {
                   type="button"
                   onClick={() => setSelectedRestId(rest.id)}
                   style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
-                  className={`absolute z-30 -translate-x-1/2 -translate-y-1/2 group transition-all duration-300 ${
+                  className={`absolute z-30 -translate-x-1/2 -translate-y-1/2 group transition-all duration-300 cursor-pointer ${
                     isSelected ? "scale-125 z-40" : "hover:scale-110"
                   }`}
                 >
                   <div
-                    className={`px-2.5 py-1.5 rounded-2xl flex items-center gap-1.5 shadow-xl border-2 transition-all ${
+                    className={`px-2.5 py-1.5 rounded-2xl flex items-center gap-1.5 shadow-xl border transition-all ${
                       isSelected
-                        ? "bg-[#60241E] text-white border-[#E77B49] ring-4 ring-[#E77B49]/30"
-                        : "bg-white text-[#1F2937] border-gray-200"
+                        ? "bg-[#111111] text-white border-[#d2d0c1] ring-4 ring-[#d2d0c1]/30"
+                        : "bg-white text-[#111111] border-gray-200"
                     }`}
                   >
-                    <Building2 className={`size-3.5 ${isSelected ? "text-[#E77B49]" : "text-[#60241E]"}`} />
+                    <Building2 className={`size-3.5 ${isSelected ? "text-[#d2d0c1]" : "text-[#111111]"}`} />
                     <span className="text-[10px] font-extrabold truncate max-w-[100px]">{rest.name}</span>
                   </div>
                 </button>
@@ -311,17 +311,17 @@ function MapRadarPage() {
 
           {/* Selected Venue Details Card */}
           {selectedRestaurant && (
-            <div className="bg-card dark:bg-slate-900 border-2 border border-border dark:border-slate-800 rounded-3xl p-6 shadow-md space-y-4">
+            <div className="bg-card dark:bg-[#222222] border border-border dark:border-[#404040] rounded-3xl p-6 shadow-md space-y-4">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
-                  <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#E77B49]">
+                  <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#d2d0c1]">
                     Selected Partner Establishment
                   </span>
-                  <h2 className="font-serif italic text-2xl font-bold text-[#60241E] dark:text-slate-100">
+                  <h2 className="font-serif italic text-2xl font-bold text-[#111111] dark:text-slate-100">
                     {selectedRestaurant.name}
                   </h2>
                   <p className="text-xs text-muted-foreground font-medium flex items-center gap-1 mt-0.5">
-                    <MapPin className="size-3 text-[#E77B49]" /> {selectedRestaurant.address}, {selectedRestaurant.city}
+                    <MapPin className="size-3 text-[#d2d0c1]" /> {selectedRestaurant.address}, {selectedRestaurant.city}
                   </p>
                 </div>
 
@@ -329,24 +329,24 @@ function MapRadarPage() {
                   <button
                     type="button"
                     onClick={() => setShowDirectionsModal(true)}
-                    className="px-4 py-2.5 rounded-2xl bg-secondary/20 hover:bg-secondary/30 text-foreground text-xs font-extrabold transition-all flex items-center gap-1.5"
+                    className="px-4 py-2.5 rounded-2xl bg-secondary/20 hover:bg-secondary/30 text-foreground text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer"
                   >
-                    <Navigation className="size-3.5 text-[#E77B49]" />
+                    <Navigation className="size-3.5 text-[#d2d0c1]" />
                     <span>Get Directions</span>
                   </button>
                   <Link
                     to="/customer/restaurant/$restaurantId"
                     params={{ restaurantId: String(selectedRestaurant.id) }}
-                    className="px-4 py-2.5 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold shadow-sm transition-all flex items-center gap-1.5"
+                    className="px-4 py-2.5 rounded-2xl bg-[#111111] hover:bg-[#333333] text-white text-xs font-extrabold shadow-sm transition-all flex items-center gap-1.5"
                   >
                     <span>View Venue Page</span>
-                    <ArrowRight className="size-3.5" />
+                    <ArrowRight className="size-3.5 text-[#d2d0c1]" />
                   </Link>
                 </div>
               </div>
 
               {/* Action Bar */}
-              <div className="pt-4 border-t border-border dark:border-slate-800 flex flex-wrap items-center justify-between gap-3">
+              <div className="pt-4 border-t border-border dark:border-[#404040] flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center gap-4 text-xs font-bold text-muted-foreground">
                   <span>Contact: {selectedRestaurant.contactPhone || "+91 9876543210"}</span>
                   <span>Hours: {selectedRestaurant.openingHours}</span>
@@ -361,7 +361,7 @@ function MapRadarPage() {
                     }
                     setShowBookingModal(true);
                   }}
-                  className="py-3 px-6 rounded-2xl bg-[#60241E] hover:bg-[#4A1B17] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all active:scale-95"
+                  className="py-3 px-6 rounded-2xl bg-[#111111] hover:bg-[#333333] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all active:scale-95 cursor-pointer"
                 >
                   Hold Table Now
                 </button>

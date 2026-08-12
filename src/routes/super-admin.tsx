@@ -69,25 +69,25 @@ function SuperAdminPage() {
 
   if (!isSuperAdmin) {
     return (
-      <div className="min-h-screen bg-background dark:bg-slate-950 flex items-center justify-center p-6 text-foreground dark:text-slate-100 selection:bg-[#E77B49] selection:text-white">
-        <div className="max-w-md w-full text-center bg-card dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-3xl p-8 shadow-xl space-y-4">
-          <div className="size-14 rounded-2xl bg-[#95271D]/10 text-[#95271D] dark:text-[#E77B49] flex items-center justify-center mx-auto">
-            <ShieldCheck className="size-7 text-[#95271D] dark:text-[#E77B49]" />
+      <div className="min-h-screen bg-background dark:bg-[#2b2b2b] flex items-center justify-center p-6 text-foreground dark:text-slate-100 selection:bg-[#d2d0c1] selection:text-white">
+        <div className="max-w-md w-full text-center bg-card dark:bg-[#222222] border-2 border-border dark:border-[#404040] rounded-3xl p-8 shadow-xl space-y-4">
+          <div className="size-14 rounded-2xl bg-[#111111]/10 text-[#111111] dark:text-[#d2d0c1] flex items-center justify-center mx-auto">
+            <ShieldCheck className="size-7 text-[#111111] dark:text-[#d2d0c1]" />
           </div>
-          <h1 className="text-2xl font-serif italic font-bold text-[#60241E] dark:text-slate-100">
+          <h1 className="text-2xl font-serif italic font-bold text-[#111111] dark:text-slate-100">
             Super Admin Access Required
           </h1>
           <p className="text-xs text-muted-foreground dark:text-slate-400 font-medium leading-relaxed">
             Your current logged in session (<code>{authSession?.userEmail || "Guest"}</code>) does not have Super Admin permissions.
           </p>
-          <div className="p-3 rounded-2xl bg-white dark:bg-slate-800 border border-border dark:border-slate-700 text-[11px] text-[#60241E] dark:text-[#E77B49] font-mono text-left">
+          <div className="p-3 rounded-2xl bg-white dark:bg-[#383838] border border-border dark:border-[#404040] text-[11px] text-[#111111] dark:text-[#d2d0c1] font-mono text-left">
             Sign in as <code>superadmin@stockdine.com</code> with password <code>super123</code> to unlock the Super Admin OS.
           </div>
           <div className="pt-2 flex justify-center gap-3">
             <Link
               to="/login"
               search={{ view: "workspace" }}
-              className="px-5 py-2.5 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold shadow-md transition-all"
+              className="px-5 py-2.5 rounded-2xl bg-[#d2d0c1] hover:bg-[#D66A38] text-white text-xs font-extrabold shadow-md transition-all"
             >
               Sign In as Super Admin
             </Link>
@@ -135,15 +135,15 @@ function SuperAdminPage() {
   );
 
   return (
-    <div className="min-h-screen bg-background dark:bg-slate-950 text-foreground dark:text-slate-100 font-sans p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto selection:bg-[#E77B49] selection:text-white pb-28 transition-colors duration-300">
+    <div className="min-h-screen bg-background dark:bg-[#2b2b2b] text-foreground dark:text-slate-100 font-sans p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto selection:bg-[#d2d0c1] selection:text-white pb-28 transition-colors duration-300">
       {/* Super Admin Top Command Header */}
-      <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 pb-5 border-b border-border dark:border-slate-800">
+      <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6 pb-5 border-b border-border dark:border-[#404040]">
         <div>
-          <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-[#60241E] dark:text-[#E77B49]">
-            <Globe2 className="size-4 text-[#E77B49]" />
+          <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-[#111111] dark:text-[#d2d0c1]">
+            <Globe2 className="size-4 text-[#d2d0c1]" />
             <span>StockDine Global Super Admin Platform OS</span>
           </div>
-          <h1 className="font-serif italic text-3xl sm:text-4xl font-bold mt-1 text-[#60241E] dark:text-slate-100">
+          <h1 className="font-serif italic text-3xl sm:text-4xl font-bold mt-1 text-[#111111] dark:text-slate-100">
             Platform Executive Command Center
           </h1>
           <p className="text-xs text-muted-foreground dark:text-slate-400 mt-0.5 font-medium flex items-center gap-2">
@@ -163,7 +163,7 @@ function SuperAdminPage() {
             <select
               value={activeCurrency}
               onChange={(e) => setCurrency(e.target.value as CurrencyCode)}
-              className="h-10 px-3 rounded-2xl bg-white dark:bg-slate-800 border border-border dark:border-slate-700 text-xs font-extrabold text-[#60241E] dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#E77B49] cursor-pointer shadow-sm"
+              className="h-10 px-3 rounded-2xl bg-white dark:bg-[#383838] border border-border dark:border-[#404040] text-xs font-extrabold text-[#111111] dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#d2d0c1] cursor-pointer shadow-sm"
             >
               {Object.values(CURRENCIES).map((c) => (
                 <option key={c.code} value={c.code}>
@@ -178,7 +178,7 @@ function SuperAdminPage() {
             <select
               value={activeLanguage}
               onChange={(e) => setLanguage(e.target.value as LanguageCode)}
-              className="h-10 px-3 rounded-2xl bg-white dark:bg-slate-800 border border-border dark:border-slate-700 text-xs font-extrabold text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#E77B49] cursor-pointer shadow-sm"
+              className="h-10 px-3 rounded-2xl bg-white dark:bg-[#383838] border border-border dark:border-[#404040] text-xs font-extrabold text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-[#d2d0c1] cursor-pointer shadow-sm"
             >
               {LANGUAGES.map((l) => (
                 <option key={l.code} value={l.code}>
@@ -192,7 +192,7 @@ function SuperAdminPage() {
 
           <Link
             to="/login"
-            className="flex items-center gap-1.5 text-xs uppercase font-extrabold tracking-wider text-muted-foreground dark:text-slate-300 hover:text-foreground dark:hover:text-white border border-border dark:border-slate-700 rounded-2xl px-3.5 py-2.5 bg-white dark:bg-slate-800 hover:bg-secondary/10 dark:hover:bg-slate-700 transition-colors shadow-sm"
+            className="flex items-center gap-1.5 text-xs uppercase font-extrabold tracking-wider text-muted-foreground dark:text-slate-300 hover:text-foreground dark:hover:text-white border border-border dark:border-[#404040] rounded-2xl px-3.5 py-2.5 bg-white dark:bg-[#383838] hover:bg-secondary/10 dark:hover:bg-slate-700 transition-colors shadow-sm"
           >
             <LogOut className="size-3.5" />
             <span>Exit Portal</span>
@@ -207,40 +207,40 @@ function SuperAdminPage() {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Global Platform Search: Restaurant Name, City, Country, Customer Email, Ticket ID..."
-          className="w-full h-13 pl-11 pr-4 rounded-2xl bg-white dark:bg-slate-900 border-2 border-border dark:border-slate-800 text-foreground dark:text-slate-100 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#E77B49] shadow-sm transition-all placeholder:text-muted-foreground/60"
+          className="w-full h-13 pl-11 pr-4 rounded-2xl bg-white dark:bg-[#222222] border-2 border-border dark:border-[#404040] text-foreground dark:text-slate-100 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#d2d0c1] shadow-sm transition-all placeholder:text-muted-foreground/60"
         />
-        <Search className="absolute left-4 top-4 size-5 text-[#E77B49] pointer-events-none" />
+        <Search className="absolute left-4 top-4 size-5 text-[#d2d0c1] pointer-events-none" />
       </div>
 
       {/* Metric Cards Summary */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div className="bg-white dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-3xl p-5 shadow-sm hover-lift">
+        <div className="bg-white dark:bg-[#222222] border-2 border-border dark:border-[#404040] rounded-3xl p-5 shadow-sm hover-lift">
           <div className="flex justify-between items-start">
             <span className="text-[10px] font-extrabold uppercase tracking-wider text-muted-foreground dark:text-slate-400">
               Global GMV Volume
             </span>
-            <span className="size-8 rounded-2xl bg-[#E77B49]/10 text-[#E77B49] flex items-center justify-center">
+            <span className="size-8 rounded-2xl bg-[#d2d0c1]/10 text-[#d2d0c1] flex items-center justify-center">
               <TrendingUp className="size-4" />
             </span>
           </div>
-          <p className="font-serif italic text-2xl sm:text-3xl font-bold text-[#60241E] dark:text-[#E77B49] mt-2">
+          <p className="font-serif italic text-2xl sm:text-3xl font-bold text-[#111111] dark:text-[#d2d0c1] mt-2">
             {formatCurrency(totalGMV)}
           </p>
-          <span className="text-[10px] font-semibold text-[#E77B49] flex items-center gap-0.5 mt-1">
+          <span className="text-[10px] font-semibold text-[#d2d0c1] flex items-center gap-0.5 mt-1">
             <ArrowUpRight className="size-3" /> +34% MoM Platform Growth
           </span>
         </div>
 
-        <div className="bg-white dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-3xl p-5 shadow-sm hover-lift">
+        <div className="bg-white dark:bg-[#222222] border-2 border-border dark:border-[#404040] rounded-3xl p-5 shadow-sm hover-lift">
           <div className="flex justify-between items-start">
             <span className="text-[10px] font-extrabold uppercase tracking-wider text-muted-foreground dark:text-slate-400">
               Commission Earnings
             </span>
-            <span className="size-8 rounded-2xl bg-[#60241E]/10 dark:bg-slate-800 text-[#60241E] dark:text-[#E77B49] flex items-center justify-center">
-              <DollarSign className="size-4 text-[#60241E] dark:text-[#E77B49]" />
+            <span className="size-8 rounded-2xl bg-[#111111]/10 dark:bg-[#383838] text-[#111111] dark:text-[#d2d0c1] flex items-center justify-center">
+              <DollarSign className="size-4 text-[#111111] dark:text-[#d2d0c1]" />
             </span>
           </div>
-          <p className="font-serif italic text-2xl sm:text-3xl font-bold text-[#60241E] dark:text-[#E77B49] mt-2">
+          <p className="font-serif italic text-2xl sm:text-3xl font-bold text-[#111111] dark:text-[#d2d0c1] mt-2">
             {formatCurrency(totalCommissions)}
           </p>
           <span className="text-[10px] font-semibold text-muted-foreground dark:text-slate-400 mt-1 block">
@@ -248,7 +248,7 @@ function SuperAdminPage() {
           </span>
         </div>
 
-        <div className="bg-white dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-3xl p-5 shadow-sm hover-lift">
+        <div className="bg-white dark:bg-[#222222] border-2 border-border dark:border-[#404040] rounded-3xl p-5 shadow-sm hover-lift">
           <div className="flex justify-between items-start">
             <span className="text-[10px] font-extrabold uppercase tracking-wider text-muted-foreground dark:text-slate-400">
               Verified Establishments
@@ -260,21 +260,21 @@ function SuperAdminPage() {
           <p className="font-serif italic text-2xl sm:text-3xl font-bold text-foreground dark:text-slate-100 mt-2">
             {verifiedCount} <span className="text-xs font-sans text-muted-foreground dark:text-slate-400">/ {platformRestaurants.length}</span>
           </p>
-          <span className="text-[10px] font-semibold text-[#B34A44] dark:text-rose-400 mt-1 block">
+          <span className="text-[10px] font-semibold text-[#333333] dark:text-rose-400 mt-1 block">
             {pendingCount} Pending Onboarding Review
           </span>
         </div>
 
-        <div className="bg-white dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-3xl p-5 shadow-sm hover-lift">
+        <div className="bg-white dark:bg-[#222222] border-2 border-border dark:border-[#404040] rounded-3xl p-5 shadow-sm hover-lift">
           <div className="flex justify-between items-start">
             <span className="text-[10px] font-extrabold uppercase tracking-wider text-muted-foreground dark:text-slate-400">
               Global Platform Users
             </span>
-            <span className="size-8 rounded-2xl bg-[#B34A44]/10 dark:bg-rose-500/10 text-[#B34A44] dark:text-rose-400 flex items-center justify-center">
+            <span className="size-8 rounded-2xl bg-[#333333]/10 dark:bg-rose-500/10 text-[#333333] dark:text-rose-400 flex items-center justify-center">
               <Users className="size-4" />
             </span>
           </div>
-          <p className="font-serif italic text-2xl sm:text-3xl font-bold text-[#60241E] dark:text-[#E77B49] mt-2">
+          <p className="font-serif italic text-2xl sm:text-3xl font-bold text-[#111111] dark:text-[#d2d0c1] mt-2">
             {platformCustomers.length * 940}
           </p>
           <span className="text-[10px] font-semibold text-emerald-700 dark:text-emerald-400 mt-1 block">
@@ -284,14 +284,14 @@ function SuperAdminPage() {
       </div>
 
       {/* Sub-Tab Navigation Bar */}
-      <div className="flex gap-2 mb-6 border-b border-border dark:border-slate-800 pb-3 overflow-x-auto">
+      <div className="flex gap-2 mb-6 border-b border-border dark:border-[#404040] pb-3 overflow-x-auto">
         <button
           type="button"
           onClick={() => setActiveTab("analytics")}
           className={`px-4 py-2.5 rounded-2xl text-xs font-extrabold transition-all flex items-center gap-2 ${
             activeTab === "analytics"
-              ? "bg-[#60241E] dark:bg-[#E77B49] text-white shadow-md"
-              : "bg-white dark:bg-slate-800 border border-border dark:border-slate-700 text-muted-foreground dark:text-slate-300 hover:text-foreground dark:hover:text-white"
+              ? "bg-[#111111] dark:bg-[#d2d0c1] text-white shadow-md"
+              : "bg-white dark:bg-[#383838] border border-border dark:border-[#404040] text-muted-foreground dark:text-slate-300 hover:text-foreground dark:hover:text-white"
           }`}
         >
           <TrendingUp className="size-4" />
@@ -303,8 +303,8 @@ function SuperAdminPage() {
           onClick={() => setActiveTab("restaurants")}
           className={`px-4 py-2.5 rounded-2xl text-xs font-extrabold transition-all flex items-center gap-2 ${
             activeTab === "restaurants"
-              ? "bg-[#60241E] dark:bg-[#E77B49] text-white shadow-md"
-              : "bg-white dark:bg-slate-800 border border-border dark:border-slate-700 text-muted-foreground dark:text-slate-300 hover:text-foreground dark:hover:text-white"
+              ? "bg-[#111111] dark:bg-[#d2d0c1] text-white shadow-md"
+              : "bg-white dark:bg-[#383838] border border-border dark:border-[#404040] text-muted-foreground dark:text-slate-300 hover:text-foreground dark:hover:text-white"
           }`}
         >
           <Building2 className="size-4" />
@@ -316,8 +316,8 @@ function SuperAdminPage() {
           onClick={() => setActiveTab("customers")}
           className={`px-4 py-2.5 rounded-2xl text-xs font-extrabold transition-all flex items-center gap-2 ${
             activeTab === "customers"
-              ? "bg-[#60241E] dark:bg-[#E77B49] text-white shadow-md"
-              : "bg-white dark:bg-slate-800 border border-border dark:border-slate-700 text-muted-foreground dark:text-slate-300 hover:text-foreground dark:hover:text-white"
+              ? "bg-[#111111] dark:bg-[#d2d0c1] text-white shadow-md"
+              : "bg-white dark:bg-[#383838] border border-border dark:border-[#404040] text-muted-foreground dark:text-slate-300 hover:text-foreground dark:hover:text-white"
           }`}
         >
           <Users className="size-4" />
@@ -329,8 +329,8 @@ function SuperAdminPage() {
           onClick={() => setActiveTab("subscriptions")}
           className={`px-4 py-2.5 rounded-2xl text-xs font-extrabold transition-all flex items-center gap-2 ${
             activeTab === "subscriptions"
-              ? "bg-[#60241E] dark:bg-[#E77B49] text-white shadow-md"
-              : "bg-white dark:bg-slate-800 border border-border dark:border-slate-700 text-muted-foreground dark:text-slate-300 hover:text-foreground dark:hover:text-white"
+              ? "bg-[#111111] dark:bg-[#d2d0c1] text-white shadow-md"
+              : "bg-white dark:bg-[#383838] border border-border dark:border-[#404040] text-muted-foreground dark:text-slate-300 hover:text-foreground dark:hover:text-white"
           }`}
         >
           <Layers className="size-4" />
@@ -342,8 +342,8 @@ function SuperAdminPage() {
           onClick={() => setActiveTab("tickets")}
           className={`px-4 py-2.5 rounded-2xl text-xs font-extrabold transition-all flex items-center gap-2 ${
             activeTab === "tickets"
-              ? "bg-[#60241E] dark:bg-[#E77B49] text-white shadow-md"
-              : "bg-white dark:bg-slate-800 border border-border dark:border-slate-700 text-muted-foreground dark:text-slate-300 hover:text-foreground dark:hover:text-white"
+              ? "bg-[#111111] dark:bg-[#d2d0c1] text-white shadow-md"
+              : "bg-white dark:bg-[#383838] border border-border dark:border-[#404040] text-muted-foreground dark:text-slate-300 hover:text-foreground dark:hover:text-white"
           }`}
         >
           <Headphones className="size-4" />
@@ -355,8 +355,8 @@ function SuperAdminPage() {
           onClick={() => setActiveTab("moderation")}
           className={`px-4 py-2.5 rounded-2xl text-xs font-extrabold transition-all flex items-center gap-2 ${
             activeTab === "moderation"
-              ? "bg-[#60241E] dark:bg-[#E77B49] text-white shadow-md"
-              : "bg-white dark:bg-slate-800 border border-border dark:border-slate-700 text-muted-foreground dark:text-slate-300 hover:text-foreground dark:hover:text-white"
+              ? "bg-[#111111] dark:bg-[#d2d0c1] text-white shadow-md"
+              : "bg-white dark:bg-[#383838] border border-border dark:border-[#404040] text-muted-foreground dark:text-slate-300 hover:text-foreground dark:hover:text-white"
           }`}
         >
           <Star className="size-4" />
@@ -368,8 +368,8 @@ function SuperAdminPage() {
           onClick={() => setActiveTab("health")}
           className={`px-4 py-2.5 rounded-2xl text-xs font-extrabold transition-all flex items-center gap-2 ${
             activeTab === "health"
-              ? "bg-[#60241E] dark:bg-[#E77B49] text-white shadow-md"
-              : "bg-white dark:bg-slate-800 border border-border dark:border-slate-700 text-muted-foreground dark:text-slate-300 hover:text-foreground dark:hover:text-white"
+              ? "bg-[#111111] dark:bg-[#d2d0c1] text-white shadow-md"
+              : "bg-white dark:bg-[#383838] border border-border dark:border-[#404040] text-muted-foreground dark:text-slate-300 hover:text-foreground dark:hover:text-white"
           }`}
         >
           <Activity className="size-4" />
@@ -382,17 +382,17 @@ function SuperAdminPage() {
       {activeTab === "analytics" && (
         <div className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="md:col-span-2 bg-white dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-5">
+            <div className="md:col-span-2 bg-white dark:bg-[#222222] border-2 border-border dark:border-[#404040] rounded-3xl p-6 shadow-sm space-y-5">
               <div className="flex justify-between items-center">
                 <div>
-                  <h2 className="font-serif italic text-2xl font-bold text-[#60241E] dark:text-slate-100">
+                  <h2 className="font-serif italic text-2xl font-bold text-[#111111] dark:text-slate-100">
                     Global Country Revenue &amp; GMV Breakdown
                   </h2>
                   <p className="text-xs text-muted-foreground dark:text-slate-400 font-medium">
                     Gross merchandise value processed per target market.
                   </p>
                 </div>
-                <span className="text-xs font-extrabold text-[#B34A44] dark:text-rose-400 bg-[#B34A44]/10 dark:bg-rose-500/10 border border-[#B34A44]/20 dark:border-rose-500/20 px-3 py-1 rounded-full">
+                <span className="text-xs font-extrabold text-[#333333] dark:text-rose-400 bg-[#333333]/10 dark:bg-rose-500/10 border border-[#333333]/20 dark:border-rose-500/20 px-3 py-1 rounded-full">
                   14 Markets Active
                 </span>
               </div>
@@ -405,9 +405,9 @@ function SuperAdminPage() {
                   { country: "UAE 🇦🇪", gmv: 1800000, share: "12%", count: 4 },
                   { country: "France 🇫🇷", gmv: 850000, share: "6%", count: 2 },
                 ].map((item) => (
-                  <div key={item.country} className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-border dark:border-slate-700 space-y-2">
+                  <div key={item.country} className="p-4 rounded-2xl bg-slate-50 dark:bg-[#383838]/60 border border-border dark:border-[#404040] space-y-2">
                     <div className="flex justify-between items-center text-xs font-bold">
-                      <span className="text-[#60241E] dark:text-[#E77B49] flex items-center gap-2">
+                      <span className="text-[#111111] dark:text-[#d2d0c1] flex items-center gap-2">
                         {item.country} <span className="text-muted-foreground dark:text-slate-400 font-normal">({item.count} venues)</span>
                       </span>
                       <span className="font-serif italic text-base text-foreground dark:text-slate-100">
@@ -416,7 +416,7 @@ function SuperAdminPage() {
                     </div>
                     <div className="h-2 w-full bg-white dark:bg-slate-700 rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-[#E77B49] rounded-full transition-all duration-500"
+                        className="h-full bg-[#d2d0c1] rounded-full transition-all duration-500"
                         style={{ width: item.share }}
                       />
                     </div>
@@ -425,14 +425,14 @@ function SuperAdminPage() {
               </div>
             </div>
 
-            <div className="bg-white dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-4">
-              <h3 className="font-serif italic text-xl font-bold text-[#60241E] dark:text-slate-100 flex items-center gap-2 border-b border-border dark:border-slate-800 pb-3">
-                <Sparkles className="size-4 text-[#E77B49]" />
+            <div className="bg-white dark:bg-[#222222] border-2 border-border dark:border-[#404040] rounded-3xl p-6 shadow-sm space-y-4">
+              <h3 className="font-serif italic text-xl font-bold text-[#111111] dark:text-slate-100 flex items-center gap-2 border-b border-border dark:border-[#404040] pb-3">
+                <Sparkles className="size-4 text-[#d2d0c1]" />
                 <span>AI Recommendation Engine Status</span>
               </h3>
 
-              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-border dark:border-slate-700 text-xs space-y-2">
-                <div className="flex justify-between font-bold text-[#60241E] dark:text-slate-100">
+              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-[#383838]/60 border border-border dark:border-[#404040] text-xs space-y-2">
+                <div className="flex justify-between font-bold text-[#111111] dark:text-slate-100">
                   <span>AI Match Score Accuracy</span>
                   <span className="text-emerald-700 dark:text-emerald-400">98.4%</span>
                 </div>
@@ -441,10 +441,10 @@ function SuperAdminPage() {
                 </p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-border dark:border-slate-700 text-xs space-y-2">
-                <div className="flex justify-between font-bold text-[#60241E] dark:text-slate-100">
+              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-[#383838]/60 border border-border dark:border-[#404040] text-xs space-y-2">
+                <div className="flex justify-between font-bold text-[#111111] dark:text-slate-100">
                   <span>Smart Mood Filters</span>
-                  <span className="text-[#E77B49]">5 Mood Presets</span>
+                  <span className="text-[#d2d0c1]">5 Mood Presets</span>
                 </div>
                 <p className="text-[11px] text-muted-foreground dark:text-slate-400 leading-relaxed">
                   Fine Dining, Business Lunch, Romantic Date, Vegan &amp; Organic, Family Feast.
@@ -460,7 +460,7 @@ function SuperAdminPage() {
         <div className="space-y-4">
           <div className="flex justify-between items-center">
             <div>
-              <h2 className="text-xl font-serif italic font-bold text-[#60241E] dark:text-slate-100">
+              <h2 className="text-xl font-serif italic font-bold text-[#111111] dark:text-slate-100">
                 Onboarded Restaurant Verification &amp; Settings
               </h2>
               <p className="text-xs text-muted-foreground dark:text-slate-400 font-medium">
@@ -473,14 +473,14 @@ function SuperAdminPage() {
             {filteredRestaurants.map((r) => (
               <div
                 key={r.id}
-                className="bg-white dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-3xl p-5 shadow-sm space-y-4 relative overflow-hidden hover-lift"
+                className="bg-white dark:bg-[#222222] border-2 border-border dark:border-[#404040] rounded-3xl p-5 shadow-sm space-y-4 relative overflow-hidden hover-lift"
               >
                 <div className="flex justify-between items-start">
                   <div>
                     <div className="flex items-center gap-2">
-                      <h3 className="font-serif italic text-2xl font-bold text-[#60241E] dark:text-slate-100">{r.name}</h3>
+                      <h3 className="font-serif italic text-2xl font-bold text-[#111111] dark:text-slate-100">{r.name}</h3>
                       {r.isFeatured && (
-                        <span className="text-[9px] font-extrabold uppercase bg-[#E77B49] text-white px-2 py-0.5 rounded-full flex items-center gap-0.5">
+                        <span className="text-[9px] font-extrabold uppercase bg-[#d2d0c1] text-white px-2 py-0.5 rounded-full flex items-center gap-0.5">
                           <Star className="size-3 fill-current" /> Featured
                         </span>
                       )}
@@ -503,10 +503,10 @@ function SuperAdminPage() {
                   </span>
                 </div>
 
-                <div className="grid grid-cols-3 gap-2 p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-border dark:border-slate-700 text-xs font-medium">
+                <div className="grid grid-cols-3 gap-2 p-3 rounded-2xl bg-slate-50 dark:bg-[#383838]/60 border border-border dark:border-[#404040] text-xs font-medium">
                   <div>
                     <span className="text-[10px] text-muted-foreground dark:text-slate-400 font-extrabold uppercase block">Processed GMV</span>
-                    <span className="font-serif italic font-bold text-[#60241E] dark:text-[#E77B49] text-sm">
+                    <span className="font-serif italic font-bold text-[#111111] dark:text-[#d2d0c1] text-sm">
                       {formatCurrency(r.gmv)}
                     </span>
                   </div>
@@ -518,11 +518,11 @@ function SuperAdminPage() {
 
                   <div>
                     <span className="text-[10px] text-muted-foreground dark:text-slate-400 font-extrabold uppercase block">Rating / AI Score</span>
-                    <span className="font-bold text-[#E77B49] text-sm">★ {r.rating} ({r.aiMatchScore}%)</span>
+                    <span className="font-bold text-[#d2d0c1] text-sm">★ {r.rating} ({r.aiMatchScore}%)</span>
                   </div>
                 </div>
 
-                <div className="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-border dark:border-slate-800">
+                <div className="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-border dark:border-[#404040]">
                   <div className="flex items-center gap-1.5">
                     {r.verificationStatus !== "Verified" && (
                       <button
@@ -538,7 +538,7 @@ function SuperAdminPage() {
                       <button
                         type="button"
                         onClick={() => verifyRestaurant(r.id, "Suspended")}
-                        className="py-1.5 px-3 rounded-xl bg-[#95271D]/10 dark:bg-rose-500/10 text-[#95271D] dark:text-rose-400 text-[11px] font-bold hover:bg-[#95271D] hover:text-white transition-colors flex items-center gap-1"
+                        className="py-1.5 px-3 rounded-xl bg-[#111111]/10 dark:bg-rose-500/10 text-[#111111] dark:text-rose-400 text-[11px] font-bold hover:bg-[#111111] hover:text-white transition-colors flex items-center gap-1"
                       >
                         <XCircle className="size-3.5" /> Suspend
                       </button>
@@ -551,8 +551,8 @@ function SuperAdminPage() {
                       onClick={() => toggleFeaturedRestaurant(r.id)}
                       className={`py-1.5 px-3 rounded-xl text-[11px] font-extrabold transition-colors ${
                         r.isFeatured
-                          ? "bg-[#E77B49]/15 text-[#95271D] dark:text-[#E77B49] border border-[#E77B49]/30"
-                          : "bg-white dark:bg-slate-800 text-muted-foreground dark:text-slate-300 border border-border dark:border-slate-700"
+                          ? "bg-[#d2d0c1]/15 text-[#111111] dark:text-[#d2d0c1] border border-[#d2d0c1]/30"
+                          : "bg-white dark:bg-[#383838] text-muted-foreground dark:text-slate-300 border border-border dark:border-[#404040]"
                       }`}
                     >
                       {r.isFeatured ? "Featured" : "Spotlight"}
@@ -564,7 +564,7 @@ function SuperAdminPage() {
                           type="number"
                           value={tempCommission}
                           onChange={(e) => setTempCommission(Number(e.target.value))}
-                          className="w-14 p-1 rounded-xl bg-white dark:bg-slate-800 border border-border dark:border-slate-700 text-xs font-bold text-foreground dark:text-slate-100"
+                          className="w-14 p-1 rounded-xl bg-white dark:bg-[#383838] border border-border dark:border-[#404040] text-xs font-bold text-foreground dark:text-slate-100"
                         />
                         <button
                           type="button"
@@ -572,7 +572,7 @@ function SuperAdminPage() {
                             setRestaurantCommission(r.id, tempCommission);
                             setEditingCommissionId(null);
                           }}
-                          className="px-2 py-1 bg-[#60241E] dark:bg-[#E77B49] text-white text-xs font-bold rounded-xl"
+                          className="px-2 py-1 bg-[#111111] dark:bg-[#d2d0c1] text-white text-xs font-bold rounded-xl"
                         >
                           Save
                         </button>
@@ -584,9 +584,9 @@ function SuperAdminPage() {
                           setEditingCommissionId(r.id);
                           setTempCommission(r.commissionRate);
                         }}
-                        className="py-1.5 px-2.5 rounded-xl bg-white dark:bg-slate-800 border border-border dark:border-slate-700 text-foreground dark:text-slate-200 text-[11px] font-bold hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-1"
+                        className="py-1.5 px-2.5 rounded-xl bg-white dark:bg-[#383838] border border-border dark:border-[#404040] text-foreground dark:text-slate-200 text-[11px] font-bold hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-1"
                       >
-                        <Sliders className="size-3 text-[#E77B49]" /> Rate
+                        <Sliders className="size-3 text-[#d2d0c1]" /> Rate
                       </button>
                     )}
                   </div>
@@ -600,14 +600,14 @@ function SuperAdminPage() {
       {/* 3. CUSTOMER DIRECTORY */}
       {activeTab === "customers" && (
         <div className="space-y-4">
-          <h2 className="text-xl font-serif italic font-bold text-[#60241E] dark:text-slate-100">
+          <h2 className="text-xl font-serif italic font-bold text-[#111111] dark:text-slate-100">
             Registered Global Customers Directory
           </h2>
 
-          <div className="bg-white dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-3xl p-5 shadow-sm overflow-x-auto">
+          <div className="bg-white dark:bg-[#222222] border-2 border-border dark:border-[#404040] rounded-3xl p-5 shadow-sm overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-border dark:border-slate-800 text-[#60241E] dark:text-[#E77B49] uppercase text-[10px] font-extrabold">
+                <tr className="border-b border-border dark:border-[#404040] text-[#111111] dark:text-[#d2d0c1] uppercase text-[10px] font-extrabold">
                   <th className="pb-3">Customer</th>
                   <th className="pb-3">Country</th>
                   <th className="pb-3">Total Bookings</th>
@@ -616,13 +616,13 @@ function SuperAdminPage() {
               </thead>
               <tbody className="divide-y divide-border dark:divide-slate-800">
                 {platformCustomers.map((c) => (
-                  <tr key={c.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                  <tr key={c.id} className="hover:bg-slate-50 dark:hover:bg-[#383838]/50 transition-colors">
                     <td className="py-3 font-bold text-foreground dark:text-slate-200">
                       <div>{c.name}</div>
                       <div className="text-[10px] text-muted-foreground dark:text-slate-400 font-normal">{c.email}</div>
                     </td>
                     <td className="py-3 font-semibold text-foreground dark:text-slate-300">{c.country}</td>
-                    <td className="py-3 font-bold text-[#60241E] dark:text-[#E77B49]">{c.totalBookings} passes</td>
+                    <td className="py-3 font-bold text-[#111111] dark:text-[#d2d0c1]">{c.totalBookings} passes</td>
                     <td className="py-3">
                       <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
                         {c.status}
@@ -639,14 +639,14 @@ function SuperAdminPage() {
       {/* 4. SUBSCRIPTION TIERS */}
       {activeTab === "subscriptions" && (
         <div className="space-y-4">
-          <h2 className="text-xl font-serif italic font-bold text-[#60241E] dark:text-slate-100">
+          <h2 className="text-xl font-serif italic font-bold text-[#111111] dark:text-slate-100">
             Platform Restaurant Subscription Tiers
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-white dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-4">
+            <div className="bg-white dark:bg-[#222222] border-2 border-border dark:border-[#404040] rounded-3xl p-6 shadow-sm space-y-4">
               <span className="text-[10px] font-extrabold uppercase text-muted-foreground dark:text-slate-400">Basic Tier</span>
-              <h3 className="font-serif italic text-3xl font-bold text-[#60241E] dark:text-slate-100">
+              <h3 className="font-serif italic text-3xl font-bold text-[#111111] dark:text-slate-100">
                 {formatCurrency(4000)} <span className="text-xs font-sans font-normal text-muted-foreground dark:text-slate-400">/ mo</span>
               </h3>
               <ul className="text-xs space-y-2 text-foreground dark:text-slate-200 font-semibold">
@@ -656,8 +656,8 @@ function SuperAdminPage() {
               </ul>
             </div>
 
-            <div className="bg-[#60241E] dark:bg-slate-800 text-white border-2 border-[#60241E] dark:border-[#E77B49] rounded-3xl p-6 shadow-md space-y-4">
-              <span className="text-[10px] font-extrabold uppercase text-[#E77B49]">Pro Tier (Most Popular)</span>
+            <div className="bg-[#111111] dark:bg-[#383838] text-white border-2 border-[#111111] dark:border-[#d2d0c1] rounded-3xl p-6 shadow-md space-y-4">
+              <span className="text-[10px] font-extrabold uppercase text-[#d2d0c1]">Pro Tier (Most Popular)</span>
               <h3 className="font-serif italic text-3xl font-bold text-white">
                 {formatCurrency(12000)} <span className="text-xs font-sans font-normal text-white/70">/ mo</span>
               </h3>
@@ -669,9 +669,9 @@ function SuperAdminPage() {
               </ul>
             </div>
 
-            <div className="bg-white dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-4">
+            <div className="bg-white dark:bg-[#222222] border-2 border-border dark:border-[#404040] rounded-3xl p-6 shadow-sm space-y-4">
               <span className="text-[10px] font-extrabold uppercase text-muted-foreground dark:text-slate-400">Enterprise Tier</span>
-              <h3 className="font-serif italic text-3xl font-bold text-[#60241E] dark:text-slate-100">
+              <h3 className="font-serif italic text-3xl font-bold text-[#111111] dark:text-slate-100">
                 {formatCurrency(32000)} <span className="text-xs font-sans font-normal text-muted-foreground dark:text-slate-400">/ mo</span>
               </h3>
               <ul className="text-xs space-y-2 text-foreground dark:text-slate-200 font-semibold">
@@ -688,7 +688,7 @@ function SuperAdminPage() {
       {/* 5. SUPPORT QUEUE */}
       {activeTab === "tickets" && (
         <div className="space-y-4">
-          <h2 className="text-xl font-serif italic font-bold text-[#60241E] dark:text-slate-100">
+          <h2 className="text-xl font-serif italic font-bold text-[#111111] dark:text-slate-100">
             Platform Support &amp; Moderation Pipeline
           </h2>
 
@@ -696,14 +696,14 @@ function SuperAdminPage() {
             {supportTickets.map((t) => (
               <div
                 key={t.id}
-                className="bg-white dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-3xl p-5 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-lift"
+                className="bg-white dark:bg-[#222222] border-2 border-border dark:border-[#404040] rounded-3xl p-5 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 hover-lift"
               >
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-mono font-bold bg-[#60241E] dark:bg-[#E77B49] text-white px-2.5 py-0.5 rounded-lg">
+                    <span className="text-xs font-mono font-bold bg-[#111111] dark:bg-[#d2d0c1] text-white px-2.5 py-0.5 rounded-lg">
                       {t.id}
                     </span>
-                    <span className="text-xs font-bold text-[#60241E] dark:text-slate-100">{t.requester}</span>
+                    <span className="text-xs font-bold text-[#111111] dark:text-slate-100">{t.requester}</span>
                     <span className="text-[10px] font-extrabold uppercase text-muted-foreground dark:text-slate-400">({t.type})</span>
                   </div>
                   <h3 className="font-serif italic text-lg font-bold text-foreground dark:text-slate-100 mt-1">{t.subject}</h3>
@@ -745,10 +745,10 @@ function SuperAdminPage() {
       {activeTab === "moderation" && (
         <div className="space-y-6">
           <div>
-            <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#60241E] dark:text-[#E77B49] bg-[#60241E]/10 dark:bg-slate-800 px-2.5 py-0.5 rounded-full">
+            <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#111111] dark:text-[#d2d0c1] bg-[#111111]/10 dark:bg-[#383838] px-2.5 py-0.5 rounded-full">
               Super Admin Control
             </span>
-            <h2 className="text-2xl font-serif italic font-bold text-[#60241E] dark:text-slate-100 mt-1">
+            <h2 className="text-2xl font-serif italic font-bold text-[#111111] dark:text-slate-100 mt-1">
               Global Platform Review Moderation
             </h2>
             <p className="text-xs text-muted-foreground dark:text-slate-400 font-medium mt-0.5">
@@ -758,21 +758,21 @@ function SuperAdminPage() {
 
           {/* Moderation Metrics */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <div className="bg-white dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-2xl p-4 space-y-1">
+            <div className="bg-white dark:bg-[#222222] border-2 border-border dark:border-[#404040] rounded-2xl p-4 space-y-1">
               <span className="text-[10px] font-extrabold uppercase text-muted-foreground dark:text-slate-400">Total Diner Reviews</span>
-              <p className="font-serif italic text-3xl font-bold text-[#60241E] dark:text-[#E77B49]">
+              <p className="font-serif italic text-3xl font-bold text-[#111111] dark:text-[#d2d0c1]">
                 {getReviews("").length || 3}
               </p>
               <span className="text-[10px] text-emerald-700 dark:text-emerald-400 font-bold">4.85 Platform Rating Avg</span>
             </div>
 
-            <div className="bg-white dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-2xl p-4 space-y-1">
+            <div className="bg-white dark:bg-[#222222] border-2 border-border dark:border-[#404040] rounded-2xl p-4 space-y-1">
               <span className="text-[10px] font-extrabold uppercase text-muted-foreground dark:text-slate-400">Verified Foodie Diners</span>
               <p className="font-serif italic text-3xl font-bold text-foreground dark:text-slate-100">1,840</p>
-              <span className="text-[10px] text-[#60241E] dark:text-[#E77B49] font-bold">100% Verified Community</span>
+              <span className="text-[10px] text-[#111111] dark:text-[#d2d0c1] font-bold">100% Verified Community</span>
             </div>
 
-            <div className="bg-white dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-2xl p-4 space-y-1">
+            <div className="bg-white dark:bg-[#222222] border-2 border-border dark:border-[#404040] rounded-2xl p-4 space-y-1">
               <span className="text-[10px] font-extrabold uppercase text-muted-foreground dark:text-slate-400">Flagged Moderation Queue</span>
               <p className="font-serif italic text-3xl font-bold text-amber-600 dark:text-amber-400">0 Pending</p>
               <span className="text-[10px] text-emerald-700 dark:text-emerald-400 font-bold">100% Genuine Diners</span>
@@ -783,7 +783,7 @@ function SuperAdminPage() {
             {getReviews("").map((r) => (
               <div
                 key={r.id}
-                className="bg-white dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-3xl p-5 shadow-sm space-y-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
+                className="bg-white dark:bg-[#222222] border-2 border-border dark:border-[#404040] rounded-3xl p-5 shadow-sm space-y-3 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
               >
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
@@ -793,7 +793,7 @@ function SuperAdminPage() {
                       className="size-8 rounded-full object-cover"
                     />
                     <span className="font-bold text-xs text-foreground dark:text-slate-200">{r.customerName}</span>
-                    <span className="text-[10px] font-bold bg-[#60241E]/10 dark:bg-slate-800 text-[#60241E] dark:text-[#E77B49] px-2 py-0.5 rounded-md">
+                    <span className="text-[10px] font-bold bg-[#111111]/10 dark:bg-[#383838] text-[#111111] dark:text-[#d2d0c1] px-2 py-0.5 rounded-md">
                       {r.restaurantId}
                     </span>
                     <span className="text-xs font-bold text-amber-500">★ {r.rating}.0</span>
@@ -820,44 +820,44 @@ function SuperAdminPage() {
       {activeTab === "health" && (
         <div className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-white dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-4">
-              <h3 className="font-serif italic text-xl font-bold text-[#60241E] dark:text-slate-100">
+            <div className="bg-white dark:bg-[#222222] border-2 border-border dark:border-[#404040] rounded-3xl p-6 shadow-sm space-y-4">
+              <h3 className="font-serif italic text-xl font-bold text-[#111111] dark:text-slate-100">
                 Infrastructure &amp; Server Health
               </h3>
 
               <div className="space-y-3 text-xs font-medium">
-                <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-border dark:border-slate-700 flex justify-between">
+                <div className="p-3 rounded-2xl bg-slate-50 dark:bg-[#383838]/60 border border-border dark:border-[#404040] flex justify-between">
                   <span className="text-foreground dark:text-slate-200">WebSocket Real-Time Engine</span>
                   <span className="text-emerald-700 dark:text-emerald-400 font-bold">Connected (0 Loss)</span>
                 </div>
 
-                <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-border dark:border-slate-700 flex justify-between">
+                <div className="p-3 rounded-2xl bg-slate-50 dark:bg-[#383838]/60 border border-border dark:border-[#404040] flex justify-between">
                   <span className="text-foreground dark:text-slate-200">API Response Latency</span>
                   <span className="text-emerald-700 dark:text-emerald-400 font-bold">18ms Avg</span>
                 </div>
 
-                <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-border dark:border-slate-700 flex justify-between">
+                <div className="p-3 rounded-2xl bg-slate-50 dark:bg-[#383838]/60 border border-border dark:border-[#404040] flex justify-between">
                   <span className="text-foreground dark:text-slate-200">Database Connections</span>
                   <span className="text-emerald-700 dark:text-emerald-400 font-bold">Healthy (Pool 12/50)</span>
                 </div>
 
-                <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-border dark:border-slate-700 flex justify-between">
+                <div className="p-3 rounded-2xl bg-slate-50 dark:bg-[#383838]/60 border border-border dark:border-[#404040] flex justify-between">
                   <span className="text-foreground dark:text-slate-200">Automated Backups</span>
-                  <span className="text-[#60241E] dark:text-[#E77B49] font-bold">Last backup 12m ago</span>
+                  <span className="text-[#111111] dark:text-[#d2d0c1] font-bold">Last backup 12m ago</span>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-3xl p-6 shadow-sm space-y-4">
-              <h3 className="font-serif italic text-xl font-bold text-[#60241E] dark:text-slate-100">
+            <div className="bg-white dark:bg-[#222222] border-2 border-border dark:border-[#404040] rounded-3xl p-6 shadow-sm space-y-4">
+              <h3 className="font-serif italic text-xl font-bold text-[#111111] dark:text-slate-100">
                 Platform Real-Time Activity Log
               </h3>
 
               <div className="space-y-2.5 max-h-[300px] overflow-y-auto pr-1">
                 {activityLogs.map((log) => (
-                  <div key={log.id} className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-border dark:border-slate-700 text-xs space-y-0.5">
+                  <div key={log.id} className="p-3 rounded-2xl bg-slate-50 dark:bg-[#383838]/60 border border-border dark:border-[#404040] text-xs space-y-0.5">
                     <div className="flex justify-between font-bold text-[10px]">
-                      <span className="text-[#60241E] dark:text-[#E77B49] uppercase">{log.type}</span>
+                      <span className="text-[#111111] dark:text-[#d2d0c1] uppercase">{log.type}</span>
                       <span className="text-muted-foreground dark:text-slate-400">{log.timestamp}</span>
                     </div>
                     <p className="text-foreground dark:text-slate-200 font-semibold">{log.message}</p>

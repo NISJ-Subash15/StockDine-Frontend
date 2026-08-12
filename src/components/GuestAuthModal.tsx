@@ -13,17 +13,17 @@ export const GuestAuthModal: React.FC<GuestAuthModalProps> = ({ isOpen, onClose 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200">
-      <div className="bg-white dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-6 animate-in zoom-in-95 duration-200 text-center relative overflow-hidden">
+    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-4 transition-opacity duration-200">
+      <div className="bg-white dark:bg-[#222222] border-2 border-border dark:border-[#404040] rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-6 sd-modal-pop text-center relative overflow-hidden">
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 rounded-xl text-slate-400 hover:text-foreground hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+          className="absolute top-4 right-4 p-2 rounded-xl text-slate-400 hover:text-foreground hover:bg-slate-100 dark:hover:bg-[#383838] transition-colors cursor-pointer"
         >
           <X className="size-5" />
         </button>
 
-        <div className="size-16 rounded-2xl bg-[#E77B49]/15 text-[#E77B49] flex items-center justify-center mx-auto shadow-sm">
+        <div className="size-16 rounded-2xl bg-[#d2d0c1]/15 text-[#d2d0c1] flex items-center justify-center mx-auto shadow-sm">
           <ShieldCheck className="size-8 stroke-[2]" />
         </div>
 
@@ -43,10 +43,10 @@ export const GuestAuthModal: React.FC<GuestAuthModalProps> = ({ isOpen, onClose 
               onClose();
               navigate({ to: "/auth/customer/login" });
             }}
-            className="w-full py-3.5 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all active:scale-95 cursor-pointer flex items-center justify-center gap-2"
+            className="w-full py-3.5 rounded-2xl bg-[#111111] hover:bg-[#333333] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all active:scale-95 cursor-pointer flex items-center justify-center gap-2"
           >
             <span>Sign In</span>
-            <ArrowRight className="size-4" />
+            <ArrowRight className="size-4 text-[#d2d0c1]" />
           </button>
 
           <button
@@ -55,7 +55,7 @@ export const GuestAuthModal: React.FC<GuestAuthModalProps> = ({ isOpen, onClose 
               onClose();
               navigate({ to: "/auth/select-role", search: { mode: "signup" } });
             }}
-            className="w-full py-3 rounded-2xl bg-secondary/30 text-[#60241E] dark:text-slate-200 hover:bg-secondary/50 font-extrabold text-xs transition-all cursor-pointer"
+            className="w-full py-3 rounded-2xl bg-white border-2 border-[#111111] text-[#111111] dark:text-slate-200 hover:bg-[#F5F5F5] font-extrabold text-xs transition-all cursor-pointer"
           >
             Create Account
           </button>

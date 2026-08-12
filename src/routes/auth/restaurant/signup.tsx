@@ -77,18 +77,18 @@ function RestaurantSignupPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] dark:bg-slate-950 text-[#1F2937] dark:text-slate-100 flex flex-col justify-between p-4 sm:p-6 lg:p-10 relative selection:bg-[#E77B49] selection:text-white transition-colors duration-300 overflow-x-hidden">
+    <div className="min-h-screen bg-[#FFFFFF] dark:bg-[#2b2b2b] text-[#111111] dark:text-slate-100 flex flex-col justify-between p-4 sm:p-6 lg:p-10 relative selection:bg-[#d2d0c1] selection:text-white transition-colors duration-300 overflow-x-hidden">
       {/* Background Glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(231,123,73,0.1),transparent_70%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(210,208,193,0.1),transparent_70%)] pointer-events-none" />
 
       {/* Header */}
       <header className="relative z-10 flex items-center justify-between max-w-5xl mx-auto w-full pt-2 pb-6">
         <Link to="/" className="group flex items-center gap-3">
           <div>
-            <span className="font-serif italic text-2xl sm:text-3xl font-bold tracking-tight text-[#60241E] dark:text-[#E77B49] block leading-none">
+            <span className="font-serif italic text-2xl sm:text-3xl font-bold tracking-tight text-[#111111] dark:text-[#d2d0c1] block leading-none">
               StockDine
             </span>
-            <span className="text-[9px] uppercase tracking-[0.25em] text-[#E77B49] dark:text-slate-400 font-extrabold block mt-1">
+            <span className="text-[9px] uppercase tracking-[0.25em] text-[#d2d0c1] dark:text-slate-400 font-extrabold block mt-1">
               Partner Registration
             </span>
           </div>
@@ -97,7 +97,7 @@ function RestaurantSignupPage() {
         <div className="flex items-center gap-3">
           <Link
             to="/auth/restaurant/login"
-            className="text-xs font-extrabold text-[#60241E] dark:text-slate-200 hover:text-[#E77B49] transition-colors flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-secondary/10 dark:bg-slate-800/80 border border-border/60"
+            className="text-xs font-extrabold text-[#111111] dark:text-slate-200 hover:text-[#d2d0c1] transition-colors flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-secondary/10 dark:bg-[#383838]/80 border border-border/60 cursor-pointer"
           >
             <span>Existing Owner? Sign In</span>
             <ArrowRight className="size-3.5" />
@@ -109,14 +109,14 @@ function RestaurantSignupPage() {
       {/* Main Container */}
       <main className="relative z-10 flex-1 flex items-center justify-center py-8">
         <div className="w-full max-w-2xl mx-auto">
-          <div className="rounded-3xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-border/60 dark:border-slate-800 p-8 sm:p-10 shadow-2xl space-y-6">
+          <div className="rounded-3xl bg-white/80 dark:bg-[#222222]/80 backdrop-blur-xl border border-[#E5E5E5] dark:border-[#404040] p-8 sm:p-10 shadow-2xl space-y-6">
             {/* Title Header */}
             <div className="text-center space-y-2">
-              <h1 className="font-serif italic text-3xl font-bold text-[#60241E] dark:text-slate-100">
+              <h1 className="font-serif italic text-3xl font-bold text-[#111111] dark:text-slate-100">
                 Register Your Restaurant
               </h1>
-              <p className="text-xs text-[#6B7280] dark:text-slate-400 font-medium">
-                Enable live stock management, table reservations & kitchen controls for your venue.
+              <p className="text-xs text-muted-foreground font-medium">
+                Enable live stock management, table reservations &amp; kitchen controls for your venue.
               </p>
             </div>
 
@@ -130,35 +130,35 @@ function RestaurantSignupPage() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-300 mb-1.5">
+                  <label className="block text-xs font-extrabold uppercase text-[#111111] dark:text-slate-300 mb-1.5">
                     Owner Name
                   </label>
                   <div className="relative">
-                    <User className="absolute left-3.5 top-3.5 size-4 text-[#6B7280]" />
+                    <User className="absolute left-3.5 top-3.5 size-4 text-[#737373]" />
                     <input
                       type="text"
                       required
                       value={ownerName}
                       onChange={(e) => setOwnerName(e.target.value)}
                       placeholder="Owner / Partner Name"
-                      className="w-full pl-10 pr-4 py-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/80 border border-border/60 text-xs font-bold text-[#1F2937] dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
+                      className="w-full pl-10 pr-4 py-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838]/80 border border-[#E5E5E5] text-xs font-bold text-[#111111] dark:text-slate-100 focus:outline-none focus:border-[#111111]"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-300 mb-1.5">
+                  <label className="block text-xs font-extrabold uppercase text-[#111111] dark:text-slate-300 mb-1.5">
                     Restaurant Name
                   </label>
                   <div className="relative">
-                    <Building2 className="absolute left-3.5 top-3.5 size-4 text-[#6B7280]" />
+                    <Building2 className="absolute left-3.5 top-3.5 size-4 text-[#737373]" />
                     <input
                       type="text"
                       required
                       value={restaurantName}
                       onChange={(e) => setRestaurantName(e.target.value)}
                       placeholder="e.g. La Piazza Bistro"
-                      className="w-full pl-10 pr-4 py-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/80 border border-border/60 text-xs font-bold text-[#1F2937] dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
+                      className="w-full pl-10 pr-4 py-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838]/80 border border-[#E5E5E5] text-xs font-bold text-[#111111] dark:text-slate-100 focus:outline-none focus:border-[#111111]"
                     />
                   </div>
                 </div>
@@ -166,66 +166,66 @@ function RestaurantSignupPage() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-300 mb-1.5">
+                  <label className="block text-xs font-extrabold uppercase text-[#111111] dark:text-slate-300 mb-1.5">
                     Email Address
                   </label>
                   <div className="relative">
-                    <Mail className="absolute left-3.5 top-3.5 size-4 text-[#6B7280]" />
+                    <Mail className="absolute left-3.5 top-3.5 size-4 text-[#737373]" />
                     <input
                       type="email"
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="contact@restaurant.com"
-                      className="w-full pl-10 pr-4 py-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/80 border border-border/60 text-xs font-bold text-[#1F2937] dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
+                      className="w-full pl-10 pr-4 py-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838]/80 border border-[#E5E5E5] text-xs font-bold text-[#111111] dark:text-slate-100 focus:outline-none focus:border-[#111111]"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-300 mb-1.5">
+                  <label className="block text-xs font-extrabold uppercase text-[#111111] dark:text-slate-300 mb-1.5">
                     Mobile Number
                   </label>
                   <div className="relative">
-                    <Phone className="absolute left-3.5 top-3.5 size-4 text-[#6B7280]" />
+                    <Phone className="absolute left-3.5 top-3.5 size-4 text-[#737373]" />
                     <input
                       type="tel"
                       required
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       placeholder="+91 98765 43210"
-                      className="w-full pl-10 pr-4 py-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/80 border border-border/60 text-xs font-bold text-[#1F2937] dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
+                      className="w-full pl-10 pr-4 py-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838]/80 border border-[#E5E5E5] text-xs font-bold text-[#111111] dark:text-slate-100 focus:outline-none focus:border-[#111111]"
                     />
                   </div>
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-300 mb-1.5">
+                <label className="block text-xs font-extrabold uppercase text-[#111111] dark:text-slate-300 mb-1.5">
                   Restaurant Full Address
                 </label>
                 <div className="relative">
-                  <MapPin className="absolute left-3.5 top-3.5 size-4 text-[#6B7280]" />
+                  <MapPin className="absolute left-3.5 top-3.5 size-4 text-[#737373]" />
                   <input
                     type="text"
                     required
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                     placeholder="100 Feet Road, Indiranagar, Bengaluru"
-                    className="w-full pl-10 pr-4 py-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/80 border border-border/60 text-xs font-bold text-[#1F2937] dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
+                    className="w-full pl-10 pr-4 py-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838]/80 border border-[#E5E5E5] text-xs font-bold text-[#111111] dark:text-slate-100 focus:outline-none focus:border-[#111111]"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-300 mb-1.5">
+                  <label className="block text-xs font-extrabold uppercase text-[#111111] dark:text-slate-300 mb-1.5">
                     Cuisine Type
                   </label>
                   <select
                     value={cuisine}
                     onChange={(e) => setCuisine(e.target.value)}
-                    className="w-full px-4 py-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/80 border border-border/60 text-xs font-bold text-[#1F2937] dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
+                    className="w-full px-4 py-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838]/80 border border-[#E5E5E5] text-xs font-bold text-[#111111] dark:text-slate-100 focus:outline-none focus:border-[#111111]"
                   >
                     <option value="Multi-Cuisine">Multi-Cuisine</option>
                     <option value="Indian & North Indian">Indian & North Indian</option>
@@ -238,23 +238,23 @@ function RestaurantSignupPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-300 mb-1.5">
+                  <label className="block text-xs font-extrabold uppercase text-[#111111] dark:text-slate-300 mb-1.5">
                     Password
                   </label>
                   <div className="relative">
-                    <Lock className="absolute left-3.5 top-3.5 size-4 text-[#6B7280]" />
+                    <Lock className="absolute left-3.5 top-3.5 size-4 text-[#737373]" />
                     <input
                       type={showPassword ? "text" : "password"}
                       required
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••"
-                      className="w-full pl-10 pr-10 py-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/80 border border-border/60 text-xs font-bold text-[#1F2937] dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
+                      className="w-full pl-10 pr-4 py-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838]/80 border border-[#E5E5E5] text-xs font-bold text-[#111111] dark:text-slate-100 focus:outline-none focus:border-[#111111]"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3.5 top-3.5 text-[#6B7280] hover:text-[#E77B49]"
+                      className="absolute right-3.5 top-3.5 text-[#737373] hover:text-[#111111] dark:hover:text-slate-200 cursor-pointer"
                     >
                       {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                     </button>
@@ -265,14 +265,14 @@ function RestaurantSignupPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full py-4 rounded-2xl bg-[#60241E] hover:bg-[#4A1B17] dark:bg-[#E77B49] dark:hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-lg hover:shadow-xl transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer mt-2"
+                className="w-full py-4 rounded-2xl bg-[#111111] hover:bg-[#333333] dark:bg-[#d2d0c1] dark:hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-lg hover:shadow-xl transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer mt-2"
               >
                 {isLoading ? (
                   <span>Registering Restaurant...</span>
                 ) : (
                   <>
                     <span>Continue as Restaurant</span>
-                    <ArrowRight className="size-4" />
+                    <ArrowRight className="size-4 text-[#d2d0c1]" />
                   </>
                 )}
               </button>
@@ -282,7 +282,7 @@ function RestaurantSignupPage() {
               <Link
                 to="/auth/select-role"
                 search={{ mode: "signup" }}
-                className="text-xs font-extrabold text-[#6B7280] hover:text-[#E77B49] transition-colors"
+                className="text-xs font-extrabold text-muted-foreground hover:text-[#111111] dark:hover:text-[#d2d0c1] transition-colors"
               >
                 ← Back to Role Selection
               </Link>
@@ -292,7 +292,7 @@ function RestaurantSignupPage() {
       </main>
 
       {/* Footer */}
-      <footer className="relative z-10 max-w-4xl mx-auto w-full pt-6 pb-2 text-center text-[11px] text-[#6B7280] dark:text-slate-500 font-medium">
+      <footer className="relative z-10 max-w-4xl mx-auto w-full pt-6 pb-2 text-center text-[11px] text-[#737373] dark:text-slate-500 font-medium">
         © StockDine Inc. All rights reserved.
       </footer>
     </div>

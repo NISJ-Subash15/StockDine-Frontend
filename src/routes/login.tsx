@@ -130,12 +130,77 @@ function LoginPage() {
   const [timer, setTimer] = useState(30);
   const [isLoading, setIsLoading] = useState(false);
 
+  // Customer Email/Password Sign In State
+  const [customerEmail, setCustomerEmail] = useState("");
+  const [customerPass, setCustomerPass] = useState("");
+  const [showCustomerPass, setShowCustomerPass] = useState(false);
+  const [customerAuthMethod, setCustomerAuthMethod] = useState<"email" | "phone">("email");
+
   // Single Restaurant Sign In State
-  const [restUser, setRestUser] = useState(searchParams?.email || "");
+  const [restUser, setRestUser] = useState(searchParams?.registered ? searchParams?.email || "" : "");
   const [restPass, setRestPass] = useState("");
   const [showRestPass, setShowRestPass] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
   const [loginError, setLoginError] = useState("");
+
+  const handleCustomerEmailSignIn = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoginError("");
+    const cleanEmail = customerEmail.trim().toLowerCase();
+    if (!cleanEmail || !customerPass) {
+      setLoginError("Please enter your Email Address and Password.");
+      return;
+    }
+    setIsLoading(true);
+    try {
+      const res = await api.auth.customerLogin({ email: cleanEmail, password: customerPass });
+      setIsLoading(false);
+      if (res && res.success && res.token) {
+        const userRole = (res.role || res.user?.role || "customer").toLowerCase();
+        if (userRole === "restaurant" || userRole === "admin" || userRole === "kitchen") {
+          setLoginError("This account is registered as a Restaurant Partner. Please switch to the RESTAURANT PARTNER tab to sign in.");
+          return;
+        }
+
+        localStorage.setItem("stockdine_token", res.token);
+        const userProf = res.user || {
+          email: cleanEmail,
+          name: cleanEmail.split("@")[0],
+          role: res.role || "customer",
+        };
+        setAuthSession({
+          userEmail: cleanEmail,
+          restaurantId: "",
+          permissions: "both",
+          isLoggedIn: true,
+          userRole: res.role || "customer",
+          profileData: userProf,
+        });
+
+        try {
+          const profRes: any = await api.auth.getProfile();
+          if (profRes && profRes.success && (profRes.profile || profRes.user)) {
+            const realProf = profRes.profile || profRes.user;
+            setAuthSession({
+              userEmail: realProf.email || cleanEmail,
+              restaurantId: "",
+              permissions: "both",
+              isLoggedIn: true,
+              userRole: realProf.role || "customer",
+              profileData: realProf,
+            });
+          }
+        } catch (pErr) {}
+
+        navigate({ to: "/customer", replace: true });
+      } else {
+        setLoginError(res.message || "Incorrect email or password. Please try again.");
+      }
+    } catch (err: any) {
+      setIsLoading(false);
+      setLoginError(err.message || "Incorrect email or password. Please try again.");
+    }
+  };
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -335,31 +400,32 @@ function LoginPage() {
   const hasSuperAdminAccess = currentPermissions === "superadmin" || userEmail.toLowerCase().includes("superadmin");
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col justify-between p-4 sm:p-6 lg:p-10 relative overflow-hidden selection:bg-[#E77B49] selection:text-white transition-colors duration-300">
+    <div className="min-h-screen bg-background text-foreground flex flex-col justify-between p-4 sm:p-6 lg:p-10 relative overflow-hidden selection:bg-[#d2d0c1] selection:text-white transition-colors duration-300">
       {/* Dynamic Background ambient light */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(231,123,73,0.06),transparent_65%)] pointer-events-none" />
-      <div className="absolute -top-32 left-1/2 -translate-x-1/2 size-[600px] rounded-full bg-[#60241E]/5 dark:bg-[#E77B49]/5 blur-3xl pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(210,208,193,0.06),transparent_65%)] pointer-events-none" />
+      <div className="absolute -top-32 left-1/2 -translate-x-1/2 size-[600px] rounded-full bg-[#111111]/5 dark:bg-[#d2d0c1]/5 blur-3xl pointer-events-none" />
 
       {/* Header Bar */}
       <header className="relative z-10 flex items-center justify-between max-w-md md:max-w-4xl mx-auto w-full pt-2 pb-6">
         <Link to="/" className="group flex items-center gap-3">
           <div>
-            <span className="font-serif italic text-3xl font-bold text-[#60241E] dark:text-[#E77B49] tracking-tight block leading-none">
+            <span className="font-serif italic text-3xl font-bold text-[#111111] dark:text-[#d2d0c1] tracking-tight block leading-none">
               StockDine
             </span>
-            <span className="text-[9px] uppercase tracking-[0.3em] text-[#E77B49] font-extrabold block mt-1">
-              Global Pass
+            <span className="text-[9px] uppercase tracking-[0.3em] text-[#d2d0c1] font-extrabold block mt-1">
+              Member Access
             </span>
           </div>
         </Link>
 
         <div className="flex items-center gap-3">
           <Link
-            to="/signup"
-            className="text-xs font-extrabold text-[#60241E] dark:text-slate-200 hover:text-[#E77B49] transition-colors flex items-center gap-1.5 px-3 py-2 rounded-xl bg-secondary/10 dark:bg-slate-800/80 border border-border/60"
+            to="/auth/select-role"
+            search={{ mode: "signup" }}
+            className="text-xs font-extrabold text-[#111111] dark:text-slate-200 hover:text-[#d2d0c1] transition-colors flex items-center gap-1.5 px-4 py-2.5 rounded-2xl bg-secondary/10 dark:bg-[#383838]/80 border border-border/60 shadow-xs active:scale-95"
           >
-            <Store className="size-3.5 text-[#E77B49]" />
-            <span>Register Restaurant</span>
+            <span>Don't have an account? Get Started</span>
+            <ArrowRight className="size-3.5" />
           </Link>
           <ThemeToggle />
         </div>
@@ -367,235 +433,363 @@ function LoginPage() {
 
       {/* Main Container View */}
       <main className="relative z-10 flex-1 flex items-center justify-center py-6">
-        <div className="w-full max-w-md md:max-w-3xl mx-auto">
-          {/* ========================================================================= */}
-          {/* VIEW 1: CUSTOMER LOGIN (Phone + OTP) */}
-          {/* ========================================================================= */}
-          {view === "customer" && (
-            <div className="glass-card-premium rounded-3xl p-6 sm:p-8 shadow-xl border border-border dark:border-slate-800 bg-card dark:bg-slate-900/90 transition-all animate-splash-in max-w-md mx-auto relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-[#E77B49]/5 rounded-full blur-2xl pointer-events-none" />
-
-              <div className="text-center mb-8">
-                <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#E77B49]/10 text-[#E77B49] text-xs font-bold mb-3 border border-[#E77B49]/20">
-                  <Sparkles className="size-3.5 fill-current text-[#E77B49]" />
-                  <span>Dine-In Customer Authentication</span>
-                </div>
-                <h1 className="font-serif italic text-3xl sm:text-4xl text-[#60241E] dark:text-slate-100 font-bold tracking-tight">
-                  Welcome to StockDine
-                </h1>
-                <p className="mt-2 text-xs sm:text-sm text-muted-foreground max-w-xs mx-auto font-medium">
-                  {otpStep
-                    ? `Enter the 4-digit code sent to ${selectedCountry.dialCode} ${phone}`
-                    : "Select your country and enter mobile number to start"}
-                </p>
+        <div className="w-full max-w-md md:max-w-xl mx-auto space-y-6">
+          {view !== "workspace" && (
+            <div className="text-center space-y-2.5 sd-fade-up">
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#F5F5F5] text-[#111111] dark:bg-[#d2d0c1]/20 dark:text-[#d2d0c1] text-[11px] font-extrabold uppercase tracking-widest border border-[#E5E5E5]">
+                <Sparkles className="size-3.5 fill-current text-[#d2d0c1]" />
+                <span>MEMBER ACCESS</span>
               </div>
+              <h1 className="font-serif italic text-3xl sm:text-4xl text-[#111111] dark:text-slate-100 font-bold tracking-tight">
+                Welcome Back
+              </h1>
+              <p className="text-xs sm:text-sm text-muted-foreground font-medium max-w-sm mx-auto">
+                Sign in to continue your StockDine experience.
+              </p>
 
-              {!otpStep ? (
-                <form onSubmit={handleSendOtp} className="space-y-5">
-                  <div className="relative">
-                    <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#60241E] dark:text-slate-300 mb-2">
-                      Mobile Phone Number
-                    </label>
-
-                    <div className="flex items-center gap-2.5">
-                      <div className="relative">
-                        <button
-                          type="button"
-                          onClick={() => setShowCountryDropdown(!showCountryDropdown)}
-                          className="h-13 px-3.5 rounded-2xl bg-white dark:bg-slate-800 border-2 border-border dark:border-slate-700 hover:border-[#E77B49] flex items-center gap-2 text-sm font-bold text-foreground transition-all shadow-sm shrink-0 focus:outline-none focus:ring-2 focus:ring-[#E77B49]/40"
-                          title="Select Country Code"
-                        >
-                          <span className="text-lg">{selectedCountry.flag}</span>
-                          <span className="text-xs font-extrabold text-foreground">{selectedCountry.dialCode}</span>
-                          <ChevronDown className="size-3.5 text-[#E77B49]" />
-                        </button>
-
-                        {showCountryDropdown && (
-                          <div className="absolute top-14 left-0 z-50 w-64 max-h-60 overflow-y-auto rounded-2xl bg-white dark:bg-slate-800 border-2 border-border dark:border-slate-700 shadow-2xl p-2 space-y-1 backdrop-blur-xl">
-                            <div className="px-3 py-1.5 text-[10px] uppercase font-extrabold text-[#60241E] dark:text-[#E77B49] border-b border-border dark:border-slate-700 mb-1 flex items-center justify-between">
-                              <span>Select Country</span>
-                              <Globe2 className="size-3" />
-                            </div>
-                            {COUNTRIES.map((c) => (
-                              <button
-                                key={c.code}
-                                type="button"
-                                onClick={() => {
-                                  setSelectedCountry(c);
-                                  setShowCountryDropdown(false);
-                                }}
-                                className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-colors ${
-                                  selectedCountry.code === c.code
-                                    ? "bg-[#E77B49] text-white font-bold"
-                                    : "hover:bg-secondary/10 dark:hover:bg-slate-700 text-foreground"
-                                }`}
-                              >
-                                <span className="flex items-center gap-2">
-                                  <span className="text-base">{c.flag}</span>
-                                  <span>{c.name}</span>
-                                </span>
-                                <span className="font-mono text-[11px] opacity-80">{c.dialCode}</span>
-                              </button>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-
-                      <div className="relative flex-1">
-                        <input
-                          type="tel"
-                          required
-                          value={phone}
-                          onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
-                          placeholder={selectedCountry.placeholder}
-                          className="w-full h-13 pl-4 pr-10 rounded-2xl bg-white dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground font-semibold text-base placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-[#E77B49] focus:border-[#E77B49] transition-all shadow-sm antialiased"
-                        />
-                        <Phone className="absolute right-3.5 size-4 text-[#E77B49] pointer-events-none" />
-                      </div>
-                    </div>
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={phone.length < selectedCountry.length - 2 || isLoading}
-                    className="w-full h-13 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white font-bold text-sm shadow-md active:scale-[0.98] transition-all disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2"
-                  >
-                    {isLoading ? (
-                      <span className="inline-block size-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    ) : (
-                      <>
-                        <span>Send OTP Code</span>
-                        <ArrowRight className="size-4" />
-                      </>
-                    )}
-                  </button>
-                </form>
-              ) : (
-                <form onSubmit={handleVerifyOtp} className="space-y-6">
-                  <div>
-                    <div className="flex justify-between items-center mb-3">
-                      <label className="text-[11px] font-extrabold uppercase tracking-wider text-[#60241E] dark:text-slate-300">
-                        Enter 4-Digit OTP
-                      </label>
-                      <button
-                        type="button"
-                        onClick={handleFillDemoOtp}
-                        className="text-xs text-[#E77B49] hover:underline font-bold flex items-center gap-1"
-                      >
-                        <CheckCircle2 className="size-3.5" /> Demo Fill (5820)
-                      </button>
-                    </div>
-
-                    <div className="grid grid-cols-4 gap-3">
-                      {otp.map((digit, idx) => (
-                        <input
-                          key={idx}
-                          id={`otp-input-${idx}`}
-                          type="text"
-                          maxLength={1}
-                          value={digit}
-                          onChange={(e) => handleOtpChange(idx, e.target.value)}
-                          className="w-full h-14 text-center text-xl font-bold rounded-2xl bg-white dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground focus:outline-none focus:ring-2 focus:ring-[#E77B49] focus:border-[#E77B49] transition-all shadow-sm antialiased"
-                        />
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="flex justify-between items-center text-xs text-muted-foreground font-medium">
-                    <button
-                      type="button"
-                      onClick={() => setOtpStep(false)}
-                      className="hover:text-foreground underline font-semibold"
-                    >
-                      Change Number
-                    </button>
-                    <span>
-                      {timer > 0 ? (
-                        `Resend in ${timer}s`
-                      ) : (
-                        <button
-                          type="button"
-                          onClick={() => setTimer(30)}
-                          className="text-[#E77B49] font-bold hover:underline flex items-center gap-1"
-                        >
-                          <RotateCcw className="size-3" /> Resend Code
-                        </button>
-                      )}
-                    </span>
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={otp.join("").length < 4 || isLoading}
-                    className="w-full h-13 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white font-bold text-sm shadow-md active:scale-[0.98] transition-all disabled:opacity-50 disabled:pointer-events-none flex items-center justify-center gap-2"
-                  >
-                    {isLoading ? (
-                      <span className="inline-block size-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    ) : (
-                      <>
-                        <span>Verify &amp; Continue</span>
-                        <ArrowRight className="size-4" />
-                      </>
-                    )}
-                  </button>
-                </form>
-              )}
-
-              {/* STEP 1: Click "Restaurant Access" -> IMMEDIATELY opens Step 2 (Restaurant Sign In) */}
-              <div className="mt-8 pt-6 border-t border-border dark:border-slate-800 text-center space-y-3">
-                <p className="text-xs text-muted-foreground font-medium">Operating a food establishment?</p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {/* 1-CLICK ROLE SWITCHER TAB BAR */}
+              <div className="pt-2 max-w-md mx-auto">
+                <div className="p-1 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838]/80 border border-[#E5E5E5] dark:border-[#404040] flex items-center gap-1">
                   <button
                     type="button"
-                    onClick={() => setView("restaurant")}
-                    className="w-full py-3 px-3 rounded-2xl bg-white dark:bg-slate-800 text-foreground text-xs font-bold border-2 border-border dark:border-slate-700 hover:border-[#E77B49] transition-all flex items-center justify-center gap-1.5 group active:scale-[0.98] shadow-sm"
+                    onClick={() => {
+                      setView("customer");
+                      setLoginError("");
+                      setCustomerEmail("");
+                      setCustomerPass("");
+                    }}
+                    className={`flex-1 py-2.5 px-3 rounded-xl text-xs font-extrabold transition-all text-center cursor-pointer flex items-center justify-center gap-1.5 ${
+                      view === "customer"
+                        ? "bg-[#111111] dark:bg-[#d2d0c1] text-white shadow-md"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
                   >
-                    <Store className="size-4 text-[#E77B49] group-hover:scale-110 transition-transform" />
-                    <span>Restaurant Login</span>
+                    <span>CUSTOMER</span>
                   </button>
 
-                  <Link
-                    to="/signup"
-                    className="w-full py-3 px-3 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold transition-all flex items-center justify-center gap-1.5 group active:scale-[0.98] shadow-md"
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setView("restaurant");
+                      setLoginError("");
+                      setRestUser("");
+                      setRestPass("");
+                    }}
+                    className={`flex-1 py-2.5 px-3 rounded-xl text-xs font-extrabold transition-all text-center cursor-pointer flex items-center justify-center gap-1.5 ${
+                      view === "restaurant"
+                        ? "bg-[#111111] dark:bg-[#d2d0c1] text-white shadow-md"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
                   >
-                    <Sparkles className="size-4 fill-current" />
-                    <span>Create Account</span>
-                  </Link>
+                    <Building2 className="size-3.5" />
+                    <span>RESTAURANT PARTNER</span>
+                  </button>
                 </div>
               </div>
             </div>
           )}
 
           {/* ========================================================================= */}
-          {/* VIEW 2: STEP 2 – RESTAURANT SIGN IN (Single Common Login Page) */}
+          {/* VIEW 1: CUSTOMER SIGN IN */}
           {/* ========================================================================= */}
-          {view === "restaurant" && (
-            <div className="glass-card-premium rounded-3xl p-6 sm:p-8 shadow-xl border border-border dark:border-slate-800 bg-card dark:bg-slate-900/90 transition-all animate-splash-in max-w-md mx-auto">
-              <div className="mb-6 flex items-center justify-between">
-                <button
-                  type="button"
-                  onClick={() => setView("customer")}
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <ArrowLeft className="size-3.5" /> Back to Customer Login
-                </button>
-                <div className="flex items-center gap-1 text-xs font-bold text-[#60241E] dark:text-[#E77B49] bg-[#E77B49]/10 px-3 py-1 rounded-full border border-[#E77B49]/20">
-                  <Building2 className="size-3.5" /> Single Portal Login
-                </div>
+          {view === "customer" && (
+            <div className="glass-card-premium rounded-3xl p-6 sm:p-8 shadow-xl border border-[#E5E5E5] dark:border-[#404040] bg-card dark:bg-[#222222]/90 transition-all sd-fade-up max-w-md mx-auto relative overflow-hidden space-y-6">
+              <div className="text-center space-y-1">
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#111111] bg-[#F5F5F5] px-3 py-1 rounded-full border border-[#E5E5E5]">
+                  CUSTOMER SIGN IN
+                </span>
               </div>
 
-              <div className="text-center mb-6">
-                <h1 className="font-serif italic text-3xl sm:text-4xl text-[#60241E] dark:text-slate-100 font-bold tracking-tight">
-                  Restaurant Admin Login
-                </h1>
-                <p className="text-xs sm:text-sm text-muted-foreground mt-1.5 font-medium">
-                  Single portal for Restaurant Owners, Kitchen Staff, and Super Admins
+              {/* Sub-toggle: Email vs Phone OTP */}
+              <div className="flex justify-center border-b border-[#E5E5E5] dark:border-[#404040] pb-3 gap-4 text-xs font-extrabold">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setCustomerAuthMethod("email");
+                    setLoginError("");
+                  }}
+                  className={`pb-1 transition-colors cursor-pointer ${
+                    customerAuthMethod === "email"
+                      ? "text-[#111111] border-b-2 border-[#111111] dark:text-[#d2d0c1] dark:border-[#d2d0c1]"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  Email &amp; Password
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setCustomerAuthMethod("phone");
+                    setLoginError("");
+                  }}
+                  className={`pb-1 transition-colors cursor-pointer ${
+                    customerAuthMethod === "phone"
+                      ? "text-[#111111] border-b-2 border-[#111111] dark:text-[#d2d0c1] dark:border-[#d2d0c1]"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  Mobile OTP
+                </button>
+              </div>
+
+              {loginError && (
+                <div className="p-3.5 rounded-2xl bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-900 text-rose-700 dark:text-rose-300 text-xs font-extrabold flex items-center gap-2">
+                  <AlertCircle className="size-4 shrink-0" />
+                  <span>{loginError}</span>
+                </div>
+              )}
+
+              {customerAuthMethod === "email" ? (
+                <form onSubmit={handleCustomerEmailSignIn} className="space-y-4">
+                  <div>
+                    <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#111111] dark:text-slate-300 mb-1.5">
+                      Email Address
+                    </label>
+                    <div className="relative flex items-center">
+                      <input
+                        type="email"
+                        required
+                        autoComplete="off"
+                        value={customerEmail}
+                        onChange={(e) => setCustomerEmail(e.target.value)}
+                        placeholder="yourname@domain.com"
+                        className="w-full pl-10 pr-4 py-3 rounded-2xl bg-white dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#111111] shadow-sm font-semibold"
+                      />
+                      <Mail className="absolute left-3.5 size-4 text-[#333333] pointer-events-none" />
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="flex justify-between items-center mb-1.5">
+                      <label className="text-[11px] font-extrabold uppercase tracking-wider text-[#111111] dark:text-slate-300">
+                        Password
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => setShowForgotModal(true)}
+                        className="text-xs text-[#d2d0c1] hover:underline font-bold cursor-pointer"
+                      >
+                        Forgot Password?
+                      </button>
+                    </div>
+                    <div className="relative flex items-center">
+                      <input
+                        type={showCustomerPass ? "text" : "password"}
+                        required
+                        value={customerPass}
+                        onChange={(e) => setCustomerPass(e.target.value)}
+                        placeholder="••••••••"
+                        className="w-full pl-10 pr-10 py-3 rounded-2xl bg-white dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#111111] shadow-sm font-semibold"
+                      />
+                      <Lock className="absolute left-3.5 size-4 text-[#333333] pointer-events-none" />
+                      <button
+                        type="button"
+                        onClick={() => setShowCustomerPass(!showCustomerPass)}
+                        className="absolute right-3.5 text-muted-foreground hover:text-foreground cursor-pointer"
+                        title={showCustomerPass ? "Hide password" : "Show password"}
+                      >
+                        {showCustomerPass ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="pt-2">
+                    <button
+                      type="submit"
+                      disabled={isLoading}
+                      className="w-full h-13 rounded-2xl bg-[#111111] hover:bg-[#333333] dark:bg-[#d2d0c1] dark:hover:bg-[#D66A38] text-white font-extrabold text-sm shadow-md active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer sd-hover-lift"
+                    >
+                      {isLoading ? (
+                        <span className="inline-block size-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      ) : (
+                        <>
+                          <span>Sign In</span>
+                          <ArrowRight className="size-4 text-[#d2d0c1]" />
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </form>
+              ) : (
+                <>
+                  {!otpStep ? (
+                    <form onSubmit={handleSendOtp} className="space-y-4">
+                      <div className="relative">
+                        <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#111111] dark:text-slate-300 mb-2">
+                          Mobile Phone Number
+                        </label>
+
+                        <div className="flex items-center gap-2.5">
+                          <div className="relative">
+                            <button
+                              type="button"
+                              onClick={() => setShowCountryDropdown(!showCountryDropdown)}
+                              className="h-13 px-3 rounded-2xl bg-white dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] hover:border-[#111111] flex items-center gap-1.5 text-sm font-bold text-foreground transition-all shadow-sm shrink-0 cursor-pointer"
+                            >
+                              <span className="text-lg">{selectedCountry.flag}</span>
+                              <span className="text-xs font-extrabold">{selectedCountry.dialCode}</span>
+                              <ChevronDown className="size-3.5 text-[#333333]" />
+                            </button>
+
+                            {showCountryDropdown && (
+                              <div className="absolute top-14 left-0 z-50 w-64 max-h-60 overflow-y-auto rounded-2xl bg-white dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] shadow-2xl p-2 space-y-1">
+                                {COUNTRIES.map((c) => (
+                                  <button
+                                    key={c.code}
+                                    type="button"
+                                    onClick={() => {
+                                      setSelectedCountry(c);
+                                      setShowCountryDropdown(false);
+                                    }}
+                                    className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold cursor-pointer ${
+                                      selectedCountry.code === c.code ? "bg-[#111111] text-white" : "hover:bg-secondary/10"
+                                    }`}
+                                  >
+                                    <span className="flex items-center gap-2">
+                                      <span>{c.flag}</span>
+                                      <span>{c.name}</span>
+                                    </span>
+                                    <span className="font-mono text-[11px] opacity-80">{c.dialCode}</span>
+                                  </button>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+
+                          <div className="relative flex-1">
+                            <input
+                              type="tel"
+                              required
+                              value={phone}
+                              onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
+                              placeholder={selectedCountry.placeholder}
+                              className="w-full h-13 pl-4 pr-10 rounded-2xl bg-white dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-foreground font-semibold text-base focus:outline-none focus:ring-2 focus:ring-[#111111]"
+                            />
+                            <Phone className="absolute right-3.5 size-4 text-[#333333] pointer-events-none" />
+                          </div>
+                        </div>
+                      </div>
+
+                      <button
+                        type="submit"
+                        disabled={phone.length < selectedCountry.length - 2 || isLoading}
+                        className="w-full h-13 rounded-2xl bg-[#111111] hover:bg-[#333333] dark:bg-[#d2d0c1] dark:hover:bg-[#D66A38] text-white font-bold text-sm shadow-md active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer sd-hover-lift"
+                      >
+                        {isLoading ? (
+                          <span className="inline-block size-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        ) : (
+                          <>
+                            <span>Send OTP Code</span>
+                            <ArrowRight className="size-4 text-[#d2d0c1]" />
+                          </>
+                        )}
+                      </button>
+                    </form>
+                  ) : (
+                    <form onSubmit={handleVerifyOtp} className="space-y-6">
+                      <div>
+                        <div className="flex justify-between items-center mb-3">
+                          <label className="text-[11px] font-extrabold uppercase tracking-wider text-[#111111] dark:text-slate-300">
+                            Enter 4-Digit OTP
+                          </label>
+                          <button
+                            type="button"
+                            onClick={handleFillDemoOtp}
+                            className="text-xs text-[#d2d0c1] hover:underline font-bold flex items-center gap-1 cursor-pointer"
+                          >
+                            <CheckCircle2 className="size-3.5" /> Demo Fill (5820)
+                          </button>
+                        </div>
+
+                        <div className="grid grid-cols-4 gap-3">
+                          {otp.map((digit, idx) => (
+                            <input
+                              key={idx}
+                              id={`otp-input-${idx}`}
+                              type="text"
+                              maxLength={1}
+                              value={digit}
+                              onChange={(e) => handleOtpChange(idx, e.target.value)}
+                              className="w-full h-14 text-center text-xl font-bold rounded-2xl bg-white dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-foreground focus:outline-none focus:ring-2 focus:ring-[#111111]"
+                            />
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="flex justify-between items-center text-xs text-muted-foreground font-medium">
+                        <button
+                          type="button"
+                          onClick={() => setOtpStep(false)}
+                          className="hover:text-foreground underline font-semibold cursor-pointer"
+                        >
+                          Change Number
+                        </button>
+                        <span>
+                          {timer > 0 ? (
+                            `Resend in ${timer}s`
+                          ) : (
+                            <button
+                              type="button"
+                              onClick={() => setTimer(30)}
+                              className="text-[#d2d0c1] font-bold hover:underline flex items-center gap-1 cursor-pointer"
+                            >
+                              <RotateCcw className="size-3" /> Resend Code
+                            </button>
+                          )}
+                        </span>
+                      </div>
+
+                      <button
+                        type="submit"
+                        disabled={otp.join("").length < 4 || isLoading}
+                        className="w-full h-13 rounded-2xl bg-[#111111] hover:bg-[#333333] dark:bg-[#d2d0c1] dark:hover:bg-[#D66A38] text-white font-bold text-sm shadow-md active:scale-[0.98] transition-all disabled:opacity-50 flex items-center justify-center gap-2 cursor-pointer sd-hover-lift"
+                      >
+                        {isLoading ? (
+                          <span className="inline-block size-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        ) : (
+                          <>
+                            <span>Verify &amp; Continue</span>
+                            <ArrowRight className="size-4 text-[#d2d0c1]" />
+                          </>
+                        )}
+                      </button>
+                    </form>
+                  )}
+                </>
+              )}
+
+              {/* Bottom Customer Sign In footer & Short Supporting Text */}
+              <div className="pt-4 border-t border-[#E5E5E5] dark:border-[#404040] text-center space-y-3">
+                <div className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground font-medium">
+                  <span>Don't have an account?</span>
+                  <Link
+                    to="/auth/customer/signup"
+                    className="text-[#111111] dark:text-[#d2d0c1] font-extrabold hover:underline"
+                  >
+                    Create Customer Account
+                  </Link>
+                </div>
+                <p className="text-[11px] text-muted-foreground/80 font-medium leading-tight max-w-xs mx-auto">
+                  Discover live food availability, reserve tables, and enjoy a smarter dining experience.
                 </p>
+              </div>
+            </div>
+          )}
+
+          {/* ========================================================================= */}
+          {/* VIEW 2: RESTAURANT PARTNER SIGN IN */}
+          {/* ========================================================================= */}
+          {view === "restaurant" && (
+            <div className="glass-card-premium rounded-3xl p-6 sm:p-8 shadow-xl border border-[#E5E5E5] dark:border-[#404040] bg-card dark:bg-[#222222]/90 transition-all sd-fade-up max-w-md mx-auto space-y-6">
+              <div className="text-center space-y-1">
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#111111] bg-[#F5F5F5] px-3 py-1 rounded-full border border-[#E5E5E5]">
+                  RESTAURANT PARTNER SIGN IN
+                </span>
               </div>
 
               {/* Registration Success Alert Banner */}
               {showRegisteredBanner && (
-                <div className="mb-6 p-4 rounded-2xl bg-emerald-500/10 border-2 border-emerald-500/30 text-emerald-700 dark:text-emerald-400 text-xs sm:text-sm font-bold flex items-start gap-3 shadow-md animate-splash-in">
+                <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 dark:text-emerald-400 text-xs sm:text-sm font-bold flex items-start gap-3 shadow-md animate-splash-in">
                   <CheckCircle2 className="size-5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
                   <div>
                     <p className="font-extrabold text-sm">Restaurant account created successfully.</p>
@@ -604,33 +798,41 @@ function LoginPage() {
                 </div>
               )}
 
+              {loginError && (
+                <div className="p-3.5 rounded-2xl bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-900 text-rose-700 dark:text-rose-300 text-xs font-extrabold flex items-center gap-2">
+                  <AlertCircle className="size-4 shrink-0" />
+                  <span>{loginError}</span>
+                </div>
+              )}
+
               <form onSubmit={handleRestaurantSignIn} className="space-y-4">
                 <div>
-                  <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#60241E] dark:text-slate-300 mb-1.5">
-                    Email Address or Mobile Number
+                  <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#111111] dark:text-slate-300 mb-1.5">
+                    Restaurant ID / Email
                   </label>
                   <div className="relative flex items-center">
                     <input
                       type="text"
                       required
+                      autoComplete="off"
                       value={restUser}
                       onChange={(e) => setRestUser(e.target.value)}
-                      placeholder="admin@restaurant.com or registered email"
-                      className="w-full pl-10 pr-4 py-3 rounded-2xl bg-white dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#E77B49] shadow-sm font-semibold"
+                      placeholder="admin@restaurant.com or Restaurant ID"
+                      className="w-full pl-10 pr-4 py-3 rounded-2xl bg-white dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#111111] shadow-sm font-semibold"
                     />
-                    <Mail className="absolute left-3.5 size-4 text-[#E77B49] pointer-events-none" />
+                    <Mail className="absolute left-3.5 size-4 text-[#333333] pointer-events-none" />
                   </div>
                 </div>
 
                 <div>
                   <div className="flex justify-between items-center mb-1.5">
-                    <label className="text-[11px] font-extrabold uppercase tracking-wider text-[#60241E] dark:text-slate-300">
+                    <label className="text-[11px] font-extrabold uppercase tracking-wider text-[#111111] dark:text-slate-300">
                       Password
                     </label>
                     <button
                       type="button"
                       onClick={() => setShowForgotModal(true)}
-                      className="text-xs text-[#E77B49] hover:underline font-bold"
+                      className="text-xs text-[#d2d0c1] hover:underline font-bold cursor-pointer"
                     >
                       Forgot Password?
                     </button>
@@ -642,13 +844,13 @@ function LoginPage() {
                       value={restPass}
                       onChange={(e) => setRestPass(e.target.value)}
                       placeholder="••••••••"
-                      className="w-full pl-10 pr-10 py-3 rounded-2xl bg-white dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#E77B49] shadow-sm font-semibold"
+                      className="w-full pl-10 pr-10 py-3 rounded-2xl bg-white dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-[#111111] shadow-sm font-semibold"
                     />
-                    <Lock className="absolute left-3.5 size-4 text-[#E77B49] pointer-events-none" />
+                    <Lock className="absolute left-3.5 size-4 text-[#333333] pointer-events-none" />
                     <button
                       type="button"
                       onClick={() => setShowRestPass(!showRestPass)}
-                      className="absolute right-3.5 text-muted-foreground hover:text-foreground"
+                      className="absolute right-3.5 text-muted-foreground hover:text-foreground cursor-pointer"
                       title={showRestPass ? "Hide password" : "Show password"}
                     >
                       {showRestPass ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
@@ -662,36 +864,45 @@ function LoginPage() {
                       type="checkbox"
                       checked={rememberMe}
                       onChange={(e) => setRememberMe(e.target.checked)}
-                      className="size-4 text-[#E77B49] rounded focus:ring-[#E77B49]"
+                      className="size-4 text-[#111111] rounded focus:ring-[#111111]"
                     />
                     <span>Remember Me</span>
                   </label>
                 </div>
 
-                {loginError && (
-                  <p className="text-xs font-bold text-rose-500 flex items-center gap-1">
-                    <AlertCircle className="size-3.5" />
-                    <span>{loginError}</span>
-                  </p>
-                )}
-
                 <div className="pt-2">
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full h-13 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white font-extrabold text-sm shadow-md active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+                    className="w-full h-13 rounded-2xl bg-[#111111] hover:bg-[#333333] dark:bg-[#d2d0c1] dark:hover:bg-[#D66A38] text-white font-extrabold text-sm shadow-md active:scale-[0.98] transition-all flex items-center justify-center gap-2 cursor-pointer sd-hover-lift"
                   >
                     {isLoading ? (
                       <span className="inline-block size-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                     ) : (
                       <>
                         <span>Sign In</span>
-                        <ArrowRight className="size-4" />
+                        <ArrowRight className="size-4 text-[#d2d0c1]" />
                       </>
                     )}
                   </button>
                 </div>
               </form>
+
+              {/* Bottom Restaurant Sign In footer & Short Supporting Text */}
+              <div className="pt-4 border-t border-[#E5E5E5] dark:border-[#404040] text-center space-y-3">
+                <div className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground font-medium">
+                  <span>Don't have a restaurant account?</span>
+                  <Link
+                    to="/signup"
+                    className="text-[#111111] dark:text-[#d2d0c1] font-extrabold hover:underline"
+                  >
+                    Register Your Restaurant
+                  </Link>
+                </div>
+                <p className="text-[11px] text-muted-foreground/80 font-medium leading-tight max-w-xs mx-auto">
+                  Manage your restaurant, menu, tables, bookings, and live operations.
+                </p>
+              </div>
             </div>
           )}
 
@@ -699,7 +910,7 @@ function LoginPage() {
           {/* VIEW 3: STEP 3 – CHOOSE YOUR WORKSPACE (Displayed ONLY after Login) */}
           {/* ========================================================================= */}
           {view === "workspace" && (
-            <div className="glass-card-premium rounded-3xl p-6 sm:p-8 shadow-xl border border-border dark:border-slate-800 bg-card dark:bg-slate-900/90 transition-all animate-splash-in max-w-3xl mx-auto">
+            <div className="glass-card-premium rounded-3xl p-6 sm:p-8 shadow-xl border border-[#E5E5E5] dark:border-[#404040] bg-card dark:bg-[#222222]/90 transition-all animate-splash-in max-w-3xl mx-auto">
               <div className="mb-6 flex items-center justify-between gap-2 flex-wrap">
                 <button
                   type="button"
@@ -707,22 +918,22 @@ function LoginPage() {
                     signOut();
                     setView("restaurant");
                   }}
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-rose-600 dark:text-rose-400 hover:underline transition-colors bg-rose-500/10 px-3 py-1.5 rounded-full border border-rose-500/20"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-rose-600 dark:text-rose-400 hover:underline transition-colors bg-rose-500/10 px-3 py-1.5 rounded-full border border-rose-500/20 cursor-pointer"
                 >
                   <LogOut className="size-3.5" /> Sign Out
                 </button>
-                <div className="flex items-center gap-1.5 text-xs font-bold text-[#60241E] dark:text-[#E77B49] bg-[#E77B49]/10 px-3 py-1 rounded-full border border-[#E77B49]/20">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-[#111111] dark:text-[#d2d0c1] bg-[#F5F5F5] px-3 py-1 rounded-full border border-[#E5E5E5]">
                   <ShieldCheck className="size-3.5 text-emerald-600 dark:text-emerald-400" />
                   <span>Logged In: {authSession.userEmail || "Restaurant Admin"}</span>
                 </div>
               </div>
 
               <div className="text-center mb-8">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#E77B49]/10 text-[#E77B49] text-xs font-extrabold mb-3 border border-[#E77B49]/20">
-                  <Building2 className="size-3.5" />
+                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#F5F5F5] text-[#111111] text-xs font-extrabold mb-3 border border-[#E5E5E5]">
+                  <Building2 className="size-3.5 text-[#d2d0c1]" />
                   <span>{currentRestProfile?.name || "StockDine Restaurant OS"}</span>
                 </div>
-                <h1 className="font-serif italic text-3xl sm:text-4xl text-[#60241E] dark:text-slate-100 font-bold tracking-tight">
+                <h1 className="font-serif italic text-3xl sm:text-4xl text-[#111111] dark:text-slate-100 font-bold tracking-tight">
                   Select Your Workspace
                 </h1>
                 <p className="mt-2 text-xs sm:text-sm text-muted-foreground font-medium max-w-md mx-auto">
@@ -734,22 +945,22 @@ function LoginPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {/* CARD 1: KITCHEN PORTAL */}
                 <div
-                  className={`bg-white dark:bg-slate-800 rounded-3xl p-6 border-2 transition-all flex flex-col justify-between relative overflow-hidden shadow-sm hover-lift ${
+                  className={`bg-white dark:bg-[#383838] rounded-3xl p-6 border transition-all flex flex-col justify-between relative overflow-hidden shadow-sm hover-lift ${
                     hasKitchenAccess
-                      ? "border-border dark:border-slate-700 hover:border-[#E77B49] hover:shadow-lg cursor-pointer"
-                      : "border-border dark:border-slate-700 opacity-60"
+                      ? "border-[#E5E5E5] dark:border-[#404040] hover:border-[#111111] hover:shadow-lg cursor-pointer"
+                      : "border-[#E5E5E5] dark:border-[#404040] opacity-60"
                   }`}
                 >
                   <div className="space-y-4">
-                    <div className="size-14 rounded-2xl bg-[#E77B49]/10 text-[#E77B49] flex items-center justify-center">
-                      <ChefHat className="size-7 stroke-[2.2] text-[#E77B49]" />
+                    <div className="size-14 rounded-2xl bg-[#F5F5F5] text-[#111111] flex items-center justify-center border border-[#E5E5E5]">
+                      <ChefHat className="size-7 stroke-[2.2] text-[#d2d0c1]" />
                     </div>
 
                     <div>
-                      <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#E77B49]">
+                      <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#d2d0c1]">
                         Operational Control
                       </span>
-                      <h2 className="font-serif text-2xl font-bold text-[#60241E] dark:text-slate-100 mt-0.5">
+                      <h2 className="font-serif text-2xl font-bold text-[#111111] dark:text-slate-100 mt-0.5">
                         Kitchen Portal
                       </h2>
                       <p className="text-xs text-muted-foreground mt-2 font-medium">
@@ -776,36 +987,36 @@ function LoginPage() {
                     </div>
                   </div>
 
-                  <div className="mt-6 pt-4 border-t border-border dark:border-slate-700">
+                  <div className="mt-6 pt-4 border-t border-[#E5E5E5] dark:border-[#404040]">
                     <button
                       type="button"
                       onClick={() => navigate({ to: "/kitchen" })}
-                      className="w-full py-3.5 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all flex items-center justify-center gap-2 group active:scale-[0.98]"
+                      className="w-full py-3.5 rounded-2xl bg-[#111111] hover:bg-[#333333] dark:bg-[#d2d0c1] dark:hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all flex items-center justify-center gap-2 group active:scale-[0.98] cursor-pointer"
                     >
                       <span>Open Kitchen Terminal</span>
-                      <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
+                      <ArrowRight className="size-4 text-[#d2d0c1] group-hover:translate-x-1 transition-transform" />
                     </button>
                   </div>
                 </div>
 
                 {/* CARD 2: RESTAURANT ADMIN PORTAL */}
                 <div
-                  className={`bg-white dark:bg-slate-800 rounded-3xl p-6 border-2 transition-all flex flex-col justify-between relative overflow-hidden shadow-sm hover-lift ${
+                  className={`bg-white dark:bg-[#383838] rounded-3xl p-6 border transition-all flex flex-col justify-between relative overflow-hidden shadow-sm hover-lift ${
                     hasAdminAccess
-                      ? "border-border dark:border-slate-700 hover:border-[#60241E] dark:hover:border-[#E77B49] hover:shadow-lg cursor-pointer"
-                      : "border-border dark:border-slate-700 opacity-60"
+                      ? "border-[#E5E5E5] dark:border-[#404040] hover:border-[#111111] dark:hover:border-[#d2d0c1] hover:shadow-lg cursor-pointer"
+                      : "border-[#E5E5E5] dark:border-[#404040] opacity-60"
                   }`}
                 >
                   <div className="space-y-4">
-                    <div className="size-14 rounded-2xl bg-[#60241E]/10 dark:bg-[#E77B49]/20 text-[#60241E] dark:text-[#E77B49] flex items-center justify-center">
+                    <div className="size-14 rounded-2xl bg-[#F5F5F5] text-[#111111] dark:text-[#d2d0c1] flex items-center justify-center border border-[#E5E5E5]">
                       <Building2 className="size-7 stroke-[2.2]" />
                     </div>
 
                     <div>
-                      <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#60241E] dark:text-[#E77B49]">
+                      <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#111111] dark:text-[#d2d0c1]">
                         Full Executive OS
                       </span>
-                      <h2 className="font-serif text-2xl font-bold text-[#60241E] dark:text-slate-100 mt-0.5">
+                      <h2 className="font-serif text-2xl font-bold text-[#111111] dark:text-slate-100 mt-0.5">
                         Restaurant Admin Portal
                       </h2>
                       <p className="text-xs text-muted-foreground mt-2 font-medium">
@@ -832,7 +1043,7 @@ function LoginPage() {
                     </div>
                   </div>
 
-                  <div className="mt-6 pt-4 border-t border-border dark:border-slate-700">
+                  <div className="mt-6 pt-4 border-t border-[#E5E5E5] dark:border-[#404040]">
                     <button
                       type="button"
                       onClick={() => {
@@ -843,14 +1054,14 @@ function LoginPage() {
                           navigate({ to: "/auth/workspace" });
                         }
                       }}
-                      className="w-full py-3.5 rounded-2xl bg-[#60241E] dark:bg-[#E77B49] hover:bg-[#4A1B17] dark:hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all flex items-center justify-center gap-2 group active:scale-[0.98] cursor-pointer"
+                      className="w-full py-3.5 rounded-2xl bg-[#111111] dark:bg-[#d2d0c1] hover:bg-[#333333] dark:hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all flex items-center justify-center gap-2 group active:scale-[0.98] cursor-pointer"
                     >
                       <span>
                         {typeof window !== "undefined" && sessionStorage.getItem("stockdine_admin_unlocked") === "true"
                           ? "Open Restaurant Admin Portal"
                           : "Open Restaurant Admin Portal (🔒 Pass Required)"}
                       </span>
-                      <ArrowRight className="size-4 group-hover:translate-x-1 transition-transform" />
+                      <ArrowRight className="size-4 text-[#d2d0c1] group-hover:translate-x-1 transition-transform" />
                     </button>
                   </div>
                 </div>
@@ -863,8 +1074,8 @@ function LoginPage() {
       {/* Forgot Password Modal */}
       {showForgotModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-splash-in">
-          <div className="bg-card dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative">
-            <h2 className="font-serif italic text-2xl font-bold text-[#60241E] dark:text-slate-100 mb-2">
+          <div className="bg-card dark:bg-[#222222] border border-[#E5E5E5] dark:border-[#404040] rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative">
+            <h2 className="font-serif italic text-2xl font-bold text-[#111111] dark:text-slate-100 mb-2">
               Forgot Password
             </h2>
             <p className="text-xs text-muted-foreground mb-6">
@@ -886,7 +1097,7 @@ function LoginPage() {
                     setForgotSuccess(false);
                     setForgotEmail("");
                   }}
-                  className="w-full py-2.5 rounded-xl bg-[#E77B49] text-white font-extrabold text-xs shadow-sm mt-2"
+                  className="w-full py-2.5 rounded-xl bg-[#111111] text-white font-extrabold text-xs shadow-sm mt-2 cursor-pointer"
                 >
                   Back to Sign In
                 </button>
@@ -894,7 +1105,7 @@ function LoginPage() {
             ) : (
               <form onSubmit={handleSendPasswordReset} className="space-y-4">
                 <div>
-                  <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#60241E] dark:text-slate-300 mb-1.5">
+                  <label className="block text-[11px] font-extrabold uppercase tracking-wider text-[#111111] dark:text-slate-300 mb-1.5">
                     Registered Email Address
                   </label>
                   <input
@@ -903,7 +1114,7 @@ function LoginPage() {
                     value={forgotEmail}
                     onChange={(e) => setForgotEmail(e.target.value)}
                     placeholder="admin@restaurant.com"
-                    className="w-full px-4 py-3 rounded-2xl bg-white dark:bg-slate-800 border-2 border-border dark:border-slate-700 text-foreground text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#E77B49]"
+                    className="w-full px-4 py-3 rounded-2xl bg-white dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-foreground text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#111111]"
                   />
                 </div>
 
@@ -911,13 +1122,13 @@ function LoginPage() {
                   <button
                     type="button"
                     onClick={() => setShowForgotModal(false)}
-                    className="flex-1 py-3 rounded-2xl bg-secondary/20 hover:bg-secondary/30 text-foreground text-xs font-bold"
+                    className="flex-1 py-3 rounded-2xl bg-secondary/20 hover:bg-secondary/30 text-foreground text-xs font-bold cursor-pointer"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="flex-1 py-3 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-bold shadow-md"
+                    className="flex-1 py-3 rounded-2xl bg-[#111111] hover:bg-[#333333] text-white text-xs font-bold shadow-md cursor-pointer"
                   >
                     Send Token
                   </button>

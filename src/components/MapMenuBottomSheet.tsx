@@ -92,22 +92,22 @@ export const MapMenuBottomSheet: React.FC<MapMenuBottomSheetProps> = ({
       <div className="flex-1" onClick={onClose} />
 
       {/* Bottom Sheet Card */}
-      <div className="bg-white dark:bg-slate-900 text-[#1F2937] dark:text-slate-100 rounded-t-3xl max-h-[85vh] w-full max-w-4xl mx-auto flex flex-col shadow-2xl border-t-2 border-[#E5E7EB] dark:border-slate-800 overflow-hidden selection:bg-[#E77B49] selection:text-white">
+      <div className="bg-white dark:bg-[#222222] text-[#111111] dark:text-slate-100 rounded-t-3xl max-h-[85vh] w-full max-w-4xl mx-auto flex flex-col shadow-2xl border-t-2 border-[#E5E5E5] dark:border-[#404040] overflow-hidden selection:bg-[#d2d0c1] selection:text-white">
         {/* Handle Bar & Top Header */}
-        <div className="p-4 bg-white dark:bg-slate-900 border-b border-[#E5E7EB] dark:border-slate-800 sticky top-0 z-20 space-y-3">
+        <div className="p-4 bg-white dark:bg-[#222222] border-b border-[#E5E5E5] dark:border-[#404040] sticky top-0 z-20 space-y-3">
           <div className="w-12 h-1.5 bg-gray-300 dark:bg-slate-700 rounded-full mx-auto" />
 
           <div className="flex items-center justify-between gap-3">
             <div>
                 <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-extrabold uppercase bg-[#E77B49]/10 text-[#E77B49] px-2.5 py-0.5 rounded-full border border-[#E77B49]/20">
+                  <span className="text-[10px] font-extrabold uppercase bg-[#d2d0c1]/10 text-[#d2d0c1] px-2.5 py-0.5 rounded-full border border-[#d2d0c1]/20">
                     Live Menu
                   </span>
-                  <span className="text-xs text-[#6B7280] dark:text-slate-400 font-bold">
+                  <span className="text-xs text-[#737373] dark:text-slate-400 font-bold">
                     ★ {restaurant.rating} • {restaurant.distanceKm || 1.2} km away
                   </span>
                 </div>
-                <h3 className="font-serif italic text-2xl font-bold text-[#60241E] dark:text-slate-100">
+                <h3 className="font-serif italic text-2xl font-bold text-[#111111] dark:text-slate-100">
                   {restaurant.name}
                 </h3>
               </div>
@@ -116,7 +116,7 @@ export const MapMenuBottomSheet: React.FC<MapMenuBottomSheetProps> = ({
               <button
                 type="button"
                 onClick={() => onOpenFullProfile(restaurant.id)}
-                className="p-2.5 rounded-2xl bg-[#F8F9FA] hover:bg-[#60241E] hover:text-white text-[#60241E] border border-[#E5E7EB] transition-all"
+                className="p-2.5 rounded-2xl bg-[#F5F5F5] hover:bg-[#111111] hover:text-white text-[#111111] border border-[#E5E5E5] transition-all cursor-pointer"
                 title="View Full Profile"
               >
                 <ExternalLink className="size-4" />
@@ -125,16 +125,16 @@ export const MapMenuBottomSheet: React.FC<MapMenuBottomSheetProps> = ({
               <button
                 type="button"
                 onClick={onOpenDirectionsModal}
-                className="p-2.5 rounded-2xl bg-[#60241E] text-white hover:bg-[#4A1B17] transition-all"
+                className="p-2.5 rounded-2xl bg-[#111111] text-white hover:bg-[#333333] transition-all cursor-pointer"
                 title="Get Directions"
               >
-                <Navigation className="size-4 text-[#E77B49]" />
+                <Navigation className="size-4 text-[#d2d0c1]" />
               </button>
 
               <button
                 type="button"
                 onClick={onClose}
-                className="p-2.5 rounded-2xl bg-[#F8F9FA] hover:bg-gray-200 text-[#4B5563] transition-all"
+                className="p-2.5 rounded-2xl bg-[#F5F5F5] hover:bg-gray-200 text-[#333333] transition-all cursor-pointer"
               >
                 <X className="size-5" />
               </button>
@@ -144,13 +144,13 @@ export const MapMenuBottomSheet: React.FC<MapMenuBottomSheetProps> = ({
           {/* Search & Category Filter Section */}
           <div className="space-y-2.5 pt-1">
             <div className="relative">
-              <Search className="absolute left-3.5 top-2.5 size-4 text-[#E77B49]" />
+              <Search className="absolute left-3.5 top-2.5 size-4 text-[#333333]" />
               <input
                 type="text"
                 value={dishSearchQuery}
                 onChange={(e) => setDishSearchQuery(e.target.value)}
                 placeholder="Search live dishes, ingredients..."
-                className="w-full pl-10 pr-4 py-2 bg-[#F8F9FA] rounded-2xl text-xs font-semibold text-[#1F2937] placeholder:text-[#9CA3AF] border border-[#E5E7EB] focus:outline-none focus:ring-2 focus:ring-[#E77B49]"
+                className="w-full pl-10 pr-4 py-2 bg-[#F5F5F5] rounded-2xl text-xs font-semibold text-[#111111] placeholder:text-[#737373] border border-[#E5E5E5] focus:outline-none focus:ring-2 focus:ring-[#111111]"
               />
             </div>
 
@@ -162,10 +162,10 @@ export const MapMenuBottomSheet: React.FC<MapMenuBottomSheetProps> = ({
                       key={cat}
                       type="button"
                       onClick={() => setSelectedCategory(cat)}
-                      className={`px-3 py-1 rounded-full transition-all shrink-0 ${
+                      className={`px-3 py-1 rounded-full transition-all shrink-0 cursor-pointer ${
                         selectedCategory === cat
-                          ? "bg-[#60241E] text-white shadow-xs"
-                          : "bg-[#F8F9FA] border border-[#E5E7EB] text-[#6B7280]"
+                          ? "bg-[#111111] text-white shadow-xs"
+                          : "bg-[#F5F5F5] border border-[#E5E5E5] text-[#737373]"
                       }`}
                     >
                       {cat}
@@ -180,10 +180,10 @@ export const MapMenuBottomSheet: React.FC<MapMenuBottomSheetProps> = ({
                     key={diet}
                     type="button"
                     onClick={() => setSelectedDietFilter(diet)}
-                    className={`px-2.5 py-0.5 rounded-full transition-all ${
+                    className={`px-2.5 py-0.5 rounded-full transition-all cursor-pointer ${
                       selectedDietFilter === diet
-                        ? "bg-[#E77B49] text-white font-extrabold"
-                        : "bg-gray-100 text-[#4B5563]"
+                        ? "bg-[#d2d0c1] text-white font-extrabold"
+                        : "bg-[#F5F5F5] text-[#333333] border border-[#E5E5E5]"
                     }`}
                   >
                     {diet}
@@ -196,12 +196,12 @@ export const MapMenuBottomSheet: React.FC<MapMenuBottomSheetProps> = ({
 
         {/* Live Dishes List */}
         <div className="p-4 sm:p-6 overflow-y-auto space-y-4 flex-1">
-          <div className="flex items-center justify-between text-xs font-extrabold text-[#60241E]">
+          <div className="flex items-center justify-between text-xs font-extrabold text-[#111111]">
             <span className="flex items-center gap-1.5">
-              <Flame className="size-4 text-emerald-500 fill-current animate-pulse" />
+              <Flame className="size-4 text-[#d2d0c1] fill-current animate-pulse" />
               Available Right Now ({filteredDishes.length} Items)
             </span>
-            <span className="text-[10px] text-[#6B7280] font-semibold">
+            <span className="text-[10px] text-[#737373] font-semibold">
               Live Kitchen Stock Verified
             </span>
           </div>
@@ -209,7 +209,7 @@ export const MapMenuBottomSheet: React.FC<MapMenuBottomSheetProps> = ({
           {filteredDishes.length === 0 ? (
             <div className="py-12 text-center space-y-2">
               <Utensils className="size-10 text-gray-300 mx-auto" />
-              <p className="text-xs font-bold text-[#6B7280]">
+              <p className="text-xs font-bold text-[#737373]">
                 No matching available dishes found for your criteria.
               </p>
             </div>
@@ -218,10 +218,10 @@ export const MapMenuBottomSheet: React.FC<MapMenuBottomSheetProps> = ({
               {filteredDishes.map((dish) => (
                 <div
                   key={dish.id}
-                  className="bg-[#F8F9FA] border-2 border-[#E5E7EB] rounded-2xl p-4 flex flex-col justify-between space-y-3 hover:border-[#E77B49] transition-all shadow-xs"
+                  className="bg-[#F5F5F5] border border-[#E5E5E5] rounded-2xl p-4 flex flex-col justify-between space-y-3 hover:border-[#d2d0c1] transition-all shadow-xs"
                 >
                   <div className="flex gap-3">
-                    <div className="relative size-24 rounded-xl overflow-hidden border border-[#E5E7EB] shrink-0 bg-white">
+                    <div className="relative size-24 rounded-xl overflow-hidden border border-[#E5E5E5] shrink-0 bg-white">
                       <img
                         src={(typeof dish.dishImage === "string" ? dish.dishImage : dish.dishImage?.imageUrl) || dish.image || "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=800"}
                         alt={dish.name}
@@ -256,26 +256,26 @@ export const MapMenuBottomSheet: React.FC<MapMenuBottomSheetProps> = ({
                         )}
 
                         {dish.isOrganic && (
-                          <span className="text-[9px] font-extrabold uppercase bg-teal-700 text-white px-1.5 py-0.5 rounded-md">
+                          <span className="text-[9px] font-extrabold uppercase bg-slate-700 text-white px-1.5 py-0.5 rounded-md">
                             Organic
                           </span>
                         )}
                       </div>
 
-                      <h4 className="font-serif italic font-bold text-base text-[#60241E] dark:text-slate-100 truncate">
+                      <h4 className="font-serif italic font-bold text-base text-[#111111] dark:text-slate-100 truncate">
                         {dish.name}
                       </h4>
-                      <p className="text-[11px] text-[#4B5563] dark:text-slate-300 line-clamp-2 leading-tight">
+                      <p className="text-[11px] text-[#333333] dark:text-slate-300 line-clamp-2 leading-tight">
                         {dish.description}
                       </p>
-                      <p className="text-[10px] text-[#E77B49] font-bold">
+                      <p className="text-[10px] text-[#d2d0c1] font-bold">
                         {dish.portionsLeft} Portions Left • Prep: {dish.prepTime}
                       </p>
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between pt-2 border-t border-[#E5E7EB] dark:border-slate-700">
-                    <span className="font-serif italic font-bold text-lg text-[#60241E] dark:text-slate-100">
+                  <div className="flex items-center justify-between pt-2 border-t border-[#E5E5E5] dark:border-[#404040]">
+                    <span className="font-serif italic font-bold text-lg text-[#111111] dark:text-slate-100">
                       {formatCurrency(dish.discountPrice || dish.price)}
                     </span>
 
@@ -285,9 +285,9 @@ export const MapMenuBottomSheet: React.FC<MapMenuBottomSheetProps> = ({
                         onSelectDishToBook(dish);
                         onClose();
                       }}
-                      className="py-2 px-3 rounded-xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold transition-all shadow-xs flex items-center gap-1 active:scale-95 cursor-pointer"
+                      className="py-2 px-3 rounded-xl bg-[#111111] hover:bg-[#333333] text-white text-xs font-extrabold transition-all shadow-xs flex items-center gap-1 active:scale-95 cursor-pointer"
                     >
-                      <Plus className="size-3.5" />
+                      <Plus className="size-3.5 text-[#d2d0c1]" />
                       <span>Hold &amp; Book</span>
                     </button>
                   </div>
@@ -298,16 +298,16 @@ export const MapMenuBottomSheet: React.FC<MapMenuBottomSheetProps> = ({
         </div>
 
         {/* Footer Actions Bar */}
-        <div className="p-4 bg-white dark:bg-slate-900 border-t border-[#E5E7EB] dark:border-slate-800 flex gap-3">
+        <div className="p-4 bg-white dark:bg-[#222222] border-t border-[#E5E5E5] dark:border-[#404040] flex gap-3">
           <button
             type="button"
             onClick={() => {
               onClose();
               onOpenBookingModal();
             }}
-            className="flex-1 py-3 px-4 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all flex items-center justify-center gap-2 active:scale-95 cursor-pointer"
+            className="flex-1 py-3 px-4 rounded-2xl bg-[#111111] hover:bg-[#333333] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all flex items-center justify-center gap-2 active:scale-95 cursor-pointer"
           >
-            <Calendar className="size-4" />
+            <Calendar className="size-4 text-[#d2d0c1]" />
             <span>Book Table Now</span>
           </button>
 
@@ -317,7 +317,7 @@ export const MapMenuBottomSheet: React.FC<MapMenuBottomSheetProps> = ({
               onClose();
               onOpenFullProfile(restaurant.id);
             }}
-            className="py-3 px-5 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 hover:bg-[#60241E] dark:hover:bg-[#E77B49] hover:text-white text-[#60241E] dark:text-slate-200 text-xs font-extrabold border-2 border-[#E5E7EB] dark:border-slate-700 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+            className="py-3 px-5 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] hover:bg-[#111111] dark:hover:bg-[#d2d0c1] hover:text-white text-[#111111] dark:text-slate-200 text-xs font-extrabold border border-[#E5E5E5] dark:border-[#404040] transition-all flex items-center justify-center gap-1.5 cursor-pointer"
           >
             <span>Full Profile</span>
             <ChevronRight className="size-4" />

@@ -195,25 +195,25 @@ function CustomerProfilePage() {
 
   if (isGuest) {
     return (
-      <div className="min-h-screen bg-[#FFFFFF] dark:bg-slate-950 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-[#FFFFFF] dark:bg-[#2b2b2b] flex items-center justify-center p-4">
         <GuestAuthModal isOpen={true} onClose={() => navigate({ to: "/customer" })} />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] dark:bg-slate-950 text-[#1F2937] dark:text-slate-100 flex flex-col justify-between p-4 sm:p-6 lg:p-10 relative selection:bg-[#E77B49] selection:text-white transition-colors duration-300 overflow-x-hidden">
+    <div className="min-h-screen bg-[#FFFFFF] dark:bg-[#2b2b2b] text-[#111111] dark:text-slate-100 flex flex-col justify-between p-4 sm:p-6 lg:p-10 relative selection:bg-[#d2d0c1] selection:text-white transition-colors duration-300 overflow-x-hidden">
       {/* Background Glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(231,123,73,0.1),transparent_70%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(210,208,193,0.1),transparent_70%)] pointer-events-none" />
 
-      {/* Header */}
+      {/* Navigation Bar */}
       <header className="relative z-10 flex items-center justify-between max-w-4xl mx-auto w-full pt-2 pb-6">
         <Link to="/customer" className="group flex items-center gap-3">
           <div>
-            <span className="font-serif italic text-2xl sm:text-3xl font-bold tracking-tight text-[#60241E] dark:text-[#E77B49] block leading-none">
+            <span className="font-serif italic text-2xl sm:text-3xl font-bold tracking-tight text-[#111111] dark:text-[#d2d0c1] block leading-none">
               StockDine
             </span>
-            <span className="text-[9px] uppercase tracking-[0.25em] text-[#E77B49] dark:text-slate-400 font-extrabold block mt-1">
+            <span className="text-[9px] uppercase tracking-[0.25em] text-[#d2d0c1] dark:text-slate-400 font-extrabold block mt-1">
               Customer Portal
             </span>
           </div>
@@ -229,7 +229,7 @@ function CustomerProfilePage() {
                 navigate({ to: "/customer" });
               }
             }}
-            className="text-xs font-extrabold text-[#60241E] dark:text-slate-200 hover:text-[#E77B49] transition-colors px-4 py-2.5 rounded-2xl bg-secondary/10 dark:bg-slate-800/80 border border-border/60 cursor-pointer"
+            className="text-xs font-extrabold text-[#111111] dark:text-slate-200 hover:text-[#d2d0c1] transition-colors px-4 py-2.5 rounded-2xl bg-secondary/10 dark:bg-[#383838]/80 border border-border/60 cursor-pointer"
           >
             ← Back to Restaurants
           </button>
@@ -242,36 +242,36 @@ function CustomerProfilePage() {
         <div className="w-full">
           {loading ? (
             <div className="text-center py-20 space-y-3">
-              <div className="size-10 border-4 border-[#E77B49] border-t-transparent rounded-full animate-spin mx-auto" />
-              <p className="text-xs font-extrabold text-[#60241E] dark:text-slate-300 uppercase tracking-widest">
+              <div className="size-10 border-4 border-[#111111] border-t-transparent rounded-full animate-spin mx-auto" />
+              <p className="text-xs font-extrabold text-[#111111] dark:text-slate-300 uppercase tracking-widest">
                 Loading Authenticated Profile...
               </p>
             </div>
           ) : loadError ? (
-            <div className="rounded-3xl bg-white/80 dark:bg-slate-900/80 border border-rose-200 dark:border-rose-900/50 p-8 text-center space-y-4 shadow-xl">
+            <div className="rounded-3xl bg-white/80 dark:bg-[#222222]/80 border border-rose-200 dark:border-rose-900/50 p-8 text-center space-y-4 shadow-xl">
               <div className="size-14 rounded-full bg-rose-100 dark:bg-rose-950/60 text-rose-600 flex items-center justify-center mx-auto">
                 <AlertCircle className="size-8" />
               </div>
               <div>
-                <h3 className="font-serif italic text-2xl font-bold text-[#60241E] dark:text-slate-100">
+                <h3 className="font-serif italic text-2xl font-bold text-[#111111] dark:text-slate-100">
                   {loadError}
                 </h3>
               </div>
               <button
                 type="button"
                 onClick={fetchProfile}
-                className="px-6 py-2.5 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all active:scale-95"
+                className="px-6 py-2.5 rounded-2xl bg-[#111111] hover:bg-[#333333] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all active:scale-95 cursor-pointer"
               >
                 Retry
               </button>
             </div>
           ) : (
-            <div className="rounded-3xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-border/60 dark:border-slate-800 p-8 sm:p-10 shadow-2xl space-y-8">
+            <div className="rounded-3xl bg-white/80 dark:bg-[#222222]/80 backdrop-blur-xl border border-border/60 dark:border-[#404040] p-8 sm:p-10 shadow-2xl space-y-8">
               {/* Top Banner & Avatar */}
               <div className="flex flex-col sm:flex-row items-center justify-between gap-6 border-b border-border/60 pb-8">
                 <div className="flex items-center gap-5 text-center sm:text-left">
                   <div className="relative group">
-                    <div className="size-20 rounded-3xl bg-[#60241E] dark:bg-[#E77B49] text-white flex items-center justify-center shadow-xl text-3xl font-bold font-serif italic border-2 border-white/20 overflow-hidden">
+                    <div className="size-20 rounded-3xl bg-[#111111] dark:bg-[#d2d0c1] text-white flex items-center justify-center shadow-xl text-3xl font-bold font-serif italic border-2 border-white/20 overflow-hidden">
                       {profileData?.avatar ? (
                         <img src={profileData.avatar} alt="Profile" className="w-full h-full object-cover" />
                       ) : profileData?.name ? (
@@ -281,7 +281,7 @@ function CustomerProfilePage() {
                       )}
                     </div>
                     {isEditing && (
-                      <label className="absolute -bottom-1 -right-1 size-7 rounded-xl bg-[#E77B49] text-white flex items-center justify-center shadow-md cursor-pointer hover:scale-110 transition-transform">
+                      <label className="absolute -bottom-1 -right-1 size-7 rounded-xl bg-[#d2d0c1] text-white flex items-center justify-center shadow-md cursor-pointer hover:scale-110 transition-transform">
                         <Edit3 className="size-3.5" />
                         <input
                           type="file"
@@ -305,19 +305,19 @@ function CustomerProfilePage() {
 
                   <div className="space-y-1">
                     <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
-                      <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#E77B49]/10 text-[#E77B49] text-[10px] font-extrabold uppercase tracking-widest border border-[#E77B49]/20">
-                        <Sparkles className="size-3" />
+                      <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#F5F5F5] text-[#111111] text-[10px] font-extrabold uppercase tracking-widest border border-[#E5E5E5]">
+                        <Sparkles className="size-3 text-[#d2d0c1]" />
                         <span>Verified Customer</span>
                       </div>
-                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-extrabold uppercase border border-emerald-500/20">
+                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#F5F5F5] text-[#111111] dark:text-emerald-400 text-[10px] font-extrabold uppercase border border-[#E5E5E5]">
                         <span>Role: {profileData?.role || "customer"}</span>
                       </span>
                     </div>
 
-                    <h1 className="font-serif italic text-3xl font-bold text-[#60241E] dark:text-slate-100">
+                    <h1 className="font-serif italic text-3xl font-bold text-[#111111] dark:text-slate-100">
                       {profileData?.name || "Customer Account"}
                     </h1>
-                    <p className="text-xs font-mono text-[#E77B49] font-extrabold">
+                    <p className="text-xs font-mono text-[#d2d0c1] font-extrabold">
                       ID: {profileData?.customerId || profileData?.id || "CUST-LIVE"}
                     </p>
                   </div>
@@ -327,9 +327,9 @@ function CustomerProfilePage() {
                   <button
                     type="button"
                     onClick={() => setIsEditing(!isEditing)}
-                    className="px-4 py-2.5 rounded-2xl bg-secondary/10 dark:bg-slate-800 border border-border/60 text-[#60241E] dark:text-slate-200 hover:text-[#E77B49] text-xs font-extrabold flex items-center gap-2 cursor-pointer transition-colors"
+                    className="px-4 py-2.5 rounded-2xl bg-secondary/10 dark:bg-[#383838] border border-border/60 text-[#111111] dark:text-slate-200 hover:text-[#d2d0c1] text-xs font-extrabold flex items-center gap-2 cursor-pointer transition-colors"
                   >
-                    <Edit3 className="size-4 text-[#E77B49]" />
+                    <Edit3 className="size-4 text-[#d2d0c1]" />
                     <span>{isEditing ? "Cancel Edit" : "Edit Profile"}</span>
                   </button>
 
@@ -362,79 +362,79 @@ function CustomerProfilePage() {
                 <div className="space-y-6">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {/* Card 1: Full Name */}
-                    <div className="p-5 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/60 border border-border/50 space-y-1">
-                      <div className="flex items-center gap-2 text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-400">
-                        <User className="size-4 text-[#E77B49]" />
+                    <div className="p-5 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838]/60 border border-[#E5E5E5] space-y-1">
+                      <div className="flex items-center gap-2 text-xs font-extrabold uppercase text-[#111111] dark:text-slate-400">
+                        <User className="size-4 text-[#d2d0c1]" />
                         <span>Full Name</span>
                       </div>
-                      <p className="text-base font-bold text-[#1F2937] dark:text-slate-100">
+                      <p className="text-base font-bold text-[#111111] dark:text-slate-100">
                         {profileData?.name || "Not Set"}
                       </p>
                     </div>
 
                     {/* Card 2: Email Address (Read-only) */}
-                    <div className="p-5 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/60 border border-border/50 space-y-1">
+                    <div className="p-5 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838]/60 border border-[#E5E5E5] space-y-1">
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2 text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-400">
-                          <Mail className="size-4 text-[#E77B49]" />
+                        <div className="flex items-center gap-2 text-xs font-extrabold uppercase text-[#111111] dark:text-slate-400">
+                          <Mail className="size-4 text-[#d2d0c1]" />
                           <span>Email Address</span>
                         </div>
                         <span className="text-[10px] text-muted-foreground uppercase font-mono">Read-Only</span>
                       </div>
-                      <p className="text-base font-bold text-[#1F2937] dark:text-slate-100">
+                      <p className="text-base font-bold text-[#111111] dark:text-slate-100">
                         {profileData?.email || "No Email Provided"}
                       </p>
                     </div>
 
                     {/* Card 3: Mobile Number */}
-                    <div className="p-5 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/60 border border-border/50 space-y-1">
-                      <div className="flex items-center gap-2 text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-400">
-                        <Phone className="size-4 text-[#E77B49]" />
+                    <div className="p-5 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838]/60 border border-[#E5E5E5] space-y-1">
+                      <div className="flex items-center gap-2 text-xs font-extrabold uppercase text-[#111111] dark:text-slate-400">
+                        <Phone className="size-4 text-[#d2d0c1]" />
                         <span>Mobile Number</span>
                       </div>
-                      <p className="text-base font-bold text-[#1F2937] dark:text-slate-100">
+                      <p className="text-base font-bold text-[#111111] dark:text-slate-100">
                         {profileData?.mobile || "Not Set"}
                       </p>
                     </div>
 
                     {/* Card 4: Account Role */}
-                    <div className="p-5 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/60 border border-border/50 space-y-1">
-                      <div className="flex items-center gap-2 text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-400">
-                        <ShieldCheck className="size-4 text-[#E77B49]" />
+                    <div className="p-5 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838]/60 border border-[#E5E5E5] space-y-1">
+                      <div className="flex items-center gap-2 text-xs font-extrabold uppercase text-[#111111] dark:text-slate-400">
+                        <ShieldCheck className="size-4 text-[#d2d0c1]" />
                         <span>Account Role</span>
                       </div>
-                      <p className="text-base font-bold text-[#1F2937] dark:text-slate-100 capitalize">
+                      <p className="text-base font-bold text-[#111111] dark:text-slate-100 capitalize">
                         {profileData?.role || "customer"}
                       </p>
                     </div>
 
                     {/* Card 5: Member Since / Creation Date */}
-                    <div className="p-5 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/60 border border-border/50 space-y-1">
-                      <div className="flex items-center gap-2 text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-400">
-                        <Calendar className="size-4 text-[#E77B49]" />
+                    <div className="p-5 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838]/60 border border-[#E5E5E5] space-y-1">
+                      <div className="flex items-center gap-2 text-xs font-extrabold uppercase text-[#111111] dark:text-slate-400">
+                        <Calendar className="size-4 text-[#d2d0c1]" />
                         <span>Account Creation Date</span>
                       </div>
-                      <p className="text-base font-bold text-[#1F2937] dark:text-slate-100">
+                      <p className="text-base font-bold text-[#111111] dark:text-slate-100">
                         {memberSinceFormatted}
                       </p>
                     </div>
 
                     {/* Card 6: Password Security Section */}
-                    <div className="p-5 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/60 border border-border/50 space-y-2">
+                    <div className="p-5 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838]/60 border border-[#E5E5E5] space-y-2">
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2 text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-400">
-                          <Lock className="size-4 text-[#E77B49]" />
+                        <div className="flex items-center gap-2 text-xs font-extrabold uppercase text-[#111111] dark:text-slate-400">
+                          <Lock className="size-4 text-[#d2d0c1]" />
                           <span>Password</span>
                         </div>
                         <button
                           type="button"
                           onClick={() => setShowChangePassword(true)}
-                          className="text-xs font-extrabold text-[#E77B49] hover:underline cursor-pointer"
+                          className="text-xs font-extrabold text-[#d2d0c1] hover:underline cursor-pointer"
                         >
                           Change Password
                         </button>
                       </div>
-                      <p className="text-base font-mono font-bold tracking-widest text-[#1F2937] dark:text-slate-100">
+                      <p className="text-base font-mono font-bold tracking-widest text-[#111111] dark:text-slate-100">
                         ••••••••
                       </p>
                     </div>
@@ -444,30 +444,30 @@ function CustomerProfilePage() {
                   <div className="grid grid-cols-2 gap-4 pt-2">
                     <Link
                       to="/customer/bookings"
-                      className="p-4 rounded-2xl bg-secondary/10 dark:bg-slate-800/80 border border-border/60 flex items-center justify-between hover:border-[#E77B49] transition-all"
+                      className="p-4 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838]/80 border border-[#E5E5E5] flex items-center justify-between hover:border-[#111111] transition-all"
                     >
                       <div className="flex items-center gap-2.5">
-                        <ChefHat className="size-5 text-[#E77B49]" />
+                        <ChefHat className="size-5 text-[#d2d0c1]" />
                         <div>
-                          <span className="text-xs font-extrabold block text-foreground">My Bookings</span>
-                          <span className="text-[10px] text-muted-foreground">View reservations & passes</span>
+                          <p className="text-xs font-bold text-[#111111] dark:text-slate-200">My Bookings</p>
+                          <p className="text-[10px] text-muted-foreground">Manage reservations</p>
                         </div>
                       </div>
-                      <span className="text-xs font-bold text-[#E77B49]">View →</span>
+                      <span className="text-xs font-bold text-[#d2d0c1]">View →</span>
                     </Link>
 
                     <Link
                       to="/customer/favorites"
-                      className="p-4 rounded-2xl bg-secondary/10 dark:bg-slate-800/80 border border-border/60 flex items-center justify-between hover:border-[#E77B49] transition-all"
+                      className="p-4 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838]/80 border border-[#E5E5E5] flex items-center justify-between hover:border-[#111111] transition-all"
                     >
                       <div className="flex items-center gap-2.5">
-                        <Sparkles className="size-5 text-[#E77B49]" />
+                        <Sparkles className="size-5 text-[#d2d0c1]" />
                         <div>
-                          <span className="text-xs font-extrabold block text-foreground">Saved Favorites</span>
-                          <span className="text-[10px] text-muted-foreground">View favorite dining spots</span>
+                          <p className="text-xs font-bold text-[#111111] dark:text-slate-200">Saved Favorites</p>
+                          <p className="text-[10px] text-muted-foreground">View favorite spots</p>
                         </div>
                       </div>
-                      <span className="text-xs font-bold text-[#E77B49]">View →</span>
+                      <span className="text-xs font-bold text-[#d2d0c1]">View →</span>
                     </Link>
                   </div>
                 </div>
@@ -475,7 +475,7 @@ function CustomerProfilePage() {
                 /* EDIT FORM */
                 <form onSubmit={handleSaveProfile} className="space-y-4 animate-in fade-in duration-300">
                   <div>
-                    <label className="block text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-300 mb-1.5">
+                    <label className="block text-xs font-extrabold uppercase text-[#111111] dark:text-slate-300 mb-1.5">
                       Full Name
                     </label>
                     <input
@@ -491,12 +491,12 @@ function CustomerProfilePage() {
                         }
                       }}
                       placeholder="Full Name"
-                      className="w-full px-4 py-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border border-border/60 text-xs font-bold text-[#1F2937] dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
+                      className="w-full px-4 py-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border border-[#E5E5E5] text-xs font-bold text-[#111111] dark:text-slate-100 focus:outline-none focus:border-[#111111]"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-300 mb-1.5">
+                    <label className="block text-xs font-extrabold uppercase text-[#111111] dark:text-slate-300 mb-1.5">
                       Mobile Number
                     </label>
                     <input
@@ -512,12 +512,12 @@ function CustomerProfilePage() {
                         }
                       }}
                       placeholder="+91 98765 43210"
-                      className="w-full px-4 py-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border border-border/60 text-xs font-bold text-[#1F2937] dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
+                      className="w-full px-4 py-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border border-[#E5E5E5] text-xs font-bold text-[#111111] dark:text-slate-100 focus:outline-none focus:border-[#111111]"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-300 mb-1.5">
+                    <label className="block text-xs font-extrabold uppercase text-[#111111] dark:text-slate-300 mb-1.5">
                       Profile Photo URL (Optional)
                     </label>
                     <input
@@ -526,7 +526,7 @@ function CustomerProfilePage() {
                       value={editAvatar}
                       onChange={(e) => setEditAvatar(e.target.value)}
                       placeholder="https://example.com/photo.jpg"
-                      className="w-full px-4 py-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border border-border/60 text-xs font-bold text-[#1F2937] dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
+                      className="w-full px-4 py-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border border-[#E5E5E5] text-xs font-bold text-[#111111] dark:text-slate-100 focus:outline-none focus:border-[#111111]"
                     />
                   </div>
 
@@ -534,7 +534,7 @@ function CustomerProfilePage() {
                     <button
                       type="button"
                       onClick={() => setIsEditing(false)}
-                      className="px-5 py-3 rounded-2xl bg-secondary/10 text-xs font-extrabold text-[#60241E] dark:text-slate-300 cursor-pointer"
+                      className="px-5 py-3 rounded-2xl bg-[#F5F5F5] border border-[#E5E5E5] text-xs font-extrabold text-[#111111] dark:text-slate-300 cursor-pointer"
                     >
                       Cancel
                     </button>
@@ -542,7 +542,7 @@ function CustomerProfilePage() {
                     <button
                       type="submit"
                       disabled={saving}
-                      className="px-6 py-3 rounded-2xl bg-[#60241E] hover:bg-[#4A1B17] dark:bg-[#E77B49] dark:hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-lg active:scale-95 cursor-pointer"
+                      className="px-6 py-3 rounded-2xl bg-[#111111] hover:bg-[#333333] dark:bg-[#d2d0c1] dark:hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-lg active:scale-95 cursor-pointer"
                     >
                       {saving ? "Saving Changes..." : "Save Changes"}
                     </button>
@@ -557,21 +557,21 @@ function CustomerProfilePage() {
       {/* Change Password Modal */}
       {showChangePassword && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-slate-900 border-2 border-border dark:border-slate-800 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-5 relative">
+          <div className="bg-white dark:bg-[#222222] border border-[#E5E5E5] dark:border-[#404040] rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-5 relative">
             <button
               type="button"
               onClick={() => setShowChangePassword(false)}
-              className="absolute top-4 right-4 p-2 rounded-xl text-slate-400 hover:text-foreground hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              className="absolute top-4 right-4 p-2 rounded-xl text-slate-400 hover:text-foreground hover:bg-slate-100 dark:hover:bg-[#383838] transition-colors cursor-pointer"
             >
               <X className="size-5" />
             </button>
 
-            <div className="size-12 rounded-2xl bg-[#E77B49]/15 text-[#E77B49] flex items-center justify-center mx-auto">
+            <div className="size-12 rounded-2xl bg-[#F5F5F5] text-[#d2d0c1] flex items-center justify-center mx-auto border border-[#E5E5E5]">
               <KeyRound className="size-6" />
             </div>
 
             <div className="text-center space-y-1">
-              <h3 className="font-serif italic font-bold text-2xl text-foreground">
+              <h3 className="font-serif italic font-bold text-2xl text-[#111111] dark:text-slate-100">
                 Change Password
               </h3>
               <p className="text-xs text-muted-foreground font-medium">
@@ -594,7 +594,7 @@ function CustomerProfilePage() {
 
             <form onSubmit={handleChangePasswordSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-300 mb-1.5">
+                <label className="block text-xs font-extrabold uppercase text-[#111111] dark:text-slate-300 mb-1.5">
                   Current Password
                 </label>
                 <input
@@ -603,12 +603,12 @@ function CustomerProfilePage() {
                   value={currentPassword}
                   onChange={(e) => setCurrentPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full px-4 py-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border border-border/60 text-xs font-bold focus:outline-none focus:border-[#E77B49]"
+                  className="w-full px-4 py-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border border-[#E5E5E5] text-xs font-bold focus:outline-none focus:border-[#111111]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-300 mb-1.5">
+                <label className="block text-xs font-extrabold uppercase text-[#111111] dark:text-slate-300 mb-1.5">
                   New Password (Min 8 chars)
                 </label>
                 <input
@@ -618,12 +618,12 @@ function CustomerProfilePage() {
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full px-4 py-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border border-border/60 text-xs font-bold focus:outline-none focus:border-[#E77B49]"
+                  className="w-full px-4 py-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border border-[#E5E5E5] text-xs font-bold focus:outline-none focus:border-[#111111]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-extrabold uppercase text-[#60241E] dark:text-slate-300 mb-1.5">
+                <label className="block text-xs font-extrabold uppercase text-[#111111] dark:text-slate-300 mb-1.5">
                   Confirm New Password
                 </label>
                 <input
@@ -633,7 +633,7 @@ function CustomerProfilePage() {
                   value={confirmNewPassword}
                   onChange={(e) => setConfirmNewPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full px-4 py-3 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border border-border/60 text-xs font-bold focus:outline-none focus:border-[#E77B49]"
+                  className="w-full px-4 py-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border border-[#E5E5E5] text-xs font-bold focus:outline-none focus:border-[#111111]"
                 />
               </div>
 
@@ -641,14 +641,14 @@ function CustomerProfilePage() {
                 <button
                   type="button"
                   onClick={() => setShowChangePassword(false)}
-                  className="w-1/3 py-3 rounded-2xl bg-secondary/20 text-xs font-extrabold cursor-pointer"
+                  className="w-1/3 py-3 rounded-2xl bg-[#F5F5F5] border border-[#E5E5E5] text-xs font-extrabold cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={changeLoading}
-                  className="w-2/3 py-3 rounded-2xl bg-[#60241E] dark:bg-[#E77B49] text-white text-xs font-extrabold uppercase tracking-wider shadow-md cursor-pointer"
+                  className="w-2/3 py-3 rounded-2xl bg-[#111111] dark:bg-[#d2d0c1] text-white text-xs font-extrabold uppercase tracking-wider shadow-md cursor-pointer"
                 >
                   {changeLoading ? "Updating..." : "Update Password"}
                 </button>
@@ -659,7 +659,7 @@ function CustomerProfilePage() {
       )}
 
       {/* Footer */}
-      <footer className="relative z-10 max-w-4xl mx-auto w-full pt-6 pb-2 text-center text-[11px] text-[#6B7280] dark:text-slate-500 font-medium">
+      <footer className="relative z-10 max-w-4xl mx-auto w-full pt-6 pb-2 text-center text-[11px] text-[#737373] dark:text-slate-500 font-medium">
         © StockDine Inc. Real MongoDB Customer Session.
       </footer>
     </div>

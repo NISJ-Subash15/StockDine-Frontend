@@ -158,30 +158,30 @@ Booking Status: ${b.bookingStatus.toUpperCase()}
 
   if (isGuest) {
     return (
-      <div className="min-h-screen bg-[#FFFFFF] dark:bg-slate-950 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-[#FFFFFF] dark:bg-[#2b2b2b] flex items-center justify-center p-4">
         <GuestAuthModal isOpen={true} onClose={() => navigate({ to: "/customer" })} />
       </div>
     );
   }
 
   return (
-    <div className="px-4 sm:px-6 pt-8 max-w-2xl mx-auto pb-28 selection:bg-[#E77B49] selection:text-white bg-[#FFFFFF] dark:bg-slate-950 text-[#1F2937] dark:text-slate-100 min-h-screen transition-colors duration-300">
+    <div className="px-4 sm:px-6 pt-8 max-w-2xl mx-auto pb-28 selection:bg-[#d2d0c1] selection:text-white bg-[#FFFFFF] dark:bg-[#2b2b2b] text-[#111111] dark:text-slate-100 min-h-screen transition-colors duration-300">
       {/* Header Bar */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <button
             type="button"
             onClick={() => navigate({ to: "/customer" })}
-            className="p-2.5 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800 border border-[#E5E7EB] dark:border-slate-700 text-[#1F2937] dark:text-slate-200 hover:bg-[#E5E7EB] dark:hover:bg-slate-700 transition-colors shadow-sm cursor-pointer"
+            className="p-2.5 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] text-[#111111] dark:text-slate-200 hover:bg-[#E5E5E5] dark:hover:bg-slate-700 transition-colors shadow-sm cursor-pointer"
             title="Go back"
           >
-            <ArrowLeft className="size-4 text-[#60241E] dark:text-[#E77B49]" />
+            <ArrowLeft className="size-4 text-[#111111] dark:text-[#d2d0c1]" />
           </button>
           <div>
-            <p className="text-[10px] uppercase tracking-[0.3em] text-[#E77B49] font-extrabold">
+            <p className="text-[10px] uppercase tracking-[0.3em] text-[#d2d0c1] font-extrabold">
               My Reservations
             </p>
-            <h1 className="font-serif italic text-3xl sm:text-4xl font-bold text-[#60241E] dark:text-slate-100">
+            <h1 className="font-serif italic text-3xl sm:text-4xl font-bold text-[#111111] dark:text-slate-100">
               My Bookings
             </h1>
           </div>
@@ -190,14 +190,14 @@ Booking Status: ${b.bookingStatus.toUpperCase()}
       </div>
 
       {/* Tab Filter Navigation */}
-      <div className="flex items-center gap-2 bg-[#F8F9FA] dark:bg-slate-900 p-1.5 rounded-2xl border-2 border-[#E5E7EB] dark:border-slate-800 mb-6">
+      <div className="flex items-center gap-2 bg-[#F5F5F5] dark:bg-[#222222] p-1.5 rounded-2xl border border-[#E5E5E5] dark:border-[#404040] mb-6">
         <button
           type="button"
           onClick={() => setActiveTab("Upcoming")}
           className={`flex-1 py-2.5 rounded-xl text-xs font-extrabold transition-all text-center cursor-pointer ${
             activeTab === "Upcoming"
-              ? "bg-[#60241E] dark:bg-[#E77B49] text-white shadow-md"
-              : "text-[#6B7280] dark:text-slate-400 hover:text-[#1F2937] dark:hover:text-slate-100"
+              ? "bg-[#111111] dark:bg-[#d2d0c1] text-white shadow-md"
+              : "text-[#737373] dark:text-slate-400 hover:text-[#111111] dark:hover:text-slate-100"
           }`}
         >
           Upcoming ({upcomingBookings.length})
@@ -208,8 +208,8 @@ Booking Status: ${b.bookingStatus.toUpperCase()}
           onClick={() => setActiveTab("Completed")}
           className={`flex-1 py-2.5 rounded-xl text-xs font-extrabold transition-all text-center cursor-pointer ${
             activeTab === "Completed"
-              ? "bg-[#60241E] dark:bg-[#E77B49] text-white shadow-md"
-              : "text-[#6B7280] dark:text-slate-400 hover:text-[#1F2937] dark:hover:text-slate-100"
+              ? "bg-[#111111] dark:bg-[#d2d0c1] text-white shadow-md"
+              : "text-[#737373] dark:text-slate-400 hover:text-[#111111] dark:hover:text-slate-100"
           }`}
         >
           Completed ({displayCompleted.length})
@@ -220,8 +220,8 @@ Booking Status: ${b.bookingStatus.toUpperCase()}
           onClick={() => setActiveTab("Cancelled")}
           className={`flex-1 py-2.5 rounded-xl text-xs font-extrabold transition-all text-center cursor-pointer ${
             activeTab === "Cancelled"
-              ? "bg-[#60241E] dark:bg-[#E77B49] text-white shadow-md"
-              : "text-[#6B7280] dark:text-slate-400 hover:text-[#1F2937] dark:hover:text-slate-100"
+              ? "bg-[#111111] dark:bg-[#d2d0c1] text-white shadow-md"
+              : "text-[#737373] dark:text-slate-400 hover:text-[#111111] dark:hover:text-slate-100"
           }`}
         >
           Cancelled ({cancelledBookings.length})
@@ -239,7 +239,7 @@ Booking Status: ${b.bookingStatus.toUpperCase()}
             return (
               <div
                 key={b.bookingId}
-                className="bg-white dark:bg-slate-900 border-2 border-[#E5E7EB] dark:border-slate-800 rounded-3xl p-5 sm:p-6 shadow-sm hover:shadow-md transition-all space-y-4 relative overflow-hidden"
+                className="bg-white dark:bg-[#222222] border border-[#E5E5E5] dark:border-[#404040] rounded-3xl p-5 sm:p-6 shadow-sm sd-hover-lift sd-fade-up space-y-4 relative overflow-hidden"
               >
                 <div className="flex justify-between items-start">
                   <div>
@@ -255,19 +255,19 @@ Booking Status: ${b.bookingStatus.toUpperCase()}
                       <Clock className="size-3" />
                       Status: {b.bookingStatus}
                     </span>
-                    <h2 className="font-serif italic text-2xl font-bold text-[#60241E] dark:text-slate-100">
+                    <h2 className="font-serif italic text-2xl font-bold text-[#111111] dark:text-slate-100">
                       {b.restaurantName}
                     </h2>
-                    <p className="text-xs text-[#6B7280] dark:text-slate-400 mt-0.5 flex items-center gap-1 font-semibold">
-                      <MapPin className="size-3.5 text-[#E77B49]" /> {b.tableNumber} • {b.date}, {b.time} ({b.guests || 2} Guests)
+                    <p className="text-xs text-[#737373] dark:text-slate-400 mt-0.5 flex items-center gap-1 font-semibold">
+                      <MapPin className="size-3.5 text-[#d2d0c1]" /> {b.tableNumber} • {b.date}, {b.time} ({b.guests || 2} Guests)
                     </p>
                   </div>
 
                   <div className="text-right flex flex-col items-end gap-1">
-                    <span className="text-[11px] font-mono font-bold bg-[#60241E] dark:bg-[#E77B49] text-white px-3 py-1 rounded-xl shadow-xs">
+                    <span className="text-[11px] font-mono font-bold bg-[#111111] dark:bg-[#d2d0c1] text-white px-3 py-1 rounded-xl shadow-xs">
                       {b.bookingId}
                     </span>
-                    <span className="text-[10px] font-mono text-[#6B7280] dark:text-slate-400">
+                    <span className="text-[10px] font-mono text-[#737373] dark:text-slate-400">
                       Ref: {b.paymentId}
                     </span>
                   </div>
@@ -275,26 +275,26 @@ Booking Status: ${b.bookingStatus.toUpperCase()}
 
                 {/* Reserved Food Items */}
                 {b.items && b.items.length > 0 && (
-                  <div className="space-y-1.5 py-3 border-y border-[#E5E7EB] dark:border-slate-800 text-xs">
-                    <span className="text-[10px] font-extrabold uppercase text-[#60241E] dark:text-[#E77B49] block">
+                  <div className="space-y-1.5 py-3 border-y border-[#E5E5E5] dark:border-[#404040] text-xs">
+                    <span className="text-[10px] font-extrabold uppercase text-[#111111] dark:text-[#d2d0c1] block">
                       Pre-Ordered Items:
                     </span>
                     {b.items.map((item: any, idx: number) => (
-                      <div key={idx} className="flex justify-between items-center text-[#4B5563] dark:text-slate-300">
+                      <div key={idx} className="flex justify-between items-center text-[#333333] dark:text-slate-300">
                         <span>{item.name} × {item.quantity}</span>
-                        <span className="font-bold text-[#60241E] dark:text-slate-100">{formatCurrency(item.price * item.quantity)}</span>
+                        <span className="font-bold text-[#111111] dark:text-slate-100">{formatCurrency(item.price * item.quantity)}</span>
                       </div>
                     ))}
                   </div>
                 )}
 
                 {/* Advance vs Remaining Payment Breakdown */}
-                <div className="p-3.5 rounded-2xl bg-[#F8F9FA] dark:bg-slate-800/60 border border-[#E5E7EB] dark:border-slate-700 space-y-1 text-xs">
-                  <div className="flex justify-between text-[#1F2937] dark:text-slate-200 font-semibold">
+                <div className="p-3.5 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838]/60 border border-[#E5E5E5] dark:border-[#404040] space-y-1 text-xs">
+                  <div className="flex justify-between text-[#111111] dark:text-slate-200 font-semibold">
                     <span>Advance Paid ({(b as any).paymentMethod || "UPI"}):</span>
                     <span className="font-bold text-emerald-700 dark:text-emerald-400">{formatCurrency(b.advanceAmount)}</span>
                   </div>
-                  <div className="flex justify-between text-[#60241E] dark:text-[#E77B49] font-bold">
+                  <div className="flex justify-between text-[#111111] dark:text-[#d2d0c1] font-bold">
                     <span>Remaining Amount (To pay at restaurant):</span>
                     <span>{formatCurrency(remainingDue)}</span>
                   </div>
@@ -306,9 +306,9 @@ Booking Status: ${b.bookingStatus.toUpperCase()}
                     <button
                       type="button"
                       onClick={() => setSelectedQrBooking(b)}
-                      className="py-2.5 px-4 rounded-xl bg-white dark:bg-slate-800 border-2 border-[#E5E7EB] dark:border-slate-700 hover:bg-[#F8F9FA] dark:hover:bg-slate-700 text-[#1F2937] dark:text-slate-200 text-xs font-extrabold flex items-center gap-1.5 shadow-xs transition-all cursor-pointer"
+                      className="py-2.5 px-4 rounded-xl bg-white dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] hover:bg-[#F5F5F5] dark:hover:bg-slate-700 text-[#111111] dark:text-slate-200 text-xs font-extrabold flex items-center gap-1.5 shadow-xs transition-all cursor-pointer"
                     >
-                      <QrCode className="size-4 text-[#E77B49]" />
+                      <QrCode className="size-4 text-[#d2d0c1]" />
                       <span>Check-in QR Pass</span>
                     </button>
                   )}
@@ -316,9 +316,9 @@ Booking Status: ${b.bookingStatus.toUpperCase()}
                   <button
                     type="button"
                     onClick={() => handleDownloadReceipt(b)}
-                    className="py-2.5 px-3.5 rounded-xl bg-white dark:bg-slate-800 border-2 border-[#E5E7EB] dark:border-slate-700 hover:bg-[#F8F9FA] dark:hover:bg-slate-700 text-[#1F2937] dark:text-slate-200 text-xs font-extrabold flex items-center gap-1.5 shadow-xs transition-all cursor-pointer"
+                    className="py-2.5 px-3.5 rounded-xl bg-white dark:bg-[#383838] border border-[#E5E5E5] dark:border-[#404040] hover:bg-[#F5F5F5] dark:hover:bg-slate-700 text-[#111111] dark:text-slate-200 text-xs font-extrabold flex items-center gap-1.5 shadow-xs transition-all cursor-pointer"
                   >
-                    <Download className="size-4 text-[#60241E]" />
+                    <Download className="size-4 text-[#111111]" />
                     <span>Receipt</span>
                   </button>
 
@@ -327,7 +327,7 @@ Booking Status: ${b.bookingStatus.toUpperCase()}
                     <button
                       type="button"
                       onClick={() => setCancelBookingTarget(b)}
-                      className="py-2.5 px-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 hover:bg-rose-100 text-xs font-extrabold transition-all ml-auto"
+                      className="py-2.5 px-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 hover:bg-rose-100 text-xs font-extrabold transition-all ml-auto cursor-pointer"
                     >
                       Cancel Hold
                     </button>
@@ -344,7 +344,7 @@ Booking Status: ${b.bookingStatus.toUpperCase()}
                         <button
                           type="button"
                           onClick={() => handleOpenReview(b)}
-                          className="py-2.5 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white text-xs font-extrabold shadow-md transition-all flex items-center gap-1.5 active:scale-95"
+                          className="py-2.5 px-4 rounded-xl bg-[#d2d0c1] hover:bg-[#D66A38] text-white text-xs font-extrabold shadow-md transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer"
                         >
                           <Sparkles className="size-3.5 fill-current" />
                           <span>Rate &amp; Review</span>
@@ -354,9 +354,9 @@ Booking Status: ${b.bookingStatus.toUpperCase()}
                       <Link
                         to="/customer/restaurant/$restaurantId"
                         params={{ restaurantId: b.restaurantId }}
-                        className="py-2.5 px-3.5 rounded-xl bg-[#60241E] text-white text-xs font-extrabold flex items-center gap-1"
+                        className="py-2.5 px-3.5 rounded-xl bg-[#111111] text-white text-xs font-extrabold flex items-center gap-1"
                       >
-                        <RotateCcw className="size-3.5" />
+                        <RotateCcw className="size-3.5 text-[#d2d0c1]" />
                         <span>Rebook</span>
                       </Link>
                     </div>
@@ -367,9 +367,9 @@ Booking Status: ${b.bookingStatus.toUpperCase()}
           })}
         </div>
       ) : (
-        <div className="bg-[#F8F9FA] border-2 border-dashed border-[#E5E7EB] rounded-3xl p-10 text-center text-[#6B7280] space-y-3">
-          <Calendar className="size-10 text-[#E77B49] mx-auto opacity-60" />
-          <h3 className="font-serif italic text-xl font-bold text-[#60241E]">
+        <div className="bg-[#F5F5F5] border border-dashed border-[#E5E5E5] rounded-3xl p-10 text-center text-[#737373] space-y-3">
+          <Calendar className="size-10 text-[#d2d0c1] mx-auto opacity-60" />
+          <h3 className="font-serif italic text-xl font-bold text-[#111111]">
             No {activeTab} Bookings Found
           </h3>
           <p className="text-xs font-medium max-w-sm mx-auto">
@@ -377,7 +377,7 @@ Booking Status: ${b.bookingStatus.toUpperCase()}
           </p>
           <Link
             to="/customer"
-            className="inline-block py-3 px-6 rounded-2xl bg-[#E77B49] text-white text-xs font-extrabold uppercase tracking-wider shadow-md hover:bg-[#D66A38] transition-all"
+            className="inline-block py-3 px-6 rounded-2xl bg-[#111111] hover:bg-[#333333] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all"
           >
             Explore Restaurants Near You
           </Link>
@@ -387,42 +387,42 @@ Booking Status: ${b.bookingStatus.toUpperCase()}
       {/* QR Code Check-in Pass Modal */}
       {selectedQrBooking && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 max-w-sm w-full shadow-2xl text-center space-y-4 relative border-2 border-[#E5E7EB] dark:border-slate-800 animate-in zoom-in-95 duration-200">
+          <div className="bg-white dark:bg-[#222222] rounded-3xl p-6 max-w-sm w-full shadow-2xl text-center space-y-4 relative border border-[#E5E5E5] dark:border-[#404040] animate-in zoom-in-95 duration-200">
             <button
               type="button"
               onClick={() => setSelectedQrBooking(null)}
-              className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-800 text-[#6B7280] dark:text-slate-400 cursor-pointer"
+              className="absolute top-4 right-4 p-2 rounded-full hover:bg-gray-100 dark:hover:bg-[#383838] text-[#737373] dark:text-slate-400 cursor-pointer"
             >
               <X className="size-5" />
             </button>
 
             <div className="space-y-1">
-              <span className="text-[10px] font-extrabold uppercase text-[#E77B49] bg-[#E77B49]/10 px-3 py-1 rounded-full border border-[#E77B49]/20">
+              <span className="text-[10px] font-extrabold uppercase text-[#d2d0c1] bg-[#F5F5F5] px-3 py-1 rounded-full border border-[#E5E5E5]">
                 Desk Check-in Pass
               </span>
-              <h3 className="font-serif italic text-2xl font-bold text-[#60241E] dark:text-slate-100">
+              <h3 className="font-serif italic text-2xl font-bold text-[#111111] dark:text-slate-100">
                 {selectedQrBooking.restaurantName}
               </h3>
-              <p className="text-xs text-[#6B7280] dark:text-slate-400">
+              <p className="text-xs text-[#737373] dark:text-slate-400">
                 {selectedQrBooking.tableNumber} • {selectedQrBooking.date} at {selectedQrBooking.time}
               </p>
             </div>
 
-            <div className="bg-[#F8F9FA] dark:bg-slate-800/80 border-2 border-[#E5E7EB] dark:border-slate-700 p-4 rounded-2xl flex flex-col items-center">
+            <div className="bg-[#F5F5F5] dark:bg-[#383838]/80 border border-[#E5E5E5] dark:border-[#404040] p-4 rounded-2xl flex flex-col items-center">
               <img
                 src={selectedQrBooking.qrCodeUrl || `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${selectedQrBooking.bookingId}`}
                 alt="QR Code Pass"
-                className="size-40 rounded-xl border border-[#E5E7EB] dark:border-slate-700 bg-white p-1"
+                className="size-40 rounded-xl border border-[#E5E5E5] dark:border-[#404040] bg-white p-1"
               />
-              <span className="text-xs font-mono font-bold text-[#60241E] dark:text-[#E77B49] mt-2">
+              <span className="text-xs font-mono font-bold text-[#111111] dark:text-[#d2d0c1] mt-2">
                 ID: {selectedQrBooking.bookingId}
               </span>
             </div>
 
-            <div className="text-xs text-[#4B5563] dark:text-slate-300 space-y-1 font-medium bg-amber-50 dark:bg-amber-950/40 p-3 rounded-2xl border border-amber-200 dark:border-amber-900/50 text-left">
+            <div className="text-xs text-[#333333] dark:text-slate-300 space-y-1 font-medium bg-[#F5F5F5] dark:bg-amber-950/40 p-3 rounded-2xl border border-[#E5E5E5] dark:border-amber-900/50 text-left">
               <div className="flex justify-between">
                 <span>Advance Paid:</span>
-                <span className="font-bold text-[#60241E] dark:text-[#E77B49]">{formatCurrency(selectedQrBooking.advanceAmount)}</span>
+                <span className="font-bold text-[#111111] dark:text-[#d2d0c1]">{formatCurrency(selectedQrBooking.advanceAmount)}</span>
               </div>
               <div className="flex justify-between text-emerald-800 dark:text-emerald-400 font-bold">
                 <span>Remaining to Pay at Venue:</span>
@@ -433,7 +433,7 @@ Booking Status: ${b.bookingStatus.toUpperCase()}
             <button
               type="button"
               onClick={() => setSelectedQrBooking(null)}
-              className="w-full py-3 rounded-2xl bg-[#60241E] dark:bg-[#E77B49] hover:bg-[#4A1B17] dark:hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider cursor-pointer"
+              className="w-full py-3 rounded-2xl bg-[#111111] dark:bg-[#d2d0c1] hover:bg-[#333333] dark:hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider cursor-pointer"
             >
               Close QR Pass
             </button>
@@ -444,9 +444,9 @@ Booking Status: ${b.bookingStatus.toUpperCase()}
       {/* Cancel Confirmation Modal */}
       {cancelBookingTarget && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl text-center space-y-4 border-2 border-[#E5E7EB] animate-in zoom-in-95 duration-200">
+          <div className="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl text-center space-y-4 border border-[#E5E5E5] animate-in zoom-in-95 duration-200">
             <AlertCircle className="size-12 text-rose-500 mx-auto" />
-            <h3 className="font-serif italic text-2xl font-bold text-[#60241E]">
+            <h3 className="font-serif italic text-2xl font-bold text-[#111111]">
               Cancel Reservation?
             </h3>
             <p className="text-xs text-[#4B5563] font-medium leading-relaxed">
@@ -459,7 +459,7 @@ Booking Status: ${b.bookingStatus.toUpperCase()}
               <button
                 type="button"
                 onClick={() => setCancelBookingTarget(null)}
-                className="py-3 rounded-2xl bg-[#F8F9FA] text-[#4B5563] text-xs font-extrabold border border-[#D1D5DB]"
+                className="py-3 rounded-2xl bg-[#F5F5F5] text-[#4B5563] text-xs font-extrabold border border-[#D1D5DB]"
               >
                 Keep Booking
               </button>

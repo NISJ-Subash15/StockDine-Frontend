@@ -89,19 +89,19 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
     value: number;
     onChange: (v: number) => void;
   }) => (
-    <div className="flex items-center justify-between py-1.5 border-b border-[#E5E7EB] last:border-none">
-      <span className="text-xs font-semibold text-[#4B5563]">{label}</span>
+    <div className="flex items-center justify-between py-1.5 border-b border-[#E5E5E5] last:border-none">
+      <span className="text-xs font-semibold text-[#333333]">{label}</span>
       <div className="flex items-center gap-1">
         {[1, 2, 3, 4, 5].map((star) => (
           <button
             key={star}
             type="button"
             onClick={() => onChange(star)}
-            className="p-1 hover:scale-110 transition-transform"
+            className="p-1 hover:scale-110 transition-transform cursor-pointer"
           >
             <Star
               className={`size-4 ${
-                star <= value ? "fill-amber-500 text-amber-500" : "text-gray-300"
+                star <= value ? "fill-[#d2d0c1] text-[#d2d0c1]" : "text-gray-300"
               }`}
             />
           </button>
@@ -112,9 +112,9 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4">
-      <div className="bg-white border-2 border-[#E5E7EB] rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl space-y-4 animate-in fade-in zoom-in-95 duration-200 relative">
+      <div className="bg-white border border-[#E5E5E5] rounded-3xl max-w-lg w-full overflow-hidden shadow-2xl space-y-4 sd-modal-pop relative">
         {/* Header */}
-        <div className="bg-gradient-to-r from-[#60241E] to-[#95271D] text-white p-5 flex items-center justify-between relative">
+        <div className="bg-[#111111] text-white p-5 flex items-center justify-between relative border-b border-[#E5E5E5]">
           <div className="flex items-center gap-3">
             <img
               src={restaurant.logo || restaurant.coverImage}
@@ -134,22 +134,22 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="p-2 rounded-full hover:bg-white/20 text-white transition-colors"
+            className="p-2 rounded-full hover:bg-white/20 text-white transition-colors cursor-pointer"
           >
             <X className="size-5" />
           </button>
         </div>
 
         {showRewardSuccess ? (
-          <div className="p-8 text-center space-y-4 animate-in zoom-in-95 duration-300">
-            <div className="size-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto border-2 border-emerald-300 shadow-md">
-              <CheckCircle2 className="size-10 animate-bounce" />
+          <div className="p-8 text-center space-y-4 sd-scale-in">
+            <div className="size-16 rounded-full bg-[#F5F5F5] text-[#d2d0c1] flex items-center justify-center mx-auto border border-[#E5E5E5] shadow-md sd-scale-in">
+              <CheckCircle2 className="size-10 text-[#d2d0c1]" />
             </div>
-            <h3 className="font-serif italic text-2xl font-bold text-[#60241E]">
+            <h3 className="font-serif italic text-2xl font-bold text-[#111111]">
               Thank You for Your Review!
             </h3>
-            <div className="bg-emerald-50 border-2 border-emerald-200 rounded-2xl p-4 space-y-1">
-              <p className="text-xs font-bold text-emerald-900">
+            <div className="bg-[#F5F5F5] border border-[#E5E5E5] rounded-2xl p-4 space-y-1">
+              <p className="text-xs font-bold text-[#111111]">
                 Your feedback has been published successfully and shared with {restaurant.name}.
               </p>
             </div>
@@ -157,8 +157,8 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
         ) : (
           <form onSubmit={handleSubmit} className="p-6 pt-2 space-y-5">
             {/* Overall Star Rating */}
-            <div className="text-center space-y-2 py-2 bg-[#F8F9FA] rounded-2xl border border-[#E5E7EB]">
-              <label className="text-xs font-extrabold uppercase tracking-wider text-[#60241E] block">
+            <div className="text-center space-y-2 py-2 bg-[#F5F5F5] rounded-2xl border border-[#E5E5E5]">
+              <label className="text-xs font-extrabold uppercase tracking-wider text-[#111111] block">
                 Overall Experience Rating
               </label>
               <div className="flex items-center justify-center gap-2">
@@ -167,17 +167,17 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
                     key={star}
                     type="button"
                     onClick={() => setOverallRating(star)}
-                    className="p-1 hover:scale-110 transition-transform"
+                    className="p-1 hover:scale-110 transition-transform cursor-pointer"
                   >
                     <Star
                       className={`size-7 ${
-                        star <= overallRating ? "fill-amber-500 text-amber-500" : "text-gray-300"
+                        star <= overallRating ? "fill-[#d2d0c1] text-[#d2d0c1]" : "text-gray-300"
                       }`}
                     />
                   </button>
                 ))}
               </div>
-              <span className="text-xs font-bold text-[#60241E] block">
+              <span className="text-xs font-bold text-[#111111] block">
                 {overallRating === 5
                   ? "⭐⭐⭐⭐⭐ Excellent"
                   : overallRating === 4
@@ -191,8 +191,8 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
             </div>
 
             {/* Detailed Category Ratings */}
-            <div className="space-y-1 bg-[#F8F9FA] rounded-2xl p-3 border border-[#E5E7EB]">
-              <span className="text-[11px] font-extrabold uppercase text-[#60241E] block mb-2">
+            <div className="space-y-1 bg-[#F5F5F5] rounded-2xl p-3 border border-[#E5E5E5]">
+              <span className="text-[11px] font-extrabold uppercase text-[#111111] block mb-2">
                 Category Ratings
               </span>
               <CategoryStarPicker label="Food Quality" value={foodRating} onChange={setFoodRating} />
@@ -204,7 +204,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
 
             {/* Text Review */}
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-[#1F2937] block">
+              <label className="text-xs font-bold text-[#111111] block">
                 Share your dining experience
               </label>
               <textarea
@@ -212,18 +212,18 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
                 onChange={(e) => setComment(e.target.value)}
                 rows={3}
                 placeholder="Loved the table setup, prompt service, and signature dishes..."
-                className="w-full p-3 rounded-2xl border-2 border-[#E5E7EB] text-xs text-[#1F2937] placeholder:text-[#9CA3AF] focus:outline-none focus:border-[#E77B49]"
+                className="w-full p-3 rounded-2xl border border-[#E5E5E5] text-xs text-[#111111] placeholder:text-[#737373] focus:outline-none focus:border-[#111111]"
               />
             </div>
 
             {/* Photo Upload Simulator */}
             <div className="space-y-2">
               <div className="flex justify-between items-center">
-                <label className="text-xs font-bold text-[#1F2937]">Upload Dining Photos (Optional)</label>
+                <label className="text-xs font-bold text-[#111111]">Upload Dining Photos (Optional)</label>
                 <button
                   type="button"
                   onClick={handleAddSamplePhoto}
-                  className="text-xs font-extrabold text-[#E77B49] hover:underline flex items-center gap-1"
+                  className="text-xs font-extrabold text-[#d2d0c1] hover:underline flex items-center gap-1 cursor-pointer"
                 >
                   <Camera className="size-3.5" />
                   <span>+ Attach Photo</span>
@@ -233,12 +233,12 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
               {photos.length > 0 && (
                 <div className="flex gap-2 overflow-x-auto pb-1">
                   {photos.map((p, idx) => (
-                    <div key={idx} className="relative size-14 rounded-xl overflow-hidden border border-[#E5E7EB] shrink-0">
+                    <div key={idx} className="relative size-14 rounded-xl overflow-hidden border border-[#E5E5E5] shrink-0">
                       <img src={p} alt="Dining photo preview" className="w-full h-full object-cover" />
                       <button
                         type="button"
                         onClick={() => setPhotos(photos.filter((_, i) => i !== idx))}
-                        className="absolute top-0.5 right-0.5 bg-black/70 text-white rounded-full p-0.5"
+                        className="absolute top-0.5 right-0.5 bg-black/70 text-white rounded-full p-0.5 cursor-pointer"
                       >
                         <X className="size-3" />
                       </button>
@@ -253,7 +253,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="py-3 px-4 rounded-2xl bg-[#F8F9FA] hover:bg-[#E5E7EB] text-[#4B5563] font-extrabold text-xs transition-all border border-[#D1D5DB]"
+                className="py-3 px-4 rounded-2xl bg-[#F5F5F5] hover:bg-[#E5E5E5] text-[#111111] font-extrabold text-xs transition-all border border-[#E5E5E5] cursor-pointer"
               >
                 Skip for Now
               </button>
@@ -261,9 +261,9 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="py-3 px-4 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white font-extrabold text-xs shadow-md transition-all active:scale-95 flex items-center justify-center gap-1.5"
+                className="py-3 px-4 rounded-2xl bg-[#111111] hover:bg-[#333333] text-white font-extrabold text-xs shadow-md transition-all active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer"
               >
-                <Sparkles className="size-4" />
+                <Sparkles className="size-4 text-[#d2d0c1]" />
                 <span>{isSubmitting ? "Submitting..." : "Submit Review"}</span>
               </button>
             </div>

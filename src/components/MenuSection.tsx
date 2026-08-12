@@ -56,26 +56,26 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ dishes, onAddBooking }
       {/* Section Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
         <div>
-          <span className="text-[10px] uppercase font-extrabold tracking-widest text-[#B34A44] bg-[#B34A44]/10 px-3 py-1 rounded-full border border-[#B34A44]/20">
+          <span className="text-[10px] uppercase font-extrabold tracking-widest text-[#d2d0c1] bg-[#d2d0c1]/10 px-3 py-1 rounded-full border border-[#d2d0c1]/20">
             Top Priority • Food First Discovery
           </span>
-          <h2 className="text-2xl sm:text-3xl font-serif italic font-bold tracking-tight text-[#60241E] mt-1.5 flex items-center gap-2">
-            <Flame className="size-6 text-[#E77B49]" />
+          <h2 className="text-2xl sm:text-3xl font-serif italic font-bold tracking-tight text-[#111111] mt-1.5 flex items-center gap-2">
+            <Flame className="size-6 text-[#d2d0c1]" />
             <span>Explore Signature Dishes</span>
           </h2>
         </div>
 
         {/* Dietary Quick Filter Pills */}
-        <div className="flex items-center gap-1.5 text-xs font-extrabold bg-[#F8F9FA] p-1.5 rounded-2xl border border-[#E5E7EB]">
+        <div className="flex items-center gap-1.5 text-xs font-extrabold bg-[#F5F5F5] p-1.5 rounded-2xl border border-[#E5E5E5]">
           {(["All", "Veg", "Vegan", "Organic"] as const).map((tag) => (
             <button
               key={tag}
               type="button"
               onClick={() => setDietaryFilter(tag)}
-              className={`px-3 py-1.5 rounded-xl transition-all ${
+              className={`px-3 py-1.5 rounded-xl transition-all cursor-pointer ${
                 dietaryFilter === tag
-                  ? "bg-[#60241E] text-white shadow-sm"
-                  : "text-[#6B7280] hover:text-[#1F2937]"
+                  ? "bg-[#111111] text-white shadow-sm"
+                  : "text-[#737373] hover:text-[#111111]"
               }`}
             >
               {tag}
@@ -93,10 +93,10 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ dishes, onAddBooking }
               key={cat}
               type="button"
               onClick={() => setSelectedCategory(cat)}
-              className={`px-4 py-2.5 rounded-2xl text-xs font-extrabold shrink-0 transition-all ${
+              className={`px-4 py-2.5 rounded-2xl text-xs font-extrabold shrink-0 transition-all cursor-pointer ${
                 isSelected
-                  ? "bg-[#E77B49] text-white shadow-md scale-105"
-                  : "bg-[#F8F9FA] border border-[#E5E7EB] text-[#6B7280] hover:text-[#1F2937] hover:border-[#60241E]/30"
+                  ? "bg-[#111111] text-white shadow-md scale-105"
+                  : "bg-[#F5F5F5] border border-[#E5E5E5] text-[#737373] hover:text-[#111111] hover:border-[#111111]/30"
               }`}
             >
               {cat}
@@ -106,20 +106,20 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ dishes, onAddBooking }
       </div>
 
       {/* Dish Search & Filter Input Bar */}
-      <div className="bg-[#F8F9FA] border-2 border-[#E5E7EB] rounded-2xl p-3 flex items-center gap-3 shadow-sm focus-within:ring-2 focus-within:ring-[#E77B49]/40 focus-within:border-[#E77B49] transition-all">
-        <Search className="size-5 text-[#E77B49]" />
+      <div className="bg-[#F5F5F5] border border-[#E5E5E5] rounded-2xl p-3 flex items-center gap-3 shadow-sm focus-within:ring-2 focus-within:ring-[#111111]/40 focus-within:border-[#111111] transition-all">
+        <Search className="size-5 text-[#333333]" />
         <input
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search slow-cooked mutton biryani, galouti kebabs, pizza..."
-          className="bg-transparent border-none outline-none w-full text-sm text-[#1F2937] placeholder:text-[#6B7280] font-semibold"
+          className="bg-transparent border-none outline-none w-full text-sm text-[#111111] placeholder:text-[#737373] font-semibold"
         />
         {searchQuery && (
           <button
             type="button"
             onClick={() => setSearchQuery("")}
-            className="text-xs font-bold text-[#6B7280] hover:text-[#1F2937]"
+            className="text-xs font-bold text-[#737373] hover:text-[#111111] cursor-pointer"
           >
             Clear
           </button>
@@ -129,8 +129,8 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ dishes, onAddBooking }
       {/* Horizontal Carousel (Top 4 Dishes) */}
       {!searchQuery && (
         <div className="space-y-3">
-          <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#60241E] flex items-center gap-1.5">
-            <Sparkles className="size-4 text-[#E77B49]" /> Featured Dishes Carousel
+          <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#111111] flex items-center gap-1.5">
+            <Sparkles className="size-4 text-[#d2d0c1]" /> Featured Dishes Carousel
           </h3>
           <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-none snap-x snap-mandatory">
             {dishes.slice(0, 4).map((d) => (
@@ -144,7 +144,7 @@ export const MenuSection: React.FC<MenuSectionProps> = ({ dishes, onAddBooking }
 
       {/* Grid Showcase of All Filtered Dishes */}
       <div className="space-y-3">
-        <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#60241E]">
+        <h3 className="text-xs font-extrabold uppercase tracking-wider text-[#111111]">
           Complete Menu Catalog ({filteredDishes.length} Items)
         </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">

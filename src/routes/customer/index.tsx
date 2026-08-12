@@ -319,16 +319,16 @@ function HomePage() {
   );
 
   return (
-    <div className="flex flex-col max-w-5xl mx-auto selection:bg-[#E77B49] selection:text-white pb-28 bg-background text-foreground px-4 sm:px-6 transition-colors duration-300">
+    <div className="flex flex-col max-w-5xl mx-auto selection:bg-[#d2d0c1] selection:text-white pb-28 bg-background text-foreground px-4 sm:px-6 transition-colors duration-300">
       {/* Top Header Bar with Geolocation & Theme Toggle */}
-      <header className="py-6 border-b border-border dark:border-slate-800 mb-6 space-y-4">
+      <header className="py-6 border-b border-border dark:border-[#404040] mb-6 space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#60241E]/10 dark:bg-[#E77B49]/20 border border-[#60241E]/20 text-[#60241E] dark:text-[#E77B49] text-xs font-bold mb-2">
-              <Sparkles className="size-3 text-[#E77B49] fill-current" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F5F5F5] dark:bg-[#d2d0c1]/20 border border-[#E5E5E5] dark:border-[#d2d0c1]/30 text-[#111111] dark:text-[#d2d0c1] text-xs font-bold mb-2">
+              <Sparkles className="size-3 text-[#d2d0c1] fill-current" />
               <span>StockDine Luxury Experience</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl font-serif italic text-[#60241E] dark:text-slate-100 font-bold tracking-tight">
+            <h1 className="text-3xl sm:text-4xl font-serif italic text-[#111111] dark:text-slate-100 font-bold tracking-tight">
               Restaurants Near You
             </h1>
             <p className="text-xs text-muted-foreground font-medium mt-0.5">
@@ -339,9 +339,9 @@ function HomePage() {
           <div className="flex items-center gap-3">
             <Link
               to="/customer/dishes"
-              className="py-2.5 px-4 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold transition-all flex items-center gap-2 shadow-sm active:scale-95"
+              className="py-2.5 px-4 rounded-2xl bg-[#111111] hover:bg-[#333333] text-white text-xs font-extrabold transition-all flex items-center gap-2 shadow-sm active:scale-95"
             >
-              <Utensils className="size-4" />
+              <Utensils className="size-4 text-[#d2d0c1]" />
               <span>Browse Dishes</span>
             </Link>
 
@@ -352,20 +352,20 @@ function HomePage() {
         {/* Location Detection Pill & Global Search Bar */}
         <div className="space-y-3 pt-2">
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-card dark:bg-slate-900 border border-border dark:border-slate-800 text-xs font-bold text-foreground shadow-xs">
-              <MapPin className="size-3.5 text-[#E77B49] shrink-0" />
+            <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-card dark:bg-[#222222] border border-border dark:border-[#404040] text-xs font-bold text-foreground shadow-xs">
+              <MapPin className="size-3.5 text-[#d2d0c1] shrink-0" />
               <span>{userLocationName}</span>
-              {isLocating && <span className="size-2 rounded-full bg-[#E77B49] animate-ping ml-1" />}
+              {isLocating && <span className="size-2 rounded-full bg-[#d2d0c1] animate-ping ml-1" />}
             </div>
 
             <button
               type="button"
               onClick={handleDetectLocation}
               disabled={isLocating}
-              className="px-3 py-1.5 rounded-xl bg-secondary/20 hover:bg-secondary/40 text-foreground text-xs font-extrabold transition-all flex items-center gap-1.5 active:scale-95"
+              className="px-3 py-1.5 rounded-xl bg-secondary/20 hover:bg-secondary/40 text-foreground text-xs font-extrabold transition-all flex items-center gap-1.5 active:scale-95 cursor-pointer"
               title="Refresh Location"
             >
-              <Navigation className={`size-3 text-[#E77B49] ${isLocating ? "animate-spin" : ""}`} />
+              <Navigation className={`size-3 text-[#d2d0c1] ${isLocating ? "animate-spin" : ""}`} />
               <span className="hidden sm:inline">Detect</span>
             </button>
           </div>
@@ -377,14 +377,14 @@ function HomePage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by restaurant name, cuisine, city, or dish (e.g. Galouti Kebab, Biryani)..."
-              className="w-full h-12 pl-11 pr-10 rounded-2xl bg-card dark:bg-slate-900 border-2 border-border dark:border-slate-800 text-foreground text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#E77B49] shadow-sm transition-all placeholder:text-muted-foreground/60"
+              className="w-full h-12 pl-11 pr-10 rounded-2xl bg-card dark:bg-[#222222] border border-[#E5E5E5] dark:border-[#404040] text-foreground text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#111111] shadow-sm transition-all placeholder:text-muted-foreground/60"
             />
-            <Search className="absolute left-4 top-3.5 size-4 text-[#E77B49] pointer-events-none" />
+            <Search className="absolute left-4 top-3.5 size-4 text-[#333333] pointer-events-none" />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery("")}
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1 text-[#6B7280] hover:text-[#1F2937]"
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1 text-[#737373] hover:text-[#111111] cursor-pointer"
               >
                 <X className="size-4" />
               </button>
@@ -393,14 +393,14 @@ function HomePage() {
 
           {/* Search Result Tabs when searching */}
           {searchQuery && (
-            <div className="flex items-center gap-2 border-b border-[#E5E7EB] pb-2">
+            <div className="flex items-center gap-2 border-b border-[#E5E5E5] pb-2">
               <button
                 type="button"
                 onClick={() => setSearchTab("Restaurants")}
-                className={`py-1.5 px-4 rounded-xl text-xs font-extrabold transition-all ${
+                className={`py-1.5 px-4 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
                   searchTab === "Restaurants"
-                    ? "bg-[#60241E] text-white shadow-sm"
-                    : "bg-[#F8F9FA] text-[#6B7280]"
+                    ? "bg-[#111111] text-white shadow-sm"
+                    : "bg-[#F5F5F5] text-[#737373]"
                 }`}
               >
                 Restaurants ({filteredRestaurants.length})
@@ -408,10 +408,10 @@ function HomePage() {
               <button
                 type="button"
                 onClick={() => setSearchTab("Dishes")}
-                className={`py-1.5 px-4 rounded-xl text-xs font-extrabold transition-all ${
+                className={`py-1.5 px-4 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
                   searchTab === "Dishes"
-                    ? "bg-[#60241E] text-white shadow-sm"
-                    : "bg-[#F8F9FA] text-[#6B7280]"
+                    ? "bg-[#111111] text-white shadow-sm"
+                    : "bg-[#F5F5F5] text-[#737373]"
                 }`}
               >
                 Dishes ({searchMatchingDishes.length})
@@ -424,7 +424,7 @@ function HomePage() {
         {!searchQuery && (
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#60241E] dark:text-[#E77B49]">
+              <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#111111] dark:text-[#d2d0c1]">
                 Category Filter
               </span>
               <span className="text-xs text-muted-foreground font-medium">
@@ -438,10 +438,10 @@ function HomePage() {
                   key={cat}
                   type="button"
                   onClick={() => setSelectedCategory(cat)}
-                  className={`px-4 py-2 rounded-2xl text-xs font-extrabold transition-all shrink-0 ${
+                  className={`px-4 py-2 rounded-2xl text-xs font-extrabold transition-all shrink-0 cursor-pointer ${
                     selectedCategory === cat
-                      ? "bg-[#60241E] text-white shadow-md scale-102"
-                      : "bg-[#F8F9FA] dark:bg-slate-900 border border-[#E5E7EB] dark:border-slate-800 text-[#4B5563] dark:text-slate-300 hover:bg-[#E5E7EB]"
+                      ? "bg-[#111111] text-white shadow-md scale-102"
+                      : "bg-[#F5F5F5] dark:bg-[#222222] border border-[#E5E5E5] dark:border-[#404040] text-[#333333] dark:text-slate-300 hover:bg-[#E5E5E5]"
                   }`}
                 >
                   {cat}
@@ -458,12 +458,12 @@ function HomePage() {
         {searchQuery && searchTab === "Dishes" ? (
           <section className="space-y-6">
             <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-serif italic font-bold text-[#60241E] dark:text-slate-100">
+              <h2 className="text-2xl font-serif italic font-bold text-[#111111] dark:text-slate-100">
                 Matching Dishes ({searchMatchingDishes.length})
               </h2>
               <Link
                 to="/customer/dishes"
-                className="text-xs font-extrabold text-[#E77B49] hover:underline flex items-center gap-1"
+                className="text-xs font-extrabold text-[#d2d0c1] hover:underline flex items-center gap-1"
               >
                 <span>View All Dishes</span>
                 <ArrowRight className="size-3.5" />
@@ -471,7 +471,7 @@ function HomePage() {
             </div>
 
             {searchMatchingDishes.length === 0 ? (
-              <div className="bg-[#F8F9FA] dark:bg-slate-900 border-2 border-dashed border-[#E5E7EB] dark:border-slate-800 rounded-3xl p-10 text-center text-xs text-[#6B7280]">
+              <div className="bg-[#F5F5F5] dark:bg-[#222222] border border-dashed border-[#E5E5E5] dark:border-[#404040] rounded-3xl p-10 text-center text-xs text-[#737373]">
                 No dishes found matching "{searchQuery}".
               </div>
             ) : (
@@ -488,18 +488,18 @@ function HomePage() {
             <section className="space-y-6">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                 <div>
-                  <span className="text-[10px] uppercase font-extrabold tracking-widest text-[#60241E] dark:text-[#E77B49] bg-[#60241E]/10 dark:bg-[#E77B49]/20 px-3 py-1 rounded-full border border-[#60241E]/20">
+                  <span className="text-[10px] uppercase font-extrabold tracking-widest text-[#111111] dark:text-[#d2d0c1] bg-[#F5F5F5] dark:bg-[#d2d0c1]/20 px-3 py-1 rounded-full border border-[#E5E5E5] dark:border-[#d2d0c1]/30">
                     FEATURED PARTNER VENUES (MAX 10 NEARBY)
                   </span>
-                  <h2 className="text-2xl sm:text-3xl font-serif italic font-bold tracking-tight text-[#60241E] dark:text-slate-100 mt-1.5 flex items-center gap-2">
-                    <Building2 className="size-6 text-[#E77B49]" />
+                  <h2 className="text-2xl sm:text-3xl font-serif italic font-bold tracking-tight text-[#111111] dark:text-slate-100 mt-1.5 flex items-center gap-2">
+                    <Building2 className="size-6 text-[#d2d0c1]" />
                     <span>Nearby Available Restaurants ({filteredRestaurants.length})</span>
                   </h2>
                 </div>
 
                 <Link
                   to="/customer/map"
-                  className="text-xs font-extrabold text-[#E77B49] hover:underline flex items-center gap-1"
+                  className="text-xs font-extrabold text-[#d2d0c1] hover:underline flex items-center gap-1"
                 >
                   <span>View Live Radar Map</span>
                   <ArrowRight className="size-3.5" />
@@ -509,16 +509,16 @@ function HomePage() {
               {isLoading ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   {[1, 2].map((i) => (
-                    <div key={i} className="h-64 rounded-3xl bg-slate-200 dark:bg-slate-800 animate-pulse" />
+                    <div key={i} className="h-64 rounded-3xl bg-slate-200 dark:bg-[#383838] animate-pulse" />
                   ))}
                 </div>
               ) : filteredRestaurants.length === 0 ? (
-                <div className="bg-[#F8F9FA] dark:bg-slate-900 border-2 border-dashed border-[#E5E7EB] dark:border-slate-800 rounded-3xl p-12 text-center space-y-3">
-                  <Building2 className="size-10 text-[#E77B49] mx-auto opacity-50" />
-                  <h3 className="font-serif italic text-xl font-bold text-[#60241E] dark:text-slate-100">
+                <div className="bg-[#F5F5F5] dark:bg-[#222222] border border-dashed border-[#E5E5E5] dark:border-[#404040] rounded-3xl p-12 text-center space-y-3">
+                  <Building2 className="size-10 text-[#d2d0c1] mx-auto opacity-50" />
+                  <h3 className="font-serif italic text-xl font-bold text-[#111111] dark:text-slate-100">
                     No restaurants available nearby
                   </h3>
-                  <p className="text-xs text-[#6B7280] dark:text-slate-400">
+                  <p className="text-xs text-[#737373] dark:text-slate-400">
                     Registered partner restaurants will appear here automatically from MongoDB.
                   </p>
                   <button
@@ -527,7 +527,7 @@ function HomePage() {
                       setSelectedCategory("All");
                       setSearchQuery("");
                     }}
-                    className="py-2.5 px-5 rounded-2xl bg-[#E77B49] text-white text-xs font-extrabold shadow-sm hover:bg-[#D66A38] transition-all"
+                    className="py-2.5 px-5 rounded-2xl bg-[#111111] text-white text-xs font-extrabold shadow-sm hover:bg-[#333333] transition-all cursor-pointer"
                   >
                     Show All Restaurants
                   </button>
@@ -549,18 +549,18 @@ function HomePage() {
             <section className="space-y-6 pt-2">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                 <div>
-                  <span className="text-[10px] uppercase font-extrabold tracking-widest text-[#E77B49] bg-[#E77B49]/10 px-3 py-1 rounded-full border border-[#E77B49]/20">
+                  <span className="text-[10px] uppercase font-extrabold tracking-widest text-[#d2d0c1] bg-[#d2d0c1]/10 px-3 py-1 rounded-full border border-[#d2d0c1]/20">
                     LIVE MENU KITCHEN STOCK (MAX 10 DISHES)
                   </span>
-                  <h2 className="text-2xl sm:text-3xl font-serif italic font-bold tracking-tight text-[#60241E] dark:text-slate-100 mt-1.5 flex items-center gap-2">
-                    <Utensils className="size-6 text-[#E77B49]" />
+                  <h2 className="text-2xl sm:text-3xl font-serif italic font-bold tracking-tight text-[#111111] dark:text-slate-100 mt-1.5 flex items-center gap-2">
+                    <Utensils className="size-6 text-[#d2d0c1]" />
                     <span>Available Dishes Nearby ({availableDishesNearby.length})</span>
                   </h2>
                 </div>
 
                 <Link
                   to="/customer/dishes"
-                  className="text-xs font-extrabold text-[#E77B49] hover:underline flex items-center gap-1"
+                  className="text-xs font-extrabold text-[#d2d0c1] hover:underline flex items-center gap-1"
                 >
                   <span>View All Menu Items</span>
                   <ArrowRight className="size-3.5" />
@@ -570,11 +570,11 @@ function HomePage() {
               {isLoading ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                   {[1, 2, 3].map((i) => (
-                    <div key={i} className="h-56 rounded-3xl bg-slate-200 dark:bg-slate-800 animate-pulse" />
+                    <div key={i} className="h-56 rounded-3xl bg-slate-200 dark:bg-[#383838] animate-pulse" />
                   ))}
                 </div>
               ) : availableDishesNearby.length === 0 ? (
-                <div className="bg-[#F8F9FA] dark:bg-slate-900 border-2 border-dashed border-[#E5E7EB] dark:border-slate-800 rounded-3xl p-10 text-center text-xs text-[#6B7280]">
+                <div className="bg-[#F5F5F5] dark:bg-[#222222] border border-dashed border-[#E5E5E5] dark:border-[#404040] rounded-3xl p-10 text-center text-xs text-[#737373]">
                   No available dishes found nearby right now.
                 </div>
               ) : (
@@ -589,7 +589,7 @@ function HomePage() {
         )}
 
         {/* Explore Dishes CTA Banner */}
-        <section className="bg-gradient-to-r from-[#60241E] to-[#95271D] text-white rounded-3xl p-6 sm:p-8 shadow-xl space-y-4 relative overflow-hidden">
+        <section className="bg-[#111111] text-white rounded-3xl p-6 sm:p-8 shadow-xl space-y-4 relative overflow-hidden border border-[#E5E5E5]">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 relative z-10">
             <div className="space-y-1">
               <span className="text-[10px] uppercase tracking-wider font-extrabold text-white/80 bg-white/20 px-3 py-1 rounded-full border border-white/30">
@@ -605,7 +605,7 @@ function HomePage() {
 
             <Link
               to="/customer/dishes"
-              className="py-3 px-6 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all shrink-0 active:scale-95 flex items-center gap-2"
+              className="py-3 px-6 rounded-2xl bg-[#d2d0c1] hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-md transition-all shrink-0 active:scale-95 flex items-center gap-2"
             >
               <Utensils className="size-4" />
               <span>Explore Dishes</span>

@@ -75,18 +75,18 @@ function SelectWorkspacePage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFFFFF] dark:bg-slate-950 text-[#1F2937] dark:text-slate-100 flex flex-col justify-between p-4 sm:p-6 lg:p-10 relative selection:bg-[#E77B49] selection:text-white transition-colors duration-300 overflow-x-hidden">
+    <div className="min-h-screen bg-[#FFFFFF] dark:bg-[#2b2b2b] text-[#111111] dark:text-slate-100 flex flex-col justify-between p-4 sm:p-6 lg:p-10 relative selection:bg-[#d2d0c1] selection:text-white transition-colors duration-300 overflow-x-hidden">
       {/* Background Radial Glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(231,123,73,0.1),transparent_70%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(210,208,193,0.1),transparent_70%)] pointer-events-none" />
 
       {/* Top Header */}
       <header className="relative z-10 flex items-center justify-between max-w-6xl mx-auto w-full pt-2 pb-6">
         <Link to="/" className="group flex items-center">
           <div>
-            <span className="font-serif italic text-2xl sm:text-3xl font-bold tracking-tight text-[#60241E] dark:text-[#E77B49] block leading-none">
+            <span className="font-serif italic text-2xl sm:text-3xl font-bold tracking-tight text-[#111111] dark:text-[#d2d0c1] block leading-none">
               StockDine
             </span>
-            <span className="text-[9px] uppercase tracking-[0.25em] text-[#E77B49] dark:text-slate-400 font-extrabold block mt-1">
+            <span className="text-[9px] uppercase tracking-[0.25em] text-[#d2d0c1] dark:text-slate-400 font-extrabold block mt-1">
               Workspace Switcher
             </span>
           </div>
@@ -109,15 +109,15 @@ function SelectWorkspacePage() {
       <main className="relative z-10 flex-1 flex flex-col items-center justify-center py-8 max-w-5xl mx-auto w-full">
         {/* Page Title */}
         <div className="text-center max-w-xl mx-auto space-y-3 mb-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E77B49]/10 dark:bg-slate-800 border border-[#E77B49]/20 text-[#60241E] dark:text-[#E77B49] text-[11px] font-extrabold uppercase tracking-widest">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F5F5F5] dark:bg-[#383838] border border-[#E5E5E5] text-[#111111] dark:text-[#d2d0c1] text-[11px] font-extrabold uppercase tracking-widest">
             <span>Authenticated Restaurant Admin</span>
           </div>
 
-          <h1 className="font-serif italic text-4xl sm:text-5xl font-bold tracking-tight text-[#60241E] dark:text-[#E77B49]">
+          <h1 className="font-serif italic text-4xl sm:text-5xl font-bold tracking-tight text-[#111111] dark:text-[#d2d0c1]">
             Select Your Workspace
           </h1>
 
-          <p className="text-xs sm:text-sm text-[#6B7280] dark:text-slate-400 font-medium leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#737373] dark:text-slate-400 font-medium leading-relaxed">
             Welcome back! Choose which terminal or management workspace you would like to open.
           </p>
         </div>
@@ -125,39 +125,39 @@ function SelectWorkspacePage() {
         {/* Two Premium Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 w-full">
           {/* WORKSPACE CARD 1: KITCHEN PORTAL */}
-          <div className="group relative rounded-3xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-border/60 dark:border-slate-800 p-8 sm:p-10 shadow-xl hover:shadow-2xl hover:border-[#E77B49]/50 transition-all duration-300 flex flex-col justify-between hover:scale-[1.02] cursor-pointer">
+          <div className="group relative rounded-3xl bg-white/80 dark:bg-[#222222]/80 backdrop-blur-xl border border-[#E5E5E5] dark:border-[#404040] p-8 sm:p-10 shadow-xl hover:shadow-2xl hover:border-[#111111] dark:hover:border-[#d2d0c1] transition-all duration-300 flex flex-col justify-between hover:scale-[1.02] cursor-pointer">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-extrabold uppercase tracking-widest text-amber-700 bg-amber-100 dark:bg-amber-950/60 dark:text-amber-300 px-3 py-1 rounded-full border border-amber-300 dark:border-amber-800">
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#111111] bg-[#F5F5F5] border border-[#E5E5E5] px-3 py-1 rounded-full">
                   Kitchen Terminal
                 </span>
               </div>
 
               <div>
-                <h2 className="font-serif italic text-2xl sm:text-3xl font-bold text-[#60241E] dark:text-slate-100">
+                <h2 className="font-serif italic text-2xl sm:text-3xl font-bold text-[#111111] dark:text-slate-100">
                   Kitchen Portal
                 </h2>
-                <p className="text-xs text-[#6B7280] dark:text-slate-400 font-medium mt-1">
-                  Fast live order execution terminal for kitchen chefs & staff.
+                <p className="text-xs text-[#737373] dark:text-slate-400 font-medium mt-1">
+                  Fast live order execution terminal for kitchen chefs &amp; staff.
                 </p>
               </div>
 
-              <ul className="space-y-2.5 text-xs text-[#1F2937]/90 dark:text-slate-300 font-medium pt-2">
+              <ul className="space-y-2.5 text-xs text-[#333333] dark:text-slate-300 font-medium pt-2">
                 <li className="flex items-center gap-2.5">
-                  <div className="size-2 rounded-full bg-amber-500" />
+                  <div className="size-2 rounded-full bg-[#d2d0c1]" />
                   <span>Manage incoming live customer orders in real-time</span>
                 </li>
                 <li className="flex items-center gap-2.5">
-                  <div className="size-2 rounded-full bg-amber-500" />
+                  <div className="size-2 rounded-full bg-[#d2d0c1]" />
                   <span>Update food preparation statuses (Preparing, Ready, Served)</span>
                 </li>
                 <li className="flex items-center gap-2.5">
-                  <div className="size-2 rounded-full bg-amber-500" />
-                  <span>Change stock & portion availability with touch controls</span>
+                  <div className="size-2 rounded-full bg-[#d2d0c1]" />
+                  <span>Change stock &amp; portion availability with touch controls</span>
                 </li>
                 <li className="flex items-center gap-2.5">
-                  <div className="size-2 rounded-full bg-amber-500" />
-                  <span>View pending & queue order tickets instantly</span>
+                  <div className="size-2 rounded-full bg-[#d2d0c1]" />
+                  <span>View pending &amp; queue order tickets instantly</span>
                 </li>
               </ul>
             </div>
@@ -166,52 +166,52 @@ function SelectWorkspacePage() {
               <button
                 type="button"
                 onClick={() => navigate({ to: "/kitchen" })}
-                className="w-full py-4 rounded-2xl bg-[#60241E] hover:bg-[#4A1B17] dark:bg-[#E77B49] dark:hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-lg hover:shadow-xl transition-all active:scale-95 flex items-center justify-center gap-2 group-hover:gap-3 cursor-pointer"
+                className="w-full py-4 rounded-2xl bg-[#111111] hover:bg-[#333333] dark:bg-[#d2d0c1] dark:hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-lg hover:shadow-xl transition-all active:scale-95 flex items-center justify-center gap-2 group-hover:gap-3 cursor-pointer"
               >
                 <span>Open Kitchen Portal</span>
-                <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="size-4 text-[#d2d0c1] transition-transform group-hover:translate-x-1" />
               </button>
             </div>
           </div>
 
           {/* WORKSPACE CARD 2: RESTAURANT ADMIN */}
-          <div className="group relative rounded-3xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-border/60 dark:border-slate-800 p-8 sm:p-10 shadow-xl hover:shadow-2xl hover:border-[#E77B49]/50 transition-all duration-300 flex flex-col justify-between hover:scale-[1.02] cursor-pointer">
+          <div className="group relative rounded-3xl bg-white/80 dark:bg-[#222222]/80 backdrop-blur-xl border border-[#E5E5E5] dark:border-[#404040] p-8 sm:p-10 shadow-xl hover:shadow-2xl hover:border-[#111111] dark:hover:border-[#d2d0c1] transition-all duration-300 flex flex-col justify-between hover:scale-[1.02] cursor-pointer">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#E77B49] bg-[#E77B49]/10 px-3 py-1 rounded-full">
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#111111] bg-[#F5F5F5] border border-[#E5E5E5] px-3 py-1 rounded-full">
                   Admin OS
                 </span>
               </div>
 
               <div>
-                <h2 className="font-serif italic text-2xl sm:text-3xl font-bold text-[#60241E] dark:text-slate-100">
+                <h2 className="font-serif italic text-2xl sm:text-3xl font-bold text-[#111111] dark:text-slate-100">
                   Restaurant Admin
                 </h2>
-                <p className="text-xs text-[#6B7280] dark:text-slate-400 font-medium mt-1">
-                  Complete management dashboard, analytics, menu & table setup.
+                <p className="text-xs text-[#737373] dark:text-slate-400 font-medium mt-1">
+                  Complete management dashboard, analytics, menu &amp; table setup.
                 </p>
               </div>
 
-              <ul className="space-y-2.5 text-xs text-[#1F2937]/90 dark:text-slate-300 font-medium pt-2">
+              <ul className="space-y-2.5 text-xs text-[#333333] dark:text-slate-300 font-medium pt-2">
                 <li className="flex items-center gap-2.5">
-                  <div className="size-2 rounded-full bg-[#E77B49]" />
-                  <span>Manage restaurant settings, logo & cover images</span>
+                  <div className="size-2 rounded-full bg-[#d2d0c1]" />
+                  <span>Manage restaurant settings, logo &amp; cover images</span>
                 </li>
                 <li className="flex items-center gap-2.5">
-                  <div className="size-2 rounded-full bg-[#E77B49]" />
-                  <span>Manage food menu & upload Cloudinary dish photos</span>
+                  <div className="size-2 rounded-full bg-[#d2d0c1]" />
+                  <span>Manage food menu &amp; upload Cloudinary dish photos</span>
                 </li>
                 <li className="flex items-center gap-2.5">
-                  <div className="size-2 rounded-full bg-[#E77B49]" />
-                  <span>Manage tables, seating capacity & availability</span>
+                  <div className="size-2 rounded-full bg-[#d2d0c1]" />
+                  <span>Manage tables, seating capacity &amp; availability</span>
                 </li>
                 <li className="flex items-center gap-2.5">
-                  <div className="size-2 rounded-full bg-[#E77B49]" />
-                  <span>View all table bookings & scan check-in QR codes</span>
+                  <div className="size-2 rounded-full bg-[#d2d0c1]" />
+                  <span>View all table bookings &amp; scan check-in QR codes</span>
                 </li>
                 <li className="flex items-center gap-2.5">
-                  <div className="size-2 rounded-full bg-[#E77B49]" />
-                  <span>View real-time revenue & analytics dashboard</span>
+                  <div className="size-2 rounded-full bg-[#d2d0c1]" />
+                  <span>View real-time revenue &amp; analytics dashboard</span>
                 </li>
               </ul>
             </div>
@@ -238,7 +238,7 @@ function SelectWorkspacePage() {
                     setShowAdminPassModal(true);
                   }
                 }}
-                className="w-full py-4 rounded-2xl bg-[#60241E] hover:bg-[#4A1B17] dark:bg-[#E77B49] dark:hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-lg hover:shadow-xl transition-all active:scale-95 flex items-center justify-center gap-2 group-hover:gap-3 cursor-pointer"
+                className="w-full py-4 rounded-2xl bg-[#111111] hover:bg-[#333333] dark:bg-[#d2d0c1] dark:hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-lg hover:shadow-xl transition-all active:scale-95 flex items-center justify-center gap-2 group-hover:gap-3 cursor-pointer"
               >
                 <span>
                   {(typeof window !== "undefined" && sessionStorage.getItem("stockdine_admin_unlocked") === "true") ||
@@ -248,7 +248,7 @@ function SelectWorkspacePage() {
                     ? "Open Restaurant Admin"
                     : "Open Restaurant Admin (🔒 Pass Required)"}
                 </span>
-                <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="size-4 text-[#d2d0c1] transition-transform group-hover:translate-x-1" />
               </button>
             </div>
           </div>
@@ -258,22 +258,22 @@ function SelectWorkspacePage() {
       {/* Admin Security Password Unlock Modal */}
       {showAdminPassModal && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-slate-900 text-foreground rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-4 border-2 border-[#E5E7EB] dark:border-slate-800 animate-in zoom-in-95 duration-200">
+          <div className="bg-white dark:bg-[#222222] text-foreground rounded-3xl p-6 max-w-md w-full shadow-2xl space-y-4 border border-[#E5E5E5] dark:border-[#404040] animate-in zoom-in-95 duration-200">
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-2.5">
-                <div className="size-10 rounded-2xl bg-[#60241E]/10 dark:bg-[#E77B49]/10 text-[#60241E] dark:text-[#E77B49] flex items-center justify-center border border-[#60241E]/20">
-                  <Lock className="size-5 text-[#60241E] dark:text-[#E77B49]" />
+                <div className="size-10 rounded-2xl bg-[#F5F5F5] dark:bg-[#d2d0c1]/10 text-[#111111] dark:text-[#d2d0c1] flex items-center justify-center border border-[#E5E5E5]">
+                  <Lock className="size-5 text-[#111111] dark:text-[#d2d0c1]" />
                 </div>
                 <div>
-                  <h3 className="font-serif italic text-2xl font-bold text-[#60241E] dark:text-slate-100 leading-none">
+                  <h3 className="font-serif italic text-2xl font-bold text-[#111111] dark:text-slate-100 leading-none">
                     Admin Portal Security
                   </h3>
-                  <span className="text-[10px] uppercase tracking-widest text-[#E77B49] font-extrabold block mt-0.5">
+                  <span className="text-[10px] uppercase tracking-widest text-[#d2d0c1] font-extrabold block mt-0.5">
                     Authorization Required
                   </span>
                 </div>
               </div>
-              <button type="button" onClick={() => setShowAdminPassModal(false)} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-800">
+              <button type="button" onClick={() => setShowAdminPassModal(false)} className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-[#383838] cursor-pointer">
                 <X className="size-5 text-gray-500" />
               </button>
             </div>
@@ -291,7 +291,7 @@ function SelectWorkspacePage() {
 
             <form onSubmit={handleOpenAdminPortal} className="space-y-4 text-xs font-bold">
               <div>
-                <label className="block text-[#60241E] dark:text-slate-200 mb-1.5 uppercase tracking-wider text-[11px]">
+                <label className="block text-[#111111] dark:text-slate-200 mb-1.5 uppercase tracking-wider text-[11px]">
                   Admin Security Password
                 </label>
                 <div className="relative">
@@ -301,12 +301,12 @@ function SelectWorkspacePage() {
                     value={adminPassInput}
                     onChange={(e) => setAdminPassInput(e.target.value)}
                     placeholder="Enter your Admin Security Password"
-                    className="w-full p-3 rounded-2xl border border-[#E5E7EB] dark:border-slate-700 bg-white dark:bg-slate-800 text-foreground pr-10 font-mono text-sm focus:outline-none focus:border-[#E77B49]"
+                    className="w-full p-3 rounded-2xl border border-[#E5E5E5] dark:border-[#404040] bg-white dark:bg-[#383838] text-foreground pr-10 font-mono text-sm focus:outline-none focus:border-[#111111]"
                   />
                   <button
                     type="button"
                     onClick={() => setShowAdminPassText(!showAdminPassText)}
-                    className="absolute right-3 top-3 text-gray-400 hover:text-gray-600 dark:hover:text-slate-200"
+                    className="absolute right-3 top-3 text-gray-400 hover:text-gray-600 dark:hover:text-slate-200 cursor-pointer"
                   >
                     {showAdminPassText ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
                   </button>
@@ -317,16 +317,16 @@ function SelectWorkspacePage() {
                 <button
                   type="button"
                   onClick={() => setShowAdminPassModal(false)}
-                  className="flex-1 py-3 rounded-2xl bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 font-bold hover:bg-gray-200"
+                  className="flex-1 py-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] text-gray-700 dark:text-slate-300 font-bold hover:bg-gray-200 cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 py-3 rounded-2xl bg-[#60241E] hover:bg-[#4A1B17] dark:bg-[#E77B49] dark:hover:bg-[#D66A38] text-white font-extrabold uppercase shadow-md transition-all flex items-center justify-center gap-2"
+                  className="flex-1 py-3 rounded-2xl bg-[#111111] hover:bg-[#333333] dark:bg-[#d2d0c1] dark:hover:bg-[#D66A38] text-white font-extrabold uppercase shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <span>Unlock Admin</span>
-                  <ArrowRight className="size-4" />
+                  <ArrowRight className="size-4 text-[#d2d0c1]" />
                 </button>
               </div>
             </form>
@@ -336,8 +336,8 @@ function SelectWorkspacePage() {
 
       {/* Footer */}
       <footer className="relative z-10 max-w-6xl mx-auto w-full pt-8 pb-4 text-center border-t border-border/40">
-        <p className="text-[11px] text-[#6B7280] dark:text-slate-500 font-medium flex items-center justify-center gap-1.5">
-          <ShieldCheck className="size-4 text-[#E77B49]" />
+        <p className="text-[11px] text-[#737373] dark:text-slate-500 font-medium flex items-center justify-center gap-1.5">
+          <ShieldCheck className="size-4 text-[#d2d0c1]" />
           <span>Logged in as {authSession?.userEmail || "Restaurant Partner"}</span>
         </p>
       </footer>

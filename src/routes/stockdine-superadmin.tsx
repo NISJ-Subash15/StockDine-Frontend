@@ -247,21 +247,21 @@ function StockDineSuperAdminPage() {
   // -------------------------------------------------------------
   if (!isSuperAdmin) {
     return (
-      <div className="min-h-screen bg-[#FDFCFB] dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col justify-between p-4 sm:p-6 lg:p-10 relative selection:bg-[#E77B49] selection:text-white font-sans overflow-x-hidden transition-colors duration-300">
+      <div className="min-h-screen bg-[#FDFCFB] dark:bg-[#2b2b2b] text-slate-900 dark:text-slate-100 flex flex-col justify-between p-4 sm:p-6 lg:p-10 relative selection:bg-[#d2d0c1] selection:text-white font-sans overflow-x-hidden transition-colors duration-300">
         {/* Ambient Glow */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(96,36,30,0.15),transparent_70%)] dark:bg-[radial-gradient(circle_at_50%_0%,rgba(96,36,30,0.4),transparent_70%)] pointer-events-none" />
 
         {/* Top Header */}
         <header className="relative z-10 flex items-center justify-between max-w-4xl mx-auto w-full pt-2 pb-6">
           <div className="flex items-center gap-3">
-            <div className="size-10 rounded-2xl bg-[#60241E] border border-[#E77B49]/40 flex items-center justify-center shadow-lg">
-              <ShieldCheck className="size-6 text-[#E77B49]" />
+            <div className="size-10 rounded-2xl bg-[#111111] border border-[#d2d0c1]/40 flex items-center justify-center shadow-lg">
+              <ShieldCheck className="size-6 text-[#d2d0c1]" />
             </div>
             <div>
-              <span className="font-serif italic text-2xl sm:text-3xl font-bold tracking-tight text-[#60241E] dark:text-slate-100 block leading-none">
+              <span className="font-serif italic text-2xl sm:text-3xl font-bold tracking-tight text-[#111111] dark:text-slate-100 block leading-none">
                 StockDine OS
               </span>
-              <span className="text-[9px] uppercase tracking-[0.25em] text-[#E77B49] font-extrabold block mt-1">
+              <span className="text-[9px] uppercase tracking-[0.25em] text-[#d2d0c1] font-extrabold block mt-1">
                 Super Admin Security Gateway
               </span>
             </div>
@@ -273,13 +273,13 @@ function StockDineSuperAdminPage() {
         {/* Super Admin Login Card */}
         <main className="relative z-10 flex-1 flex items-center justify-center py-8">
           <div className="w-full max-w-md mx-auto">
-            <div className="rounded-3xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-2xl border border-border dark:border-slate-800 p-8 sm:p-10 shadow-2xl space-y-6">
+            <div className="rounded-3xl bg-white/90 dark:bg-[#222222]/90 backdrop-blur-2xl border border-border dark:border-[#404040] p-8 sm:p-10 shadow-2xl space-y-6">
               <div className="text-center space-y-2">
-                <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#E77B49]/10 text-[#E77B49] text-[10px] font-extrabold uppercase tracking-widest border border-[#E77B49]/20">
+                <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#d2d0c1]/10 text-[#d2d0c1] text-[10px] font-extrabold uppercase tracking-widest border border-[#d2d0c1]/20">
                   <Lock className="size-3" />
                   <span>Restricted Access</span>
                 </div>
-                <h1 className="font-serif italic text-3xl font-bold text-[#60241E] dark:text-slate-100">
+                <h1 className="font-serif italic text-3xl font-bold text-[#111111] dark:text-slate-100">
                   Super Admin Portal
                 </h1>
                 <p className="text-xs text-muted-foreground dark:text-slate-400 font-medium">
@@ -307,7 +307,7 @@ function StockDineSuperAdminPage() {
                       value={loginEmail}
                       onChange={(e) => setLoginEmail(e.target.value)}
                       placeholder="superadmin@stockdine.com"
-                      className="w-full pl-10 pr-4 py-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-border dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
+                      className="w-full pl-10 pr-4 py-3.5 rounded-2xl bg-slate-50 dark:bg-[#383838]/80 border border-border dark:border-[#404040] text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none focus:border-[#d2d0c1]"
                     />
                   </div>
                 </div>
@@ -324,7 +324,7 @@ function StockDineSuperAdminPage() {
                       value={loginPassword}
                       onChange={(e) => setLoginPassword(e.target.value)}
                       placeholder="••••••••"
-                      className="w-full pl-10 pr-4 py-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-border dark:border-slate-700 text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
+                      className="w-full pl-10 pr-4 py-3.5 rounded-2xl bg-slate-50 dark:bg-[#383838]/80 border border-border dark:border-[#404040] text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none focus:border-[#d2d0c1]"
                     />
                   </div>
                 </div>
@@ -332,7 +332,7 @@ function StockDineSuperAdminPage() {
                 <button
                   type="submit"
                   disabled={isLoggingIn}
-                  className="w-full py-4 rounded-2xl bg-[#E77B49] hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-lg hover:shadow-xl transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer mt-2"
+                  className="w-full py-4 rounded-2xl bg-[#d2d0c1] hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-lg hover:shadow-xl transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer mt-2"
                 >
                   {isLoggingIn ? (
                     <span>Authenticating...</span>
@@ -365,19 +365,19 @@ function StockDineSuperAdminPage() {
   // 2. AUTHENTICATED: SUPER ADMIN PLATFORM OS DASHBOARD
   // -------------------------------------------------------------
   return (
-    <div className="min-h-screen bg-[#FDFCFB] dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans selection:bg-[#E77B49] selection:text-white transition-colors duration-300">
+    <div className="min-h-screen bg-[#FDFCFB] dark:bg-[#2b2b2b] text-slate-900 dark:text-slate-100 font-sans selection:bg-[#d2d0c1] selection:text-white transition-colors duration-300">
       {/* Top Super Admin Navigation Header */}
-      <header className="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-b border-border dark:border-slate-800 px-4 sm:px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4 shadow-md">
+      <header className="sticky top-0 z-40 bg-white/95 dark:bg-[#222222]/95 backdrop-blur-xl border-b border-border dark:border-[#404040] px-4 sm:px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4 shadow-md">
         <div className="flex items-center gap-3">
-          <div className="size-10 rounded-2xl bg-[#E77B49] text-white flex items-center justify-center shadow-lg font-bold">
+          <div className="size-10 rounded-2xl bg-[#d2d0c1] text-white flex items-center justify-center shadow-lg font-bold">
             <ShieldCheck className="size-6 text-white" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-serif italic text-2xl font-bold tracking-tight text-[#60241E] dark:text-white leading-none">
+              <span className="font-serif italic text-2xl font-bold tracking-tight text-[#111111] dark:text-white leading-none">
                 StockDine HQ
               </span>
-              <span className="text-[10px] uppercase font-extrabold bg-[#E77B49]/20 text-[#E77B49] px-2.5 py-0.5 rounded-full border border-[#E77B49]/30">
+              <span className="text-[10px] uppercase font-extrabold bg-[#d2d0c1]/20 text-[#d2d0c1] px-2.5 py-0.5 rounded-full border border-[#d2d0c1]/30">
                 Super Admin OS
               </span>
             </div>
@@ -393,7 +393,7 @@ function StockDineSuperAdminPage() {
             type="button"
             onClick={fetchSuperAdminData}
             disabled={loadingData}
-            className="p-2.5 rounded-2xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-border dark:border-slate-700 transition-all cursor-pointer"
+            className="p-2.5 rounded-2xl bg-slate-100 dark:bg-[#383838] hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-border dark:border-[#404040] transition-all cursor-pointer"
             title="Refresh Real MongoDB Data"
           >
             <RefreshCw className={`size-4 ${loadingData ? "animate-spin" : ""}`} />
@@ -416,7 +416,7 @@ function StockDineSuperAdminPage() {
       </header>
 
       {/* Sub-Navigation Tabs */}
-      <nav className="bg-white/80 dark:bg-slate-900/60 border-b border-border dark:border-slate-800 px-4 sm:px-6 py-2 overflow-x-auto">
+      <nav className="bg-white/80 dark:bg-[#222222]/60 border-b border-border dark:border-[#404040] px-4 sm:px-6 py-2 overflow-x-auto">
         <div className="flex items-center gap-2 max-w-7xl mx-auto">
           {[
             { id: "dashboard", label: "Dashboard Overview", icon: <TrendingUp className="size-4" /> },
@@ -434,8 +434,8 @@ function StockDineSuperAdminPage() {
               onClick={() => setActiveTab(tab.id as SuperAdminTab)}
               className={`px-4 py-2.5 rounded-2xl text-xs font-extrabold transition-all flex items-center gap-2 shrink-0 cursor-pointer ${
                 activeTab === tab.id
-                  ? "bg-[#E77B49] text-white shadow-lg"
-                  : "bg-slate-100 dark:bg-slate-800/60 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white border border-border/60 dark:border-slate-700/50"
+                  ? "bg-[#d2d0c1] text-white shadow-lg"
+                  : "bg-slate-100 dark:bg-[#383838]/60 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-[#383838] hover:text-slate-900 dark:hover:text-white border border-border/60 dark:border-[#404040]/50"
               }`}
             >
               {tab.icon}
@@ -452,23 +452,23 @@ function StockDineSuperAdminPage() {
           <div className="space-y-8 animate-in fade-in duration-300">
             {/* Real MongoDB Stat Cards */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-              <div className="p-5 rounded-3xl bg-white dark:bg-slate-900 border border-border dark:border-slate-800 shadow-sm space-y-2">
+              <div className="p-5 rounded-3xl bg-white dark:bg-[#222222] border border-border dark:border-[#404040] shadow-sm space-y-2">
                 <div className="flex items-center justify-between text-muted-foreground dark:text-slate-400">
                   <span className="text-xs font-extrabold uppercase tracking-wider">Total Users</span>
-                  <Users className="size-5 text-[#E77B49]" />
+                  <Users className="size-5 text-[#d2d0c1]" />
                 </div>
-                <p className="text-3xl font-serif italic font-bold text-[#60241E] dark:text-white">
+                <p className="text-3xl font-serif italic font-bold text-[#111111] dark:text-white">
                   {stats?.totalUsers || usersList.length || 0}
                 </p>
                 <p className="text-[10px] text-muted-foreground dark:text-slate-400">Real MongoDB Registered Diners & Admins</p>
               </div>
 
-              <div className="p-5 rounded-3xl bg-white dark:bg-slate-900 border border-border dark:border-slate-800 shadow-sm space-y-2">
+              <div className="p-5 rounded-3xl bg-white dark:bg-[#222222] border border-border dark:border-[#404040] shadow-sm space-y-2">
                 <div className="flex items-center justify-between text-muted-foreground dark:text-slate-400">
                   <span className="text-xs font-extrabold uppercase tracking-wider">Total Restaurants</span>
                   <Building2 className="size-5 text-amber-500" />
                 </div>
-                <p className="text-3xl font-serif italic font-bold text-[#60241E] dark:text-white">
+                <p className="text-3xl font-serif italic font-bold text-[#111111] dark:text-white">
                   {stats?.totalRestaurants || restaurantsList.length || 0}
                 </p>
                 <p className="text-[10px] text-emerald-700 dark:text-emerald-400 font-bold">
@@ -476,12 +476,12 @@ function StockDineSuperAdminPage() {
                 </p>
               </div>
 
-              <div className="p-5 rounded-3xl bg-white dark:bg-slate-900 border border-border dark:border-slate-800 shadow-sm space-y-2">
+              <div className="p-5 rounded-3xl bg-white dark:bg-[#222222] border border-border dark:border-[#404040] shadow-sm space-y-2">
                 <div className="flex items-center justify-between text-muted-foreground dark:text-slate-400">
                   <span className="text-xs font-extrabold uppercase tracking-wider">Total Bookings</span>
                   <Calendar className="size-5 text-blue-500" />
                 </div>
-                <p className="text-3xl font-serif italic font-bold text-[#60241E] dark:text-white">
+                <p className="text-3xl font-serif italic font-bold text-[#111111] dark:text-white">
                   {stats?.totalBookings || bookingsList.length || 0}
                 </p>
                 <p className="text-[10px] text-muted-foreground dark:text-slate-400">
@@ -489,7 +489,7 @@ function StockDineSuperAdminPage() {
                 </p>
               </div>
 
-              <div className="p-5 rounded-3xl bg-white dark:bg-slate-900 border border-border dark:border-slate-800 shadow-sm space-y-2">
+              <div className="p-5 rounded-3xl bg-white dark:bg-[#222222] border border-border dark:border-[#404040] shadow-sm space-y-2">
                 <div className="flex items-center justify-between text-muted-foreground dark:text-slate-400">
                   <span className="text-xs font-extrabold uppercase tracking-wider">Gross GMV</span>
                   <DollarSign className="size-5 text-emerald-600 dark:text-emerald-400" />
@@ -504,20 +504,20 @@ function StockDineSuperAdminPage() {
             </div>
 
             {/* Pending Restaurant Approvals Section */}
-            <div className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-border dark:border-slate-800 shadow-xl space-y-4">
+            <div className="p-6 rounded-3xl bg-white dark:bg-[#222222] border border-border dark:border-[#404040] shadow-xl space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="text-xs uppercase font-extrabold tracking-widest text-[#E77B49] bg-[#E77B49]/10 px-3 py-1 rounded-full border border-[#E77B49]/20">
+                  <span className="text-xs uppercase font-extrabold tracking-widest text-[#d2d0c1] bg-[#d2d0c1]/10 px-3 py-1 rounded-full border border-[#d2d0c1]/20">
                     Action Required
                   </span>
-                  <h2 className="font-serif italic text-2xl font-bold text-[#60241E] dark:text-white">
+                  <h2 className="font-serif italic text-2xl font-bold text-[#111111] dark:text-white">
                     Pending Restaurant Approvals ({restaurantsList.filter((r) => r.status === "Pending").length})
                   </h2>
                 </div>
               </div>
 
               {restaurantsList.filter((r) => r.status === "Pending").length === 0 ? (
-                <div className="p-8 text-center bg-slate-50 dark:bg-slate-800/40 rounded-2xl border border-border dark:border-slate-700 text-muted-foreground dark:text-slate-400 text-xs font-semibold">
+                <div className="p-8 text-center bg-slate-50 dark:bg-[#383838]/40 rounded-2xl border border-border dark:border-[#404040] text-muted-foreground dark:text-slate-400 text-xs font-semibold">
                   ✨ No pending restaurant approvals. All partner applications have been reviewed.
                 </div>
               ) : (
@@ -527,10 +527,10 @@ function StockDineSuperAdminPage() {
                     .map((r) => (
                       <div
                         key={r._id || r.id}
-                        className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-border dark:border-slate-700 space-y-3"
+                        className="p-5 rounded-2xl bg-slate-50 dark:bg-[#383838]/80 border border-border dark:border-[#404040] space-y-3"
                       >
                         <div>
-                          <h3 className="font-serif italic text-xl font-bold text-[#60241E] dark:text-white">
+                          <h3 className="font-serif italic text-xl font-bold text-[#111111] dark:text-white">
                             {r.restaurantName}
                           </h3>
                           <p className="text-xs text-muted-foreground dark:text-slate-400">Owner: {r.ownerName || r.email}</p>
@@ -565,7 +565,7 @@ function StockDineSuperAdminPage() {
           <div className="space-y-6 animate-in fade-in duration-300">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               <div>
-                <h2 className="font-serif italic text-3xl font-bold text-[#60241E] dark:text-white">
+                <h2 className="font-serif italic text-3xl font-bold text-[#111111] dark:text-white">
                   User Management ({usersList.length})
                 </h2>
                 <p className="text-xs text-muted-foreground dark:text-slate-400">
@@ -580,15 +580,15 @@ function StockDineSuperAdminPage() {
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   placeholder="Search user name, email, mobile..."
-                  className="w-full pl-10 pr-4 py-2 rounded-2xl bg-white dark:bg-slate-900 border border-border dark:border-slate-800 text-xs font-semibold text-slate-900 dark:text-slate-100 focus:outline-none focus:border-[#E77B49]"
+                  className="w-full pl-10 pr-4 py-2 rounded-2xl bg-white dark:bg-[#222222] border border-border dark:border-[#404040] text-xs font-semibold text-slate-900 dark:text-slate-100 focus:outline-none focus:border-[#d2d0c1]"
                 />
               </div>
             </div>
 
-            <div className="rounded-3xl bg-white dark:bg-slate-900 border border-border dark:border-slate-800 overflow-hidden shadow-xl">
+            <div className="rounded-3xl bg-white dark:bg-[#222222] border border-border dark:border-[#404040] overflow-hidden shadow-xl">
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs text-slate-700 dark:text-slate-300">
-                  <thead className="bg-slate-50 dark:bg-slate-800/80 text-slate-700 dark:text-slate-400 uppercase text-[10px] tracking-wider font-extrabold border-b border-border dark:border-slate-800">
+                  <thead className="bg-slate-50 dark:bg-[#383838]/80 text-slate-700 dark:text-slate-400 uppercase text-[10px] tracking-wider font-extrabold border-b border-border dark:border-[#404040]">
                     <tr>
                       <th className="p-4">Customer / User</th>
                       <th className="p-4">Mobile Number</th>
@@ -607,7 +607,7 @@ function StockDineSuperAdminPage() {
                           u.mobile?.includes(searchTerm)
                       )
                       .map((u) => (
-                        <tr key={u._id || u.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/40">
+                        <tr key={u._id || u.id} className="hover:bg-slate-50 dark:hover:bg-[#383838]/40">
                           <td className="p-4 font-bold text-slate-900 dark:text-white">
                             <div>{u.name}</div>
                             <div className="text-[10px] text-muted-foreground dark:text-slate-400 font-mono">{u.email || "No email"}</div>
@@ -653,7 +653,7 @@ function StockDineSuperAdminPage() {
           <div className="space-y-6 animate-in fade-in duration-300">
             <div className="flex justify-between items-center">
               <div>
-                <h2 className="font-serif italic text-3xl font-bold text-[#60241E] dark:text-white">
+                <h2 className="font-serif italic text-3xl font-bold text-[#111111] dark:text-white">
                   Restaurant Management ({restaurantsList.length})
                 </h2>
                 <p className="text-xs text-muted-foreground dark:text-slate-400">
@@ -666,7 +666,7 @@ function StockDineSuperAdminPage() {
               {restaurantsList.map((r) => (
                 <div
                   key={r._id || r.id}
-                  className="bg-white dark:bg-slate-900 border border-border dark:border-slate-800 rounded-3xl p-5 shadow-lg space-y-4"
+                  className="bg-white dark:bg-[#222222] border border-border dark:border-[#404040] rounded-3xl p-5 shadow-lg space-y-4"
                 >
                   <div className="flex justify-between items-start">
                     <div>
@@ -681,14 +681,14 @@ function StockDineSuperAdminPage() {
                       >
                         Status: {r.status || "Pending"}
                       </span>
-                      <h3 className="font-serif italic text-2xl font-bold text-[#60241E] dark:text-white">
+                      <h3 className="font-serif italic text-2xl font-bold text-[#111111] dark:text-white">
                         {r.restaurantName}
                       </h3>
                       <p className="text-xs text-muted-foreground dark:text-slate-400">{r.cuisine || "Multi-Cuisine"} • {r.city || "Local"}</p>
                     </div>
                   </div>
 
-                  <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-border dark:border-slate-700 text-xs space-y-1">
+                  <div className="p-3 rounded-2xl bg-slate-50 dark:bg-[#383838]/60 border border-border dark:border-[#404040] text-xs space-y-1">
                     <div className="flex justify-between">
                       <span className="text-muted-foreground dark:text-slate-400">Owner:</span>
                       <span className="font-bold text-slate-900 dark:text-white">{r.ownerName || "Partner"}</span>
@@ -725,7 +725,7 @@ function StockDineSuperAdminPage() {
                     <button
                       type="button"
                       onClick={() => handleDeleteRestaurant(r._id || r.id)}
-                      className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-rose-50 dark:hover:bg-rose-950 border border-border dark:border-slate-700 hover:border-rose-300 dark:hover:border-rose-800 text-slate-700 dark:text-slate-300 hover:text-rose-600 dark:hover:text-rose-300 cursor-pointer"
+                      className="p-2.5 rounded-xl bg-slate-100 dark:bg-[#383838] hover:bg-rose-50 dark:hover:bg-rose-950 border border-border dark:border-[#404040] hover:border-rose-300 dark:hover:border-rose-800 text-slate-700 dark:text-slate-300 hover:text-rose-600 dark:hover:text-rose-300 cursor-pointer"
                       title="Delete Restaurant"
                     >
                       <Trash2 className="size-4" />
@@ -741,7 +741,7 @@ function StockDineSuperAdminPage() {
         {activeTab === "bookings" && (
           <div className="space-y-6 animate-in fade-in duration-300">
             <div>
-              <h2 className="font-serif italic text-3xl font-bold text-[#60241E] dark:text-white">
+              <h2 className="font-serif italic text-3xl font-bold text-[#111111] dark:text-white">
                 Booking Oversight ({bookingsList.length})
               </h2>
               <p className="text-xs text-muted-foreground dark:text-slate-400">
@@ -749,10 +749,10 @@ function StockDineSuperAdminPage() {
               </p>
             </div>
 
-            <div className="rounded-3xl bg-white dark:bg-slate-900 border border-border dark:border-slate-800 overflow-hidden shadow-xl">
+            <div className="rounded-3xl bg-white dark:bg-[#222222] border border-border dark:border-[#404040] overflow-hidden shadow-xl">
               <div className="overflow-x-auto">
                 <table className="w-full text-left text-xs text-slate-700 dark:text-slate-300">
-                  <thead className="bg-slate-50 dark:bg-slate-800/80 text-slate-700 dark:text-slate-400 uppercase text-[10px] tracking-wider font-extrabold border-b border-border dark:border-slate-800">
+                  <thead className="bg-slate-50 dark:bg-[#383838]/80 text-slate-700 dark:text-slate-400 uppercase text-[10px] tracking-wider font-extrabold border-b border-border dark:border-[#404040]">
                     <tr>
                       <th className="p-4">Booking ID</th>
                       <th className="p-4">Restaurant</th>
@@ -764,8 +764,8 @@ function StockDineSuperAdminPage() {
                   </thead>
                   <tbody className="divide-y divide-border dark:divide-slate-800">
                     {bookingsList.map((b) => (
-                      <tr key={b._id || b.id || b.bookingId} className="hover:bg-slate-50 dark:hover:bg-slate-800/40">
-                        <td className="p-4 font-mono font-bold text-[#E77B49]">
+                      <tr key={b._id || b.id || b.bookingId} className="hover:bg-slate-50 dark:hover:bg-[#383838]/40">
+                        <td className="p-4 font-mono font-bold text-[#d2d0c1]">
                           {b.bookingId || b._id}
                         </td>
                         <td className="p-4 font-bold text-slate-900 dark:text-white">{b.restaurantName}</td>
@@ -800,7 +800,7 @@ function StockDineSuperAdminPage() {
         {activeTab === "payments" && (
           <div className="space-y-6 animate-in fade-in duration-300">
             <div>
-              <h2 className="font-serif italic text-3xl font-bold text-[#60241E] dark:text-white">
+              <h2 className="font-serif italic text-3xl font-bold text-[#111111] dark:text-white">
                 Payment &amp; GMV Analytics
               </h2>
               <p className="text-xs text-muted-foreground dark:text-slate-400">
@@ -809,7 +809,7 @@ function StockDineSuperAdminPage() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-              <div className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-border dark:border-slate-800 shadow-xl space-y-2">
+              <div className="p-6 rounded-3xl bg-white dark:bg-[#222222] border border-border dark:border-[#404040] shadow-xl space-y-2">
                 <span className="text-xs font-extrabold uppercase text-muted-foreground dark:text-slate-400">Total Platform GMV</span>
                 <p className="text-4xl font-serif italic font-bold text-emerald-600 dark:text-emerald-400">
                   {formatCurrency(paymentsData?.gmv || stats?.gmv || 0)}
@@ -817,15 +817,15 @@ function StockDineSuperAdminPage() {
                 <p className="text-[10px] text-muted-foreground dark:text-slate-400">Non-cancelled reservation value</p>
               </div>
 
-              <div className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-border dark:border-slate-800 shadow-xl space-y-2">
+              <div className="p-6 rounded-3xl bg-white dark:bg-[#222222] border border-border dark:border-[#404040] shadow-xl space-y-2">
                 <span className="text-xs font-extrabold uppercase text-muted-foreground dark:text-slate-400">Advance Payments Collected</span>
-                <p className="text-4xl font-serif italic font-bold text-[#E77B49]">
+                <p className="text-4xl font-serif italic font-bold text-[#d2d0c1]">
                   {formatCurrency(paymentsData?.totalAdvance || stats?.advancePayments || 0)}
                 </p>
                 <p className="text-[10px] text-muted-foreground dark:text-slate-400">Total upfront deposits processed</p>
               </div>
 
-              <div className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-border dark:border-slate-800 shadow-xl space-y-2">
+              <div className="p-6 rounded-3xl bg-white dark:bg-[#222222] border border-border dark:border-[#404040] shadow-xl space-y-2">
                 <span className="text-xs font-extrabold uppercase text-muted-foreground dark:text-slate-400">Platform Commission (10%)</span>
                 <p className="text-4xl font-serif italic font-bold text-blue-600 dark:text-blue-400">
                   {formatCurrency(((paymentsData?.gmv || stats?.gmv || 0) * 10) / 100)}
@@ -840,7 +840,7 @@ function StockDineSuperAdminPage() {
         {activeTab === "reviews" && (
           <div className="space-y-6 animate-in fade-in duration-300">
             <div>
-              <h2 className="font-serif italic text-3xl font-bold text-[#60241E] dark:text-white">
+              <h2 className="font-serif italic text-3xl font-bold text-[#111111] dark:text-white">
                 Review Moderation ({reviewsList.length})
               </h2>
               <p className="text-xs text-muted-foreground dark:text-slate-400">
@@ -849,7 +849,7 @@ function StockDineSuperAdminPage() {
             </div>
 
             {reviewsList.length === 0 ? (
-              <div className="p-8 text-center bg-white dark:bg-slate-900 rounded-3xl border border-border dark:border-slate-800 text-muted-foreground dark:text-slate-400 text-xs font-semibold">
+              <div className="p-8 text-center bg-white dark:bg-[#222222] rounded-3xl border border-border dark:border-[#404040] text-muted-foreground dark:text-slate-400 text-xs font-semibold">
                 ⭐ No reported or flagged reviews found in database.
               </div>
             ) : (
@@ -857,7 +857,7 @@ function StockDineSuperAdminPage() {
                 {reviewsList.map((rev) => (
                   <div
                     key={rev._id || rev.id}
-                    className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-border dark:border-slate-800 flex justify-between items-start gap-4"
+                    className="p-5 rounded-2xl bg-white dark:bg-[#222222] border border-border dark:border-[#404040] flex justify-between items-start gap-4"
                   >
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
@@ -886,7 +886,7 @@ function StockDineSuperAdminPage() {
         {activeTab === "crm" && (
           <div className="space-y-6 animate-in fade-in duration-300">
             <div>
-              <h2 className="font-serif italic text-3xl font-bold text-[#60241E] dark:text-white">
+              <h2 className="font-serif italic text-3xl font-bold text-[#111111] dark:text-white">
                 CRM &amp; Support Tickets ({crmTickets.length})
               </h2>
               <p className="text-xs text-muted-foreground dark:text-slate-400">
@@ -898,14 +898,14 @@ function StockDineSuperAdminPage() {
               {crmTickets.map((t) => (
                 <div
                   key={t.id || t.ticketId}
-                  className="p-5 rounded-3xl bg-white dark:bg-slate-900 border border-border dark:border-slate-800 space-y-3"
+                  className="p-5 rounded-3xl bg-white dark:bg-[#222222] border border-border dark:border-[#404040] space-y-3"
                 >
                   <div className="flex justify-between items-start">
                     <div>
-                      <span className="text-[10px] font-mono text-[#E77B49] font-bold block">
+                      <span className="text-[10px] font-mono text-[#d2d0c1] font-bold block">
                         {t.ticketId}
                       </span>
-                      <h3 className="font-serif italic text-xl font-bold text-[#60241E] dark:text-white">
+                      <h3 className="font-serif italic text-xl font-bold text-[#111111] dark:text-white">
                         {t.subject}
                       </h3>
                       <p className="text-xs text-muted-foreground dark:text-slate-400">
@@ -922,7 +922,7 @@ function StockDineSuperAdminPage() {
                       {t.status}
                     </span>
                   </div>
-                  <p className="text-xs text-slate-800 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/60 p-3 rounded-2xl border border-border dark:border-slate-700">
+                  <p className="text-xs text-slate-800 dark:text-slate-300 bg-slate-50 dark:bg-[#383838]/60 p-3 rounded-2xl border border-border dark:border-[#404040]">
                     "{t.message}"
                   </p>
                 </div>
@@ -935,7 +935,7 @@ function StockDineSuperAdminPage() {
         {activeTab === "settings" && (
           <div className="space-y-6 max-w-2xl animate-in fade-in duration-300">
             <div>
-              <h2 className="font-serif italic text-3xl font-bold text-[#60241E] dark:text-white">
+              <h2 className="font-serif italic text-3xl font-bold text-[#111111] dark:text-white">
                 Platform Settings
               </h2>
               <p className="text-xs text-muted-foreground dark:text-slate-400">
@@ -943,16 +943,16 @@ function StockDineSuperAdminPage() {
               </p>
             </div>
 
-            <div className="p-6 rounded-3xl bg-white dark:bg-slate-900 border border-border dark:border-slate-800 space-y-4 text-xs font-bold">
-              <div className="flex justify-between items-center py-2 border-b border-border dark:border-slate-800">
+            <div className="p-6 rounded-3xl bg-white dark:bg-[#222222] border border-border dark:border-[#404040] space-y-4 text-xs font-bold">
+              <div className="flex justify-between items-center py-2 border-b border-border dark:border-[#404040]">
                 <span className="text-slate-900 dark:text-slate-100">Default Restaurant Commission Rate</span>
-                <span className="text-[#E77B49] font-mono">10%</span>
+                <span className="text-[#d2d0c1] font-mono">10%</span>
               </div>
-              <div className="flex justify-between items-center py-2 border-b border-border dark:border-slate-800">
+              <div className="flex justify-between items-center py-2 border-b border-border dark:border-[#404040]">
                 <span className="text-slate-900 dark:text-slate-100">Advance Payment Percentage</span>
-                <span className="text-[#E77B49] font-mono">20%</span>
+                <span className="text-[#d2d0c1] font-mono">20%</span>
               </div>
-              <div className="flex justify-between items-center py-2 border-b border-border dark:border-slate-800">
+              <div className="flex justify-between items-center py-2 border-b border-border dark:border-[#404040]">
                 <span className="text-slate-900 dark:text-slate-100">Platform Currency</span>
                 <span className="text-emerald-600 dark:text-emerald-400 font-mono">INR (₹)</span>
               </div>
