@@ -59,8 +59,8 @@ function StockDineSuperAdminPage() {
       authSession?.permissions === "superadmin");
 
   // Login form state
-  const [loginEmail, setLoginEmail] = useState("superadmin@stockdine.com");
-  const [loginPassword, setLoginPassword] = useState("super123");
+  const [loginEmail, setLoginEmail] = useState("nisjsubash@gmail.com");
+  const [loginPassword, setLoginPassword] = useState("15082007");
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [loginError, setLoginError] = useState("");
 

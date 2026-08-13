@@ -81,7 +81,7 @@ function SuperAdminPage() {
             Your current logged in session (<code>{authSession?.userEmail || "Guest"}</code>) does not have Super Admin permissions.
           </p>
           <div className="p-3 rounded-2xl bg-white dark:bg-[#383838] border border-border dark:border-[#404040] text-[11px] text-[#111111] dark:text-[#d2d0c1] font-mono text-left">
-            Sign in as <code>superadmin@stockdine.com</code> with password <code>super123</code> to unlock the Super Admin OS.
+            Sign in as <code>nisjsubash@gmail.com</code> with password <code>15082007</code> to unlock the Super Admin OS.
           </div>
           <div className="pt-2 flex justify-center gap-3">
             <Link
