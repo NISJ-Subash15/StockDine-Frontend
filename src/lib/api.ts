@@ -1,10 +1,19 @@
 const getApiBaseUrl = (): string => {
+  let envUrl = "";
   if (typeof import.meta !== "undefined" && import.meta.env && import.meta.env.VITE_API_URL) {
-    return import.meta.env.VITE_API_URL.replace(/\/+$/, "");
+    envUrl = import.meta.env.VITE_API_URL.trim();
+  } else if (typeof process !== "undefined" && process.env && process.env.VITE_API_URL) {
+    envUrl = process.env.VITE_API_URL.trim();
   }
-  if (typeof process !== "undefined" && process.env && process.env.VITE_API_URL) {
-    return process.env.VITE_API_URL.replace(/\/+$/, "");
+
+  if (envUrl) {
+    let clean = envUrl.replace(/\/+$/, "");
+    if (!clean.endsWith("/api")) {
+      clean = `${clean}/api`;
+    }
+    return clean;
   }
+
   if (typeof window !== "undefined" && window.location) {
     const host = window.location.hostname;
     const protocol = window.location.protocol === "https:" ? "https:" : "http:";
@@ -71,6 +80,8 @@ async function apiFetch<T>(endpoint: string, options: RequestInit = {}): Promise
   try {
     return await doFetch(primaryUrl);
   } catch (error: any) {
+    const isNetworkErr = error.name === "TypeError" || error.message?.includes("fetch") || error.message?.includes("NetworkError");
+
     // If primary attempt returned 404 or network failure, attempt fallback URLs for localhost / 127.0.0.1 backend
     const fallbackUrls: string[] = [];
     if (!primaryUrl.includes("localhost:5000")) {
@@ -85,10 +96,16 @@ async function apiFetch<T>(endpoint: string, options: RequestInit = {}): Promise
         return await doFetch(fallbackUrl);
       } catch (fbErr: any) {
         // Continue trying fallback URLs if status was 404 or network failure
-        if (fbErr.status !== 404 && fbErr.status !== undefined) {
+        if (fbErr.status !== 404 && fbErr.status !== undefined && fbErr.name !== "TypeError") {
           throw fbErr; // Re-throw non-404 business errors (e.g. 400 Bad Request, 401 Unauthorized)
         }
       }
+    }
+
+    if (isNetworkErr) {
+      const friendlyErr: any = new Error("Unable to connect to StockDine services. Please ensure the backend server is running on http://localhost:5000.");
+      friendlyErr.status = 503;
+      throw friendlyErr;
     }
 
     console.error(`❌ API Fetch Error [${options.method || "GET"} ${primaryUrl}]:`, error.message || error);
