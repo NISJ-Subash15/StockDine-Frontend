@@ -97,13 +97,8 @@ export function LoginPage() {
             profileData: res.user,
           });
 
-          const superAdminEnvUrl = import.meta.env.VITE_SUPERADMIN_URL;
           setTimeout(() => {
-            if (superAdminEnvUrl && (superAdminEnvUrl.startsWith("http://") || superAdminEnvUrl.startsWith("https://"))) {
-              window.location.href = superAdminEnvUrl;
-            } else {
-              navigate({ to: "/stockdine-superadmin", replace: true });
-            }
+            navigate({ to: "/stockdine-superadmin", replace: true });
           }, 600);
           return;
         }

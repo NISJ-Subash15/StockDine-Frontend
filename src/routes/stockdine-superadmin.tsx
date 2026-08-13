@@ -48,7 +48,7 @@ type SuperAdminTab =
   | "crm"
   | "settings";
 
-function StockDineSuperAdminPage() {
+export function StockDineSuperAdminPage() {
   const navigate = useNavigate();
   const { authSession, setAuthSession, signOut } = useStockDineStore();
 

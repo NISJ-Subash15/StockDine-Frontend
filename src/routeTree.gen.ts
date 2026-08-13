@@ -18,6 +18,7 @@ import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as StockdineSuperadminRouteImport } from './routes/stockdine-superadmin'
 import { Route as SuperAdminRouteImport } from './routes/super-admin'
+import { Route as SuperadminRouteImport } from './routes/superadmin'
 import { Route as AuthSelectRoleRouteImport } from './routes/auth/select-role'
 import { Route as AuthWorkspaceRouteImport } from './routes/auth/workspace'
 import { Route as CustomerIndexRouteImport } from './routes/customer/index'
@@ -85,6 +86,11 @@ const StockdineSuperadminRoute = StockdineSuperadminRouteImport.update({
 const SuperAdminRoute = SuperAdminRouteImport.update({
   id: '/super-admin',
   path: '/super-admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SuperadminRoute = SuperadminRouteImport.update({
+  id: '/superadmin',
+  path: '/superadmin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthSelectRoleRoute = AuthSelectRoleRouteImport.update({
@@ -221,6 +227,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stockdine-superadmin': typeof StockdineSuperadminRouteWithChildren
   '/super-admin': typeof SuperAdminRoute
+  '/superadmin': typeof SuperadminRoute
   '/auth/select-role': typeof AuthSelectRoleRoute
   '/auth/workspace': typeof AuthWorkspaceRoute
   '/customer/bookings': typeof CustomerBookingsRoute
@@ -254,6 +261,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stockdine-superadmin': typeof StockdineSuperadminRouteWithChildren
   '/super-admin': typeof SuperAdminRoute
+  '/superadmin': typeof SuperadminRoute
   '/auth/select-role': typeof AuthSelectRoleRoute
   '/auth/workspace': typeof AuthWorkspaceRoute
   '/customer/bookings': typeof CustomerBookingsRoute
@@ -289,6 +297,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stockdine-superadmin': typeof StockdineSuperadminRouteWithChildren
   '/super-admin': typeof SuperAdminRoute
+  '/superadmin': typeof SuperadminRoute
   '/auth/select-role': typeof AuthSelectRoleRoute
   '/auth/workspace': typeof AuthWorkspaceRoute
   '/customer/bookings': typeof CustomerBookingsRoute
@@ -325,6 +334,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/stockdine-superadmin'
     | '/super-admin'
+    | '/superadmin'
     | '/auth/select-role'
     | '/auth/workspace'
     | '/customer/bookings'
@@ -358,6 +368,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/stockdine-superadmin'
     | '/super-admin'
+    | '/superadmin'
     | '/auth/select-role'
     | '/auth/workspace'
     | '/customer/bookings'
@@ -392,6 +403,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/stockdine-superadmin'
     | '/super-admin'
+    | '/superadmin'
     | '/auth/select-role'
     | '/auth/workspace'
     | '/customer/bookings'
@@ -427,6 +439,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StockdineSuperadminRoute: typeof StockdineSuperadminRouteWithChildren
   SuperAdminRoute: typeof SuperAdminRoute
+  SuperadminRoute: typeof SuperadminRoute
   AuthSelectRoleRoute: typeof AuthSelectRoleRoute
   AuthWorkspaceRoute: typeof AuthWorkspaceRoute
   RestaurantAdminRoute: typeof RestaurantAdminRoute
@@ -500,6 +513,13 @@ declare module '@tanstack/react-router' {
       path: '/super-admin'
       fullPath: '/super-admin'
       preLoaderRoute: typeof SuperAdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/superadmin': {
+      id: '/superadmin'
+      path: '/superadmin'
+      fullPath: '/superadmin'
+      preLoaderRoute: typeof SuperadminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth/select-role': {
@@ -725,6 +745,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   StockdineSuperadminRoute: StockdineSuperadminRouteWithChildren,
   SuperAdminRoute: SuperAdminRoute,
+  SuperadminRoute: SuperadminRoute,
   AuthSelectRoleRoute: AuthSelectRoleRoute,
   AuthWorkspaceRoute: AuthWorkspaceRoute,
   RestaurantAdminRoute: RestaurantAdminRoute,
