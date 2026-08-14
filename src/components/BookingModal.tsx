@@ -170,20 +170,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
       };
     });
 
-    try {
-      await api.bookings.create({
-        customerName,
-        customerPhone,
-        restaurantId: restaurant.id,
-        tableNumber: selectedTableObj ? selectedTableObj.tableNumber : "Table 01",
-        guests: guestCount,
-        bookingDate,
-        bookingTime,
-        bookedItems: bookingItems,
-      });
-    } catch (e) {
-      console.log("Saving booking to local store fallback");
-    }
+
 
     let booking: any = null;
     if (onConfirmBooking) {

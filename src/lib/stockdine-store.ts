@@ -1234,7 +1234,7 @@ export const stockDineStore = {
 
   createBooking: async (bookingData: any) => {
     const bookingId = "#SD-BK-" + Math.floor(1000 + Math.random() * 9000);
-    const newBooking: Booking = {
+    const localBooking: Booking = {
       ...bookingData,
       bookingId,
       paymentId: "#PAY-" + Math.floor(1000 + Math.random() * 9000),
@@ -1242,14 +1242,42 @@ export const stockDineStore = {
       bookingStatus: "Confirmed",
       createdAt: "Just now",
     };
-    initialBookings = [newBooking, ...initialBookings];
-    notify();
+
     try {
-      await api.bookings.create(bookingData);
+      const res: any = await api.bookings.create(bookingData);
+      if (res && res.success && res.booking) {
+        const b = res.booking;
+        const apiBooking: Booking = {
+          bookingId: b.bookingId || bookingId,
+          paymentId: "#PAY-" + Math.floor(1000 + Math.random() * 9000),
+          restaurantId: b.restaurantId || (b.restaurant?._id ? String(b.restaurant._id) : bookingData.restaurantId),
+          restaurantName: b.restaurantName || b.restaurant?.restaurantName || bookingData.restaurantName || "Partner Restaurant",
+          customerName: b.customerName || bookingData.customerName,
+          customerPhone: b.customerPhone || bookingData.customerPhone,
+          items: bookingData.items || [],
+          tableId: b.tableId || bookingData.tableId || "",
+          tableNumber: b.tableNumber || bookingData.tableNumber || "TBD",
+          date: b.bookingDate || bookingData.date,
+          time: b.bookingTime || bookingData.time,
+          totalAmount: b.totalAmount !== undefined ? b.totalAmount : bookingData.totalAmount || 0,
+          advanceAmount: b.advanceAmount !== undefined ? b.advanceAmount : bookingData.advanceAmount || 0,
+          remainingAmount: b.remainingAmount !== undefined ? b.remainingAmount : (b.totalAmount - b.advanceAmount) || 0,
+          paymentStatus: "Confirmed",
+          bookingStatus: "Confirmed",
+          qrCodeUrl: b.qrCode,
+          createdAt: b.createdAt ? new Date(b.createdAt).toLocaleDateString() : "Just now",
+        };
+        initialBookings = [apiBooking, ...initialBookings.filter((x) => x.bookingId !== bookingId)];
+        notify();
+        return apiBooking;
+      }
     } catch (err) {
       console.error("Failed to create booking in API:", err);
     }
-    return newBooking;
+
+    initialBookings = [localBooking, ...initialBookings];
+    notify();
+    return localBooking;
   },
 
   updateBookingStatus: (bookingId: string, status: BookingStatus) => {
