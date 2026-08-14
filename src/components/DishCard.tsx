@@ -128,35 +128,35 @@ export const DishCard: React.FC<DishCardProps> = ({
         <div className="space-y-1">
           <h3
             onClick={() => onSelect && onSelect(dish)}
-            className="font-serif italic font-bold text-lg sm:text-xl text-[#111111] dark:text-slate-100 leading-tight line-clamp-1 cursor-pointer hover:text-[#d2d0c1] transition-colors"
+            className="font-serif italic font-bold text-lg sm:text-xl text-[#111111] dark:text-slate-100 leading-tight line-clamp-1 cursor-pointer hover:text-amber-600 dark:hover:text-amber-300 transition-colors"
           >
             {dish.name}
           </h3>
 
-          <p className="text-xs text-[#333333] dark:text-slate-400 font-medium line-clamp-2 leading-relaxed">
+          <p className="text-xs text-slate-700 dark:text-slate-200 font-semibold line-clamp-2 leading-relaxed">
             {dish.description}
           </p>
         </div>
       </div>
 
       {/* Footer Pricing & CTA */}
-      <div className="pt-3 mt-3 border-t border-[#E5E5E5] dark:border-[#404040] space-y-3">
+      <div className="pt-3 mt-3 border-t border-slate-300 dark:border-[#404040] space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex flex-col">
-            <span className="text-[10px] font-extrabold uppercase text-[#737373] dark:text-slate-400">Price</span>
+            <span className="text-[10px] font-black uppercase text-slate-600 dark:text-slate-300">Price</span>
             <div className="flex items-baseline gap-1.5">
               <span className="font-serif italic font-bold text-xl text-[#111111] dark:text-slate-100">
                 {formatCurrency(dish.discountPrice || dish.price)}
               </span>
               {dish.discountPrice && (
-                <span className="line-through text-xs text-[#737373] dark:text-slate-500">
+                <span className="line-through text-xs text-slate-500 dark:text-slate-400 font-bold">
                   {formatCurrency(dish.price)}
                 </span>
               )}
             </div>
           </div>
 
-          <span className="text-[11px] font-bold text-[#737373] dark:text-slate-400">
+          <span className="text-[11px] font-extrabold text-slate-800 dark:text-slate-200">
             ⏱️ {dish.prepTime}
           </span>
         </div>
@@ -165,9 +165,9 @@ export const DishCard: React.FC<DishCardProps> = ({
           <Link
             to="/customer/restaurant/$restaurantId"
             params={{ restaurantId: dish.restaurantId }}
-            className="py-2.5 px-3 rounded-2xl bg-[#F5F5F5] dark:bg-[#383838] hover:bg-[#E5E5E5] dark:hover:bg-slate-700 border border-[#E5E5E5] dark:border-[#404040] text-[#111111] dark:text-slate-200 text-xs font-extrabold text-center transition-all flex items-center justify-center gap-1 active:scale-95 shadow-xs cursor-pointer"
+            className="py-2.5 px-3 rounded-2xl bg-slate-100 dark:bg-[#383838] hover:bg-slate-200 dark:hover:bg-[#484848] border border-slate-300 dark:border-[#505050] text-slate-900 dark:text-white text-xs font-black text-center transition-all flex items-center justify-center gap-1 active:scale-95 shadow-xs cursor-pointer"
           >
-            <Eye className="size-3.5 text-[#111111] dark:text-[#d2d0c1]" />
+            <Eye className="size-3.5 text-slate-800 dark:text-slate-200" />
             <span>View Venue</span>
           </Link>
 
@@ -179,13 +179,13 @@ export const DishCard: React.FC<DishCardProps> = ({
               }
             }}
             disabled={!isAvailable}
-            className={`py-2.5 px-3 rounded-2xl text-xs font-extrabold text-center shadow-md transition-all flex items-center justify-center gap-1 active:scale-95 cursor-pointer ${
+            className={`py-2.5 px-3 rounded-2xl text-xs font-black text-center shadow-md transition-all flex items-center justify-center gap-1 active:scale-95 cursor-pointer ${
               isAvailable
-                ? "bg-[#111111] hover:bg-[#333333] text-white"
-                : "bg-gray-200 dark:bg-[#383838] text-gray-500 dark:text-slate-500 cursor-not-allowed"
+                ? "bg-[#111111] hover:bg-[#333333] dark:bg-white dark:hover:bg-slate-200 text-white dark:text-[#111111]"
+                : "bg-slate-200 dark:bg-[#383838] text-slate-500 dark:text-slate-400 cursor-not-allowed"
             }`}
           >
-            <Calendar className="size-3.5 text-[#d2d0c1]" />
+            <Calendar className="size-3.5 text-amber-400 dark:text-amber-600" />
             <span>Book Table</span>
           </button>
         </div>

@@ -82,16 +82,16 @@ export const RestaurantCard: React.FC<RestaurantCardProps> = ({
 
         {/* Details Content */}
         <div className="p-4 space-y-3">
-          <p className="text-xs text-[#333333] font-medium line-clamp-2 leading-relaxed">
+          <p className="text-xs text-slate-700 dark:text-slate-200 font-semibold line-clamp-2 leading-relaxed">
             {restaurant.description}
           </p>
 
           <div className="flex flex-wrap items-center gap-2 text-xs font-semibold">
-            <span className="text-[#111111] bg-[#F5F5F5] px-2.5 py-1 rounded-full font-bold border border-[#E5E5E5]">
+            <span className="text-slate-900 dark:text-slate-100 bg-slate-100 dark:bg-[#383838] px-2.5 py-1 rounded-full font-bold border border-slate-300 dark:border-[#505050]">
               {restaurant.priceRange}
             </span>
-            <span className="text-[#737373] flex items-center gap-1.5 font-medium">
-              <Utensils className="size-3.5 text-[#d2d0c1]" />
+            <span className="text-slate-700 dark:text-slate-300 flex items-center gap-1.5 font-bold">
+              <Utensils className="size-3.5 text-amber-500" />
               {Array.isArray(restaurant.cuisines) ? restaurant.cuisines.join(" • ") : restaurant.cuisines}
             </span>
           </div>
@@ -100,13 +100,13 @@ export const RestaurantCard: React.FC<RestaurantCardProps> = ({
 
       {/* Available Tables & Action Buttons Footer */}
       <div className="p-4 pt-0 space-y-3">
-        <div className="flex items-center justify-between pt-3 border-t border-[#E5E5E5]">
-          <span className="text-xs font-bold text-[#111111] bg-[#d2d0c1]/10 px-3 py-1 rounded-full border border-[#d2d0c1]/30 flex items-center gap-1.5">
-            <span className="size-2 rounded-full bg-[#d2d0c1] animate-pulse" />
+        <div className="flex items-center justify-between pt-3 border-t border-slate-300 dark:border-[#404040]">
+          <span className="text-xs font-black text-slate-900 dark:text-slate-100 bg-emerald-500/15 px-3 py-1 rounded-full border border-emerald-500/30 flex items-center gap-1.5">
+            <span className="size-2 rounded-full bg-emerald-500 animate-pulse" />
             {restaurant.availableTablesCount || 5} Tables Available
           </span>
 
-          <span className="text-[11px] font-bold text-[#737373]">
+          <span className="text-[11px] font-extrabold text-slate-700 dark:text-slate-300">
             {restaurant.category || "Fine Dining"}
           </span>
         </div>
@@ -115,9 +115,9 @@ export const RestaurantCard: React.FC<RestaurantCardProps> = ({
           <Link
             to="/customer/restaurant/$restaurantId"
             params={{ restaurantId: restaurant.id }}
-            className="py-2.5 px-3 rounded-2xl bg-[#F5F5F5] hover:bg-[#E5E5E5] border border-[#E5E5E5] text-[#111111] text-xs font-extrabold text-center transition-all flex items-center justify-center gap-1.5 active:scale-95 shadow-xs"
+            className="py-2.5 px-3 rounded-2xl bg-slate-100 dark:bg-[#383838] hover:bg-slate-200 dark:hover:bg-[#484848] border border-slate-300 dark:border-[#505050] text-slate-900 dark:text-white text-xs font-black text-center transition-all flex items-center justify-center gap-1.5 active:scale-95 shadow-xs"
           >
-            <Eye className="size-3.5 text-[#111111]" />
+            <Eye className="size-3.5 text-slate-800 dark:text-slate-200" />
             <span>View Details</span>
           </Link>
 
@@ -129,9 +129,9 @@ export const RestaurantCard: React.FC<RestaurantCardProps> = ({
                 onBookNow(restaurant);
               }
             }}
-            className="py-2.5 px-3 rounded-2xl bg-[#111111] hover:bg-[#333333] text-white text-xs font-extrabold text-center shadow-md transition-all flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer"
+            className="py-2.5 px-3 rounded-2xl bg-[#111111] hover:bg-[#333333] dark:bg-white dark:hover:bg-slate-200 text-white dark:text-[#111111] text-xs font-black text-center shadow-md transition-all flex items-center justify-center gap-1.5 active:scale-95 cursor-pointer"
           >
-            <Calendar className="size-3.5 text-[#d2d0c1]" />
+            <Calendar className="size-3.5 text-amber-400 dark:text-amber-600" />
             <span>Book Table</span>
           </button>
         </div>

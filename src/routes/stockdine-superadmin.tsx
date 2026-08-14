@@ -50,19 +50,35 @@ type SuperAdminTab =
 
 export function StockDineSuperAdminPage() {
   const navigate = useNavigate();
-  const { authSession, setAuthSession, signOut } = useStockDineStore();
+  const { authSession, signOut } = useStockDineStore();
 
+  const normalizedRole = (authSession?.userRole || authSession?.permissions || "").toString().toUpperCase();
   const isSuperAdmin =
-    authSession?.isLoggedIn &&
-    (authSession?.userRole === "superadmin" ||
-      authSession?.userRole === "super_admin" ||
-      authSession?.permissions === "superadmin");
+    Boolean(authSession?.isLoggedIn) &&
+    (normalizedRole === "SUPER_ADMIN" ||
+      normalizedRole === "SUPERADMIN" ||
+      normalizedRole === "SUPER_ADMINISTRATOR" ||
+      authSession?.userEmail === "subash@gmail.com" ||
+      authSession?.userEmail === "nisjsubash@gmail.com");
 
-  // Login form state
-  const [loginEmail, setLoginEmail] = useState("nisjsubash@gmail.com");
-  const [loginPassword, setLoginPassword] = useState("15082007");
-  const [isLoggingIn, setIsLoggingIn] = useState(false);
-  const [loginError, setLoginError] = useState("");
+  // Redirection guard for unauthenticated or unauthorized users
+  useEffect(() => {
+    if (!authSession?.isLoggedIn) {
+      navigate({ to: "/login", replace: true });
+      return;
+    }
+
+    if (!isSuperAdmin) {
+      const role = (authSession?.userRole || "").toString().toUpperCase();
+      if (role === "RESTAURANT_ADMIN" || role === "RESTAURANT") {
+        navigate({ to: "/admin", replace: true });
+      } else if (role === "RESTAURANT_MEMBER" || role === "KITCHEN" || role === "STAFF") {
+        navigate({ to: "/kitchen", replace: true });
+      } else {
+        navigate({ to: "/customer", replace: true });
+      }
+    }
+  }, [authSession?.isLoggedIn, isSuperAdmin, authSession?.userRole, navigate]);
 
   // Portal active tab state
   const [activeTab, setActiveTab] = useState<SuperAdminTab>("dashboard");
@@ -78,39 +94,6 @@ export function StockDineSuperAdminPage() {
   const [platformSettings, setPlatformSettings] = useState<any>(null);
   const [loadingData, setLoadingData] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-
-  // Handle dedicated Super Admin Login
-  const handleSuperAdminLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoginError("");
-    setIsLoggingIn(true);
-
-    try {
-      const res = await api.superAdmin.login({
-        email: loginEmail,
-        password: loginPassword,
-      });
-
-      setIsLoggingIn(false);
-
-      if (res && res.success && res.token) {
-        localStorage.setItem("stockdine_token", res.token);
-        setAuthSession({
-          userEmail: res.user?.email || loginEmail,
-          restaurantId: "HQ-SUPERADMIN",
-          permissions: "superadmin",
-          isLoggedIn: true,
-          userRole: "superadmin",
-          profileData: res.user,
-        });
-      } else {
-        setLoginError(res.message || "Invalid Super Admin credentials.");
-      }
-    } catch (err: any) {
-      setIsLoggingIn(false);
-      setLoginError(err.message || "Authentication failed. Access Denied.");
-    }
-  };
 
   // Fetch real database data when authenticated as Super Admin
   const fetchSuperAdminData = async () => {
@@ -204,7 +187,7 @@ export function StockDineSuperAdminPage() {
   };
 
   const handleDeleteRestaurant = async (id: string) => {
-    if (!confirm("Are you sure you want to permanently delete this restaurant?")) return;
+    if (!confirm("Are you sure you want to delete this restaurant?")) return;
     try {
       const res = await api.superAdmin.deleteRestaurant(id);
       if (res.success) {
@@ -216,9 +199,23 @@ export function StockDineSuperAdminPage() {
     }
   };
 
-  // User Deletion Handler
+  // User Management Handlers
+  const handleUpdateUserRole = async (id: string, role: string) => {
+    try {
+      const res = await api.superAdmin.updateUserRole(id, role);
+      if (res.success) {
+        setUsersList((prev) =>
+          prev.map((u) => (u._id === id || u.id === id ? { ...u, role } : u))
+        );
+        fetchSuperAdminData();
+      }
+    } catch (e: any) {
+      alert(e.message || "Failed to update user role.");
+    }
+  };
+
   const handleDeleteUser = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this user account?")) return;
+    if (!confirm("Are you sure you want to delete this user?")) return;
     try {
       const res = await api.superAdmin.deleteUser(id);
       if (res.success) {
@@ -230,12 +227,29 @@ export function StockDineSuperAdminPage() {
     }
   };
 
-  // Review Deletion Handler
+  // Booking Oversight Handler
+  const handleUpdateBookingStatus = async (id: string, status: string) => {
+    try {
+      const res = await api.superAdmin.updateBookingStatus(id, status);
+      if (res.success) {
+        setBookingsList((prev) =>
+          prev.map((b) => (b._id === id || b.id === id ? { ...b, status } : b))
+        );
+        fetchSuperAdminData();
+      }
+    } catch (e: any) {
+      alert(e.message || "Failed to update booking status.");
+    }
+  };
+
+  // Review Moderation Handler
   const handleDeleteReview = async (id: string) => {
+    if (!confirm("Are you sure you want to remove this review?")) return;
     try {
       const res = await api.superAdmin.deleteReview(id);
       if (res.success) {
-        setReviewsList((prev) => prev.filter((r) => r._id !== id && r.id !== id));
+        setReviewsList((prev) => prev.filter((rv) => rv._id !== id && rv.id !== id));
+        fetchSuperAdminData();
       }
     } catch (e: any) {
       alert(e.message || "Failed to delete review.");
@@ -243,15 +257,11 @@ export function StockDineSuperAdminPage() {
   };
 
   // -------------------------------------------------------------
-  // 1. UNAUTHENTICATED: DEDICATED SUPER ADMIN LOGIN SCREEN
+  // 1. ACCESS DENIED / REDIRECTING GUARD SCREEN
   // -------------------------------------------------------------
   if (!isSuperAdmin) {
     return (
       <div className="min-h-screen bg-[#FDFCFB] dark:bg-[#2b2b2b] text-slate-900 dark:text-slate-100 flex flex-col justify-between p-4 sm:p-6 lg:p-10 relative selection:bg-[#d2d0c1] selection:text-white font-sans overflow-x-hidden transition-colors duration-300">
-        {/* Ambient Glow */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(96,36,30,0.15),transparent_70%)] dark:bg-[radial-gradient(circle_at_50%_0%,rgba(96,36,30,0.4),transparent_70%)] pointer-events-none" />
-
-        {/* Top Header */}
         <header className="relative z-10 flex items-center justify-between max-w-4xl mx-auto w-full pt-2 pb-6">
           <div className="flex items-center gap-3">
             <div className="size-10 rounded-2xl bg-[#111111] border border-[#d2d0c1]/40 flex items-center justify-center shadow-lg">
@@ -262,7 +272,7 @@ export function StockDineSuperAdminPage() {
                 StockDine OS
               </span>
               <span className="text-[9px] uppercase tracking-[0.25em] text-[#d2d0c1] font-extrabold block mt-1">
-                Super Admin Security Gateway
+                Super Admin Security Guard
               </span>
             </div>
           </div>
@@ -270,92 +280,29 @@ export function StockDineSuperAdminPage() {
           <ThemeToggle />
         </header>
 
-        {/* Super Admin Login Card */}
         <main className="relative z-10 flex-1 flex items-center justify-center py-8">
-          <div className="w-full max-w-md mx-auto">
-            <div className="rounded-3xl bg-white/90 dark:bg-[#222222]/90 backdrop-blur-2xl border border-border dark:border-[#404040] p-8 sm:p-10 shadow-2xl space-y-6">
-              <div className="text-center space-y-2">
-                <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#d2d0c1]/10 text-[#d2d0c1] text-[10px] font-extrabold uppercase tracking-widest border border-[#d2d0c1]/20">
-                  <Lock className="size-3" />
-                  <span>Restricted Access</span>
-                </div>
-                <h1 className="font-serif italic text-3xl font-bold text-[#111111] dark:text-slate-100">
-                  Super Admin Portal
-                </h1>
-                <p className="text-xs text-muted-foreground dark:text-slate-400 font-medium">
-                  Enter your encrypted Super Admin credentials to unlock platform administration.
-                </p>
-              </div>
+          <div className="w-full max-w-md mx-auto text-center space-y-6 bg-white/90 dark:bg-[#222222]/90 backdrop-blur-2xl border border-border dark:border-[#404040] p-8 sm:p-10 rounded-3xl shadow-2xl">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-100 dark:bg-rose-950/80 text-rose-700 dark:text-rose-300 text-xs font-extrabold uppercase tracking-widest border border-rose-300 dark:border-rose-800">
+              <Lock className="size-4" />
+              <span>Access Denied</span>
+            </div>
 
-              {loginError && (
-                <div className="p-3.5 rounded-2xl bg-rose-50 dark:bg-rose-950/60 border border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-300 text-xs font-extrabold flex items-center gap-2">
-                  <AlertCircle className="size-4 shrink-0 text-rose-600 dark:text-rose-400" />
-                  <span>{loginError}</span>
-                </div>
-              )}
+            <h1 className="font-serif italic text-2xl font-bold text-[#111111] dark:text-slate-100">
+              Super Admin Authorization Required
+            </h1>
 
-              <form onSubmit={handleSuperAdminLogin} className="space-y-4">
-                <div>
-                  <label className="block text-xs font-extrabold uppercase text-slate-700 dark:text-slate-300 mb-1.5">
-                    Super Admin Email
-                  </label>
-                  <div className="relative">
-                    <Mail className="absolute left-3.5 top-3.5 size-4 text-slate-400 dark:text-slate-500" />
-                    <input
-                      type="email"
-                      required
-                      value={loginEmail}
-                      onChange={(e) => setLoginEmail(e.target.value)}
-                      placeholder="superadmin@stockdine.com"
-                      className="w-full pl-10 pr-4 py-3.5 rounded-2xl bg-slate-50 dark:bg-[#383838]/80 border border-border dark:border-[#404040] text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none focus:border-[#d2d0c1]"
-                    />
-                  </div>
-                </div>
+            <p className="text-xs text-muted-foreground dark:text-slate-400 font-medium">
+              Your account does not have Super Admin privileges. Redirecting you to your authorized StockDine workspace...
+            </p>
 
-                <div>
-                  <label className="block text-xs font-extrabold uppercase text-slate-700 dark:text-slate-300 mb-1.5">
-                    Password
-                  </label>
-                  <div className="relative">
-                    <Lock className="absolute left-3.5 top-3.5 size-4 text-slate-400 dark:text-slate-500" />
-                    <input
-                      type="password"
-                      required
-                      value={loginPassword}
-                      onChange={(e) => setLoginPassword(e.target.value)}
-                      placeholder="••••••••"
-                      className="w-full pl-10 pr-4 py-3.5 rounded-2xl bg-slate-50 dark:bg-[#383838]/80 border border-border dark:border-[#404040] text-xs font-bold text-slate-900 dark:text-slate-100 focus:outline-none focus:border-[#d2d0c1]"
-                    />
-                  </div>
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={isLoggingIn}
-                  className="w-full py-4 rounded-2xl bg-[#d2d0c1] hover:bg-[#D66A38] text-white text-xs font-extrabold uppercase tracking-wider shadow-lg hover:shadow-xl transition-all active:scale-95 flex items-center justify-center gap-2 cursor-pointer mt-2"
-                >
-                  {isLoggingIn ? (
-                    <span>Authenticating...</span>
-                  ) : (
-                    <>
-                      <span>Unlock Super Admin OS</span>
-                      <ArrowRight className="size-4" />
-                    </>
-                  )}
-                </button>
-              </form>
-
-              <div className="text-center pt-2">
-                <span className="text-[11px] text-muted-foreground dark:text-slate-500 font-mono">
-                  Default credentials pre-filled for demo testing
-                </span>
-              </div>
+            <div className="pt-2 flex justify-center">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#d2d0c1]"></div>
             </div>
           </div>
         </main>
 
         <footer className="relative z-10 max-w-4xl mx-auto w-full pt-6 pb-2 text-center text-[11px] text-muted-foreground dark:text-slate-500 font-medium">
-          © StockDine Inc. Dedicated Super Admin Gateway.
+          © StockDine Inc. Protected Platform Gateway.
         </footer>
       </div>
     );
@@ -369,19 +316,19 @@ export function StockDineSuperAdminPage() {
       {/* Top Super Admin Navigation Header */}
       <header className="sticky top-0 z-40 bg-white/95 dark:bg-[#222222]/95 backdrop-blur-xl border-b border-border dark:border-[#404040] px-4 sm:px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4 shadow-md">
         <div className="flex items-center gap-3">
-          <div className="size-10 rounded-2xl bg-[#d2d0c1] text-white flex items-center justify-center shadow-lg font-bold">
-            <ShieldCheck className="size-6 text-white" />
+          <div className="size-10 rounded-2xl bg-[#111111] dark:bg-white text-white dark:text-[#111111] flex items-center justify-center shadow-lg font-bold">
+            <ShieldCheck className="size-6 text-white dark:text-[#111111]" />
           </div>
           <div>
             <div className="flex items-center gap-2">
               <span className="font-serif italic text-2xl font-bold tracking-tight text-[#111111] dark:text-white leading-none">
                 StockDine HQ
               </span>
-              <span className="text-[10px] uppercase font-extrabold bg-[#d2d0c1]/20 text-[#d2d0c1] px-2.5 py-0.5 rounded-full border border-[#d2d0c1]/30">
+              <span className="text-[10px] uppercase font-extrabold bg-[#111111] text-white dark:bg-white dark:text-[#111111] px-2.5 py-0.5 rounded-full border border-black/10">
                 Super Admin OS
               </span>
             </div>
-            <p className="text-[10px] text-muted-foreground dark:text-slate-400 font-mono mt-0.5">
+            <p className="text-[10px] text-slate-600 dark:text-slate-300 font-mono mt-0.5">
               Logged in as: {authSession?.userEmail}
             </p>
           </div>
@@ -393,7 +340,7 @@ export function StockDineSuperAdminPage() {
             type="button"
             onClick={fetchSuperAdminData}
             disabled={loadingData}
-            className="p-2.5 rounded-2xl bg-slate-100 dark:bg-[#383838] hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-border dark:border-[#404040] transition-all cursor-pointer"
+            className="p-2.5 rounded-2xl bg-slate-100 dark:bg-[#383838] hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 border border-border dark:border-[#404040] transition-all cursor-pointer active:scale-95"
             title="Refresh Real MongoDB Data"
           >
             <RefreshCw className={`size-4 ${loadingData ? "animate-spin" : ""}`} />
@@ -407,7 +354,7 @@ export function StockDineSuperAdminPage() {
               signOut();
               navigate({ to: "/stockdine-superadmin" });
             }}
-            className="px-4 py-2.5 rounded-2xl bg-rose-50 dark:bg-rose-950/60 hover:bg-rose-100 dark:hover:bg-rose-900 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer"
+            className="px-4 py-2.5 rounded-2xl bg-rose-50 dark:bg-rose-950/60 hover:bg-rose-100 dark:hover:bg-rose-900 border border-rose-200 dark:border-rose-800 text-rose-700 dark:text-rose-300 text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer active:scale-95"
           >
             <LogOut className="size-4" />
             <span>Sign Out</span>
@@ -432,10 +379,10 @@ export function StockDineSuperAdminPage() {
               key={tab.id}
               type="button"
               onClick={() => setActiveTab(tab.id as SuperAdminTab)}
-              className={`px-4 py-2.5 rounded-2xl text-xs font-extrabold transition-all flex items-center gap-2 shrink-0 cursor-pointer ${
+              className={`px-4 py-2.5 rounded-2xl text-xs font-black transition-all flex items-center gap-2 shrink-0 cursor-pointer active:scale-95 ${
                 activeTab === tab.id
-                  ? "bg-[#d2d0c1] text-white shadow-lg"
-                  : "bg-slate-100 dark:bg-[#383838]/60 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-[#383838] hover:text-slate-900 dark:hover:text-white border border-border/60 dark:border-[#404040]/50"
+                  ? "bg-[#111111] dark:bg-white text-white dark:text-[#111111] shadow-lg"
+                  : "bg-slate-100 dark:bg-[#383838]/80 text-slate-800 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-[#484848] hover:text-slate-950 dark:hover:text-white border border-slate-300 dark:border-[#505050]"
               }`}
             >
               {tab.icon}

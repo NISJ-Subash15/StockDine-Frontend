@@ -82,84 +82,77 @@ export function LoginPage() {
 
       if (res && res.success && res.token) {
         localStorage.setItem("stockdine_token", res.token);
-        const rawRole = (res.role || res.user?.role || "customer").toLowerCase();
+        const rawRole = (res.role || res.user?.role || "user").toString().toUpperCase();
 
         setLoginSuccess("Authentication successful! Redirecting...");
 
-        // ROLE 1: Super Admin
-        if (rawRole === "super_admin" || rawRole === "superadmin") {
+        // ROLE 1: SUPER ADMIN
+        if (rawRole === "SUPER_ADMIN" || rawRole === "SUPERADMIN" || rawRole === "SUPER_ADMINISTRATOR") {
           setAuthSession({
             userEmail: res.user?.email || cleanIdentifier,
             restaurantId: "HQ-SUPERADMIN",
             permissions: "superadmin",
             isLoggedIn: true,
-            userRole: "superadmin",
+            userRole: "SUPER_ADMIN",
             profileData: res.user,
           });
 
           setTimeout(() => {
-            navigate({ to: "/stockdine-superadmin", replace: true });
-          }, 600);
+            navigate({ to: "/superadmin", replace: true });
+          }, 400);
           return;
         }
 
-        // ROLE 2: Customer / User
-        if (rawRole === "customer" || rawRole === "user") {
+        // ROLE 2: RESTAURANT ADMIN
+        if (rawRole === "RESTAURANT_ADMIN" || rawRole === "RESTAURANT") {
+          const restMongoId = res.user?._id || res.user?.id || res.user?.restaurantId || "";
           setAuthSession({
             userEmail: res.user?.email || cleanIdentifier,
-            restaurantId: "",
+            restaurantId: restMongoId,
             permissions: "both",
             isLoggedIn: true,
-            userRole: "customer",
+            userRole: "RESTAURANT_ADMIN",
             profileData: res.user,
           });
 
           setTimeout(() => {
-            navigate({ to: "/customer", replace: true });
-          }, 600);
+            navigate({ to: "/admin", replace: true });
+          }, 400);
           return;
         }
 
-        // ROLE 3: Kitchen Staff
-        if (rawRole === "kitchen") {
+        // ROLE 3: RESTAURANT MEMBER / KITCHEN
+        if (rawRole === "RESTAURANT_MEMBER" || rawRole === "KITCHEN" || rawRole === "STAFF") {
           const restMongoId = res.user?.restaurantId || res.user?._id || "";
           setAuthSession({
             userEmail: res.user?.email || cleanIdentifier,
             restaurantId: restMongoId,
             permissions: "kitchen",
             isLoggedIn: true,
-            userRole: "kitchen",
+            userRole: "RESTAURANT_MEMBER",
             profileData: res.user,
           });
 
           setTimeout(() => {
             navigate({ to: "/kitchen", replace: true });
-          }, 600);
+          }, 400);
           return;
         }
 
-        // ROLE 4: Restaurant Admin / Restaurant Account
-        const restMongoId = res.user?._id || res.user?.id || res.user?.restaurantId || "";
-        const workspaces = res.workspaces || ["admin", "kitchen"];
-
+        // ROLE 4: USER / CUSTOMER (Default)
         setAuthSession({
           userEmail: res.user?.email || cleanIdentifier,
-          restaurantId: restMongoId,
+          restaurantId: "",
           permissions: "both",
           isLoggedIn: true,
-          userRole: "restaurant",
+          userRole: "USER",
           profileData: res.user,
         });
 
         setTimeout(() => {
-          if (workspaces && workspaces.length > 1) {
-            navigate({ to: "/auth/workspace", replace: true });
-          } else if (workspaces && workspaces.includes("kitchen")) {
-            navigate({ to: "/kitchen", replace: true });
-          } else {
-            navigate({ to: "/admin", replace: true });
-          }
-        }, 600);
+          navigate({ to: "/customer", replace: true });
+        }, 400);
+        return;
       } else {
         setLoginError(res.message || "Invalid email or password.");
       }

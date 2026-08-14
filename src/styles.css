@@ -42,40 +42,40 @@
 
 :root {
   --radius: 1.25rem;
-  /* StockDine Premium Monochrome Palette: White #FFFFFF, Light Grey #F5F5F5, Main Black #111111, Dark Grey #333333, Border #E5E5E5, Muted #737373, Warm Accent #d2d0c1 */
+  /* StockDine High Contrast Palette */
   --brand: #111111;
   --brand-hover: #333333;
   --brand-secondary: #333333;
-  --brand-accent: #d2d0c1;
-  --brand-highlight: #d2d0c1;
-  --brand-light: rgba(210, 208, 193, 0.12);
+  --brand-accent: #9E8D6B;
+  --brand-highlight: #9E8D6B;
+  --brand-light: rgba(158, 141, 107, 0.15);
   --brand-foreground: #FFFFFF;
-  --secondary: #F5F5F5;
-  --secondary-foreground: #111111;
-  --accent: #d2d0c1;
+  --secondary: #F1F5F9;
+  --secondary-foreground: #0F172A;
+  --accent: #9E8D6B;
   --accent-foreground: #FFFFFF;
-  --surface: #F5F5F5;
+  --surface: #F8FAFC;
   --background: #FFFFFF;
-  --foreground: #111111;
+  --foreground: #0F172A;
   --card: #FFFFFF;
-  --card-foreground: #111111;
+  --card-foreground: #0F172A;
   --popover: #FFFFFF;
-  --popover-foreground: #111111;
+  --popover-foreground: #0F172A;
   --primary: #111111;
   --primary-foreground: #FFFFFF;
-  --muted: #F5F5F5;
-  --muted-foreground: #737373;
+  --muted: #F1F5F9;
+  --muted-foreground: #475569;
   --destructive: #DC2626;
   --destructive-foreground: #FFFFFF;
-  --border: #E5E5E5;
-  --input: #E5E5E5;
-  --ring: #d2d0c1;
+  --border: #CBD5E1;
+  --input: #CBD5E1;
+  --ring: #9E8D6B;
 }
 
 .dark {
   --brand: #FFFFFF;
   --brand-hover: #E5E5E5;
-  --brand-secondary: #A3A3A3;
+  --brand-secondary: #CBD5E1;
   --brand-accent: #d2d0c1;
   --brand-highlight: #d2d0c1;
   --brand-light: rgba(210, 208, 193, 0.2);
@@ -94,11 +94,11 @@
   --primary: #FFFFFF;
   --primary-foreground: #111111;
   --muted: #383838;
-  --muted-foreground: #A3A3A3;
+  --muted-foreground: #E2E8F0;
   --destructive: #EF4444;
   --destructive-foreground: #FFFFFF;
-  --border: #404040;
-  --input: #404040;
+  --border: #475569;
+  --input: #475569;
   --ring: #d2d0c1;
 }
 
@@ -114,6 +114,8 @@
     transition: background-color 0.4s ease, color 0.4s ease;
     overflow-x: hidden;
     letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 

@@ -209,13 +209,13 @@ function playKitchenOrderChime() {
       {/* Header Bar */}
       <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 pb-4 border-b border-border dark:border-[#404040]">
         <div>
-          <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-[#111111] dark:text-[#d2d0c1]">
+          <div className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-[#111111] dark:text-amber-400">
             <span>Kitchen Operating Terminal • Live Sync</span>
           </div>
           <h1 className="font-serif italic text-3xl sm:text-4xl font-bold mt-1 text-[#111111] dark:text-slate-100">
             {currentProfile?.name || "StockDine Kitchen"}
           </h1>
-          <p className="text-xs text-[#737373] dark:text-slate-400 mt-0.5 font-medium">
+          <p className="text-xs text-slate-700 dark:text-slate-300 mt-0.5 font-bold">
             Terminal ID: {currentRestId} • Food Stock &amp; Pass Control
           </p>
         </div>
@@ -225,10 +225,10 @@ function playKitchenOrderChime() {
             <button
               type="button"
               onClick={() => navigate({ to: "/admin" })}
-              className="flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-wider text-[#111111] dark:text-slate-200 bg-[#111111]/10 dark:bg-[#383838] hover:bg-[#111111] hover:text-white dark:hover:bg-[#d2d0c1] border border-[#111111]/20 dark:border-[#404040] rounded-2xl px-3.5 py-2.5 transition-all shadow-sm active:scale-95 cursor-pointer"
+              className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-900 dark:text-slate-100 bg-slate-100 dark:bg-[#383838] hover:bg-slate-200 dark:hover:bg-[#484848] border border-slate-300 dark:border-[#505050] rounded-2xl px-3.5 py-2.5 transition-all shadow-sm active:scale-95 cursor-pointer"
               title="Return to Admin Dashboard"
             >
-              <BarChart3 className="size-3.5 text-[#d2d0c1]" />
+              <BarChart3 className="size-3.5 text-amber-500" />
               <span>Return to Admin Dashboard</span>
             </button>
           )}
@@ -256,7 +256,7 @@ function playKitchenOrderChime() {
           value={kitchenSearchQuery}
           onChange={(e) => setKitchenSearchQuery(e.target.value)}
           placeholder="Fast Kitchen Search: Food Item, Category, Customer Name, Table Number, Order Ticket..."
-          className="w-full h-13 pl-11 pr-4 rounded-2xl bg-[#F5F5F5] border-2 border-[#E5E5E5] text-[#111111] text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#d2d0c1] shadow-sm transition-all placeholder:text-[#737373]/60"
+          className="w-full h-13 pl-11 pr-4 rounded-2xl bg-slate-100 dark:bg-[#222222] border-2 border-slate-300 dark:border-[#505050] text-slate-900 dark:text-slate-100 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-[#111111] shadow-sm transition-all placeholder:text-slate-500 dark:placeholder:text-slate-400"
         />
         <Search className="absolute left-4 top-4 size-4 text-[#d2d0c1] pointer-events-none" />
         {kitchenSearchQuery && (

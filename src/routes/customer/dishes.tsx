@@ -80,9 +80,10 @@ function DishesPage() {
   useEffect(() => {
     api.dishes.getAll().then((res: any) => {
       if (res && res.success && Array.isArray(res.dishes)) {
-        const mapped = res.dishes.map((d: any) => ({
+        const validDishes = res.dishes.filter((d: any) => d.restaurant && (d.restaurant._id || d.restaurant.restaurantName));
+        const mapped = validDishes.map((d: any) => ({
           id: d._id,
-          restaurantId: d.restaurant?._id || d.restaurant || "",
+          restaurantId: d.restaurant?._id || (typeof d.restaurant === "string" ? d.restaurant : ""),
           restaurantName: d.restaurant?.restaurantName || "",
           name: d.dishName,
           category: d.category,
@@ -105,20 +106,21 @@ function DishesPage() {
   }, []);
 
   const restaurantMap = getAllRestaurantProfiles();
-  const restaurantList = Object.values(restaurantMap);
 
   const dishesPool = liveDishes.length > 0 ? liveDishes : (dishes || []);
 
-  // Attach restaurant name & ratings to dishes
-  const enrichedDishes: Dish[] = dishesPool.map((d) => {
-    const profile = restaurantMap[d.restaurantId] || restaurantList[0] || defaultFallbackRestaurant;
-    return {
-      ...d,
-      restaurantName: d.restaurantName || profile?.name || "StockDine Partner",
-      restaurantLogo: d.restaurantLogo || profile?.logo,
-      rating: d.rating || profile?.rating || 4.9,
-    };
-  });
+  // Attach restaurant name & ratings to dishes, excluding orphaned items
+  const enrichedDishes: Dish[] = dishesPool
+    .filter((d) => Boolean(d.restaurantName || (d.restaurantId && restaurantMap[d.restaurantId])))
+    .map((d) => {
+      const profile = restaurantMap[d.restaurantId];
+      return {
+        ...d,
+        restaurantName: d.restaurantName || profile?.name || "Partner Restaurant",
+        restaurantLogo: d.restaurantLogo || profile?.logo,
+        rating: d.rating || profile?.rating || 4.9,
+      };
+    });
 
   // State Filters
   const [searchQuery, setSearchQuery] = useState("");
@@ -197,14 +199,14 @@ function DishesPage() {
             <button
               type="button"
               onClick={() => navigate({ to: "/customer" })}
-              className="p-2.5 rounded-2xl bg-card dark:bg-[#222222] border border-border dark:border-[#404040] text-foreground hover:bg-secondary/20 transition-colors shadow-xs cursor-pointer"
+              className="p-2.5 rounded-2xl bg-slate-100 dark:bg-[#222222] border border-slate-300 dark:border-[#404040] text-foreground hover:bg-slate-200 transition-all shadow-xs cursor-pointer active:scale-95"
               title="Back to Home"
             >
-              <ChevronLeft className="size-4 text-[#d2d0c1]" />
+              <ChevronLeft className="size-4 text-slate-800 dark:text-slate-200" />
             </button>
             <div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#F5F5F5] dark:bg-[#d2d0c1]/20 text-[#111111] dark:text-[#d2d0c1] text-[10px] font-extrabold uppercase tracking-widest border border-[#E5E5E5]">
-                <Flame className="size-3 text-[#d2d0c1] fill-current" />
+              <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-amber-500/15 text-slate-900 dark:text-slate-100 text-[10px] font-black uppercase tracking-widest border border-amber-500/30">
+                <Flame className="size-3 text-amber-500 fill-current" />
                 <span>Live Menu Inventory</span>
               </div>
               <h1 className="text-2xl sm:text-3xl font-serif italic text-[#111111] dark:text-slate-100 font-bold tracking-tight mt-0.5">
@@ -224,14 +226,14 @@ function DishesPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search dishes by name, ingredients, or restaurant..."
-              className="w-full h-11 pl-11 pr-10 rounded-2xl bg-card dark:bg-[#222222] border border-[#E5E5E5] dark:border-[#404040] text-foreground text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#111111] shadow-xs placeholder:text-muted-foreground/60"
+              className="w-full h-11 pl-11 pr-10 rounded-2xl bg-slate-100 dark:bg-[#222222] border border-slate-300 dark:border-[#404040] text-slate-900 dark:text-slate-100 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-[#111111] shadow-xs placeholder:text-slate-500 dark:placeholder:text-slate-400"
             />
-            <Search className="absolute left-4 top-3.5 size-4 text-[#333333] pointer-events-none" />
+            <Search className="absolute left-4 top-3.5 size-4 text-slate-600 dark:text-slate-300 pointer-events-none" />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery("")}
-                className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1 text-muted-foreground hover:text-foreground cursor-pointer"
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1 text-slate-600 dark:text-slate-300 hover:text-foreground cursor-pointer"
               >
                 <X className="size-4" />
               </button>
@@ -241,13 +243,13 @@ function DishesPage() {
           <button
             type="button"
             onClick={() => setShowFilterDrawer(!showFilterDrawer)}
-            className={`h-11 px-4 rounded-2xl border text-xs font-extrabold transition-all flex items-center gap-2 shrink-0 cursor-pointer ${
+            className={`h-11 px-4 rounded-2xl border text-xs font-black transition-all flex items-center gap-2 shrink-0 cursor-pointer active:scale-95 ${
               selectedDiet !== "All" || onlyAvailable || bestsellersOnly
-                ? "bg-[#111111] text-white border-[#111111] shadow-sm"
-                : "bg-card dark:bg-[#222222] border-border dark:border-[#404040] text-foreground"
+                ? "bg-[#111111] dark:bg-white text-white dark:text-[#111111] border-[#111111] shadow-sm"
+                : "bg-slate-100 dark:bg-[#222222] border-slate-300 dark:border-[#404040] text-slate-900 dark:text-slate-100"
             }`}
           >
-            <SlidersHorizontal className="size-4 text-[#d2d0c1]" />
+            <SlidersHorizontal className="size-4 text-amber-500" />
             <span className="hidden sm:inline">Filters</span>
           </button>
         </div>
@@ -259,10 +261,10 @@ function DishesPage() {
               key={cat}
               type="button"
               onClick={() => setSelectedCategory(cat)}
-              className={`px-4 py-2 rounded-2xl text-xs font-extrabold transition-all shrink-0 cursor-pointer ${
+              className={`px-4 py-2 rounded-2xl text-xs font-black transition-all shrink-0 cursor-pointer active:scale-95 ${
                 selectedCategory === cat
-                  ? "bg-[#111111] text-white shadow-md scale-102"
-                  : "bg-card dark:bg-[#222222] border border border-[#E5E5E5] dark:border-[#404040] text-muted-foreground hover:bg-secondary/20"
+                  ? "bg-[#111111] dark:bg-white text-white dark:text-[#111111] shadow-md scale-102"
+                  : "bg-slate-100 dark:bg-[#222222] border border-slate-300 dark:border-[#404040] text-slate-800 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-[#383838]"
               }`}
             >
               {cat}

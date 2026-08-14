@@ -138,10 +138,11 @@ function HomePage() {
           }
 
           if (dRes && dRes.dishes && Array.isArray(dRes.dishes)) {
-            const mappedDishes: Dish[] = dRes.dishes.map((d: any) => ({
+            const validDishes = dRes.dishes.filter((d: any) => d.restaurant && (d.restaurant._id || d.restaurant.restaurantName));
+            const mappedDishes: Dish[] = validDishes.map((d: any) => ({
               id: d._id || d.id,
-              restaurantId: d.restaurant?._id || d.restaurant || "REST-1",
-              restaurantName: d.restaurant?.restaurantName || "StockDine Partner",
+              restaurantId: d.restaurant?._id || (typeof d.restaurant === "string" ? d.restaurant : ""),
+              restaurantName: d.restaurant?.restaurantName || "",
               restaurantLogo: formatImageUrl(d.restaurant?.restaurantLogo),
               name: d.dishName || d.name,
               category: d.category || "Main Course",

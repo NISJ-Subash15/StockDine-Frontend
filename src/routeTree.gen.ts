@@ -37,6 +37,13 @@ import { Route as StockdineSuperadminRestaurantsRouteImport } from './routes/sto
 import { Route as StockdineSuperadminReviewsRouteImport } from './routes/stockdine-superadmin/reviews'
 import { Route as StockdineSuperadminSettingsRouteImport } from './routes/stockdine-superadmin/settings'
 import { Route as StockdineSuperadminUsersRouteImport } from './routes/stockdine-superadmin/users'
+import { Route as SuperadminAnalyticsRouteImport } from './routes/superadmin/analytics'
+import { Route as SuperadminDashboardRouteImport } from './routes/superadmin/dashboard'
+import { Route as SuperadminPaymentsRouteImport } from './routes/superadmin/payments'
+import { Route as SuperadminRestaurantsRouteImport } from './routes/superadmin/restaurants'
+import { Route as SuperadminReviewsRouteImport } from './routes/superadmin/reviews'
+import { Route as SuperadminSettingsRouteImport } from './routes/superadmin/settings'
+import { Route as SuperadminUsersRouteImport } from './routes/superadmin/users'
 import { Route as AuthCustomerLoginRouteImport } from './routes/auth/customer/login'
 import { Route as AuthCustomerSignupRouteImport } from './routes/auth/customer/signup'
 import { Route as AuthRestaurantLoginRouteImport } from './routes/auth/restaurant/login'
@@ -190,6 +197,41 @@ const StockdineSuperadminUsersRoute =
     path: '/users',
     getParentRoute: () => StockdineSuperadminRoute,
   } as any)
+const SuperadminAnalyticsRoute = SuperadminAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => SuperadminRoute,
+} as any)
+const SuperadminDashboardRoute = SuperadminDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => SuperadminRoute,
+} as any)
+const SuperadminPaymentsRoute = SuperadminPaymentsRouteImport.update({
+  id: '/payments',
+  path: '/payments',
+  getParentRoute: () => SuperadminRoute,
+} as any)
+const SuperadminRestaurantsRoute = SuperadminRestaurantsRouteImport.update({
+  id: '/restaurants',
+  path: '/restaurants',
+  getParentRoute: () => SuperadminRoute,
+} as any)
+const SuperadminReviewsRoute = SuperadminReviewsRouteImport.update({
+  id: '/reviews',
+  path: '/reviews',
+  getParentRoute: () => SuperadminRoute,
+} as any)
+const SuperadminSettingsRoute = SuperadminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => SuperadminRoute,
+} as any)
+const SuperadminUsersRoute = SuperadminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => SuperadminRoute,
+} as any)
 const AuthCustomerLoginRoute = AuthCustomerLoginRouteImport.update({
   id: '/auth/customer/login',
   path: '/auth/customer/login',
@@ -227,7 +269,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stockdine-superadmin': typeof StockdineSuperadminRouteWithChildren
   '/super-admin': typeof SuperAdminRoute
-  '/superadmin': typeof SuperadminRoute
+  '/superadmin': typeof SuperadminRouteWithChildren
   '/auth/select-role': typeof AuthSelectRoleRoute
   '/auth/workspace': typeof AuthWorkspaceRoute
   '/customer/bookings': typeof CustomerBookingsRoute
@@ -245,6 +287,13 @@ export interface FileRoutesByFullPath {
   '/stockdine-superadmin/reviews': typeof StockdineSuperadminReviewsRoute
   '/stockdine-superadmin/settings': typeof StockdineSuperadminSettingsRoute
   '/stockdine-superadmin/users': typeof StockdineSuperadminUsersRoute
+  '/superadmin/analytics': typeof SuperadminAnalyticsRoute
+  '/superadmin/dashboard': typeof SuperadminDashboardRoute
+  '/superadmin/payments': typeof SuperadminPaymentsRoute
+  '/superadmin/restaurants': typeof SuperadminRestaurantsRoute
+  '/superadmin/reviews': typeof SuperadminReviewsRoute
+  '/superadmin/settings': typeof SuperadminSettingsRoute
+  '/superadmin/users': typeof SuperadminUsersRoute
   '/customer/': typeof CustomerIndexRoute
   '/auth/customer/login': typeof AuthCustomerLoginRoute
   '/auth/customer/signup': typeof AuthCustomerSignupRoute
@@ -261,7 +310,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stockdine-superadmin': typeof StockdineSuperadminRouteWithChildren
   '/super-admin': typeof SuperAdminRoute
-  '/superadmin': typeof SuperadminRoute
+  '/superadmin': typeof SuperadminRouteWithChildren
   '/auth/select-role': typeof AuthSelectRoleRoute
   '/auth/workspace': typeof AuthWorkspaceRoute
   '/customer/bookings': typeof CustomerBookingsRoute
@@ -279,6 +328,13 @@ export interface FileRoutesByTo {
   '/stockdine-superadmin/reviews': typeof StockdineSuperadminReviewsRoute
   '/stockdine-superadmin/settings': typeof StockdineSuperadminSettingsRoute
   '/stockdine-superadmin/users': typeof StockdineSuperadminUsersRoute
+  '/superadmin/analytics': typeof SuperadminAnalyticsRoute
+  '/superadmin/dashboard': typeof SuperadminDashboardRoute
+  '/superadmin/payments': typeof SuperadminPaymentsRoute
+  '/superadmin/restaurants': typeof SuperadminRestaurantsRoute
+  '/superadmin/reviews': typeof SuperadminReviewsRoute
+  '/superadmin/settings': typeof SuperadminSettingsRoute
+  '/superadmin/users': typeof SuperadminUsersRoute
   '/customer': typeof CustomerIndexRoute
   '/auth/customer/login': typeof AuthCustomerLoginRoute
   '/auth/customer/signup': typeof AuthCustomerSignupRoute
@@ -297,7 +353,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stockdine-superadmin': typeof StockdineSuperadminRouteWithChildren
   '/super-admin': typeof SuperAdminRoute
-  '/superadmin': typeof SuperadminRoute
+  '/superadmin': typeof SuperadminRouteWithChildren
   '/auth/select-role': typeof AuthSelectRoleRoute
   '/auth/workspace': typeof AuthWorkspaceRoute
   '/customer/bookings': typeof CustomerBookingsRoute
@@ -315,6 +371,13 @@ export interface FileRoutesById {
   '/stockdine-superadmin/reviews': typeof StockdineSuperadminReviewsRoute
   '/stockdine-superadmin/settings': typeof StockdineSuperadminSettingsRoute
   '/stockdine-superadmin/users': typeof StockdineSuperadminUsersRoute
+  '/superadmin/analytics': typeof SuperadminAnalyticsRoute
+  '/superadmin/dashboard': typeof SuperadminDashboardRoute
+  '/superadmin/payments': typeof SuperadminPaymentsRoute
+  '/superadmin/restaurants': typeof SuperadminRestaurantsRoute
+  '/superadmin/reviews': typeof SuperadminReviewsRoute
+  '/superadmin/settings': typeof SuperadminSettingsRoute
+  '/superadmin/users': typeof SuperadminUsersRoute
   '/customer/': typeof CustomerIndexRoute
   '/auth/customer/login': typeof AuthCustomerLoginRoute
   '/auth/customer/signup': typeof AuthCustomerSignupRoute
@@ -352,6 +415,13 @@ export interface FileRouteTypes {
     | '/stockdine-superadmin/reviews'
     | '/stockdine-superadmin/settings'
     | '/stockdine-superadmin/users'
+    | '/superadmin/analytics'
+    | '/superadmin/dashboard'
+    | '/superadmin/payments'
+    | '/superadmin/restaurants'
+    | '/superadmin/reviews'
+    | '/superadmin/settings'
+    | '/superadmin/users'
     | '/customer/'
     | '/auth/customer/login'
     | '/auth/customer/signup'
@@ -386,6 +456,13 @@ export interface FileRouteTypes {
     | '/stockdine-superadmin/reviews'
     | '/stockdine-superadmin/settings'
     | '/stockdine-superadmin/users'
+    | '/superadmin/analytics'
+    | '/superadmin/dashboard'
+    | '/superadmin/payments'
+    | '/superadmin/restaurants'
+    | '/superadmin/reviews'
+    | '/superadmin/settings'
+    | '/superadmin/users'
     | '/customer'
     | '/auth/customer/login'
     | '/auth/customer/signup'
@@ -421,6 +498,13 @@ export interface FileRouteTypes {
     | '/stockdine-superadmin/reviews'
     | '/stockdine-superadmin/settings'
     | '/stockdine-superadmin/users'
+    | '/superadmin/analytics'
+    | '/superadmin/dashboard'
+    | '/superadmin/payments'
+    | '/superadmin/restaurants'
+    | '/superadmin/reviews'
+    | '/superadmin/settings'
+    | '/superadmin/users'
     | '/customer/'
     | '/auth/customer/login'
     | '/auth/customer/signup'
@@ -439,7 +523,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StockdineSuperadminRoute: typeof StockdineSuperadminRouteWithChildren
   SuperAdminRoute: typeof SuperAdminRoute
-  SuperadminRoute: typeof SuperadminRoute
+  SuperadminRoute: typeof SuperadminRouteWithChildren
   AuthSelectRoleRoute: typeof AuthSelectRoleRoute
   AuthWorkspaceRoute: typeof AuthWorkspaceRoute
   RestaurantAdminRoute: typeof RestaurantAdminRoute
@@ -648,6 +732,55 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StockdineSuperadminUsersRouteImport
       parentRoute: typeof StockdineSuperadminRoute
     }
+    '/superadmin/analytics': {
+      id: '/superadmin/analytics'
+      path: '/analytics'
+      fullPath: '/superadmin/analytics'
+      preLoaderRoute: typeof SuperadminAnalyticsRouteImport
+      parentRoute: typeof SuperadminRoute
+    }
+    '/superadmin/dashboard': {
+      id: '/superadmin/dashboard'
+      path: '/dashboard'
+      fullPath: '/superadmin/dashboard'
+      preLoaderRoute: typeof SuperadminDashboardRouteImport
+      parentRoute: typeof SuperadminRoute
+    }
+    '/superadmin/payments': {
+      id: '/superadmin/payments'
+      path: '/payments'
+      fullPath: '/superadmin/payments'
+      preLoaderRoute: typeof SuperadminPaymentsRouteImport
+      parentRoute: typeof SuperadminRoute
+    }
+    '/superadmin/restaurants': {
+      id: '/superadmin/restaurants'
+      path: '/restaurants'
+      fullPath: '/superadmin/restaurants'
+      preLoaderRoute: typeof SuperadminRestaurantsRouteImport
+      parentRoute: typeof SuperadminRoute
+    }
+    '/superadmin/reviews': {
+      id: '/superadmin/reviews'
+      path: '/reviews'
+      fullPath: '/superadmin/reviews'
+      preLoaderRoute: typeof SuperadminReviewsRouteImport
+      parentRoute: typeof SuperadminRoute
+    }
+    '/superadmin/settings': {
+      id: '/superadmin/settings'
+      path: '/settings'
+      fullPath: '/superadmin/settings'
+      preLoaderRoute: typeof SuperadminSettingsRouteImport
+      parentRoute: typeof SuperadminRoute
+    }
+    '/superadmin/users': {
+      id: '/superadmin/users'
+      path: '/users'
+      fullPath: '/superadmin/users'
+      preLoaderRoute: typeof SuperadminUsersRouteImport
+      parentRoute: typeof SuperadminRoute
+    }
     '/auth/customer/login': {
       id: '/auth/customer/login'
       path: '/auth/customer/login'
@@ -735,6 +868,30 @@ const StockdineSuperadminRouteChildren: StockdineSuperadminRouteChildren = {
 const StockdineSuperadminRouteWithChildren =
   StockdineSuperadminRoute._addFileChildren(StockdineSuperadminRouteChildren)
 
+interface SuperadminRouteChildren {
+  SuperadminAnalyticsRoute: typeof SuperadminAnalyticsRoute
+  SuperadminDashboardRoute: typeof SuperadminDashboardRoute
+  SuperadminPaymentsRoute: typeof SuperadminPaymentsRoute
+  SuperadminRestaurantsRoute: typeof SuperadminRestaurantsRoute
+  SuperadminReviewsRoute: typeof SuperadminReviewsRoute
+  SuperadminSettingsRoute: typeof SuperadminSettingsRoute
+  SuperadminUsersRoute: typeof SuperadminUsersRoute
+}
+
+const SuperadminRouteChildren: SuperadminRouteChildren = {
+  SuperadminAnalyticsRoute: SuperadminAnalyticsRoute,
+  SuperadminDashboardRoute: SuperadminDashboardRoute,
+  SuperadminPaymentsRoute: SuperadminPaymentsRoute,
+  SuperadminRestaurantsRoute: SuperadminRestaurantsRoute,
+  SuperadminReviewsRoute: SuperadminReviewsRoute,
+  SuperadminSettingsRoute: SuperadminSettingsRoute,
+  SuperadminUsersRoute: SuperadminUsersRoute,
+}
+
+const SuperadminRouteWithChildren = SuperadminRoute._addFileChildren(
+  SuperadminRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CustomerRouteRoute: CustomerRouteRouteWithChildren,
@@ -745,7 +902,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   StockdineSuperadminRoute: StockdineSuperadminRouteWithChildren,
   SuperAdminRoute: SuperAdminRoute,
-  SuperadminRoute: SuperadminRoute,
+  SuperadminRoute: SuperadminRouteWithChildren,
   AuthSelectRoleRoute: AuthSelectRoleRoute,
   AuthWorkspaceRoute: AuthWorkspaceRoute,
   RestaurantAdminRoute: RestaurantAdminRoute,
